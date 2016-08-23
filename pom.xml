@@ -18,9 +18,17 @@
     </modules>
 
     <properties>
+        <pom.version.junit>4.12</pom.version.junit>
         <pom.version.spring>4.3.0.RELEASE</pom.version.spring>
-        <pom.version.mybatis>3.4.1</pom.version.mybatis>
+        <pom.version.spring.data.redis>1.7.2.RELEASE</pom.version.spring.data.redis>
+        <pom.version.spring.data.solr>2.0.2.RELEASE</pom.version.spring.data.solr>
+        <pom.version.spring.retry>1.1.3.RELEASE</pom.version.spring.retry>
+        <pom.version.jackson.databind>2.8.0</pom.version.jackson.databind>
         <pom.version.aspectj>1.8.9</pom.version.aspectj>
+        <pom.version.jdbc>5.1.38</pom.version.jdbc>
+        <pom.version.druid>1.0.24</pom.version.druid>
+        <pom.version.mybatis>3.4.1</pom.version.mybatis>
+        <pom.version.mybatis.spring>1.3.0</pom.version.mybatis.spring>
     </properties>
 
     <dependencies>
@@ -28,7 +36,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${pom.version.junit}</version>
         </dependency>
 
         <dependency>
@@ -127,15 +135,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- extension mybatis generator -->
-            <dependency>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-core</artifactId>
-                <version>1.3.3</version>
-                <type>jar</type>
-            </dependency>
-
-            <!-- spring related -->
+            <!-- spring dependency -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
@@ -217,7 +217,7 @@
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-redis</artifactId>
-                <version>1.7.2.RELEASE</version>
+                <version>${pom.version.spring.data.redis}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.slf4j</groupId>
@@ -228,7 +228,7 @@
 
             <dependency>
                 <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-solr</artifactId>
+                <artifactId>${pom.version.spring.data.solr}</artifactId>
                 <version>2.0.2.RELEASE</version>
                 <exclusions>
                     <exclusion>
@@ -241,7 +241,7 @@
             <dependency>
                 <groupId>org.springframework.retry</groupId>
                 <artifactId>spring-retry</artifactId>
-                <version>1.1.2.RELEASE</version>
+                <version>${pom.version.spring.retry}</version>
             </dependency>
 
             <!-- spring dependency -->
@@ -260,7 +260,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.7.5</version>
+                <version>${pom.version.jackson.databind}</version>
             </dependency>
 
             <dependency>
@@ -271,27 +271,41 @@
 
             <!-- mybatis -->
             <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${pom.version.jdbc}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${pom.version.druid}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>${pom.version.mybatis}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>1.0.24</version>
-            </dependency>
-
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.36</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-spring</artifactId>
-                <version>1.3.0</version>
+                <version>${pom.version.mybatis.spring}</version>
+            </dependency>
+
+            <!-- template -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.23</version>
+            </dependency>
+
+            <!-- commons utils -->
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.3.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -378,10 +392,6 @@
             <email>zhang_yao_wu1993@yeah.net</email>
             <roles>
                 <role>Owner</role>
-                <role>Manager</role>
-                <role>Developer</role>
-                <role>Tester</role>
-                <role>Operation</role>
             </roles>
             <timezone>+8</timezone>
         </developer>
