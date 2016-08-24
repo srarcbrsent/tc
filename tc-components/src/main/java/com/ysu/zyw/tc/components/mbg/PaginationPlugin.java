@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class PaginationPlugin extends PluginAdapter {
 
-    private static final String START_LINE = "startLine";
+    public static final String START_LINE = "startLine";
 
-    private static final String PAGE_SIZE = "pageSize";
+    public static final String PAGE_SIZE = "pageSize";
 
     @Override
     public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
@@ -50,7 +50,7 @@ public class PaginationPlugin extends PluginAdapter {
         paginationWrapElement.addAttribute(new Attribute("test",
                 START_LINE + " != null and " + PAGE_SIZE + " != null and " + PAGE_SIZE + " > 0"));
         paginationWrapElement
-                .addElement(new TextElement("limit #{" + START_LINE + "} , #{" + PAGE_SIZE + "}"));
+                .addElement(new TextElement("limit #{" + START_LINE + "}, #{" + PAGE_SIZE + "}"));
         element.addElement(paginationWrapElement);
         return super.sqlMapSelectByExampleWithBLOBsElementGenerated(element, introspectedTable);
     }
