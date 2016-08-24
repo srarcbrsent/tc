@@ -1,6 +1,7 @@
 package com.ysu.zyw.tc.components.mbg;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.*;
@@ -10,7 +11,7 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * SelectPrimaryKeyPlugin is a extension of mybatis-generator, plug this plugin will make mybatis-generator generated
@@ -27,33 +28,37 @@ public class SelectPrimaryKeyPlugin extends PluginAdapter {
 
     private static final String SELECT_KEY_BY_EXAMPLE = "selectPrimaryKeyByExample";
 
+    private static final String PRIMARY_KEY_RESULT_MAP = "PrimaryKeyResultMap";
+
     @Override
-    public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        doIfOnlyOnePrimaryKey(() -> {
-            generateJavaClient(interfaze, introspectedTable);
-            return null;
-        }, introspectedTable);
+    public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable
+            introspectedTable) {
+        generateJavaClient(interfaze, introspectedTable);
         return super.clientGenerated(interfaze, topLevelClass, introspectedTable);
+    }
+
+    @Override
+    public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
+        generateSqlMap(document, introspectedTable);
+        return super.sqlMapDocumentGenerated(document, introspectedTable);
+    }
+
+    private boolean hasOnlyOnePrimaryKeyColumn(IntrospectedTable introspectedTable) {
+        return introspectedTable.getPrimaryKeyColumns().size() == 1;
     }
 
     private void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
         Method method = new Method(SELECT_KEY_BY_EXAMPLE);
         FullyQualifiedJavaType exampleParamType = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         method.addParameter(new Parameter(exampleParamType, "example"));
-        String primaryKeyJavaType =
-                introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().getFullyQualifiedName();
+
+        String primaryKeyJavaType = hasOnlyOnePrimaryKeyColumn(introspectedTable) ? introspectedTable
+                .getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType()
+                .getFullyQualifiedName() : introspectedTable.getPrimaryKeyType();
+
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("java.util.List<" + primaryKeyJavaType + ">");
         method.setReturnType(returnType);
         interfaze.addMethod(method);
-    }
-
-    @Override
-    public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
-        doIfOnlyOnePrimaryKey(() -> {
-            generateSqlMap(document, introspectedTable);
-            return null;
-        }, introspectedTable);
-        return super.sqlMapDocumentGenerated(document, introspectedTable);
     }
 
     private void generateSqlMap(Document document, IntrospectedTable introspectedTable) {
@@ -66,26 +71,33 @@ public class SelectPrimaryKeyPlugin extends PluginAdapter {
         xmlElement.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType()));
 
         // result map
-        String primaryKeyJavaType =
-                introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().getFullyQualifiedName();
-        xmlElement.addAttribute(new Attribute("resultType", primaryKeyJavaType));
+        if (hasOnlyOnePrimaryKeyColumn(introspectedTable)) {
+            String primaryKeyJavaType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType()
+                    .getFullyQualifiedName();
+            xmlElement.addAttribute(new Attribute("resultType", primaryKeyJavaType));
+        } else {
+            generatePrimaryKeyBaseMap(document, introspectedTable);
+            xmlElement.addAttribute(new Attribute("resultMap", PRIMARY_KEY_RESULT_MAP));
+        }
 
         // content
-        String primaryKeyColumnName = introspectedTable.getPrimaryKeyColumns().get(0).getActualColumnName();
+        String primaryKeyColumnNames = String.join(", ", introspectedTable.getPrimaryKeyColumns().stream().map
+                (IntrospectedColumn::getActualColumnName).collect(Collectors.toList()));
         String content =
                 "select\n" +
                         "    <if test=\"distinct\">\n" +
                         "      distinct\n" +
                         "    </if>\n" +
-                        "    " + primaryKeyColumnName + "\n" +
-                        "    from config\n" +
+                        "    " + primaryKeyColumnNames + "\n" +
+                        "    from " + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName() + "\n" +
                         "    <if test=\"_parameter != null\">\n" +
                         "      <include refid=\"" + introspectedTable.getExampleWhereClauseId() + "\" />\n" +
                         "    </if>\n" +
                         "    <if test=\"orderByClause != null\">\n" +
                         "      order by ${orderByClause}\n" +
                         "    </if>\n" +
-                        "    <if test=\"" + PaginationPlugin.START_LINE + " != null and " + PaginationPlugin.PAGE_SIZE + " != null and " + PaginationPlugin.PAGE_SIZE + " > 0\">\n" +
+                        "    <if test=\"" + PaginationPlugin.START_LINE + " != null and " + PaginationPlugin
+                        .PAGE_SIZE + " != null and " + PaginationPlugin.PAGE_SIZE + " > 0\">\n" +
                         "      limit #{" + PaginationPlugin.START_LINE + "}, #{" + PaginationPlugin.PAGE_SIZE + "}\n" +
                         "    </if>";
         xmlElement.addElement(new TextElement(content));
@@ -93,13 +105,27 @@ public class SelectPrimaryKeyPlugin extends PluginAdapter {
         document.getRootElement().addElement(xmlElement);
     }
 
-    private void doIfOnlyOnePrimaryKey(Supplier<Void> supplier, IntrospectedTable introspectedTable) {
-        if (introspectedTable.getPrimaryKeyColumns().size() == 1) {
-            supplier.get();
-        } else {
-            log.info("table [{}] has more than one primary key, selectKeyByExample method generate passed!",
-                    introspectedTable.getFullyQualifiedTable().getIntrospectedTableName());
+    private void generatePrimaryKeyBaseMap(Document document, IntrospectedTable introspectedTable) {
+        XmlElement xmlElement = new XmlElement("resultMap");
+
+        // id
+        xmlElement.addAttribute(new Attribute("id", PRIMARY_KEY_RESULT_MAP));
+
+        // type
+        xmlElement.addAttribute(new Attribute("type", introspectedTable.getPrimaryKeyType()));
+
+        // ids
+        for (int i = 0; i < introspectedTable.getPrimaryKeyColumns().size(); i++) {
+            IntrospectedColumn introspectedColumn = introspectedTable.getPrimaryKeyColumns().get(i);
+            XmlElement idXmlElement = new XmlElement("id");
+            idXmlElement.addAttribute(new Attribute("column", introspectedColumn.getActualColumnName()));
+            idXmlElement.addAttribute(new Attribute("jdbcType", introspectedColumn.getJdbcTypeName()));
+            idXmlElement.addAttribute(new Attribute("property", introspectedColumn.getJavaProperty()));
+            xmlElement.addElement(i, idXmlElement);
         }
+
+        // content
+        document.getRootElement().addElement(1, xmlElement);
     }
 
     @Override

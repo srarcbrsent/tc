@@ -22,6 +22,8 @@
 
         <plugin type="com.ysu.zyw.tc.components.mbg.SelectPrimaryKeyPlugin"/>
 
+        <plugin type="com.ysu.zyw.tc.components.mbg.BatchInsertPlugin"/>
+
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
@@ -53,7 +55,12 @@
         </javaClientGenerator>
 
         <!-- !!!! Table Configurations !!!! -->
-        <table tableName="config" domainObjectName="Config"/>
+        <table tableName="t_member" domainObjectName="Member"/>
+
+        <table tableName="t_foreend_permission_mapping" domainObjectName="ForeendPermissionMapping">
+            <columnOverride column="visiable" javaType="boolean"/>
+            <ignoreColumn column="data_spm"/>
+        </table>
 
     </context>
 

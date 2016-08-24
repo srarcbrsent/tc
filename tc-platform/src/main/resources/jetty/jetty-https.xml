@@ -14,10 +14,10 @@
                 <Arg name="next">http/1.1</Arg>
                 <Arg name="sslContextFactory">
                     <New id="sslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
-                        <Set name="KeyStorePath">/keystore</Set>
+                        <Set name="KeyStorePath"><Property name="jetty.home" default="." />/keystore</Set>
                         <Set name="KeyStorePassword">123456</Set>
                         <Set name="KeyManagerPassword">123456</Set>
-                        <Set name="TrustStorePath">/keystore</Set>
+                        <Set name="TrustStorePath"><Property name="jetty.home" default="." />/keystore</Set>
                         <Set name="TrustStorePassword">123456</Set>
                     </New>
                 </Arg>

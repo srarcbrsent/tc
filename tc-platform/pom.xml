@@ -13,6 +13,83 @@
     <packaging>war</packaging>
 
     <dependencies>
+        <!-- spring dependency -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+        </dependency>
+
+        <!-- mybatis -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -95,22 +172,22 @@
                     <webApp>
                         <contextPath>/</contextPath>
                         <defaultsDescriptor>
-                            ${project.basedir}/src/main/resources/jetty/webdefault.xml
+                            ${project.build.outputDirectory}/jetty/webdefault.xml
                         </defaultsDescriptor>
                     </webApp>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
                     <jettyXml>
-                        ${project.basedir}/src/main/resources/jetty/jetty.xml,
-                        ${project.basedir}/src/main/resources/jetty/jetty-http.xml,
-                        ${project.basedir}/src/main/resources/jetty/jetty-ssl.xml,
-                        ${project.basedir}/src/main/resources/jetty/jetty-https.xml
+                        ${project.build.outputDirectory}/jetty/jetty.xml,
+                        ${project.build.outputDirectory}/jetty/jetty-http.xml,
+                        ${project.build.outputDirectory}/jetty/jetty-ssl.xml,
+                        ${project.build.outputDirectory}/jetty/jetty-https.xml
                     </jettyXml>
                     <stopKey>stop-tc-platform</stopKey>
                     <stopPort>8081</stopPort>
                     <systemProperties>
                         <systemProperty>
                             <name>logback.configurationFile</name>
-                            <value>file:///${project.build.directory}/classes/logback.xml</value>
+                            <value>file:///${project.build.outputDirectory}/logback.xml</value>
                         </systemProperty>
                     </systemProperties>
                 </configuration>
