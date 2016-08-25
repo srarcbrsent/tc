@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- !!!! Infrastructure !!!! -->
+
+    <!-- aop -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- !!!! Disconf !!!! -->
+    <bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
+          destroy-method="destroy">
+        <property name="scanPackage" value="com.example.disconf.demo"/>
+    </bean>
+
+    <bean id="disconfMgrBeanSecond" class="com.baidu.disconf.client.DisconfMgrBeanSecond"
+          init-method="init" destroy-method="destroy">
+    </bean>
+
+    <bean id="propertyPlaceholderConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="false"/>
+        <property name="ignoreUnresolvablePlaceholders" value="false"/>
+        <property name="propertiesArray">
+            <list>
+                <bean class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+                    <property name="locations">
+                        <list>
+                            <value>classpath*:/properties/local.properties</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!-- !!!! Import !!!! -->
+    <import resource="classpath*:config/spring-dao.xml"/>
+
+    <import resource="classpath*:config/spring-security.xml"/>
+
+    <import resource="classpath*:config/spring-svc.xml"/>
+
+
+</beans>

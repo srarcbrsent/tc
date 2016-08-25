@@ -79,6 +79,12 @@
             <artifactId>spring-websocket</artifactId>
         </dependency>
 
+        <!-- disconf -->
+        <dependency>
+            <groupId>com.baidu.disconf</groupId>
+            <artifactId>disconf-client</artifactId>
+        </dependency>
+
         <!-- mybatis -->
         <dependency>
             <groupId>mysql</groupId>
@@ -93,6 +99,11 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
         </dependency>
     </dependencies>
 

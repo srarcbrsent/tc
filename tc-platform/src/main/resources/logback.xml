@@ -3,9 +3,9 @@
 
     <contextName>tc-platform</contextName>
 
-    <property name="properties.logback.appender.log.project.base" value="C:/ZhangYaoWu_Programing/_Middleware/logs"/>
+    <property name="properties.logback.appender.log.store.base" value="C:/ZhangYaoWu_Programing/_Middleware/logs"/>
 
-    <property name="properties.logback.appender.log.store.base" value="/tc-platform"/>
+    <property name="properties.logback.appender.log.project.base" value="/tc-platform"/>
 
     <property name="logback.appender.layout.pattern"
               value="[%level] [%date] [%cn] [%t] [%file:%line] %logger{0} - %msg%n"/>
