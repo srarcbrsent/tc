@@ -1,0 +1,1 @@
+<#include "/WEB-INF/templates/commons/header.ftl"/>

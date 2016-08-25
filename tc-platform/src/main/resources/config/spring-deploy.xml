@@ -46,5 +46,4 @@
 
     <import resource="classpath*:config/spring-svc.xml"/>
 
-
 </beans>

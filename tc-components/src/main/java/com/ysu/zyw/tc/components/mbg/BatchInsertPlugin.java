@@ -39,7 +39,7 @@ public class BatchInsertPlugin extends PluginAdapter {
     private void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
         Method method = new Method(BATCH_INSERT);
         String modelType = introspectedTable.getBaseRecordType();
-        FullyQualifiedJavaType modelListType = new FullyQualifiedJavaType("java.util.List<" + modelType + ">");
+        FullyQualifiedJavaType modelListType = new FullyQualifiedJavaType("java.utils.List<" + modelType + ">");
         method.addParameter(new Parameter(modelListType, "records"));
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("int");
         method.setReturnType(returnType);

@@ -56,7 +56,7 @@ public class SelectPrimaryKeyPlugin extends PluginAdapter {
                 .getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType()
                 .getFullyQualifiedName() : introspectedTable.getPrimaryKeyType();
 
-        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("java.util.List<" + primaryKeyJavaType + ">");
+        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("java.utils.List<" + primaryKeyJavaType + ">");
         method.setReturnType(returnType);
         interfaze.addMethod(method);
     }

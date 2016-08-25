@@ -39,11 +39,11 @@
     <!-- threads should be set as high as possible given the memory  -->
     <!-- available.                                                  -->
     <!--                                                             -->
-    <!-- Consult the javadoc of o.e.j.util.thread.QueuedThreadPool   -->
+    <!-- Consult the javadoc of o.e.j.utils.thread.QueuedThreadPool   -->
     <!-- for all configuration that may be set here.                 -->
     <!-- =========================================================== -->
     <!-- uncomment to change type of threadpool
-    <Arg name="threadpool"><New id="threadpool" class="org.eclipse.jetty.util.thread.QueuedThreadPool"/></Arg>
+    <Arg name="threadpool"><New id="threadpool" class="org.eclipse.jetty.utils.thread.QueuedThreadPool"/></Arg>
     -->
     <Get name="ThreadPool">
         <Set name="minThreads" type="int">

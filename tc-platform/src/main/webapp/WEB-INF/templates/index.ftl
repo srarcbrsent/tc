@@ -5,6 +5,6 @@
     <title>index</title>
 </head>
 <body>
-
+<#include "commons/header.ftl"/>
 </body>
 </html>

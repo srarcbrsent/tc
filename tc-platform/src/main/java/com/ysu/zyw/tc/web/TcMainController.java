@@ -14,7 +14,7 @@ public class TcMainController {
 
     @RequestMapping(value = "index")
     public ModelAndView index() {
-        return new ModelAndView("index");
+        return new ModelAndView("/WEB-INF/templates/index.ftl");
     }
 
     @RequestMapping(value = "/not_found")

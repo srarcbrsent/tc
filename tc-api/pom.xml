@@ -12,5 +12,21 @@
     <artifactId>tc-api</artifactId>
     <packaging>war</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-components</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-model</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
