@@ -14,12 +14,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * BatchInsertPlugin is a extension of mybatis-generator, plug this plugin will let mybatis-generator generate two
+ * TcBatchInsertPlugin is a extension of mybatis-generator, plug this plugin will let mybatis-generator generate two
  * function that batchInsert.
  *
  * @author yaowu.zhang
  */
-public class BatchInsertPlugin extends PluginAdapter {
+public class TcBatchInsertPlugin extends PluginAdapter {
 
     private static final String BATCH_INSERT = "batchInsert";
 

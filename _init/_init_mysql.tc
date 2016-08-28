@@ -1,0 +1,9 @@
+# root@localhost: Rjr7)71qnblj
+
+CREATE USER 'tc_product'@'%' IDENTIFIED BY 'Rjr7)71qnbldjcvvjw4=';
+
+GRANT ALL ON *.* TO 'tc_product'@'%';
+
+CREATE USER 'tc_develop'@'%' IDENTIFIED BY '123456';
+
+GRANT ALL ON *.* TO 'tc_develop'@'%';

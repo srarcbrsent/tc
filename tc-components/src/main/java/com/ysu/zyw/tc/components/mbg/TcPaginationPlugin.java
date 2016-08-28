@@ -11,16 +11,16 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import java.util.List;
 
 /**
- * PaginationPlugin is a extension of mybatis-generator, plug this plugin will make mybatis-generator generated xml
+ * TcPaginationPlugin is a extension of mybatis-generator, plug this plugin will make mybatis-generator generated xml
  * file have pagination ability, this directly based on mybatis-plugin's plugin adapter.
  *
  * @author yaowu.zhang
  */
-public class PaginationPlugin extends PluginAdapter {
+public class TcPaginationPlugin extends PluginAdapter {
 
-    public static final String START_LINE = "startLine";
+    static final String START_LINE = "startLine";
 
-    public static final String PAGE_SIZE = "pageSize";
+    static final String PAGE_SIZE = "pageSize";
 
     @Override
     public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,

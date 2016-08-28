@@ -23,6 +23,8 @@ public class TcConstant {
 
         public static final String DOUBLE_QUOTE = "\"";
 
+        public static final String DOT = ".";
+
     }
 
     public abstract class R {

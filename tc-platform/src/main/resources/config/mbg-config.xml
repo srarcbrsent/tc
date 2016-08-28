@@ -18,11 +18,11 @@
 
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
 
-        <plugin type="com.ysu.zyw.tc.components.mbg.PaginationPlugin"/>
+        <plugin type="com.ysu.zyw.tc.components.mbg.TcPaginationPlugin"/>
 
-        <plugin type="com.ysu.zyw.tc.components.mbg.SelectPrimaryKeyPlugin"/>
+        <plugin type="com.ysu.zyw.tc.components.mbg.TcSelectPrimaryKeyPlugin"/>
 
-        <plugin type="com.ysu.zyw.tc.components.mbg.BatchInsertPlugin"/>
+        <plugin type="com.ysu.zyw.tc.components.mbg.TcBatchInsertPlugin"/>
 
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>

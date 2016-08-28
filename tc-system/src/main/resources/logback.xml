@@ -3,7 +3,7 @@
 
     <contextName>tc-system</contextName>
 
-    <property name="properties.logback.appender.log.store.base" value="C:/ZhangYaoWu_Programing/_Middleware/logs"/>
+    <property name="properties.logback.appender.log.store.base" value="/home/zhangyaowu/local/logs"/>
 
     <property name="properties.logback.appender.log.project.base" value="/tc-system"/>
 

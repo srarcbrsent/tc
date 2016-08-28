@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.components.mbg;
 
-import lombok.extern.slf4j.Slf4j;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
@@ -14,17 +13,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * SelectPrimaryKeyPlugin is a extension of mybatis-generator, plug this plugin will make mybatis-generator generated
+ * TcSelectPrimaryKeyPlugin is a extension of mybatis-generator, plug this plugin will make mybatis-generator generated
  * a method named selectKeyByExample, and this method only return the primary key of table, and this select method
- * will auto have pagination clause, and you could use this clause if PaginationPlugin plug in.
+ * will auto have pagination clause, and you could use this clause if TcPaginationPlugin plug in.
  * <p>
  * this plugin only support one primary key, and if this table has more than one primary key, then this method
  * will not generated.
  *
  * @author yaowu.zhang
  */
-@Slf4j
-public class SelectPrimaryKeyPlugin extends PluginAdapter {
+public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
 
     private static final String SELECT_KEY_BY_EXAMPLE = "selectPrimaryKeyByExample";
 
@@ -96,9 +94,9 @@ public class SelectPrimaryKeyPlugin extends PluginAdapter {
                         "    <if test=\"orderByClause != null\">\n" +
                         "      order by ${orderByClause}\n" +
                         "    </if>\n" +
-                        "    <if test=\"" + PaginationPlugin.START_LINE + " != null and " + PaginationPlugin
-                        .PAGE_SIZE + " != null and " + PaginationPlugin.PAGE_SIZE + " > 0\">\n" +
-                        "      limit #{" + PaginationPlugin.START_LINE + "}, #{" + PaginationPlugin.PAGE_SIZE + "}\n" +
+                        "    <if test=\"" + TcPaginationPlugin.START_LINE + " != null and " + TcPaginationPlugin
+                        .PAGE_SIZE + " != null and " + TcPaginationPlugin.PAGE_SIZE + " > 0\">\n" +
+                        "      limit #{" + TcPaginationPlugin.START_LINE + "}, #{" + TcPaginationPlugin.PAGE_SIZE + "}\n" +
                         "    </if>";
         xmlElement.addElement(new TextElement(content));
 
