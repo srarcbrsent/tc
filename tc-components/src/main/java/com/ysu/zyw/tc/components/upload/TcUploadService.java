@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.components.upload;
 
+import javax.annotation.Nonnull;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -10,12 +11,12 @@ import java.io.OutputStream;
  */
 public interface TcUploadService {
 
-    public String upload(TcUploadResourceData metadata, InputStream inputStream);
+    public String upload(@Nonnull TcUploadResourceData metadata, @Nonnull InputStream inputStream);
 
-    public OutputStream download(TcUploadResourceData metadata);
+    public OutputStream download(@Nonnull TcUploadResourceData metadata);
 
-    public void delete(TcUploadResourceData metadata);
+    public void delete(@Nonnull TcUploadResourceData metadata);
 
-    public boolean exists(TcUploadResourceData metadata);
+    public boolean exists(@Nonnull TcUploadResourceData metadata);
 
 }

@@ -184,7 +184,7 @@
                 <configuration>
                     <overwrite>true</overwrite>
                     <configurationFile>
-                        ${project.basedir}/src/main/resources/config/mbg-config.xml
+                        src/main/resources/config/tc-mbg-config.xml
                     </configurationFile>
                 </configuration>
             </plugin>

@@ -13,8 +13,8 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- !!!! Import !!!! -->
-    <import resource="classpath*:config/spring-web-front-end.xml"/>
+    <import resource="classpath*:config/tc-spring-web-front-end.xml"/>
 
-    <import resource="classpath*:config/spring-web-websocket.xml"/>
+    <import resource="classpath*:config/tc-spring-web-websocket.xml"/>
 
 </beans>

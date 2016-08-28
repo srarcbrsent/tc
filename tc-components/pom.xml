@@ -12,6 +12,7 @@
     <artifactId>tc-components</artifactId>
 
     <dependencies>
+        <!-- project -->
         <dependency>
             <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-system</artifactId>
@@ -22,6 +23,29 @@
             <artifactId>tc-base</artifactId>
         </dependency>
 
+        <!-- spring framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+
+        <!-- codis -->
+        <dependency>
+            <groupId>io.codis.jodis</groupId>
+            <artifactId>jodis</artifactId>
+        </dependency>
+
+        <!-- util -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

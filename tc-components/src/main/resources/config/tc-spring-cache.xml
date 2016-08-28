@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true" order="-20"/>
+
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches" ref="codisCache"/>
+    </bean>
+
+    <bean id="codisConnectionFactory" class="com.ysu.zyw.tc.components.cache.CodisConnectionFactory">
+        <property name="zkAddr" value="${properties.cache.zookeeper.addr}"/>
+        <property name="zkSessionTimeoutMs" value="${properties.cache.zookeeper.session.timeout.ms}"/>
+        <property name="zkProxyDir" value="${properties.cache.zookeeper.proxy.dir}"/>
+        <property name="timeout" value="${properties.cache.zookeeper.timeout}"/>
+        <property name="password" value="${properties.cache.password}"/>
+        <property name="poolConfig">
+            <bean class="redis.clients.jedis.JedisPoolConfig">
+                <property name="maxTotal" value="${properties.cache.pool.config.max.total}"/>
+                <property name="maxWaitMillis" value="${properties.cache.pool.config.max.wait.millis}"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="stringKeySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+
+    <bean id="objectKeySerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+
+    <bean id="valueSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+
+    <bean id="stringKeyCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="codisConnectionFactory"/>
+        <property name="keySerializer" ref="stringKeySerializer"/>
+        <property name="valueSerializer" ref="valueSerializer"/>
+    </bean>
+
+    <bean id="objectKeyCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="codisConnectionFactory"/>
+        <property name="keySerializer" ref="objectKeySerializer"/>
+        <property name="valueSerializer" ref="valueSerializer"/>
+    </bean>
+
+    <bean id="codisService" class="com.ysu.zyw.tc.components.cache.CodisService">
+        <property name="codisTemplate" ref="stringKeyCodisTemplate"/>
+    </bean>
+
+    <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.CodisCache">
+        <property name="name" value="${properties.cache.codis.cache.name}"/>
+        <property name="redisTemplate" ref="objectKeyCodisTemplate"/>
+        <property name="expiration" value="${properties.cache.codis.expiration.sec}"/>
+    </bean>
+
+</beans>

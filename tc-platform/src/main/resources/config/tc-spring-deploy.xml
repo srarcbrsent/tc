@@ -40,10 +40,10 @@
     </bean>
 
     <!-- !!!! Import !!!! -->
-    <import resource="classpath*:config/spring-dao.xml"/>
+    <import resource="classpath*:config/tc-spring-dao.xml"/>
 
-    <import resource="classpath*:config/spring-security.xml"/>
+    <import resource="classpath*:config/tc-spring-security.xml"/>
 
-    <import resource="classpath*:config/spring-svc.xml"/>
+    <import resource="classpath*:config/tc-spring-svc.xml"/>
 
 </beans>

@@ -339,6 +339,13 @@
                 <version>${pom.version.disconf}</version>
             </dependency>
 
+            <!-- codis -->
+            <dependency>
+                <groupId>io.codis.jodis</groupId>
+                <artifactId>jodis</artifactId>
+                <version>0.3.0</version>
+            </dependency>
+
             <!-- template -->
             <dependency>
                 <groupId>org.freemarker</groupId>

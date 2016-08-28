@@ -9,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -36,7 +36,7 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
     public String visitResourceBase;
 
     @Override
-    public String upload(TcUploadResourceData metadata, InputStream inputStream) {
+    public String upload(@Nonnull TcUploadResourceData metadata, @Nonnull InputStream inputStream) {
         log.info("upload file [{}]", metadata);
         validateUploadResourceData(metadata);
         mkdirIfNecessary(metadata);
@@ -54,7 +54,7 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
     }
 
     @Override
-    public OutputStream download(TcUploadResourceData metadata) {
+    public OutputStream download(@Nonnull TcUploadResourceData metadata) {
         log.info("download file [{}]", metadata);
         validateUploadResourceData(metadata);
         String resourceFullPath = localFileSystemUploadBase + metadata.getFolder() + metadata.getName() + metadata
@@ -72,7 +72,7 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
     }
 
     @Override
-    public void delete(TcUploadResourceData metadata) {
+    public void delete(@Nonnull TcUploadResourceData metadata) {
         log.info("delete file [{}]", metadata);
         validateUploadResourceData(metadata);
         String resourceFullPath = localFileSystemUploadBase + metadata.getFolder() + metadata.getName() + metadata
@@ -87,7 +87,7 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
     }
 
     @Override
-    public boolean exists(TcUploadResourceData metadata) {
+    public boolean exists(@Nonnull TcUploadResourceData metadata) {
         validateUploadResourceData(metadata);
         String resourceFullPath = localFileSystemUploadBase + metadata.getFolder() + metadata.getName() + metadata
                 .getExtension();
