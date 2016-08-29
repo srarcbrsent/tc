@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.cache;
+package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
@@ -11,11 +11,11 @@ import redis.clients.util.Pool;
 import java.util.Objects;
 
 @Slf4j
-public class CodisConnectionFactory extends JedisConnectionFactory {
+public class TcCodisConnectionFactory extends JedisConnectionFactory {
 
     @Getter
     @Setter
-    protected CodisPool codisPool;
+    protected TcCodisPool tcCodisPool;
 
     @Getter
     @Setter
@@ -32,29 +32,29 @@ public class CodisConnectionFactory extends JedisConnectionFactory {
     @Override
     public void destroy() {
         super.destroy();
-        if (Objects.nonNull(codisPool)) {
+        if (Objects.nonNull(tcCodisPool)) {
             try {
-                codisPool.close();
+                tcCodisPool.close();
                 log.info("success close codis pool ...");
             } catch (Exception ex) {
                 log.warn("Cannot properly close codis pool", ex);
             }
-            codisPool = null;
+            tcCodisPool = null;
         }
     }
 
     @Override
     protected Pool<Jedis> createRedisPool() {
-        codisPool = new CodisPool(
+        tcCodisPool = new TcCodisPool(
                 zkAddr,
                 zkSessionTimeoutMs,
                 zkProxyDir,
                 this.getPoolConfig(),
                 this.getTimeout(),
                 this.getPassword());
-        Preconditions.checkNotNull(codisPool, "codis pool creation failed");
+        Preconditions.checkNotNull(tcCodisPool, "codis pool creation failed");
         log.info("success create codis pool ...");
-        return codisPool;
+        return tcCodisPool;
     }
 
 }

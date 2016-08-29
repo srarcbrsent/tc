@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.cache;
+package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
@@ -17,12 +17,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * CodisService provide codis upper-level operations
+ * TcCodisService provide codis upper-level operations
  *
  * @author yaowu.zhang
  */
 @Slf4j
-public class CodisService {
+public class TcCodisService {
 
     @Getter
     @Setter

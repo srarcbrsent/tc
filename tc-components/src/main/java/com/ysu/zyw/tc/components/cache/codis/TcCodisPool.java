@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.cache;
+package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.base.Preconditions;
 import io.codis.jodis.RoundRobinJedisPool;
@@ -9,16 +9,16 @@ import redis.clients.jedis.exceptions.JedisException;
 
 import java.util.Objects;
 
-public class CodisPool extends JedisPool {
+public class TcCodisPool extends JedisPool {
 
     private final RoundRobinJedisPool roundRobinJedisPool;
 
-    public CodisPool(String zkAddr,
-                     int zkSessionTimeoutMs,
-                     String zkProxyDir,
-                     JedisPoolConfig codisPoolConfig,
-                     int connectionTimeout,
-                     String password) {
+    public TcCodisPool(String zkAddr,
+                       int zkSessionTimeoutMs,
+                       String zkProxyDir,
+                       JedisPoolConfig codisPoolConfig,
+                       int connectionTimeout,
+                       String password) {
         super();
 
         Preconditions.checkNotNull(zkAddr, "empty zk addr is not allowed");

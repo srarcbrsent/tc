@@ -13,7 +13,7 @@
         <property name="caches" ref="codisCache"/>
     </bean>
 
-    <bean id="codisConnectionFactory" class="com.ysu.zyw.tc.components.cache.CodisConnectionFactory">
+    <bean id="codisConnectionFactory" class="com.ysu.zyw.tc.components.cache.codis.TcCodisConnectionFactory">
         <property name="zkAddr" value="${properties.cache.zookeeper.addr}"/>
         <property name="zkSessionTimeoutMs" value="${properties.cache.zookeeper.session.timeout.ms}"/>
         <property name="zkProxyDir" value="${properties.cache.zookeeper.proxy.dir}"/>
@@ -45,11 +45,11 @@
         <property name="valueSerializer" ref="valueSerializer"/>
     </bean>
 
-    <bean id="codisService" class="com.ysu.zyw.tc.components.cache.CodisService">
+    <bean id="codisService" class="com.ysu.zyw.tc.components.cache.codis.TcCodisService">
         <property name="codisTemplate" ref="stringKeyCodisTemplate"/>
     </bean>
 
-    <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.CodisCache">
+    <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
         <property name="name" value="${properties.cache.codis.cache.name}"/>
         <property name="redisTemplate" ref="objectKeyCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.expiration.sec}"/>

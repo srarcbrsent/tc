@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <aop:config>
-        <aop:advisor advice-ref="retryAdvice"
-                     pointcut="@annotation(org.springframework.retry.annotation.Retryable)"/>
-    </aop:config>
-
-    <bean id="retryAdvice"
-          class="org.springframework.retry.interceptor.RetryOperationsInterceptor">
-        <property name="retryOperations" ref="retryTemplate"/>
-    </bean>
+    <bean class="com.ysu.zyw.tc.components.retry.TcRetryConfiguration"/>
 
     <bean id="retryTemplate" class="org.springframework.retry.support.RetryTemplate">
         <property name="retryPolicy">
@@ -24,13 +13,11 @@
             </bean>
         </property>
         <property name="backOffPolicy">
-            <bean class="org.springframework.retry.backoff.FixedBackOffPolicy">
-                <property name="backOffPeriod" value="${properties.retry.backoff.period}"/>
-            </bean>
+            <bean class="org.springframework.retry.backoff.NoBackOffPolicy"/>
         </property>
         <property name="listeners" ref="retryLogListener"/>
     </bean>
 
-    <bean id="retryLogListener" class="com.ysu.zyw.tc.components.retry.RetryLogListener"/>
+    <bean id="retryLogListener" class="com.ysu.zyw.tc.components.retry.TcRetryLogListener"/>
 
 </beans>

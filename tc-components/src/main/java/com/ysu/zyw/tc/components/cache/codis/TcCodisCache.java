@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.cache;
+package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.base.Preconditions;
 import com.ysu.zyw.tc.sys.ex.TcException;
@@ -15,12 +15,12 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
- * CodisCache is a impl directly based on codis service
+ * TcCodisCache is a impl directly based on codis service
  *
  * @author yaowu.zhang
  */
 @Slf4j
-public class CodisCache implements Cache {
+public class TcCodisCache implements Cache {
 
     @Setter
     private String name = "default";

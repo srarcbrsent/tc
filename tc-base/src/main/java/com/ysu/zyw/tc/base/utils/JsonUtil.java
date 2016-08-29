@@ -40,7 +40,7 @@ public class JsonUtil {
         }
     }
 
-    public static <T> T deserialize(@Nonnull String text, @Nonnull TypeReference<?> typeReference) {
+    public static <T> T deserialize(@Nonnull String text, @Nonnull TypeReference<T> typeReference) {
         checkNotNull(text, "null deserialize str is not allowed");
         checkNotNull(typeReference, "null deserialize type reference is not allowed");
         try {
