@@ -22,7 +22,10 @@
                        write-fsync="${properties.data.mongodb.write.fsync}"/>
     </mongo:mongo>
 
-    <mongo:db-factory dbname="database" mongo-ref="mongo"/>
+    <mongo:db-factory username="${properties.data.mongodb.username}"
+                      password="${properties.data.mongodb.password}"
+                      dbname="${properties.data.mongodb.database}"
+                      mongo-ref="mongo"/>
 
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
