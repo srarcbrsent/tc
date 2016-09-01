@@ -44,7 +44,6 @@ public class TcCodisService {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public <T> T get(@Nonnull String key, @Nonnull Class<T> clazz) {
         Preconditions.checkNotNull(key, "empty key is not allowed");
         Preconditions.checkNotNull(clazz, "null clazz is not allowed");
@@ -52,12 +51,13 @@ public class TcCodisService {
         if (log.isDebugEnabled()) {
             log.debug("cache get key [{}], value [{}], clazz [{}]", key, sValue, clazz);
         }
+        //noinspection unchecked
         return (T) sValue;
     }
 
-    @SuppressWarnings("unchecked")
     public boolean exists(@Nonnull String key) {
         Preconditions.checkNotNull(key, "empty key is not allowed");
+        //noinspection unchecked
         return codisTemplate.execute((RedisCallback<Boolean>) connection -> connection
                 .exists(((RedisSerializer<String>) codisTemplate.getKeySerializer()).serialize(key)));
     }
@@ -86,7 +86,6 @@ public class TcCodisService {
             codisTemplate.opsForZSet().add(group, groupedKey, buildGroupedZSetFieldScore(timeout));
         }
 
-        @SuppressWarnings("unchecked")
         public <T> T get(@Nonnull String group, @Nonnull String key, @Nonnull Class<T> clazz) {
             Preconditions.checkNotNull(group, "empty group is not allowed");
             Preconditions.checkNotNull(key, "empty key is not allowed");
@@ -99,13 +98,14 @@ public class TcCodisService {
                     codisTemplate.delete(group);
                 }
             }
+            //noinspection unchecked
             return (T) sValue;
         }
 
-        @SuppressWarnings("unchecked")
         public boolean exists(@Nonnull String group, @Nonnull String key) {
             Preconditions.checkNotNull(group, "empty group is not allowed");
             Preconditions.checkNotNull(key, "empty key is not allowed");
+            //noinspection unchecked
             return codisTemplate.execute((RedisCallback<Boolean>) connection -> connection
                     .exists(((RedisSerializer<String>) codisTemplate.getKeySerializer())
                             .serialize(buildGroupedKey(group, key))));

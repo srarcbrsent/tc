@@ -7,21 +7,20 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcLeaveApplication implements Serializable {
+public class TcSalaryRaiseApplication implements Serializable {
 
     @Id
     private String id;
 
     private String name;
 
-    private int leaveDays;
+    private long currentSalary;
 
-    private Date filingDate;
+    private long expectedValue;
 
 }

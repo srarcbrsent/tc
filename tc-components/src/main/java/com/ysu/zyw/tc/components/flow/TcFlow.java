@@ -3,7 +3,9 @@ package com.ysu.zyw.tc.components.flow;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "tcFlow")
@@ -19,13 +22,16 @@ public class TcFlow<T> implements Serializable {
     @Id
     private String id;
 
+    @Version
+    private String version;
+
     private String flowId;
 
     private String flowType;
 
     private String flowState;
 
-    private String bizKey;
+    private String flowBizKey;
 
     private List<String> flowCandidateRoleList;
 

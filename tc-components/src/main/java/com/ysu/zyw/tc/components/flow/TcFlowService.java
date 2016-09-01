@@ -3,8 +3,10 @@ package com.ysu.zyw.tc.components.flow;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.map.MultiValueMap;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,113 +20,128 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Slf4j
 public class TcFlowService {
 
+    private static final String STATE_INITIAL = "00";
+
+    private static final String STATE_FINISH = "99";
+
     @Resource
     private MongoTemplate mongoTemplate;
 
-    // or strategy
-
-    public <T> void executeFlow(@Nonnull TcFlow<T> tcFlow,
-                                @Nonnull TcFlowLog tcFlowLog) {
-        // verify flow
-        assertFlowLegal(tcFlow, tcFlowLog);
-
-        // update flow
-        if (flowExists(tcFlow.getFlowId())) {
-            updateFlow(tcFlow);
-        } else {
-            createFlow(tcFlow);
-        }
-
-        // append log
-        appendFlowLog(tcFlow, tcFlowLog);
-    }
-
-    public <T> void updateFlowData(@Nonnull String flowId,
-                                   @Nonnull T flowData) {
-        if (!flowExists(flowId)) {
-            throw new TcException("flow doesn't exists", flowId);
-        }
-        // update data TODO
-    }
-
-    public List<TcFlow<?>> findFlowWithFilter(@Nullable String assignee,
-                                              @Nullable List<String> roleList,
-                                              @Nullable MultiValueMap mongoFilter) {
-        // search TODO
-        return null;
-    }
-
-    private <T> void assertFlowLegal(TcFlow<T> tcFlow, TcFlowLog tcFlowLog) {
+    public <T> void initialFlow(@Nonnull TcFlow<T> tcFlow) {
+        // verify argument
         checkNotNull(tcFlow, "null flow is not allowed");
-        checkNotNull(tcFlowLog, "null flow log is not allowed");
 
-        // tcFlow
         checkNotNull(tcFlow.getFlowId(), "null flow id is not allowed");
         checkNotNull(tcFlow.getFlowType(), "null flow type is not allowed");
         checkNotNull(tcFlow.getFlowData(), "null flow data is not allowed");
         checkNotNull(tcFlow.getFlowState(), "null flow state is not allowed");
+        checkNotNull(tcFlow.getFlowBizKey(), "null flow biz key is not allowed");
 
         boolean hasFlowCandidateRole = CollectionUtils.isNotEmpty(tcFlow.getFlowCandidateRoleList());
-        boolean hasFLowCandidateAssignee = CollectionUtils.isNotEmpty(tcFlow.getFlowCandidateAssigneeList());
-        checkArgument(hasFlowCandidateRole || hasFLowCandidateAssignee,
-                "one of candidate role or assignee is required");
+        boolean hasFlowCandidateAssignee = CollectionUtils.isNotEmpty(tcFlow.getFlowCandidateAssigneeList());
+        checkArgument(!hasFlowCandidateRole && !hasFlowCandidateAssignee,
+                "candidate role or assignee is not allowed here");
 
         checkArgument(CollectionUtils.isEmpty(tcFlow.getFlowLogList()), "flow log list not allowed here");
 
         checkNotNull(tcFlow.getUpdatedPerson(), "null updated person is not allowed");
+        checkNotNull(tcFlow.getCreatedPerson(), "null created person is not allowed");
 
-        // tcFlowLog
-        checkNotNull(tcFlowLog.getFlowLog(), "null flow log is not allowed");
+        Date now = new Date();
+        tcFlow
+                .setFlowState(STATE_INITIAL)
+                .setUpdatedTimestamp(now)
+                .setCreatedTimestamp(now);
+
+        mongoTemplate.insert(tcFlow);
     }
 
-    private boolean flowExists(String flowId) {
-        // search mongodb TODO
-        return false;
+    public void executeFlow(@Nonnull String flowId,
+                            @Nonnull String flowState,
+                            @Nonnull List<String> flowCandidateRoleList,
+                            @Nonnull List<String> flowCandidateAssigneeList,
+                            @Nonnull String flowLog,
+                            @Nonnull String performer) {
+        checkNotNull(flowId, "null flow id is not allowed");
+        checkNotNull(flowState, "null flow state is not allowed");
+        checkNotNull(flowLog, "null flow log is not allowed");
+        checkNotNull(performer, "null operation performer is not allowed");
+        boolean hasFlowCandidateRole = CollectionUtils.isNotEmpty(flowCandidateRoleList);
+        boolean hasFLowCandidateAssignee = CollectionUtils.isNotEmpty(flowCandidateAssigneeList);
+        checkArgument(hasFlowCandidateRole || hasFLowCandidateAssignee,
+                "one of candidate role or assignee is required");
+
+        if (!existFlow(flowId)) {
+            throw new TcException("flow doesn't exists", flowId);
+        }
+
+        Date now = new Date();
+
+
+        Update updateTcFlowQuery = new Update()
+                .addToSet("flowState", flowState)
+                .addToSet("flowCandidateRoleList", flowCandidateRoleList)
+                .addToSet("flowCandidateAssigneeList", flowCandidateAssigneeList)
+                .addToSet("updatedPerson", performer)
+                .addToSet("updatedTimestamp", now);
+
+        mongoTemplate.updateFirst(new Query(Criteria.where("flowId").is(flowId)), updateTcFlowQuery, TcFlow.class);
+
+        TcFlowLog tcFlowLog = new TcFlowLog()
+                .setFlowId(flowId)
+                .setFlowLog(flowLog)
+                .setCreatedPerson(performer)
+                .setCreatedTimestamp(now);
+
+        mongoTemplate.insert(tcFlowLog);
     }
 
-    private <T> void createFlow(TcFlow<T> tcFlow) {
-        buildRequiredField(tcFlow);
+    public <T> void updateFlowData(@Nonnull String flowId,
+                                   @Nonnull T flowData,
+                                   @Nonnull Class<T> clazz,
+                                   @Nonnull String performer) {
+        checkNotNull(flowId, "null flow id is not allowed");
+        checkNotNull(flowData, "null flow data is not allowed");
+        checkNotNull(clazz, "null clazz is not allowed");
+        checkNotNull(performer, "null operation performer is not allowed");
 
-        // build now
-        tcFlow.setCreatedTimestamp(new Date());
-        tcFlow.setUpdatedTimestamp(new Date());
+        if (!existFlow(flowId)) {
+            throw new TcException("flow doesn't exists", flowId);
+        }
 
-        // insert TODO
+        mongoTemplate.updateFirst(
+                new Query(Criteria.where("flowId").is(flowId)),
+                Update.update("flowData", flowData),
+                clazz);
     }
 
-    private <T> void updateFlow(TcFlow<T> tcFlow) {
-        removeNonRenewableField(tcFlow);
+    public boolean existFlow(@Nonnull String flowId) {
+        checkNotNull(flowId, "null flow id is not allowed");
 
-        // build now
-        tcFlow.setUpdatedTimestamp(new Date());
-
-        // update TODO
+        return mongoTemplate.exists(new Query(Criteria.where("flowId").is(flowId)), TcFlow.class);
     }
 
-    private <T> void buildRequiredField(TcFlow<T> tcFlow) {
-        // id will build by mongodb
-        // copy updated person to created person
-        tcFlow.setCreatedPerson(tcFlow.getUpdatedPerson());
+    public <T> TcFlow<T> findFlow(@Nonnull String flowId,
+                                  @Nonnull Class<T> clazz) {
+        checkNotNull(flowId, "null flow id is not allowed");
+        checkNotNull(clazz, "null clazz is not allowed");
+
+        //noinspection unchecked
+        return mongoTemplate.findOne(new Query(Criteria.where("flowId").is(flowId)), TcFlow.class);
     }
 
-    private <T> void removeNonRenewableField(TcFlow<T> tcFlow) {
-        // id can't renew but we need it as primary key
-        // flow type can't renew
-        tcFlow.setFlowType(null);
-        // flow data can't renew (call another open api to update)
-        tcFlow.setFlowData(null);
-        // created person can't renew
-        tcFlow.setCreatedPerson(null);
-        // created timestamp can't renew
-        tcFlow.setCreatedTimestamp(null);
+    public long countFlowWithFilter(@Nullable String assignee,
+                                    @Nullable List<String> roleList,
+                                    @Nullable Query query) {
+        // TODO
+        return 1;
     }
 
-    private <T> void appendFlowLog(TcFlow<T> tcFlow, TcFlowLog tcFlowLog) {
-        tcFlowLog.setFlowId(tcFlow.getFlowId());
-        tcFlowLog.setCreatedPerson(tcFlow.getUpdatedPerson());
-        tcFlowLog.setCreatedTimestamp(tcFlow.getUpdatedTimestamp());
-
-        // append log TODO
+    public List<TcFlow<?>> findFlowWithFilter(@Nullable String assignee,
+                                              @Nullable List<String> roleList,
+                                              @Nullable Query query) {
+        // TODO
+        return null;
     }
 
 }

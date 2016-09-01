@@ -1,11 +1,11 @@
-package com.ysu.zyw.tc.base.tool;
+package com.ysu.zyw.tc.base.tools;
 
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 
 import java.util.UUID;
 
 /**
- * IdWorker is a id generate tool.
+ * IdWorker is a id generate tools.
  *
  * @author yaowu.zhang
  */

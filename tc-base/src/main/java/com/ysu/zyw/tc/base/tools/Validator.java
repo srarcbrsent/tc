@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.base.tool;
+package com.ysu.zyw.tc.base.tools;
 
 import javax.annotation.Nonnull;
 import java.util.regex.Pattern;

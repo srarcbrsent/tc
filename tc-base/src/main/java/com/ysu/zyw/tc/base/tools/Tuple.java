@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.base.tool;
+package com.ysu.zyw.tc.base.tools;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
