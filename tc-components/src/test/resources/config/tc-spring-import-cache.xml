@@ -10,4 +10,6 @@
     <context:property-placeholder file-encoding="UTF-8"
                                   location="classpath*:example/local-cache-example.properties"/>
 
+    <bean class="com.ysu.zyw.tc.components.cache.MongoPool"/>
+
 </beans>

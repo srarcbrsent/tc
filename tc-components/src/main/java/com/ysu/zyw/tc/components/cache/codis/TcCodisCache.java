@@ -49,11 +49,18 @@ public class TcCodisCache implements Cache {
     public ValueWrapper get(Object key) {
         checkNotNull(key, "null key is not allowed");
         checkArgument(key instanceof Serializable, "key must implements Serializable");
-        SimpleValueWrapper simpleValueWrapper = new SimpleValueWrapper(redisTemplate.opsForValue().get(key));
-        if (log.isDebugEnabled()) {
-            log.debug("get object [{}] from cache by key [{}]", simpleValueWrapper, key);
+        Serializable sValue = redisTemplate.opsForValue().get(key);
+        if (Objects.nonNull(sValue)) {
+            if (log.isDebugEnabled()) {
+                log.debug("get object [{}] from cache by key [{}]", sValue, key);
+            }
+            return new SimpleValueWrapper(sValue);
+        } else {
+            if (log.isDebugEnabled()) {
+                log.debug("get object [{}] from cache by key [{}]", null, key);
+            }
+            return null;
         }
-        return simpleValueWrapper;
     }
 
     @Override
@@ -81,7 +88,7 @@ public class TcCodisCache implements Cache {
             try {
                 T loadedValue = valueLoader.call();
                 redisTemplate.opsForValue().set((Serializable) key, (Serializable) loadedValue, expiration,
-                        TimeUnit.SECONDS);
+                        TimeUnit.MILLISECONDS);
                 if (log.isDebugEnabled()) {
                     log.debug("put object [{}] into cache by key [{}], expiration [{}]", loadedValue, key, expiration);
                 }
@@ -98,7 +105,7 @@ public class TcCodisCache implements Cache {
         checkArgument(key instanceof Serializable, "key must implements Serializable");
         checkNotNull(value, "null value is not allowed");
         checkArgument(value instanceof Serializable, "value must implements Serializable");
-        redisTemplate.opsForValue().set((Serializable) key, (Serializable) value, expiration, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set((Serializable) key, (Serializable) value, expiration, TimeUnit.MILLISECONDS);
         if (log.isDebugEnabled()) {
             log.debug("put object [{}] into cache by key [{}], expiration [{}]", value, key, expiration);
         }

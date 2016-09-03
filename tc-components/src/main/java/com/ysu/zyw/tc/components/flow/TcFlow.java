@@ -33,6 +33,8 @@ public class TcFlow<T> implements Serializable {
 
     private String flowBizKey;
 
+    private String flowSponsor;
+
     private List<String> flowCandidateRoleList;
 
     private List<String> flowCandidateAssigneeList;

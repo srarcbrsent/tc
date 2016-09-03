@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,12 +18,15 @@ import java.util.Date;
 @Document(collection = "tcFlowLog")
 public class TcFlowLog implements Serializable {
 
+    @Id
     private String id;
 
     @Version
     private String version;
 
     private String flowId;
+
+    private String flowLogType;
 
     private String flowLog;
 

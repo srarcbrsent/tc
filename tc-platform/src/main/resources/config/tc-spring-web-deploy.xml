@@ -9,6 +9,14 @@
 
     <!-- !!!! Infrastructure !!!! -->
 
+    <!-- thread pool -->
+    <bean id="threadPoolTaskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="poolSize" value="5"/>
+        <property name="errorHandler">
+            <bean class="com.ysu.zyw.tc.components.utils.pool.TcThreadPoolErrorLogHandler"/>
+        </property>
+    </bean>
+
     <!-- aop -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 

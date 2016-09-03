@@ -94,6 +94,12 @@
             <artifactId>spring-websocket</artifactId>
         </dependency>
 
+        <!-- freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
         <!-- disconf -->
         <dependency>
             <groupId>com.baidu.disconf</groupId>

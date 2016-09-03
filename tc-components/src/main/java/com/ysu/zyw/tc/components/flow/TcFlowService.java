@@ -17,12 +17,23 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * flow: initialFlow: stateInitial -> executeFlow: state1 -> executeFLow: state2 ...
+ * <p>
+ * candidateRoleList and candidateAssigneeList is a or relation, any match curr user is a candidate
+ * <p>
+ * every execute flow type log's create person is the person who push the flow.
+ *
+ * @author yaowu.zhang
+ */
 @Slf4j
 public class TcFlowService {
 
-    private static final String STATE_INITIAL = "00";
+    private static final String FLOW_STATE_INITIAL = "00";
 
-    private static final String STATE_FINISH = "99";
+    private static final String FLOW_LOG_EXECUTE_FLOW = "execute-flow";
+
+    private static final String FLOW_LOG_COMMENT_FLOW = "comment-flow";
 
     @Resource
     private MongoTemplate mongoTemplate;
@@ -36,6 +47,7 @@ public class TcFlowService {
         checkNotNull(tcFlow.getFlowData(), "null flow data is not allowed");
         checkNotNull(tcFlow.getFlowState(), "null flow state is not allowed");
         checkNotNull(tcFlow.getFlowBizKey(), "null flow biz key is not allowed");
+        checkNotNull(tcFlow.getFlowSponsor(), "null flow sponsor is not allowed");
 
         boolean hasFlowCandidateRole = CollectionUtils.isNotEmpty(tcFlow.getFlowCandidateRoleList());
         boolean hasFlowCandidateAssignee = CollectionUtils.isNotEmpty(tcFlow.getFlowCandidateAssigneeList());
@@ -49,7 +61,7 @@ public class TcFlowService {
 
         Date now = new Date();
         tcFlow
-                .setFlowState(STATE_INITIAL)
+                .setFlowState(FLOW_STATE_INITIAL)
                 .setUpdatedTimestamp(now)
                 .setCreatedTimestamp(now);
 
@@ -77,7 +89,6 @@ public class TcFlowService {
 
         Date now = new Date();
 
-
         Update updateTcFlowQuery = new Update()
                 .addToSet("flowState", flowState)
                 .addToSet("flowCandidateRoleList", flowCandidateRoleList)
@@ -89,6 +100,7 @@ public class TcFlowService {
 
         TcFlowLog tcFlowLog = new TcFlowLog()
                 .setFlowId(flowId)
+                .setFlowLogType(FLOW_LOG_EXECUTE_FLOW)
                 .setFlowLog(flowLog)
                 .setCreatedPerson(performer)
                 .setCreatedTimestamp(now);
@@ -110,15 +122,28 @@ public class TcFlowService {
         }
 
         mongoTemplate.updateFirst(
-                new Query(Criteria.where("flowId").is(flowId)),
+                Query.query(Criteria.where("flowId").is(flowId)),
                 Update.update("flowData", flowData),
                 clazz);
+    }
+
+    public void createFlowLog(@Nonnull String flowId,
+                              @Nonnull String flowLog,
+                              @Nonnull String performer) {
+        TcFlowLog tcFlowLog = new TcFlowLog()
+                .setFlowId(flowId)
+                .setFlowLogType(FLOW_LOG_COMMENT_FLOW)
+                .setFlowLog(flowLog)
+                .setCreatedPerson(performer)
+                .setCreatedTimestamp(new Date());
+
+        mongoTemplate.insert(tcFlowLog);
     }
 
     public boolean existFlow(@Nonnull String flowId) {
         checkNotNull(flowId, "null flow id is not allowed");
 
-        return mongoTemplate.exists(new Query(Criteria.where("flowId").is(flowId)), TcFlow.class);
+        return mongoTemplate.exists(Query.query(Criteria.where("flowId").is(flowId)), TcFlow.class);
     }
 
     public <T> TcFlow<T> findFlow(@Nonnull String flowId,
@@ -127,19 +152,56 @@ public class TcFlowService {
         checkNotNull(clazz, "null clazz is not allowed");
 
         //noinspection unchecked
-        return mongoTemplate.findOne(new Query(Criteria.where("flowId").is(flowId)), TcFlow.class);
+        return mongoTemplate.findOne(Query.query(Criteria.where("flowId").is(flowId)), TcFlow.class);
     }
 
-    public long countFlowWithFilter(@Nullable String assignee,
-                                    @Nullable List<String> roleList,
-                                    @Nullable Query query) {
+    public long countITodoFlowWithFilter(@Nullable String assignee,
+                                         @Nullable List<String> roleList,
+                                         @Nullable Query query) {
         // TODO
         return 1;
     }
 
-    public List<TcFlow<?>> findFlowWithFilter(@Nullable String assignee,
-                                              @Nullable List<String> roleList,
-                                              @Nullable Query query) {
+    public List<TcFlow<?>> findITodoFlowWithFilter(@Nullable String assignee,
+                                                   @Nullable List<String> roleList,
+                                                   @Nullable Query query) {
+        // TODO
+        return null;
+    }
+
+    public long countIDoneFlowWithFilter(@Nullable String assignee,
+                                         @Nullable Query query) {
+        // TODO
+
+        Query.query(Criteria
+                .where("flowLogType").is(FLOW_LOG_EXECUTE_FLOW)
+                .and("createdPerson").is(assignee)
+                .and("distinct").is("flowId"))
+                .fields().include("flowId");
+
+        mongoTemplate.count(query, String.class);
+        return 1;
+    }
+
+    public List<TcFlow<?>> findIDoneFlowWithFilter(@Nullable String assignee,
+                                                   @Nullable Query query) {
+        // TODO
+        return null;
+    }
+
+    public long countIStartFlowWithFilter(@Nullable String assignee,
+                                          @Nullable Query query) {
+        // TODO
+        return 1;
+    }
+
+    public List<TcFlow<?>> findIStartFlowWithFilter(@Nullable String assignee,
+                                                    @Nullable Query query) {
+        // TODO
+        return null;
+    }
+
+    public List<TcFlowLog> findFlowLogList(@Nonnull String flowId) {
         // TODO
         return null;
     }

@@ -10,7 +10,14 @@
     <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true" order="-20"/>
 
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
-        <property name="caches" ref="codisCache"/>
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="default"/>
+                </bean>
+                <ref bean="codisCache"/>
+            </set>
+        </property>
     </bean>
 
     <bean id="codisConnectionFactory" class="com.ysu.zyw.tc.components.cache.codis.TcCodisConnectionFactory">
@@ -45,14 +52,18 @@
         <property name="valueSerializer" ref="valueSerializer"/>
     </bean>
 
+    <bean class="com.ysu.zyw.tc.components.cache.codis.ops.OpsForGroupedValue">
+        <property name="codisTemplate" ref="stringKeyCodisTemplate"/>
+    </bean>
+
     <bean id="codisService" class="com.ysu.zyw.tc.components.cache.codis.TcCodisService">
         <property name="codisTemplate" ref="stringKeyCodisTemplate"/>
     </bean>
 
     <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
-        <property name="name" value="${properties.cache.codis.cache.name}"/>
+        <property name="name" value="codisCache"/>
         <property name="redisTemplate" ref="objectKeyCodisTemplate"/>
-        <property name="expiration" value="${properties.cache.codis.expiration.sec}"/>
+        <property name="expiration" value="${properties.cache.codis.expiration.millis}"/>
     </bean>
 
 </beans>

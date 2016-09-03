@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
-import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +8,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.util.Pool;
 
 import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
 public class TcCodisConnectionFactory extends JedisConnectionFactory {
@@ -52,7 +53,7 @@ public class TcCodisConnectionFactory extends JedisConnectionFactory {
                 this.getPoolConfig(),
                 this.getTimeout(),
                 this.getPassword());
-        Preconditions.checkNotNull(tcCodisPool, "codis pool creation failed");
+        checkNotNull(tcCodisPool, "codis pool creation failed");
         log.info("success create codis pool ...");
         return tcCodisPool;
     }
