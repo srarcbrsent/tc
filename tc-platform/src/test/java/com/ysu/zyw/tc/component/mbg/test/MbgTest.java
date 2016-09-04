@@ -2,11 +2,6 @@ package com.ysu.zyw.tc.component.mbg.test;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.dao.mappers.ForeendPermissionMappingMapper;
-import com.ysu.zyw.tc.dao.mappers.MemberMapper;
-import com.ysu.zyw.tc.dao.po.ForeendPermissionMappingKey;
-import com.ysu.zyw.tc.dao.po.Member;
-import com.ysu.zyw.tc.dao.po.MemberExample;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;

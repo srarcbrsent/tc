@@ -14,8 +14,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * TcBatchInsertPlugin is a extension of mybatis-generator, plug this plugin will let mybatis-generator generate two
- * function that batchInsert.
+ * TcBatchInsertPlugin is a extension of mybatis-generator, plug this plugin will let mybatis-generator
+ * generate two function that batchInsert.
  *
  * @author yaowu.zhang
  */
@@ -39,7 +39,7 @@ public class TcBatchInsertPlugin extends PluginAdapter {
     private void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
         Method method = new Method(BATCH_INSERT);
         String modelType = introspectedTable.getBaseRecordType();
-        FullyQualifiedJavaType modelListType = new FullyQualifiedJavaType("java.utils.List<" + modelType + ">");
+        FullyQualifiedJavaType modelListType = new FullyQualifiedJavaType("java.util.List<" + modelType + ">");
         method.addParameter(new Parameter(modelListType, "records"));
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("int");
         method.setReturnType(returnType);
