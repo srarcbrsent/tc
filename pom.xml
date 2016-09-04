@@ -29,6 +29,8 @@
         <pom.version.disconf>2.6.32</pom.version.disconf>
         <pom.version.jdbc>5.1.38</pom.version.jdbc>
         <pom.version.druid>1.0.24</pom.version.druid>
+        <pom.version.elastic.job>1.1.1</pom.version.elastic.job>
+        <pom.version.curator>2.9.1</pom.version.curator>
         <pom.version.mybatis>3.4.1</pom.version.mybatis>
         <pom.version.mybatis.spring>1.3.0</pom.version.mybatis.spring>
     </properties>
@@ -365,6 +367,44 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.16</version>
+            </dependency>
+
+            <!-- elastic job -->
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>elastic-job-core</artifactId>
+                <version>${pom.version.elastic.job}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>elastic-job-spring</artifactId>
+                <version>${pom.version.elastic.job}</version>
+            </dependency>
+
+            <!-- curator -->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${pom.version.curator}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${pom.version.curator}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-test</artifactId>
+                <version>${pom.version.curator}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-client</artifactId>
+                <version>${pom.version.curator}</version>
             </dependency>
 
             <!-- commons utils -->

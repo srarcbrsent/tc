@@ -38,7 +38,8 @@ public class ForeendPermissionMappingKey implements Serializable {
         }
         ForeendPermissionMappingKey other = (ForeendPermissionMappingKey) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getPermissionId() == null ? other.getPermissionId() == null : this.getPermissionId().equals(other.getPermissionId()));
+                && (this.getPermissionId() == null ? other.getPermissionId() == null : this.getPermissionId().equals
+                (other.getPermissionId()));
     }
 
     @Override

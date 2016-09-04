@@ -17,7 +17,7 @@ public class PaginationUtil {
 
     /**
      * give every page size and current page, then return start line number and page size.
-     *
+     * <p>
      * only consider logic paging, do not accept all records size verify.
      */
     public static Pagination paging(int currentPage, int pageSize) {
@@ -34,7 +34,7 @@ public class PaginationUtil {
 
     /**
      * give total size, every page size and current page, then return start line number and all page count.
-     *
+     * <p>
      * auto reset the first page and last page if pass an invalid current page.
      */
     public static Pagination paging(int currentPage, int totalSize, int pageSize) {

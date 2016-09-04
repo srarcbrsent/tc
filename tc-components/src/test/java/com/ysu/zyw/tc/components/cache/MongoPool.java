@@ -3,12 +3,14 @@ package com.ysu.zyw.tc.components.cache;
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -64,7 +66,8 @@ public class MongoPool {
         selectCall++;
         log.info("[{}] times real call select", selectCall);
         return mongoIdList.parallelStream()
-                .map(this::select)
+                .map(((MongoPool) AopContext.currentProxy())::select)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 

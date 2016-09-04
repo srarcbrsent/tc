@@ -7,7 +7,9 @@
        http://www.springframework.org/schema/cache
        http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-    <cache:annotation-driven cache-manager="cacheManager" proxy-target-class="true" order="-20"/>
+    <cache:annotation-driven cache-manager="cacheManager"
+                             proxy-target-class="true"
+                             order="-20"/>
 
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">

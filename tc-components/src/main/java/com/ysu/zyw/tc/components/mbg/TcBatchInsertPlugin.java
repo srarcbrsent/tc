@@ -70,7 +70,7 @@ public class TcBatchInsertPlugin extends PluginAdapter {
 
         String contentB = String.join(", \n      ", introspectedTable.getAllColumns().stream().map
                 (introspectedColumn2InsertSql()
-        ).collect(Collectors.toList()));
+                ).collect(Collectors.toList()));
 
         foreachXmlElement.addElement(new TextElement("(" + contentB + ")"));
 

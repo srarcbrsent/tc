@@ -1,9 +1,6 @@
 package com.ysu.zyw.tc.components.cache.codis.ops;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Nonnull;
@@ -25,15 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * keys will be not perfect match, but the other api is use the relative time so
  * do not influenced.
  */
-public class OpsForGroupedValue {
-
-    private static final String GROUP_ZSET_FIELD_PREFIX = "group:";
-
-    private static final String GROUP_NAME_KEY_SPLIT = ":";
-
-    @Getter
-    @Setter
-    private RedisTemplate<String, Serializable> codisTemplate;
+public class OpsForGroupedValue extends AbstractOpsForGroup {
 
     public void set(@Nonnull String group,
                     @Nonnull String key,
@@ -105,28 +94,6 @@ public class OpsForGroupedValue {
     public void delete(@Nonnull String group) {
         checkNotNull(group, "empty group is not allowed");
         delete(group, 0, Long.MAX_VALUE);
-    }
-
-    private void delete(@Nonnull String group, long min, long max) {
-        Set<Serializable> expiredKeys = codisTemplate.opsForZSet().rangeByScore(group, min, max);
-        expiredKeys.parallelStream().forEach(sValue -> {
-            String expiredKey = (String) sValue;
-            codisTemplate.delete(expiredKey);
-            codisTemplate.opsForZSet().remove(group, expiredKey);
-        });
-        if (codisTemplate.opsForZSet().size(group) == 0) {
-            codisTemplate.delete(group);
-        }
-    }
-
-    public String buildGroupedKey(@Nonnull String group, @Nonnull String key) {
-        checkNotNull(group, "empty group is not allowed");
-        checkNotNull(key, "empty key is not allowed");
-        return GROUP_ZSET_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + key;
-    }
-
-    private long buildGroupedZSetFieldScore(long timeout) {
-        return new Date(new Date().getTime() + timeout).getTime();
     }
 
 }

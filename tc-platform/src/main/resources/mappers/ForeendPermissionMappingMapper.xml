@@ -1,247 +1,253 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ysu.zyw.tc.dao.mappers.ForeendPermissionMappingMapper">
-  <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <id column="permission_id" jdbcType="VARCHAR" property="permissionId" />
-    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
-    <result column="visiable" jdbcType="VARCHAR" property="visiable" />
-    <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
-  </resultMap>
-  <resultMap id="PrimaryKeyResultMap" type="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingKey">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <id column="permission_id" jdbcType="VARCHAR" property="permissionId" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <id column="permission_id" jdbcType="VARCHAR" property="permissionId"/>
+        <result column="permission_name" jdbcType="VARCHAR" property="permissionName"/>
+        <result column="visiable" jdbcType="VARCHAR" property="visiable"/>
+        <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp"/>
+    </resultMap>
+    <resultMap id="PrimaryKeyResultMap" type="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingKey">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <id column="permission_id" jdbcType="VARCHAR" property="permissionId"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, permission_id, permission_name, visiable, created_timestamp
+    </sql>
+    <select id="selectByExample" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, permission_id, permission_name, visiable, created_timestamp
-  </sql>
-  <select id="selectByExample" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from t_foreend_permission_mapping
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="startLine != null and pageSize != null and pageSize > 0">
-      limit #{startLine} , #{pageSize}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingKey" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_foreend_permission_mapping
-    where id = #{id,jdbcType=VARCHAR}
-      and permission_id = #{permissionId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingKey">
-    delete from t_foreend_permission_mapping
-    where id = #{id,jdbcType=VARCHAR}
-      and permission_id = #{permissionId,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingExample">
-    delete from t_foreend_permission_mapping
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
-    insert into t_foreend_permission_mapping (id, permission_id, permission_name, 
-      visiable, created_timestamp)
-    values (#{id,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, 
-      #{visiable,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
-    insert into t_foreend_permission_mapping
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="permissionId != null">
-        permission_id,
-      </if>
-      <if test="permissionName != null">
-        permission_name,
-      </if>
-      visiable,
-      <if test="createdTimestamp != null">
-        created_timestamp,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionId != null">
-        #{permissionId,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionName != null">
-        #{permissionName,jdbcType=VARCHAR},
-      </if>
-      #{visiable,jdbcType=VARCHAR},
-      <if test="createdTimestamp != null">
-        #{createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingExample" resultType="java.lang.Long">
-    select count(*) from t_foreend_permission_mapping
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update t_foreend_permission_mapping
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.permissionId != null">
+        <include refid="Base_Column_List"/>
+        from t_foreend_permission_mapping
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startLine != null and pageSize != null and pageSize > 0">
+            limit #{startLine} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingKey"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_foreend_permission_mapping
+        where id = #{id,jdbcType=VARCHAR}
+        and permission_id = #{permissionId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingKey">
+        delete from t_foreend_permission_mapping
+        where id = #{id,jdbcType=VARCHAR}
+        and permission_id = #{permissionId,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingExample">
+        delete from t_foreend_permission_mapping
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
+        insert into t_foreend_permission_mapping (id, permission_id, permission_name,
+        visiable, created_timestamp)
+        values (#{id,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR},
+        #{visiable,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
+        insert into t_foreend_permission_mapping
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="permissionId != null">
+                permission_id,
+            </if>
+            <if test="permissionName != null">
+                permission_name,
+            </if>
+            visiable,
+            <if test="createdTimestamp != null">
+                created_timestamp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="permissionId != null">
+                #{permissionId,jdbcType=VARCHAR},
+            </if>
+            <if test="permissionName != null">
+                #{permissionName,jdbcType=VARCHAR},
+            </if>
+            #{visiable,jdbcType=VARCHAR},
+            <if test="createdTimestamp != null">
+                #{createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingExample"
+            resultType="java.lang.Long">
+        select count(*) from t_foreend_permission_mapping
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_foreend_permission_mapping
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.permissionId != null">
+                permission_id = #{record.permissionId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.permissionName != null">
+                permission_name = #{record.permissionName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.visiable != null">
+                visiable = #{record.visiable,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdTimestamp != null">
+                created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_foreend_permission_mapping
+        set id = #{record.id,jdbcType=VARCHAR},
         permission_id = #{record.permissionId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.permissionName != null">
         permission_name = #{record.permissionName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.visiable != null">
         visiable = #{record.visiable,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createdTimestamp != null">
-        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update t_foreend_permission_mapping
-    set id = #{record.id,jdbcType=VARCHAR},
-      permission_id = #{record.permissionId,jdbcType=VARCHAR},
-      permission_name = #{record.permissionName,jdbcType=VARCHAR},
-      visiable = #{record.visiable,jdbcType=VARCHAR},
-      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
-    update t_foreend_permission_mapping
-    <set>
-      <if test="permissionName != null">
-        permission_name = #{permissionName,jdbcType=VARCHAR},
-      </if>
-      <if test="visiable != null">
+        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
+        update t_foreend_permission_mapping
+        <set>
+            <if test="permissionName != null">
+                permission_name = #{permissionName,jdbcType=VARCHAR},
+            </if>
+            <if test="visiable != null">
+                visiable = #{visiable,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTimestamp != null">
+                created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+        and permission_id = #{permissionId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
+        update t_foreend_permission_mapping
+        set permission_name = #{permissionName,jdbcType=VARCHAR},
         visiable = #{visiable,jdbcType=VARCHAR},
-      </if>
-      <if test="createdTimestamp != null">
-        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-      and permission_id = #{permissionId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
-    update t_foreend_permission_mapping
-    set permission_name = #{permissionName,jdbcType=VARCHAR},
-      visiable = #{visiable,jdbcType=VARCHAR},
-      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-      and permission_id = #{permissionId,jdbcType=VARCHAR}
-  </update>
-  <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingExample" resultMap="PrimaryKeyResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    id, permission_id
-    from t_foreend_permission_mapping
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="startLine != null and pageSize != null and pageSize > 0">
-      limit #{startLine}, #{pageSize}
-    </if>
-  </select>
-  <insert id="batchInsert" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
-    insert into t_foreend_permission_mapping (
-      id, 
-      permission_id, 
-      permission_name, 
-      visiable, 
-      created_timestamp
-    ) values 
-    <foreach collection="list" item="item" separator=", ">
-      (#{item.id,jdbcType=VARCHAR}, 
-      #{item.permissionId,jdbcType=VARCHAR}, 
-      #{item.permissionName,jdbcType=VARCHAR}, 
-      #{item.visiable,jdbcType=VARCHAR}, 
-      #{item.createdTimestamp,jdbcType=TIMESTAMP})
-    </foreach>
-  </insert>
+        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+        and permission_id = #{permissionId,jdbcType=VARCHAR}
+    </update>
+    <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMappingExample"
+            resultMap="PrimaryKeyResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        id, permission_id
+        from t_foreend_permission_mapping
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startLine != null and pageSize != null and pageSize > 0">
+            limit #{startLine}, #{pageSize}
+        </if>
+    </select>
+    <insert id="batchInsert" parameterType="com.ysu.zyw.tc.dao.po.ForeendPermissionMapping">
+        insert into t_foreend_permission_mapping (
+        id,
+        permission_id,
+        permission_name,
+        visiable,
+        created_timestamp
+        ) values
+        <foreach collection="list" item="item" separator=", ">
+            (#{item.id,jdbcType=VARCHAR},
+            #{item.permissionId,jdbcType=VARCHAR},
+            #{item.permissionName,jdbcType=VARCHAR},
+            #{item.visiable,jdbcType=VARCHAR},
+            #{item.createdTimestamp,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
 </mapper>

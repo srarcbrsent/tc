@@ -49,10 +49,13 @@ public class ForeendPermissionMapping extends ForeendPermissionMappingKey implem
         }
         ForeendPermissionMapping other = (ForeendPermissionMapping) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getPermissionId() == null ? other.getPermissionId() == null : this.getPermissionId().equals(other.getPermissionId()))
-            && (this.getPermissionName() == null ? other.getPermissionName() == null : this.getPermissionName().equals(other.getPermissionName()))
-            && (this.isVisiable() == other.isVisiable())
-            && (this.getCreatedTimestamp() == null ? other.getCreatedTimestamp() == null : this.getCreatedTimestamp().equals(other.getCreatedTimestamp()));
+                && (this.getPermissionId() == null ? other.getPermissionId() == null : this.getPermissionId().equals
+                (other.getPermissionId()))
+                && (this.getPermissionName() == null ? other.getPermissionName() == null : this.getPermissionName()
+                .equals(other.getPermissionName()))
+                && (this.isVisiable() == other.isVisiable())
+                && (this.getCreatedTimestamp() == null ? other.getCreatedTimestamp() == null : this
+                .getCreatedTimestamp().equals(other.getCreatedTimestamp()));
     }
 
     @Override

@@ -29,8 +29,14 @@ public class TcCodisPool extends JedisPool {
         checkNotNull(codisPoolConfig, "null codis pool config is not allowed");
         checkArgument(connectionTimeout > 0, "negative connection timeout is not allowed");
         checkNotNull(password, "codis password is required");
-        roundRobinJedisPool = RoundRobinJedisPool.create().curatorClient(zkAddr, zkSessionTimeoutMs).password(password)
-                .zkProxyDir(zkProxyDir).poolConfig(codisPoolConfig).timeoutMs(connectionTimeout).build();
+        roundRobinJedisPool = RoundRobinJedisPool
+                .create()
+                .curatorClient(zkAddr, zkSessionTimeoutMs)
+                .password(password)
+                .zkProxyDir(zkProxyDir)
+                .poolConfig(codisPoolConfig)
+                .timeoutMs(connectionTimeout)
+                .build();
     }
 
     @Override

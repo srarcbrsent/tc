@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.dangdang.com/schema/ddframe/reg
+       http://www.dangdang.com/schema/ddframe/reg/reg.xsd">
+
+    <reg:zookeeper id="regCenter"
+                   server-lists="${properties.elastic.zookeeper.center}"
+                   namespace="${properties.elastic.namespace}"
+                   base-sleep-time-milliseconds="${properties.elastic.base.sleep.time}"
+                   max-sleep-time-milliseconds="${properties.elastic.max.sleep.time}"
+                   max-retries="${properties.elastic.max.retries}"/>
+
+</beans>

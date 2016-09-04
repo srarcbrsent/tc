@@ -38,7 +38,7 @@ public class TcCodisConnectionFactory extends JedisConnectionFactory {
                 tcCodisPool.close();
                 log.info("success close codis pool ...");
             } catch (Exception ex) {
-                log.warn("Cannot properly close codis pool", ex);
+                log.error("Cannot properly close codis pool", ex);
             }
             tcCodisPool = null;
         }

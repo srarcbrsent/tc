@@ -196,12 +196,6 @@ public class TcCodisServiceTest {
     }
 
     @Test
-    public void buildGroupedKey() throws Exception {
-        String groupedKey = tcCodisService.opsForGroupedValue().buildGroupedKey("key", "value");
-        Assert.assertEquals("group:key:value", groupedKey);
-    }
-
-    @Test
     public void buildHashtagedKey() throws Exception {
         String hashtagedKey = tcCodisService.buildHashtagedKey("key", "value");
         Assert.assertEquals("{key}value", hashtagedKey);

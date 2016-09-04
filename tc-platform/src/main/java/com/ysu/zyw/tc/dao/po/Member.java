@@ -109,14 +109,20 @@ public class Member implements Serializable {
         }
         Member other = (Member) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
-            && (this.getNickname() == null ? other.getNickname() == null : this.getNickname().equals(other.getNickname()))
-            && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
-            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-            && (this.getLockReleaseTime() == null ? other.getLockReleaseTime() == null : this.getLockReleaseTime().equals(other.getLockReleaseTime()))
-            && (this.getLastLoginTime() == null ? other.getLastLoginTime() == null : this.getLastLoginTime().equals(other.getLastLoginTime()))
-            && (this.getSignupTime() == null ? other.getSignupTime() == null : this.getSignupTime().equals(other.getSignupTime()))
-            && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()));
+                && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other
+                .getUsername()))
+                && (this.getNickname() == null ? other.getNickname() == null : this.getNickname().equals(other
+                .getNickname()))
+                && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
+                && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other
+                .getPassword()))
+                && (this.getLockReleaseTime() == null ? other.getLockReleaseTime() == null : this.getLockReleaseTime
+                ().equals(other.getLockReleaseTime()))
+                && (this.getLastLoginTime() == null ? other.getLastLoginTime() == null : this.getLastLoginTime()
+                .equals(other.getLastLoginTime()))
+                && (this.getSignupTime() == null ? other.getSignupTime() == null : this.getSignupTime().equals(other
+                .getSignupTime()))
+                && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()));
     }
 
     @Override

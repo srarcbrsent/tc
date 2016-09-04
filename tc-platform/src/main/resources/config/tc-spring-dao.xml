@@ -17,8 +17,8 @@
         <property name="url" value="${properties.jdbc.core.url}"/>
         <property name="username" value="${properties.jdbc.core.username}"/>
         <property name="password" value="${properties.jdbc.core.password}"/>
-        <property name="maxActive" value="${properties.jdbc.max.active}" />
-        <property name="maxWait" value="${properties.jdbc.max.wait}" />
+        <property name="maxActive" value="${properties.jdbc.max.active}"/>
+        <property name="maxWait" value="${properties.jdbc.max.wait}"/>
         <property name="connectProperties">
             <props>
                 <prop key="useUnicode">true</prop>

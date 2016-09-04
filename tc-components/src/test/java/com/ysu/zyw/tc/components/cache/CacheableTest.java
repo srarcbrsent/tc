@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 /**
  * @warn every business part must have it's own cache impl(or impl a cache key generator),
- * and this place only for test cacheable annotation, it will clear all the codis cache.
+ * and this place only for test cacheable annotation, it will clear the codis(default) cache.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -41,26 +41,51 @@ public class CacheableTest {
         String uuid1 = IdWorker.upperCaseUuid();
         Mongo mongo1 = new Mongo(uuid1,
                 Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
-        String uuid2 = IdWorker.upperCaseUuid();
-        Mongo mongo2 = new Mongo(uuid2,
+        Mongo mongo2 = new Mongo(uuid1,
                 Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
 
         assertMethodCall(0, 0, 0, 0, 0);
 
+        // selectOne 1
         Assert.assertNull(mongoPool.select(uuid1));
+        // select 1 selectOne 1(from cache)
         Assert.assertEquals(0, mongoPool.select(Lists.newArrayList(uuid1)).size());
-        assertMethodCall(0, 0, 0, 1, 0);
+        assertMethodCall(0, 0, 0, 1, 1);
 
+        // insert 1
         mongoPool.insert(mongo1);
 
+        // selectOne 3
+        Assert.assertNotNull(mongoPool.select(uuid1));
+        // select 2 selectOne 1(from cache)
         Assert.assertEquals(1, mongoPool.select(Lists.newArrayList(uuid1)).size());
+        assertMethodCall(1, 0, 0, 2, 1);
 
-        assertMethodCall(1, 0, 0, 2, 0);
-
+        // select 3 selectOne 1(from cache)
         Assert.assertEquals(1, mongoPool.select(Lists.newArrayList(uuid1)).size());
+        assertMethodCall(1, 0, 0, 3, 1);
 
-        assertMethodCall(1, 0, 0, 2, 0);
+        // update 1
+        mongoPool.update(mongo2);
+        // selectOne 1(from cache)
+        Assert.assertNotNull(mongoPool.select(uuid1));
 
+        assertMethodCall(1, 0, 1, 3, 1);
+
+        // delete 1(clear cache)
+        mongoPool.delete(uuid1);
+
+        // select 4 selectOne 2
+        Assert.assertEquals(0, mongoPool.select(Lists.newArrayList(uuid1)).size());
+        assertMethodCall(1, 1, 1, 4, 2);
+
+        // clear cache
+        mongoPool.clearCache();
+
+        // selectOne 3
+        Assert.assertNull(mongoPool.select(uuid1));
+
+        assertMethodCall(1, 1, 1, 4, 3);
     }
 
     private void assertMethodCall(int insertCall,

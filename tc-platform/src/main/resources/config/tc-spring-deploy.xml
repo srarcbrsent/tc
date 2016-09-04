@@ -10,7 +10,8 @@
     <!-- !!!! Infrastructure !!!! -->
 
     <!-- aop -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <aop:aspectj-autoproxy proxy-target-class="true"
+                           expose-proxy="true"/>
 
     <!-- !!!! Disconf !!!! -->
     <bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"

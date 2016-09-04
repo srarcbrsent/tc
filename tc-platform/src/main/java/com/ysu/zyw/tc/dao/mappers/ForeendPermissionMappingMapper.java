@@ -22,9 +22,11 @@ public interface ForeendPermissionMappingMapper {
 
     ForeendPermissionMapping selectByPrimaryKey(ForeendPermissionMappingKey key);
 
-    int updateByExampleSelective(@Param("record") ForeendPermissionMapping record, @Param("example") ForeendPermissionMappingExample example);
+    int updateByExampleSelective(@Param("record") ForeendPermissionMapping record, @Param("example")
+            ForeendPermissionMappingExample example);
 
-    int updateByExample(@Param("record") ForeendPermissionMapping record, @Param("example") ForeendPermissionMappingExample example);
+    int updateByExample(@Param("record") ForeendPermissionMapping record, @Param("example")
+            ForeendPermissionMappingExample example);
 
     int updateByPrimaryKeySelective(ForeendPermissionMapping record);
 

@@ -18,7 +18,8 @@
     </bean>
 
     <!-- aop -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <aop:aspectj-autoproxy proxy-target-class="true"
+                           expose-proxy="true"/>
 
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:config/tc-spring-web-front-end.xml"/>

@@ -96,7 +96,8 @@ public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
                         "    </if>\n" +
                         "    <if test=\"" + TcPaginationPlugin.START_LINE + " != null and " + TcPaginationPlugin
                         .PAGE_SIZE + " != null and " + TcPaginationPlugin.PAGE_SIZE + " > 0\">\n" +
-                        "      limit #{" + TcPaginationPlugin.START_LINE + "}, #{" + TcPaginationPlugin.PAGE_SIZE + "}\n" +
+                        "      limit #{" + TcPaginationPlugin.START_LINE + "}, #{" + TcPaginationPlugin.PAGE_SIZE +
+                        "}\n" +
                         "    </if>";
         xmlElement.addElement(new TextElement(content));
 
