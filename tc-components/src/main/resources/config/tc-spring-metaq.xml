@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--  message service factory -->
+    <bean id="sessionFactory" class="com.taobao.metamorphosis.client.extension.spring.MetaqMessageSessionFactoryBean">
+        <property name="zkConnect" value="${properties,mq.meta.zookeeper.connect}"/>
+        <property name="zkSessionTimeoutMs" value="${properties,mq.meta.zookeeper.session.timeout.ms}"/>
+        <property name="zkConnectionTimeoutMs" value="${properties,mq.meta.zookeeper.connection.timeout.ms}"/>
+        <property name="zkSyncTimeMs" value="${properties,mq.meta.zookeeper.sync.time.ms}"/>
+    </bean>
+
+    <!--  message body converter using java serialization. -->
+    <bean id="messageBodyConverter"
+          class="com.taobao.metamorphosis.client.extension.spring.JavaSerializationMessageBodyConverter"/>
+
+    <!--  template to send messages. -->
+    <bean id="metaqTemplate" class="com.taobao.metamorphosis.client.extension.spring.MetaqTemplate">
+        <property name="messageSessionFactory" ref="sessionFactory"/>
+        <property name="messageBodyConverter" ref="messageBodyConverter"/>
+        <property name="shareProducer" value="true"/>
+    </bean>
+
+</beans>

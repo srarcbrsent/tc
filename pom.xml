@@ -28,6 +28,8 @@
         <pom.version.disconf>2.6.32</pom.version.disconf>
         <pom.version.jdbc>5.1.38</pom.version.jdbc>
         <pom.version.druid>1.0.24</pom.version.druid>
+        <pom.version.codis.client>0.3.0</pom.version.codis.client>
+        <pom.version.metaq.client>1.4.6.2</pom.version.metaq.client>
         <pom.version.elastic.job>1.1.1</pom.version.elastic.job>
         <pom.version.curator>2.9.1</pom.version.curator>
         <pom.version.mybatis>3.4.1</pom.version.mybatis>
@@ -342,7 +344,14 @@
             <dependency>
                 <groupId>io.codis.jodis</groupId>
                 <artifactId>jodis</artifactId>
-                <version>0.3.0</version>
+                <version>${pom.version.codis.client}</version>
+            </dependency>
+
+            <!-- metaq -->
+            <dependency>
+                <groupId>com.taobao.metamorphosis</groupId>
+                <artifactId>metamorphosis-client</artifactId>
+                <version>${pom.version.metaq.client}</version>
             </dependency>
 
             <!-- template -->
@@ -404,6 +413,19 @@
                 <version>4.5.2</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>4.4.4</version>
+            </dependency>
+
+            <!-- zookeeper -->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>3.4.8</version>
+            </dependency>
+
             <!-- commons utils -->
             <dependency>
                 <groupId>commons-fileupload</groupId>
@@ -433,6 +455,12 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>1.9.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.2</version>
             </dependency>
 
             <!-- test -->

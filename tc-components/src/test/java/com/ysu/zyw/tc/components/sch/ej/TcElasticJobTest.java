@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.sch;
+package com.ysu.zyw.tc.components.sch.ej;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:config/tc-spring-sch.xml",
-        "classpath*:config/tc-spring-import-sch.xml"
+        "classpath*:config/tc-spring-ej.xml",
+        "classpath*:config/tc-spring-import-ej.xml"
 })
 public class TcElasticJobTest {
 

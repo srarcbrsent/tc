@@ -1,9 +1,8 @@
-package com.ysu.zyw.tc.components.cache;
+package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.base.tools.IdWorker;
-import com.ysu.zyw.tc.components.cache.codis.TcCodisService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.After;
@@ -27,8 +26,8 @@ import java.util.stream.IntStream;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:config/tc-spring-cache.xml",
-        "classpath*:config/tc-spring-import-cache.xml"
+        "classpath*:config/tc-spring-codis.xml",
+        "classpath*:config/tc-spring-import-codis.xml"
 })
 @Slf4j
 public class TcCodisServiceTest {

@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.cache;
+package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.base.tools.IdWorker;
@@ -18,8 +18,8 @@ import javax.annotation.Resource;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:config/tc-spring-cache.xml",
-        "classpath*:config/tc-spring-import-cache.xml"
+        "classpath*:config/tc-spring-codis.xml",
+        "classpath*:config/tc-spring-import-codis.xml"
 })
 public class CacheableTest {
 

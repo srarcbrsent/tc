@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.sch;
+package com.ysu.zyw.tc.components.sch.ej;
 
 import com.dangdang.ddframe.job.api.ElasticJob;
 import com.dangdang.ddframe.job.exception.JobException;

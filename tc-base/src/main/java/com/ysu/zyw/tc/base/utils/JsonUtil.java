@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
+import com.ysu.zyw.tc.sys.constant.TcConstant;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
@@ -19,7 +20,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Slf4j
 public class JsonUtil {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper;
+
+    static {
+        objectMapper = new ObjectMapper();
+        objectMapper.setDateFormat(TcConstant.C.SIMPLE_DATE_FORMAT);
+    }
 
     public static String serialize(@Nonnull Object object) {
         checkNotNull(object, "null serialize object is not allowed");

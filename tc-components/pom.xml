@@ -71,6 +71,12 @@
             <artifactId>jodis</artifactId>
         </dependency>
 
+        <!-- metaq -->
+        <dependency>
+            <groupId>com.taobao.metamorphosis</groupId>
+            <artifactId>metamorphosis-client</artifactId>
+        </dependency>
+
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>

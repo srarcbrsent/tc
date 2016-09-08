@@ -8,10 +8,10 @@
        http://www.dangdang.com/schema/ddframe/reg/reg.xsd">
 
     <reg:zookeeper id="regCenter"
-                   server-lists="${properties.elastic.zookeeper.center}"
-                   namespace="${properties.elastic.namespace}"
-                   base-sleep-time-milliseconds="${properties.elastic.base.sleep.time}"
-                   max-sleep-time-milliseconds="${properties.elastic.max.sleep.time}"
-                   max-retries="${properties.elastic.max.retries}"/>
+                   server-lists="${properties.sch.ej.zookeeper.center}"
+                   namespace="${properties.sch.ej.namespace}"
+                   base-sleep-time-milliseconds="${properties.sch.ej.base.sleep.time}"
+                   max-sleep-time-milliseconds="${properties.sch.ej.max.sleep.time}"
+                   max-retries="${properties.sch.ej.max.retries}"/>
 
 </beans>

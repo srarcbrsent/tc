@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.cache;
+package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.sys.constant.TcConstant;

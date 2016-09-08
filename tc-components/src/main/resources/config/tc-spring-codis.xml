@@ -23,15 +23,15 @@
     </bean>
 
     <bean id="codisConnectionFactory" class="com.ysu.zyw.tc.components.cache.codis.TcCodisConnectionFactory">
-        <property name="zkAddr" value="${properties.cache.zookeeper.addr}"/>
-        <property name="zkSessionTimeoutMs" value="${properties.cache.zookeeper.session.timeout.ms}"/>
-        <property name="zkProxyDir" value="${properties.cache.zookeeper.proxy.dir}"/>
-        <property name="timeout" value="${properties.cache.zookeeper.timeout}"/>
-        <property name="password" value="${properties.cache.password}"/>
+        <property name="zkAddr" value="${properties.cache.codis.zookeeper.addr}"/>
+        <property name="zkSessionTimeoutMs" value="${properties.cache.codis.zookeeper.session.timeout.ms}"/>
+        <property name="zkProxyDir" value="${properties.cache.codis.zookeeper.proxy.dir}"/>
+        <property name="timeout" value="${properties.cache.codis.zookeeper.timeout}"/>
+        <property name="password" value="${properties.cache.codis.password}"/>
         <property name="poolConfig">
             <bean class="redis.clients.jedis.JedisPoolConfig">
-                <property name="maxTotal" value="${properties.cache.pool.config.max.total}"/>
-                <property name="maxWaitMillis" value="${properties.cache.pool.config.max.wait.millis}"/>
+                <property name="maxTotal" value="${properties.cache.codis.pool.config.max.total}"/>
+                <property name="maxWaitMillis" value="${properties.cache.codis.pool.config.max.wait.millis}"/>
             </bean>
         </property>
     </bean>
