@@ -68,7 +68,7 @@ public class TcCodisServiceTest {
             });
             return null;
         });
-        log.info("process [{}] simple string take time [{}] ...", 30 * loop, simpleStrDuration);
+        log.info("process [{}] simple string take time [{}s] ...", 30 * loop, simpleStrDuration);
 
         long simpleObjDuration = invoke(() -> {
             IntStream.range(0, 15 * loop).parallel().forEach(i -> {
@@ -81,7 +81,7 @@ public class TcCodisServiceTest {
             });
             return null;
         });
-        log.info("process [{}] simple object take time [{}] ...", 15 * loop, simpleObjDuration);
+        log.info("process [{}] simple object take time [{}s] ...", 15 * loop, simpleObjDuration);
 
         long objListDuration = invoke(() -> {
             IntStream.range(0, loop).parallel().forEach(i -> {
@@ -99,7 +99,7 @@ public class TcCodisServiceTest {
             });
             return null;
         });
-        log.info("process [{}] object list take time [{}] ...", loop, objListDuration);
+        log.info("process [{}] object list take time [{}s] ...", loop, objListDuration);
     }
 
     @Test
@@ -130,7 +130,7 @@ public class TcCodisServiceTest {
             });
             return null;
         });
-        log.info("process [{}] simple string take time [{}] ...", 30 * loop, simpleStrDuration);
+        log.info("process [{}] simple string take time [{}s] ...", 30 * loop, simpleStrDuration);
     }
 
     @Test
@@ -163,7 +163,7 @@ public class TcCodisServiceTest {
             });
             return null;
         });
-        log.info("process [{}] simple string take time [{}] ...", 30 * loop, simpleStrDuration);
+        log.info("process [{}] simple string take time [{}s] ...", 30 * loop, simpleStrDuration);
 
         tcCodisService.expire(IdWorker.upperCaseUuid(), 1000);
     }
@@ -191,7 +191,7 @@ public class TcCodisServiceTest {
             });
             return null;
         });
-        log.info("process [{}] simple string take time [{}] ...", 30 * loop, simpleStrDuration);
+        log.info("process [{}] simple string take time [{}s] ...", 30 * loop, simpleStrDuration);
     }
 
     @Test
@@ -225,7 +225,7 @@ public class TcCodisServiceTest {
             });
             return null;
         });
-        log.info("process [{}] simple string take time [{}] ...", 30 * loop, simpleStrDuration);
+        log.info("process [{}] simple string take time [{}s] ...", 30 * loop, simpleStrDuration);
     }
 
     @Test
@@ -270,7 +270,7 @@ public class TcCodisServiceTest {
             Assert.assertEquals(0, keys2.size());
             return null;
         });
-        log.info("process [{}] simple string take time [{}] ...", 1, simpleStrDuration);
+        log.info("process [{}] simple string take time [{}s] ...", 1, simpleStrDuration);
     }
 
     @Test

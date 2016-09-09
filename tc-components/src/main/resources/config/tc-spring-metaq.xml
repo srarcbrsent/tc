@@ -4,23 +4,34 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--  message service factory -->
     <bean id="sessionFactory" class="com.taobao.metamorphosis.client.extension.spring.MetaqMessageSessionFactoryBean">
-        <property name="zkConnect" value="${properties,mq.meta.zookeeper.connect}"/>
-        <property name="zkSessionTimeoutMs" value="${properties,mq.meta.zookeeper.session.timeout.ms}"/>
-        <property name="zkConnectionTimeoutMs" value="${properties,mq.meta.zookeeper.connection.timeout.ms}"/>
-        <property name="zkSyncTimeMs" value="${properties,mq.meta.zookeeper.sync.time.ms}"/>
+        <property name="zkConnect" value="${properties.mq.metaq.zookeeper.connect}"/>
+        <property name="zkSessionTimeoutMs" value="${properties.mq.metaq.zookeeper.session.timeout.ms}"/>
+        <property name="zkConnectionTimeoutMs" value="${properties.mq.metaq.zookeeper.connection.timeout.ms}"/>
+        <property name="zkSyncTimeMs" value="${properties.mq.metaq.zookeeper.sync.time.ms}"/>
     </bean>
 
-    <!--  message body converter using java serialization. -->
     <bean id="messageBodyConverter"
           class="com.taobao.metamorphosis.client.extension.spring.JavaSerializationMessageBodyConverter"/>
 
-    <!--  template to send messages. -->
     <bean id="metaqTemplate" class="com.taobao.metamorphosis.client.extension.spring.MetaqTemplate">
         <property name="messageSessionFactory" ref="sessionFactory"/>
         <property name="messageBodyConverter" ref="messageBodyConverter"/>
-        <property name="shareProducer" value="true"/>
+    </bean>
+
+    <bean id="listenerContainer" class="com.ysu.zyw.tc.components.mq.metaq.TcMetaMessageQueueListenerRegistry">
+        <property name="messageSessionFactory" ref="sessionFactory"/>
+        <property name="messageBodyConverter" ref="messageBodyConverter"/>
+        <property name="subscribers" ref="metaQueueMessageSubcribers"/>
+    </bean>
+
+    <bean id="defaultAbstractTopic"
+          abstract="true"
+          class="com.taobao.metamorphosis.client.extension.spring.MetaqTopic">
+        <property name="fetchRunnerCount"
+                  value="${properties.mq.metaq.consumer.default.fetch.runner.count}"/>
+        <property name="maxDelayFetchTimeInMills"
+                  value="${properties.mq.metaq.consumer.default.max.delay.fetch.time.ms}"/>
     </bean>
 
 </beans>

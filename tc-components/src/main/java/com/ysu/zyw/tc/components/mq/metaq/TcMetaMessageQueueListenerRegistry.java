@@ -1,6 +1,6 @@
-package com.ysu.zyw.tc.components.mq.meta;
+package com.ysu.zyw.tc.components.mq.metaq;
 
-
+import com.taobao.gecko.core.util.StringUtils;
 import com.taobao.metamorphosis.client.consumer.MessageConsumer;
 import com.taobao.metamorphosis.client.consumer.MessageListener;
 import com.taobao.metamorphosis.client.extension.spring.DefaultMessageListener;
@@ -8,7 +8,6 @@ import com.taobao.metamorphosis.client.extension.spring.MessageListenerContainer
 import com.taobao.metamorphosis.client.extension.spring.MetaqTopic;
 import com.taobao.metamorphosis.consumer.ConsumerMessageFilter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -40,9 +39,8 @@ public class TcMetaMessageQueueListenerRegistry extends MessageListenerContainer
                 if (listener.getMessageBodyConverter() == null) {
                     listener.setMessageBodyConverter(this.getMessageBodyConverter());
                 }
-                // FIXME register consumer message listener
                 consumer.subscribe(topic.getTopic(), topic.getMaxBufferSize(), listener,
-                        this.tryConvert2ConsumerMessageFilter(listener));
+                        this.tryConvertListener2ConsumerFilter(listener));
                 consumers.add(consumer);
             }
             for (MessageConsumer consumer : consumers) {
@@ -52,7 +50,7 @@ public class TcMetaMessageQueueListenerRegistry extends MessageListenerContainer
         log.info("Initialize message listener container successfully.");
     }
 
-    private ConsumerMessageFilter tryConvert2ConsumerMessageFilter(MessageListener messageListener) {
+    private ConsumerMessageFilter tryConvertListener2ConsumerFilter(MessageListener messageListener) {
         if (Objects.nonNull(messageListener) && messageListener instanceof ConsumerMessageFilter) {
             return (ConsumerMessageFilter) messageListener;
         }

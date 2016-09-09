@@ -4,12 +4,46 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
-
-
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder file-encoding="UTF-8"
                                   location="classpath*:example/local-metaq-example.properties"/>
+
+
+    <bean id="tcLogTopic" parent="defaultAbstractTopic"
+          class="com.taobao.metamorphosis.client.extension.spring.MetaqTopic">
+        <property name="topic" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).TOPIC_LOG}"/>
+        <property name="group" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).GROUP_DATA_STORAGE}"/>
+        <property name="maxBufferSize" value="16384"/>
+    </bean>
+
+    <bean id="tcLogListener" class="com.ysu.zyw.tc.components.mq.metaq.subcribers.TcLogListener">
+        <property name="name" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).TOPIC_LOG}"/>
+        <property name="processThreads" value="10"/>
+    </bean>
+
+
+    <bean id="tcApiCallTopic" parent="defaultAbstractTopic"
+          class="com.taobao.metamorphosis.client.extension.spring.MetaqTopic">
+        <property name="topic" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).TOPIC_API_CALL}"/>
+        <property name="group" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).GROUP_DATA_STORAGE}"/>
+        <property name="maxBufferSize" value="16384"/>
+    </bean>
+
+    <bean id="tcApiCallListener" class="com.ysu.zyw.tc.components.mq.metaq.subcribers.TcApiCallListener">
+        <property name="name" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).TOPIC_API_CALL}"/>
+        <property name="processThreads" value="10"/>
+    </bean>
+
+
+    <bean id="metaQueueMessageSubcribers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+                <entry key-ref="tcLogTopic" value-ref="tcLogListener"/>
+                <entry key-ref="tcApiCallTopic" value-ref="tcApiCallListener"/>
+            </map>
+        </property>
+    </bean>
 
 </beans>

@@ -29,7 +29,7 @@
         <pom.version.jdbc>5.1.38</pom.version.jdbc>
         <pom.version.druid>1.0.24</pom.version.druid>
         <pom.version.codis.client>0.3.0</pom.version.codis.client>
-        <pom.version.metaq.client>1.4.6.2</pom.version.metaq.client>
+        <pom.version.metaq.client>1.4.6.3-SNAPSHOT</pom.version.metaq.client>
         <pom.version.elastic.job>1.1.1</pom.version.elastic.job>
         <pom.version.curator>2.9.1</pom.version.curator>
         <pom.version.mybatis>3.4.1</pom.version.mybatis>
@@ -227,6 +227,12 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
                 <version>${pom.version.spring}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -352,6 +358,16 @@
                 <groupId>com.taobao.metamorphosis</groupId>
                 <artifactId>metamorphosis-client</artifactId>
                 <version>${pom.version.metaq.client}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- template -->
@@ -373,6 +389,12 @@
                 <groupId>com.dangdang</groupId>
                 <artifactId>elastic-job-core</artifactId>
                 <version>${pom.version.elastic.job}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -411,6 +433,12 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>4.5.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -424,6 +452,16 @@
                 <groupId>org.apache.zookeeper</groupId>
                 <artifactId>zookeeper</artifactId>
                 <version>3.4.8</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- commons utils -->
@@ -561,12 +599,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>log4j-over-slf4j</artifactId>
                 <version>1.7.21</version>
-            </dependency>
-
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.17</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
