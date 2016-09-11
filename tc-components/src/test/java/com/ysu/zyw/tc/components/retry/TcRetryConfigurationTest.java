@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:config/tc-spring-retry.xml",
+        "classpath*:config/tc-spring-common-retry.xml",
         "classpath*:config/tc-spring-import-retry.xml"
 })
 public class TcRetryConfigurationTest {

@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
-import com.ysu.zyw.tc.components.cache.codis.ops.OpsForGroupedValue;
+import com.ysu.zyw.tc.components.cache.codis.ops.TcOpsForGroupedValue;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class TcCodisService {
     private RedisTemplate<String, Serializable> codisTemplate;
 
     @Resource
-    private OpsForGroupedValue opsForGroupedValue;
+    private TcOpsForGroupedValue tcOpsForGroupedValue;
 
     public void set(@Nonnull String key, @Nonnull Serializable value, long timeout) {
         checkNotNull(key, "empty key is not allowed");
@@ -74,8 +74,8 @@ public class TcCodisService {
         return "{" + hashtag + "}" + key;
     }
 
-    public OpsForGroupedValue opsForGroupedValue() {
-        return opsForGroupedValue;
+    public TcOpsForGroupedValue opsForGroupedValue() {
+        return tcOpsForGroupedValue;
     }
 
 }

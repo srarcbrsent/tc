@@ -11,13 +11,41 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder file-encoding="UTF-8"
-                                  location="classpath*:example/local-ej-example.properties"/>
+                                  location="classpath*:example/local-sch-ej-example.properties"/>
 
-    <job:simple id="logJob"
-                class="com.ysu.zyw.tc.components.sch.ej.LogJob"
+    <job:simple id="simpleJob"
+                class="com.ysu.zyw.tc.components.sch.ej.job.TcSimpleJob"
+                description="简单任务"
                 registry-center-ref="regCenter"
-                cron="* * * * * ?"
+                overwrite="true"
+                cron="0/10 * * * * ?"
                 sharding-total-count="3"
-                sharding-item-parameters="0=A,1=B,2=C"/>
+                sharding-item-parameters="0=世界,1=你,2=好"
+                job-parameter="你好世界">
+        <!--<job:listener class="xx.MySimpleJobListener"/>-->
+        <!--<job:distributed-listener class="xx.MyOnceSimpleJobListener"-->
+        <!--started-timeout-milliseconds="1000"-->
+        <!--completed-timeout-milliseconds="2000"/>-->
+        <!--<job:event-log/>-->
+        <!--<job:event-rdb driver="org.h2.Driver"-->
+        <!--url="jdbc:h2:mem:job_event_bus"-->
+        <!--username="sa"-->
+        <!--password=""-->
+        <!--log-level="INFO"/>-->
+    </job:simple>
+
+    <!--<job:dataflow id="throughputDataflow"-->
+    <!--class="xxx.MyThroughputDataflowElasticJob"-->
+    <!--registry-center-ref="regCenter"-->
+    <!--cron="0/10 * * * * ?"-->
+    <!--sharding-total-count="3"-->
+    <!--sharding-item-parameters="0=A,1=B,2=C"/>-->
+
+    <!--<job:script id="scriptElasticJob"-->
+    <!--registry-center-ref="regCenter"-->
+    <!--cron="0/10 * * * * ?"-->
+    <!--sharding-total-count="3"-->
+    <!--sharding-item-parameters="0=A,1=B,2=C"-->
+    <!--script-command-line="/your/file/path/demo.sh"/>-->
 
 </beans>

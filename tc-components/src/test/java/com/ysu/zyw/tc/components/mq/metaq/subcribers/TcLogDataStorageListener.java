@@ -7,11 +7,12 @@ import com.ysu.zyw.tc.components.mq.metaq.model.TcLogMessage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Formatter;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
-public class TcLogListener extends TcMetaMessageListener<TcLogMessage> {
+public class TcLogDataStorageListener extends TcMetaMessageListener<TcLogMessage> {
 
-    public static int alreadyReceived = 0;
+    public static final AtomicInteger alreadyReceived = new AtomicInteger(0);
 
     @Override
     public boolean accept(String group, Message message) {
@@ -23,7 +24,7 @@ public class TcLogListener extends TcMetaMessageListener<TcLogMessage> {
         System.out.println(new Formatter().format("[id:%s] [topic:%s] [received:%s] [attribute:%s] [msg:%s]",
                 msg.getId(),
                 msg.getTopic(),
-                ++alreadyReceived,
+                alreadyReceived.addAndGet(1),
                 msg.getAttribute(),
                 msg.getBody()));
     }

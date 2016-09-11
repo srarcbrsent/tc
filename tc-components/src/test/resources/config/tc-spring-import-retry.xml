@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder file-encoding="UTF-8"
-                                  location="classpath*:example/local-retry-example.properties"/>
+                                  location="classpath*:example/local-common-retry-example.properties"/>
 
     <bean class="com.ysu.zyw.tc.components.retry.RetryStub"/>
 

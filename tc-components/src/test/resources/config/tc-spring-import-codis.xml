@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:property-placeholder file-encoding="UTF-8"
-                                  location="classpath*:example/local-codis-example.properties"/>
+                                  location="classpath*:example/local-cache-codis-example.properties"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"
                            expose-proxy="true"/>

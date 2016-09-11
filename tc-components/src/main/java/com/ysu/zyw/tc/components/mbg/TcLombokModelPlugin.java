@@ -20,10 +20,15 @@ public class TcLombokModelPlugin extends PluginAdapter {
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
                                                  IntrospectedTable introspectedTable) {
         // generate annotation
-        topLevelClass.addAnnotation("@lombok.Data");
-        topLevelClass.addAnnotation("@lombok.experimental.Accessors(chain = true)");
-        topLevelClass.addAnnotation("@lombok.NoArgsConstructor");
-        topLevelClass.addAnnotation("@lombok.AllArgsConstructor");
+        topLevelClass.addImportedType("lombok.Data");
+        topLevelClass.addImportedType("lombok.experimental.Accessors");
+        topLevelClass.addImportedType("lombok.NoArgsConstructor");
+        topLevelClass.addImportedType("lombok.AllArgsConstructor");
+
+        topLevelClass.addAnnotation("@Data");
+        topLevelClass.addAnnotation("@Accessors(chain = true)");
+        topLevelClass.addAnnotation("@NoArgsConstructor");
+        topLevelClass.addAnnotation("@AllArgsConstructor");
         return super.modelBaseRecordClassGenerated(topLevelClass, introspectedTable);
     }
 
@@ -33,7 +38,7 @@ public class TcLombokModelPlugin extends PluginAdapter {
                                               IntrospectedColumn introspectedColumn,
                                               IntrospectedTable introspectedTable,
                                               ModelClassType modelClassType) {
-        // no getter
+        // do not generate getter
         return false;
     }
 
@@ -43,7 +48,7 @@ public class TcLombokModelPlugin extends PluginAdapter {
                                               IntrospectedColumn introspectedColumn,
                                               IntrospectedTable introspectedTable,
                                               ModelClassType modelClassType) {
-        // no setter
+        // do not generate setter
         return false;
     }
 

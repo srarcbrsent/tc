@@ -26,7 +26,7 @@ import java.util.stream.IntStream;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:config/tc-spring-codis.xml",
+        "classpath*:config/tc-spring-cache-codis.xml",
         "classpath*:config/tc-spring-import-codis.xml"
 })
 @Slf4j

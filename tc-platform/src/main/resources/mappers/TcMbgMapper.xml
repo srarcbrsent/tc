@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ysu.zyw.tc.dao.mappers.UcMapper">
-    <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.dao.po.Uc">
+<mapper namespace="com.ysu.zyw.tc.dao.mappers.TcMbgMapper">
+    <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.dao.po.TcMbg">
         <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="enable" jdbcType="VARCHAR" property="enable"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="join_date" jdbcType="DATE" property="joinDate"/>
+        <result column="join_time" jdbcType="TIME" property="joinTime"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -65,15 +70,15 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id
+        id, name, enable, birthday, join_date, join_time
     </sql>
-    <select id="selectByExample" parameterType="com.ysu.zyw.tc.dao.po.UcExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.ysu.zyw.tc.dao.po.TcMbgExample" resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from t_uc
+        from t_mbg
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -84,44 +89,99 @@
             limit #{startLine} , #{pageSize}
         </if>
     </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_mbg
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        DELETE FROM t_uc
+        DELETE FROM t_mbg
         WHERE id = #{id,jdbcType=VARCHAR}
     </delete>
-    <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.dao.po.UcExample">
-        delete from t_uc
+    <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.dao.po.TcMbgExample">
+        delete from t_mbg
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.ysu.zyw.tc.dao.po.Uc">
-        INSERT INTO t_uc (id)
-        VALUES (#{id,jdbcType=VARCHAR})
+    <insert id="insert" parameterType="com.ysu.zyw.tc.dao.po.TcMbg">
+        INSERT INTO t_mbg (id, name, enable,
+                           birthday, join_date, join_time
+        )
+        VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enable,jdbcType=VARCHAR},
+                #{birthday,jdbcType=TIMESTAMP}, #{joinDate,jdbcType=DATE}, #{joinTime,jdbcType=TIME}
+        )
     </insert>
-    <insert id="insertSelective" parameterType="com.ysu.zyw.tc.dao.po.Uc">
-        insert into t_uc
+    <insert id="insertSelective" parameterType="com.ysu.zyw.tc.dao.po.TcMbg">
+        insert into t_mbg
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="enable != null">
+                enable,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="joinDate != null">
+                join_date,
+            </if>
+            <if test="joinTime != null">
+                join_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="enable != null">
+                #{enable,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="joinDate != null">
+                #{joinDate,jdbcType=DATE},
+            </if>
+            <if test="joinTime != null">
+                #{joinTime,jdbcType=TIME},
+            </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="com.ysu.zyw.tc.dao.po.UcExample" resultType="java.lang.Long">
-        select count(*) from t_uc
+    <select id="countByExample" parameterType="com.ysu.zyw.tc.dao.po.TcMbgExample" resultType="java.lang.Long">
+        select count(*) from t_mbg
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
-        update t_uc
+        update t_mbg
         <set>
             <if test="record.id != null">
                 id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.enable != null">
+                enable = #{record.enable,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birthday != null">
+                birthday = #{record.birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.joinDate != null">
+                join_date = #{record.joinDate,jdbcType=DATE},
+            </if>
+            <if test="record.joinTime != null">
+                join_time = #{record.joinTime,jdbcType=TIME},
             </if>
         </set>
         <if test="_parameter != null">
@@ -129,20 +189,55 @@
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
-        update t_uc
-        set id = #{record.id,jdbcType=VARCHAR}
+        update t_mbg
+        set id = #{record.id,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
+        enable = #{record.enable,jdbcType=VARCHAR},
+        birthday = #{record.birthday,jdbcType=TIMESTAMP},
+        join_date = #{record.joinDate,jdbcType=DATE},
+        join_time = #{record.joinTime,jdbcType=TIME}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
-    <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.dao.po.UcExample"
+    <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.dao.po.TcMbg">
+        update t_mbg
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="enable != null">
+                enable = #{enable,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="joinDate != null">
+                join_date = #{joinDate,jdbcType=DATE},
+            </if>
+            <if test="joinTime != null">
+                join_time = #{joinTime,jdbcType=TIME},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.dao.po.TcMbg">
+        UPDATE t_mbg
+        SET name      = #{name,jdbcType=VARCHAR},
+            enable    = #{enable,jdbcType=VARCHAR},
+            birthday  = #{birthday,jdbcType=TIMESTAMP},
+            join_date = #{joinDate,jdbcType=DATE},
+            join_time = #{joinTime,jdbcType=TIME}
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.dao.po.TcMbgExample"
             resultType="java.lang.String">
         select
         <if test="distinct">
             distinct
         </if>
         id
-        from t_uc
+        from t_mbg
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -153,12 +248,22 @@
             limit #{startLine}, #{pageSize}
         </if>
     </select>
-    <insert id="batchInsert" parameterType="com.ysu.zyw.tc.dao.po.Uc">
-        insert into t_uc (
-        id
+    <insert id="batchInsert" parameterType="com.ysu.zyw.tc.dao.po.TcMbg">
+        insert into t_mbg (
+        id,
+        name,
+        enable,
+        birthday,
+        join_date,
+        join_time
         ) values
         <foreach collection="list" item="item" separator=", ">
-            (#{item.id,jdbcType=VARCHAR})
+            (#{item.id,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.enable,jdbcType=VARCHAR},
+            #{item.birthday,jdbcType=TIMESTAMP},
+            #{item.joinDate,jdbcType=DATE},
+            #{item.joinTime,jdbcType=TIME})
         </foreach>
     </insert>
 </mapper>

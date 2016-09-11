@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:config/tc-spring-codis.xml",
+        "classpath*:config/tc-spring-cache-codis.xml",
         "classpath*:config/tc-spring-import-codis.xml"
 })
 public class CacheableTest {

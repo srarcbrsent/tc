@@ -11,7 +11,7 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public abstract class AbstractOpsForGroup {
+public abstract class TcAbstractOpsForGroup {
 
     protected static final String GROUP_NAME_KEY_SPLIT = ":";
 

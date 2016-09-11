@@ -18,9 +18,9 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:config/tc-spring-flow.xml",
+        "classpath*:config/tc-spring-module-flow.xml",
         "classpath*:config/tc-spring-data-mongodb.xml",
-        "classpath*:config/tc-spring-import-data-mongodb.xml"
+        "classpath*:config/tc-spring-import-mongodb.xml"
 })
 public class TcFlowServiceTest {
 

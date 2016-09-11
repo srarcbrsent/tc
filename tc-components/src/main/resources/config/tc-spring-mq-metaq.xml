@@ -12,7 +12,9 @@
     </bean>
 
     <bean id="messageBodyConverter"
-          class="com.taobao.metamorphosis.client.extension.spring.JavaSerializationMessageBodyConverter"/>
+          class="com.ysu.zyw.tc.components.mq.metaq.TcHessianSerializationMessageBodyConverter">
+        <property name="defaultByteArrayBufferSize" value="512"/>
+    </bean>
 
     <bean id="metaqTemplate" class="com.taobao.metamorphosis.client.extension.spring.MetaqTemplate">
         <property name="messageSessionFactory" ref="sessionFactory"/>

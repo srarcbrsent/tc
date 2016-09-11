@@ -33,6 +33,8 @@
                         password="${mbg.jdbc.password}">
         </jdbcConnection>
 
+        <javaTypeResolver type="com.ysu.zyw.tc.components.mbg.TcEnableNDateJavaTypeResolverImpl"/>
+
         <!-- !!!! Model Configurations !!!! -->
         <javaModelGenerator targetPackage="${mbg.po.package}"
                             targetProject="${mbg.project.base}/src/main/java">
@@ -53,7 +55,10 @@
         </javaClientGenerator>
 
         <!-- !!!! Table Configurations !!!! -->
-        <table tableName="t_uc" domainObjectName="Uc"/>
+        <table tableName="t_mbg" domainObjectName="TcMbg" mapperName="TcMbgMapper">
+            <ignoreColumn column="password"/>
+            <columnOverride column="enable" javaType="java.lang.Boolean"/>
+        </table>
 
     </context>
 

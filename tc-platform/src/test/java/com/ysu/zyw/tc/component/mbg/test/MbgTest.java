@@ -2,6 +2,13 @@ package com.ysu.zyw.tc.component.mbg.test;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Lists;
+import com.ysu.zyw.tc.base.tools.IdWorker;
+import com.ysu.zyw.tc.dao.mappers.TcMbgMapper;
+import com.ysu.zyw.tc.dao.po.TcMbg;
+import com.ysu.zyw.tc.dao.po.TcMbgExample;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -10,17 +17,21 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
+import java.util.Properties;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
+@Slf4j
 public class MbgTest {
 
     private DruidDataSource dataSource;
@@ -30,15 +41,21 @@ public class MbgTest {
     @Before
     public void setUp() throws Exception {
         dataSource = new DruidDataSource();
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/zr_core_db");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/tc_platform");
+        Properties properties = new Properties();
+        properties.put("useUnicode", Boolean.TRUE.toString());
+        properties.put("characterEncoding", "UTF-8");
+        properties.put("zeroDateTimeBehavior", "convertToNull");
+        properties.put("useSSL", Boolean.FALSE.toString());
+        dataSource.setConnectProperties(properties);
+        dataSource.setUsername("tc_develop");
+        dataSource.setPassword("123456");
 
         Configuration configuration = new Configuration();
         configuration.setEnvironment(new Environment("main", new JdbcTransactionFactory(), dataSource));
         List<String> resources = Lists.newArrayList(
-                "mappers/ForeendPermissionMappingMapper.xml",
-                "mappers/MemberMapper.xml");
+                "mappers/TcMbgMapper.xml"
+        );
         resources.forEach(resource -> {
             XMLMapperBuilder mapperParser = null;
             try {
@@ -63,82 +80,101 @@ public class MbgTest {
     }
 
     @Test
-    public void testPagination() {
+    public void testInsert() {
         invokeWithSqlSession(sqlSession -> {
-            MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
-
-            pagination(memberMapper, 1);
-            pagination(memberMapper, 2);
-            pagination(memberMapper, 3);
-            pagination(memberMapper, 4);
-
-            MemberExample memberExample1 = new MemberExample();
-            memberExample1.setStartLine(0);
-            memberExample1.setPageSize(2);
-            List<Member> members1 = memberMapper.selectByExample(memberExample1);
-
-            MemberExample memberExample2 = new MemberExample();
-            memberExample2.setStartLine(1);
-            memberExample2.setPageSize(1);
-            List<Member> members2 = memberMapper.selectByExample(memberExample2);
-
-            Assert.assertEquals(members1.get(1), members2.get(0));
+            TcMbgMapper tcMbgMapper = sqlSession.getMapper(TcMbgMapper.class);
+            IntStream.range(0, 500).parallel().forEach(i -> {
+                tcMbgMapper.insert(new TcMbg(
+                        IdWorker.upperCaseUuid(),
+                        IdWorker.upperCaseUuid(),
+                        false,
+                        LocalDateTime.of(
+                                RandomUtils.nextInt(5000),
+                                RandomUtils.nextInt(12) + 1,
+                                RandomUtils.nextInt(28) + 1,
+                                RandomUtils.nextInt(24),
+                                RandomUtils.nextInt(60),
+                                RandomUtils.nextInt(60)
+                        ),
+                        LocalDate.of(
+                                RandomUtils.nextInt(5000),
+                                RandomUtils.nextInt(12) + 1,
+                                RandomUtils.nextInt(28) + 1
+                        ),
+                        LocalTime.of(
+                                RandomUtils.nextInt(24),
+                                RandomUtils.nextInt(60),
+                                RandomUtils.nextInt(60)
+                        ))
+                );
+            });
         });
-    }
-
-    private void pagination(MemberMapper memberMapper, int pageSize) {
-        MemberExample memberExample = new MemberExample();
-        memberExample.setStartLine(0);
-        memberExample.setPageSize(pageSize);
-        List<Member> members = memberMapper.selectByExample(memberExample);
-        Assert.assertTrue(members.size() == pageSize);
     }
 
     @Test
     public void testSelectPrimaryKey() {
         invokeWithSqlSession(sqlSession -> {
-            MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+            TcMbgMapper tcMbgMapper = sqlSession.getMapper(TcMbgMapper.class);
+            long total = tcMbgMapper.countByExample(null);
+            log.info("total [{}]", total);
 
-            List<String> pk1 = memberMapper.selectPrimaryKeyByExample(null);
-            System.out.println(pk1);
+            TcMbgExample tcMbgExample = new TcMbgExample();
+            tcMbgExample.createCriteria().andBirthdayGreaterThan(LocalDateTime.now());
+            long l = tcMbgMapper.countByExample(tcMbgExample);
+            log.info("not valid [{}]", l);
 
-            MemberExample memberExample = new MemberExample();
-            memberExample.setStartLine(1);
-            memberExample.setPageSize(Integer.MAX_VALUE);
-            List<String> pk2 = memberMapper.selectPrimaryKeyByExample(memberExample);
+            List<String> apks = tcMbgMapper.selectPrimaryKeyByExample(null);
+            System.out.println(apks);
 
-            Assert.assertEquals(pk1.get(1), pk2.get(0));
-            Assert.assertTrue(pk1.size() == (pk2.size() + 1));
+            List<String> lpks = tcMbgMapper.selectPrimaryKeyByExample(tcMbgExample);
+            System.out.println(lpks);
 
-            ForeendPermissionMappingMapper foreendPermissionMappingMapper = sqlSession.getMapper
-                    (ForeendPermissionMappingMapper.class);
-
-            List<ForeendPermissionMappingKey> pk3 = foreendPermissionMappingMapper
-                    .selectPrimaryKeyByExample(null);
-            System.out.println(pk3);
+            Collection subtract = CollectionUtils.subtract(apks, lpks);
+            log.info("valid [{}]", subtract.size());
         });
     }
 
     @Test
     public void testBatchInsert() {
         invokeWithSqlSession(sqlSession -> {
-            MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+            List<TcMbg> tcMbgList = Lists.newArrayList();
+            IntStream.range(0, 50).parallel().forEach(i -> {
+                tcMbgList.add(new TcMbg(
+                        IdWorker.upperCaseUuid(),
+                        IdWorker.upperCaseUuid(),
+                        false,
+                        LocalDateTime.of(
+                                RandomUtils.nextInt(5000),
+                                RandomUtils.nextInt(12) + 1,
+                                RandomUtils.nextInt(28) + 1,
+                                RandomUtils.nextInt(24),
+                                RandomUtils.nextInt(60),
+                                RandomUtils.nextInt(60)
+                        ),
+                        LocalDate.of(
+                                RandomUtils.nextInt(5000),
+                                RandomUtils.nextInt(12) + 1,
+                                RandomUtils.nextInt(28) + 1
+                        ),
+                        LocalTime.of(
+                                RandomUtils.nextInt(24),
+                                RandomUtils.nextInt(60),
+                                RandomUtils.nextInt(60)
+                        )));
+            });
 
-            List<Member> memberList = Lists.newArrayList();
-            for (int i = 0; i < 300; i++) {
-                Member member = new Member();
-                member.setUsername(UUID.randomUUID().toString().replace("-", "").substring(0, 9));
-                member.setPassword(UUID.randomUUID().toString().replace("-", ""));
-                member.setAvatar(UUID.randomUUID().toString().replace("-", ""));
-                member.setEmail(UUID.randomUUID().toString().replace("-", ""));
-                member.setId(UUID.randomUUID().toString().replace("-", ""));
-                member.setLastLoginTime(new Date());
-                member.setNickname(UUID.randomUUID().toString().replace("-", "").substring(0, 9));
-                member.setSignupTime(new Date());
-                memberList.add(member);
-            }
+            TcMbgMapper tcMbgMapper = sqlSession.getMapper(TcMbgMapper.class);
+            long totalBefore = tcMbgMapper.countByExample(null);
 
-            memberMapper.batchInsert(memberList);
+            tcMbgMapper.batchInsert(tcMbgList);
+
+            log.info("total before [{}], insert count [{}]", totalBefore, tcMbgList.size());
+        });
+        invokeWithSqlSession(sqlSession -> {
+            TcMbgMapper tcMbgMapper = sqlSession.getMapper(TcMbgMapper.class);
+            long totalAfter = tcMbgMapper.countByExample(null);
+
+            log.info("total after [{}]", totalAfter);
         });
     }
 

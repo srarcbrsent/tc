@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * keys will be not perfect match, but the other api is use the relative time so
  * do not influenced.
  */
-public class OpsForGroupedValue extends AbstractOpsForGroup {
+public class TcOpsForGroupedValue extends TcAbstractOpsForGroup {
 
     public void set(@Nonnull String group,
                     @Nonnull String key,

@@ -54,7 +54,7 @@
         <property name="valueSerializer" ref="valueSerializer"/>
     </bean>
 
-    <bean class="com.ysu.zyw.tc.components.cache.codis.ops.OpsForGroupedValue">
+    <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcOpsForGroupedValue">
         <property name="codisTemplate" ref="stringKeyCodisTemplate"/>
     </bean>
 

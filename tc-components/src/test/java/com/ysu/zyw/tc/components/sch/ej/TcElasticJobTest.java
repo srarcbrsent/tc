@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:config/tc-spring-ej.xml",
+        "classpath*:config/tc-spring-sch-ej.xml",
         "classpath*:config/tc-spring-import-ej.xml"
 })
 public class TcElasticJobTest {
