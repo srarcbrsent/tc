@@ -2,10 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- !!!! Infrastructure !!!! -->
 
@@ -13,32 +14,17 @@
     <aop:aspectj-autoproxy proxy-target-class="true"
                            expose-proxy="true"/>
 
-    <!-- !!!! Disconf !!!! -->
-    <bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
-          destroy-method="destroy">
-        <property name="scanPackage" value="com.example.disconf.demo"/>
-    </bean>
-
-    <bean id="disconfMgrBeanSecond" class="com.baidu.disconf.client.DisconfMgrBeanSecond"
-          init-method="init" destroy-method="destroy">
-    </bean>
-
-    <bean id="propertyPlaceholderConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="ignoreResourceNotFound" value="false"/>
-        <property name="ignoreUnresolvablePlaceholders" value="false"/>
-        <property name="propertiesArray">
-            <list>
-                <bean class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
-                    <property name="locations">
-                        <list>
-                            <value>classpath*:/properties/local.properties</value>
-                        </list>
-                    </property>
-                </bean>
-            </list>
+    <!-- metaq -->
+    <bean id="metaQueueMessageSubcribers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
         </property>
     </bean>
+
+    <!-- !!!! Import !!!! -->
+    <context:property-placeholder file-encoding="UTF-8"
+                                  location="classpath*:/properties/local.properties"/>
 
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:config/tc-spring-dao.xml"/>

@@ -16,7 +16,7 @@
                 <property name="objectMapper">
                     <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
                         <property name="simpleDateFormat"
-                                  value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).SIMPLE_DATE_FORMAT}"/>
+                                  value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).SIMPLE_DATE_FORMAT_VALUE}"/>
                     </bean>
                 </property>
             </bean>
@@ -30,7 +30,7 @@
             <set>
                 <bean class="com.ysu.zyw.tc.components.utils.converters.TcSimpleDateFormatter">
                     <property name="simpleDateFormat"
-                              value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).SIMPLE_DATE_FORMAT}"/>
+                              value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).SIMPLE_DATE_FORMAT_VALUE}"/>
                 </bean>
             </set>
         </property>

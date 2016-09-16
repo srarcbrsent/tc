@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.base.utils.JsonUtil;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.InitializingBean;
 
-import javax.annotation.Resource;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,8 +23,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Slf4j
 public class TcRegionService implements InitializingBean {
 
-    @Resource(name = "regionResource")
-    private org.springframework.core.io.Resource regionResource;
+    @Getter
+    @Setter
+    private String regionFilepath;
 
     private static List<TcProvince> tcCompletedProvinceList;
 
@@ -58,7 +61,8 @@ public class TcRegionService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        String regionJson = FileUtils.readFileToString(regionResource.getFile(), "UTF-8");
+        InputStream regionInputStream = this.getClass().getResourceAsStream(regionFilepath);
+        String regionJson = IOUtils.toString(regionInputStream, "UTF-8");
         tcCompletedProvinceList = JsonUtil.deserialize(regionJson, new TypeReference<List<TcProvince>>() {
         });
         // build completed province list

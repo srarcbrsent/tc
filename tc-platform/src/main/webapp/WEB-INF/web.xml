@@ -15,7 +15,14 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath*:/config/tc-spring-deploy.xml
+            classpath*:/config/tc-spring-deploy.xml,
+            classpath*:/config/tc-spring-cache-codis.xml,
+            classpath*:/config/tc-spring-mq-metaq.xml,
+            classpath*:/config/tc-spring-common-retry.xml,
+            classpath*:/config/tc-spring-data-mongodb.xml,
+            classpath*:/config/tc-spring-sch-ej.xml,
+            classpath*:/config/tc-spring-module-region.xml,
+            classpath*:/config/tc-spring-security-shiro.xml
         </param-value>
     </context-param>
 

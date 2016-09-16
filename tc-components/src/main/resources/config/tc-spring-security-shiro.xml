@@ -112,7 +112,7 @@
                 </entry>
             </map>
         </property>
-        <property name="filterChainDefinitions" value="classpath:profiles/filter-chain.properties"/>
+        <property name="filterChainDefinitions" value="${properties.security.shiro.filter.chain.definitions}"/>
     </bean>
 
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor ">

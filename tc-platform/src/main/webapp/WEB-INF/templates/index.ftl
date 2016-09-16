@@ -5,6 +5,6 @@
     <title>index</title>
 </head>
 <body>
-<#include "commons/header.ftl"/>
+<#include "/WEB-INF/templates/commons/header.ftl"/>
 </body>
 </html>

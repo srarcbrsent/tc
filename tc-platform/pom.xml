@@ -100,12 +100,6 @@
             <artifactId>freemarker</artifactId>
         </dependency>
 
-        <!-- disconf -->
-        <dependency>
-            <groupId>com.baidu.disconf</groupId>
-            <artifactId>disconf-client</artifactId>
-        </dependency>
-
         <!-- mybatis -->
         <dependency>
             <groupId>mysql</groupId>
