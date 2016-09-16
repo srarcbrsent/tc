@@ -9,7 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import javax.annotation.Resource;
 import java.util.List;
 
-public class TcMobilePasswordRealm extends TcAbstractAuthorizingRealm {
+public class TcEmailPasswordRealm extends TcAbstractAuthorizingRealm {
 
     @Resource
     private TcAccountMapper tcAccountMapper;
@@ -17,7 +17,7 @@ public class TcMobilePasswordRealm extends TcAbstractAuthorizingRealm {
     @Override
     protected TcAccount fetchAccount(String username) {
         TcAccountExample tcAccountExample = new TcAccountExample();
-        tcAccountExample.createCriteria().andMobileEqualTo(username);
+        tcAccountExample.createCriteria().andEmailEqualTo(username);
         List<TcAccount> tcAccountList = tcAccountMapper.selectByExample(tcAccountExample);
 
         if (CollectionUtils.isEmpty(tcAccountList)) {
@@ -29,6 +29,6 @@ public class TcMobilePasswordRealm extends TcAbstractAuthorizingRealm {
 
     @Override
     protected String fetchRealmName() {
-        return TcConstant.Sys.SHIRO_MOBILE_PASSWORD_REALM;
+        return TcConstant.Sys.SHIRO_EMAIL_PASSWORD_REALM;
     }
 }

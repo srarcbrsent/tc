@@ -1,40 +1,36 @@
 package com.ysu.zyw.tc.svc.components.security.shiro;
 
-import com.google.common.base.Preconditions;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.subject.PrincipalCollection;
+import com.ysu.zyw.tc.dao.mappers.TcAccountMapper;
+import com.ysu.zyw.tc.dao.po.TcAccount;
+import com.ysu.zyw.tc.dao.po.TcAccountExample;
+import com.ysu.zyw.tc.sys.constant.TcConstant;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 
-public class TcUsernamePasswordRealm extends AuthorizingRealm {
+import javax.annotation.Resource;
+import java.util.List;
 
-    private static final String REALM_NAME = "JDBC_USERNAME_REALM";
+@Slf4j
+public class TcUsernamePasswordRealm extends TcAbstractAuthorizingRealm {
+
+    @Resource
+    private TcAccountMapper tcAccountMapper;
 
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        Preconditions.checkNotNull(principals.getPrimaryPrincipal());
+    protected TcAccount fetchAccount(String username) {
+        TcAccountExample tcAccountExample = new TcAccountExample();
+        tcAccountExample.createCriteria().andNameEqualTo(username);
+        List<TcAccount> tcAccountList = tcAccountMapper.selectByExample(tcAccountExample);
 
-        return new SimpleAuthorizationInfo();
+        if (CollectionUtils.isEmpty(tcAccountList)) {
+            return null;
+        } else {
+            return tcAccountList.get(0);
+        }
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        Preconditions.checkArgument(token instanceof UsernamePasswordToken,
-                "this realm is only support username password token");
-
-        String username = ((UsernamePasswordToken) token).getUsername();
-
-        String password = String.valueOf(((UsernamePasswordToken) token).getPassword());
-
-        // this place only select by username, password's verify is credentials matcher.
-
-//            throw new UnknownAccountException("unknown account '" + username + "'");
-
-//            throw new LockedAccountException("locked account '" + username + "'");
-
-        // first argument is principal
-        return new SimpleAuthenticationInfo(null, null, REALM_NAME);
+    protected String fetchRealmName() {
+        return TcConstant.Sys.SHIRO_USERNAME_PASSWORD_REALM;
     }
-
 }

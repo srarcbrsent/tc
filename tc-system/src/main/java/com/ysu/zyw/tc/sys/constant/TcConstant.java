@@ -11,6 +11,8 @@ public class TcConstant {
 
     public static abstract class Sys {
 
+        public static final String TC_ADMIN_ID = "00000000000000000000000000000000";
+
         public static final String DEFAULT_CACHE = "defaultCache";
 
         public static final String CODIS_CACHE = "codisCache";
@@ -18,6 +20,12 @@ public class TcConstant {
         public static final String SHIRO_AUTHENTICATION_CACHE = "authenticationCache";
 
         public static final String SHIRO_AUTHORIZATION_CACHE = "authorizationCache";
+
+        public static final String SHIRO_USERNAME_PASSWORD_REALM = "jdbcUsernamePasswordRealm";
+
+        public static final String SHIRO_MOBILE_PASSWORD_REALM = "jdbcMobilePasswordRealm";
+
+        public static final String SHIRO_EMAIL_PASSWORD_REALM = "jdbcEmailPasswordRealm";
 
     }
 

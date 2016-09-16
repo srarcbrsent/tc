@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="authService" class="com.ysu.zyw.tc.svc.components.security.auth.TcAuthService"/>
+
     <bean id="shiroRealms"
           parent="abstractAuthorizingRealm"
           class="org.springframework.beans.factory.config.ListFactoryBean">
