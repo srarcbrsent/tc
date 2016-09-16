@@ -28,7 +28,7 @@ public class MongoPool {
 
     private static final Map<String, Mongo> pool = Maps.newConcurrentMap();
 
-    @CachePut(cacheNames = {TcConstant.Sys.DEFAULT_CACHE_NAME}, key = "#root.args[0].id")
+    @CachePut(cacheNames = {TcConstant.Sys.DEFAULT_CACHE}, key = "#root.args[0].id")
     public Mongo insert(Mongo mongo) {
         insertCall++;
         log.info("[{}] times real call insert", insertCall);
@@ -36,14 +36,14 @@ public class MongoPool {
         return mongo;
     }
 
-    @CacheEvict(cacheNames = {TcConstant.Sys.DEFAULT_CACHE_NAME}, key = "#root.args[0]")
+    @CacheEvict(cacheNames = {TcConstant.Sys.DEFAULT_CACHE}, key = "#root.args[0]")
     public void delete(String mongoId) {
         deleteCall++;
         log.info("[{}] times real call delete", deleteCall);
         pool.remove(mongoId);
     }
 
-    @CachePut(cacheNames = {TcConstant.Sys.DEFAULT_CACHE_NAME}, key = "#root.args[0].id")
+    @CachePut(cacheNames = {TcConstant.Sys.DEFAULT_CACHE}, key = "#root.args[0].id")
     public Mongo update(Mongo mongo) {
         updateCall++;
         log.info("[{}] times real call update", updateCall);
@@ -51,7 +51,7 @@ public class MongoPool {
         return mongo;
     }
 
-    @Cacheable(cacheNames = {TcConstant.Sys.DEFAULT_CACHE_NAME}, key = "#root.args[0]")
+    @Cacheable(cacheNames = {TcConstant.Sys.DEFAULT_CACHE}, key = "#root.args[0]")
     public Mongo select(String mongoId) {
         selectOneCall++;
         log.info("[{}] times real call select one", selectOneCall);
@@ -72,7 +72,7 @@ public class MongoPool {
     }
 
     // codis not support this operation
-    @CacheEvict(cacheNames = {TcConstant.Sys.DEFAULT_CACHE_NAME}, allEntries = true)
+    @CacheEvict(cacheNames = {TcConstant.Sys.DEFAULT_CACHE}, allEntries = true)
     public void clearCache() {
     }
 

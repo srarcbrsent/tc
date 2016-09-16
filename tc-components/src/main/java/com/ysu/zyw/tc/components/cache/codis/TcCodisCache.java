@@ -33,7 +33,7 @@ public class TcCodisCache implements Cache {
 
     @Getter
     @Setter
-    private RedisTemplate<Serializable, Serializable> redisTemplate;
+    private RedisTemplate<Serializable, Serializable> codisTemplate;
 
     @Override
     public String getName() {
@@ -42,14 +42,14 @@ public class TcCodisCache implements Cache {
 
     @Override
     public Object getNativeCache() {
-        return redisTemplate;
+        return codisTemplate;
     }
 
     @Override
     public ValueWrapper get(Object key) {
         checkNotNull(key, "null key is not allowed");
         checkArgument(key instanceof Serializable, "key must implements Serializable");
-        Serializable sValue = redisTemplate.opsForValue().get(key);
+        Serializable sValue = codisTemplate.opsForValue().get(key);
         if (Objects.nonNull(sValue)) {
             if (log.isDebugEnabled()) {
                 log.debug("get object [{}] from cache by key [{}]", sValue, key);
@@ -68,7 +68,7 @@ public class TcCodisCache implements Cache {
         checkNotNull(key, "null key is not allowed");
         checkArgument(key instanceof Serializable, "key must implements Serializable");
         //noinspection unchecked
-        T value = (T) redisTemplate.opsForValue().get(key);
+        T value = (T) codisTemplate.opsForValue().get(key);
         if (log.isDebugEnabled()) {
             log.debug("get object [{}] from cache by key [{}]", value, key);
         }
@@ -77,24 +77,39 @@ public class TcCodisCache implements Cache {
 
     @Override
     public <T> T get(Object key, Callable<T> valueLoader) {
-        //noinspection unchecked
-        T value = (T) redisTemplate.opsForValue().get(key);
+        checkNotNull(key, "null key is not allowed");
+        checkNotNull(valueLoader, "null value loader is not allowed");
+        @SuppressWarnings("unchecked")
+        T value = (T) codisTemplate.opsForValue().get(key);
         if (Objects.nonNull(value)) {
             if (log.isDebugEnabled()) {
                 log.debug("get object [{}] from cache by key [{}]", value, key);
             }
             return value;
         } else {
-            try {
-                T loadedValue = valueLoader.call();
-                redisTemplate.opsForValue().set((Serializable) key, (Serializable) loadedValue, expiration,
-                        TimeUnit.MILLISECONDS);
-                if (log.isDebugEnabled()) {
-                    log.debug("put object [{}] into cache by key [{}], expiration [{}]", loadedValue, key, expiration);
+            synchronized (this) {
+                // lock and get
+                @SuppressWarnings("unchecked")
+                T sValue = (T) codisTemplate.opsForValue().get(key);
+                if (Objects.nonNull(sValue)) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("get object [{}] from cache by key [{}]", sValue, key);
+                    }
+                    return sValue;
                 }
-                return loadedValue;
-            } catch (Exception e) {
-                throw new ValueRetrievalException(key, valueLoader, e);
+                // not found, try load value
+                try {
+                    T loadedValue = valueLoader.call();
+                    codisTemplate.opsForValue().set((Serializable) key, (Serializable) loadedValue, expiration,
+                            TimeUnit.MILLISECONDS);
+                    if (log.isDebugEnabled()) {
+                        log.debug("put object [{}] into cache by key [{}], expiration [{}]", loadedValue, key,
+                                expiration);
+                    }
+                    return loadedValue;
+                } catch (Exception e) {
+                    throw new ValueRetrievalException(key, valueLoader, e);
+                }
             }
         }
     }
@@ -105,7 +120,7 @@ public class TcCodisCache implements Cache {
         checkArgument(key instanceof Serializable, "key must implements Serializable");
         checkNotNull(value, "null value is not allowed");
         checkArgument(value instanceof Serializable, "value must implements Serializable");
-        redisTemplate.opsForValue().set((Serializable) key, (Serializable) value, expiration, TimeUnit.MILLISECONDS);
+        codisTemplate.opsForValue().set((Serializable) key, (Serializable) value, expiration, TimeUnit.MILLISECONDS);
         if (log.isDebugEnabled()) {
             log.debug("put object [{}] into cache by key [{}], expiration [{}]", value, key, expiration);
         }
@@ -120,7 +135,7 @@ public class TcCodisCache implements Cache {
         Serializable existValue = get(key, Serializable.class);
         if (Objects.isNull(existValue)) {
             put(key, value);
-            return new SimpleValueWrapper(value);
+            return null;
         } else {
             return new SimpleValueWrapper(existValue);
         }
@@ -130,7 +145,7 @@ public class TcCodisCache implements Cache {
     public void evict(Object key) {
         checkNotNull(key, "null key is not allowed");
         checkArgument(key instanceof Serializable, "key must implements Serializable");
-        redisTemplate.delete((Serializable) key);
+        codisTemplate.delete((Serializable) key);
         if (log.isDebugEnabled()) {
             log.debug("evict cache by key [{}]", key);
         }

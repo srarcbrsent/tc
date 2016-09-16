@@ -22,30 +22,16 @@
                 sharding-total-count="3"
                 sharding-item-parameters="0=世界,1=你,2=好"
                 job-parameter="你好世界">
-        <!--<job:listener class="xx.MySimpleJobListener"/>-->
-        <!--<job:distributed-listener class="xx.MyOnceSimpleJobListener"-->
-        <!--started-timeout-milliseconds="1000"-->
-        <!--completed-timeout-milliseconds="2000"/>-->
-        <!--<job:event-log/>-->
-        <!--<job:event-rdb driver="org.h2.Driver"-->
-        <!--url="jdbc:h2:mem:job_event_bus"-->
-        <!--username="sa"-->
-        <!--password=""-->
-        <!--log-level="INFO"/>-->
+        <job:listener class="com.ysu.zyw.tc.components.sch.ej.job.TcSimpleJobListener"/>
     </job:simple>
 
-    <!--<job:dataflow id="throughputDataflow"-->
-    <!--class="xxx.MyThroughputDataflowElasticJob"-->
-    <!--registry-center-ref="regCenter"-->
-    <!--cron="0/10 * * * * ?"-->
-    <!--sharding-total-count="3"-->
-    <!--sharding-item-parameters="0=A,1=B,2=C"/>-->
-
-    <!--<job:script id="scriptElasticJob"-->
-    <!--registry-center-ref="regCenter"-->
-    <!--cron="0/10 * * * * ?"-->
-    <!--sharding-total-count="3"-->
-    <!--sharding-item-parameters="0=A,1=B,2=C"-->
-    <!--script-command-line="/your/file/path/demo.sh"/>-->
+    <job:dataflow id="dataflowJob"
+                  class="com.ysu.zyw.tc.components.sch.ej.job.TcDataflowJob"
+                  registry-center-ref="regCenter"
+                  overwrite="true"
+                  cron="0/10 * * * * ?"
+                  sharding-total-count="3"
+                  sharding-item-parameters="0=A,1=B,2=C"
+                  streaming-process="false"/>
 
 </beans>

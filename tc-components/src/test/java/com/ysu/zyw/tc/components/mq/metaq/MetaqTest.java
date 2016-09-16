@@ -153,6 +153,16 @@ public class MetaqTest {
         log.info("java [{}ns], hessian [{}ns]", javaSerializationTakeNanos, hessian2SerializationTakeNanos);
     }
 
+    @Test
+    public void test5() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(60);
+    }
+
+    @Test
+    public void test6() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(60);
+    }
+
     private boolean allMessageReceived(int logRealTimeComputationMsg, int logDataStorageMsg, int apiCallMsg) {
         log.info("current consumed message [{}] [{}] [{}]",
                 TcLogRealTimeComputationListener.alreadyReceived,

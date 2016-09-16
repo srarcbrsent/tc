@@ -1,6 +1,7 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
 import com.ysu.zyw.tc.components.cache.codis.ops.TcOpsForGroupedValue;
+import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import javax.annotation.Nonnull;
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.Objects;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -48,6 +51,44 @@ public class TcCodisService {
         }
         //noinspection unchecked
         return (T) sValue;
+    }
+
+    public <T> T get(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout) {
+        checkNotNull(key, "null key is not allowed");
+        checkNotNull(valueLoader, "null value loader is not allowed");
+        @SuppressWarnings("unchecked")
+        T value = (T) codisTemplate.opsForValue().get(key);
+        if (Objects.nonNull(value)) {
+            if (log.isDebugEnabled()) {
+                log.debug("get object [{}] from cache by key [{}]", value, key);
+            }
+            return value;
+        } else {
+            synchronized (this) {
+                // lock and get
+                @SuppressWarnings("unchecked")
+                T sValue = (T) codisTemplate.opsForValue().get(key);
+                if (Objects.nonNull(sValue)) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("get object [{}] from cache by key [{}]", sValue, key);
+                    }
+                    return sValue;
+                }
+                // not found, try load value.
+                T loadedValue;
+                try {
+                    loadedValue = valueLoader.call();
+                } catch (Exception e) {
+                    throw new TcException(e, key, valueLoader);
+                }
+                checkNotNull(loadedValue, "empty loaded value is not allowed");
+                codisTemplate.opsForValue().set(key, (Serializable) loadedValue, timeout, TimeUnit.MILLISECONDS);
+                if (log.isDebugEnabled()) {
+                    log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, key, timeout);
+                }
+                return loadedValue;
+            }
+        }
     }
 
     public boolean exists(@Nonnull String key) {

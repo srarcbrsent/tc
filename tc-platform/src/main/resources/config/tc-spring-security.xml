@@ -4,4 +4,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="shiroRealms"
+          parent="abstractAuthorizingRealm"
+          class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <bean class="com.ysu.zyw.tc.svc.components.security.shiro.TcUsernamePasswordRealm"/>
+                <bean class="com.ysu.zyw.tc.svc.components.security.shiro.TcMobilePasswordRealm"/>
+            </list>
+        </property>
+    </bean>
+
 </beans>

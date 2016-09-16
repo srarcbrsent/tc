@@ -8,6 +8,6 @@
         <constructor-arg value="/region/region.json"/>
     </bean>
 
-    <bean id="regionService" class="com.ysu.zyw.tc.components.region.RegionService"/>
+    <bean id="regionService" class="com.ysu.zyw.tc.components.region.TcRegionService"/>
 
 </beans>

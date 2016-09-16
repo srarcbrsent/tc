@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.rtp;
 
-public class RealTimePushService {
+public class TcRealTimePushService {
 
 
 }

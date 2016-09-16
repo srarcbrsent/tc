@@ -4,11 +4,13 @@ import com.ysu.zyw.tc.sys.constant.TcConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Data
+@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class TcProvince implements Serializable {
@@ -23,7 +25,12 @@ public class TcProvince implements Serializable {
         return name;
     }
 
+    public TcProvince copy() {
+        return new TcProvince(this.getCode(), this.getName(), null);
+    }
+
     @Data
+    @Accessors(chain = true)
     @NoArgsConstructor
     @AllArgsConstructor
     public static class TcCity implements Serializable {
@@ -40,7 +47,12 @@ public class TcProvince implements Serializable {
             return tcProvince.completeName() + TcConstant.Str.HYPHEN + name;
         }
 
+        public TcCity copy() {
+            return new TcCity(this.getCode(), this.getName(), null, null);
+        }
+
         @Data
+        @Accessors(chain = true)
         @NoArgsConstructor
         @AllArgsConstructor
         public static class TcDistrict implements Serializable {
@@ -53,6 +65,10 @@ public class TcProvince implements Serializable {
 
             public String completeName() {
                 return tcCity.completeName() + TcConstant.Str.HYPHEN + name;
+            }
+
+            public TcDistrict copy() {
+                return new TcDistrict(this.getCode(), this.getName(), null);
             }
 
         }

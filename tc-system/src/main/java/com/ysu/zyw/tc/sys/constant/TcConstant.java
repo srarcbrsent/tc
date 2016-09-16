@@ -11,9 +11,13 @@ public class TcConstant {
 
     public static abstract class Sys {
 
-        public static final String DEFAULT_CACHE_NAME = "default";
+        public static final String DEFAULT_CACHE = "defaultCache";
 
-        public static final String CODIS_CACHE_NAME = "codisCache";
+        public static final String CODIS_CACHE = "codisCache";
+
+        public static final String SHIRO_AUTHENTICATION_CACHE = "authenticationCache";
+
+        public static final String SHIRO_AUTHORIZATION_CACHE = "authorizationCache";
 
     }
 
@@ -58,6 +62,12 @@ public class TcConstant {
         public static final String SIMPLE_DATE_FORMAT_VALUE = "yyyy-MM-dd HH:mm:ss";
 
         public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(SIMPLE_DATE_FORMAT_VALUE);
+
+    }
+
+    public static abstract class S {
+
+        public static final String SESSION_SHIRO_MATCHER_ONCE_TOKEN = "matcher_token";
 
     }
 
