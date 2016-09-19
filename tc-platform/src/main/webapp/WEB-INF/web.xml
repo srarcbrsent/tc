@@ -12,25 +12,6 @@
         <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
 
-    <!-- spring config -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath*:/config/tc-spring-deploy.xml,
-            classpath*:/config/tc-spring-cache-codis.xml,
-            classpath*:/config/tc-spring-mq-metaq.xml,
-            classpath*:/config/tc-spring-common-retry.xml,
-            classpath*:/config/tc-spring-data-mongodb.xml,
-            classpath*:/config/tc-spring-sch-ej.xml,
-            classpath*:/config/tc-spring-module-region.xml,
-            classpath*:/config/tc-spring-security-shiro.xml
-        </param-value>
-    </context-param>
-
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
     <!-- shiro filter -->
     <filter>
         <filter-name>shiroFilter</filter-name>
@@ -52,7 +33,7 @@
         <url-pattern>*.json</url-pattern>
     </filter-mapping>
 
-    <!-- Gzip Filter -->
+    <!-- gzip filter -->
     <!--<filter>-->
     <!--<filter-name>gzipFilter</filter-name>-->
     <!--<filter-class>net.sf.ehcache.constructs.web.filter.GzipFilter</filter-class>-->
@@ -78,18 +59,6 @@
     <!--<filter-name>gzipFilter</filter-name>-->
     <!--<url-pattern>*.css</url-pattern>-->
     <!--</filter-mapping>-->
-
-    <!-- etag filter -->
-    <filter>
-        <filter-name>etagFilter</filter-name>
-        <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
-        <async-supported>true</async-supported>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>etagFilter</filter-name>
-        <servlet-name>dispatcher</servlet-name>
-    </filter-mapping>
 
     <!-- character encoding filter -->
     <filter>
@@ -125,6 +94,37 @@
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>*.css</url-pattern>
     </filter-mapping>
+
+    <!-- etag filter -->
+    <filter>
+        <filter-name>etagFilter</filter-name>
+        <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>etagFilter</filter-name>
+        <servlet-name>dispatcher</servlet-name>
+    </filter-mapping>
+
+    <!-- spring config -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:/config/tc-spring-deploy.xml,
+            classpath*:/config/tc-spring-cache-codis.xml,
+            classpath*:/config/tc-spring-mq-metaq.xml,
+            classpath*:/config/tc-spring-common-retry.xml,
+            classpath*:/config/tc-spring-data-mongodb.xml,
+            classpath*:/config/tc-spring-sch-ej.xml,
+            classpath*:/config/tc-spring-module-region.xml,
+            classpath*:/config/tc-spring-security-shiro.xml
+        </param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <!-- spring mvc config -->
     <servlet>
