@@ -39,7 +39,7 @@ public class TcConstant {
 
         public static final String COLON = ":";
 
-        public static final String SPACE = " ";
+        public static final String BLANK = " ";
 
         public static final String SINGLE_QUOTE = "'";
 
@@ -51,7 +51,7 @@ public class TcConstant {
 
     public static abstract class C {
 
-        public static final String FULL_DATE_FORMAT_VALUE = "yyyy-MM-dd HH:mm:ss zzz";
+        public static final String FULL_DATE_FORMAT_VALUE = "yyyy-MM-dd HH:mm:ss.SSS";
 
         public static final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat(FULL_DATE_FORMAT_VALUE);
 

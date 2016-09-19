@@ -138,6 +138,35 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>tc_dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <properties.pom.activation.spring.profile>
+                    classpath*:/properties/dev/spring.properties
+                </properties.pom.activation.spring.profile>
+                <properties.pom.activation.spring.web.profile>
+                    classpath*:/properties/dev/spring-web.properties
+                </properties.pom.activation.spring.web.profile>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>tc_pdu</id>
+            <properties>
+                <properties.pom.activation.spring.profile>
+                    classpath*:/properties/pdu/spring.properties
+                </properties.pom.activation.spring.profile>
+                <properties.pom.activation.spring.web.profile>
+                    classpath*:/properties/pdu/spring-web.properties
+                </properties.pom.activation.spring.web.profile>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <finalName>ROOT</finalName>
 

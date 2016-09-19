@@ -68,18 +68,22 @@ public class TcRegionService implements InitializingBean {
         // build completed province list
         tcCompletedProvinceList = buildTwoWayLink(tcCompletedProvinceList);
         checkArgument(CollectionUtils.isNotEmpty(tcCompletedProvinceList), "empty region is not allowed");
+        log.info("load completed province list success, load [{}] provinces", tcCompletedProvinceList.size());
         // build province list
         tcProvinceList = buildProvinceList(tcCompletedProvinceList);
         checkArgument(CollectionUtils.isNotEmpty(tcProvinceList), "empty region is not allowed");
+        log.info("load province list success, load [{}] provinces", tcProvinceList.size());
         // build city list
         tcCityListGroup = buildCityListGroup(tcCompletedProvinceList);
         checkArgument(tcCityListGroup.size() > 0, "empty region is not allowed");
+        log.info("load city list success, load [{}] cities",
+                tcCityListGroup.entrySet().stream().mapToInt(entry -> entry.getValue().size()).sum());
         // build district list
         tcDistrictListGroup = buildDistrictListGroup(tcCompletedProvinceList);
         checkArgument(tcDistrictListGroup.size() > 0, "empty region is not allowed");
-        log.info("load region json file success ...");
+        log.info("load district list success, load [{}] districts",
+                tcDistrictListGroup.entrySet().stream().mapToInt(entry -> entry.getValue().size()).sum());
     }
-
 
     private List<TcProvince> buildTwoWayLink(List<TcProvince> tcProvinceList) {
         tcProvinceList.parallelStream().forEach(tcProvince -> {

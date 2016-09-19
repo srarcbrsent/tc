@@ -29,7 +29,7 @@
 
     <!-- !!!! Import !!!! -->
     <context:property-placeholder file-encoding="UTF-8"
-                                  location="classpath*:/properties/web-local.properties"/>
+                                  location="${properties.pom.activation.spring.web.profile}"/>
 
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:/config/tc-spring-web-front-end.xml"/>

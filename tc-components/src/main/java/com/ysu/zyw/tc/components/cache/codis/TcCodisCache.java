@@ -87,7 +87,10 @@ public class TcCodisCache implements Cache {
             }
             return value;
         } else {
-            synchronized (this) {
+            // lock value loader, and if more than one value loader spec, then they are don't exclusive
+            // FIXME if there is a same logic difference lambda, then it will cause a conflict.
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
+            synchronized (valueLoader) {
                 // lock and get
                 @SuppressWarnings("unchecked")
                 T sValue = (T) codisTemplate.opsForValue().get(key);

@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.sys.ex;
 
+import com.ysu.zyw.tc.sys.constant.TcConstant;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 public class TcException extends RuntimeException {
 
     public TcException(String message, Object... infos) {
-        super(String.valueOf(message) + " " + Arrays.toString(infos));
+        super(String.valueOf(message) + TcConstant.Str.BLANK + Arrays.toString(infos));
     }
 
     public TcException(Throwable cause, Object... infos) {
@@ -21,7 +22,7 @@ public class TcException extends RuntimeException {
     }
 
     public TcException(String message, Throwable cause, Object... infos) {
-        super(String.valueOf(message) + " " + Arrays.toString(infos), cause);
+        super(String.valueOf(message) + TcConstant.Str.BLANK + Arrays.toString(infos), cause);
     }
 
 }

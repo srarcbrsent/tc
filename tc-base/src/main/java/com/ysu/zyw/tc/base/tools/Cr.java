@@ -3,18 +3,18 @@ package com.ysu.zyw.tc.base.tools;
 import java.io.Serializable;
 
 /**
- * Transmitter is a class use for cross function call's object transform.
+ * Cr is a class use for cross function call's object transform.
  *
  * @author yaowu.zhang
  */
-public class Transmitter<T> implements Serializable {
+public class Cr<T> implements Serializable {
 
     private T object;
 
-    public Transmitter() {
+    public Cr() {
     }
 
-    public Transmitter(T object) {
+    public Cr(T object) {
         this.object = object;
     }
 

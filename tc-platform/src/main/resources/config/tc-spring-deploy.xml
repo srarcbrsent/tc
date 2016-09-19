@@ -24,7 +24,7 @@
 
     <!-- !!!! Import !!!! -->
     <context:property-placeholder file-encoding="UTF-8"
-                                  location="classpath*:/properties/local.properties"/>
+                                  location="${properties.pom.activation.spring.profile}"/>
 
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:/config/tc-spring-dao.xml"/>
