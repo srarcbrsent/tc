@@ -430,6 +430,10 @@ public class TcCodisServiceTest {
         Assert.assertTrue(tcCodisService.opsForGroupedValue().keys(group2).size() > 0);
     }
 
+    @Test
+    public void testGuavaCache() {
+    }
+
     private void sleep(long timeout) {
         try {
             TimeUnit.MILLISECONDS.sleep(timeout);

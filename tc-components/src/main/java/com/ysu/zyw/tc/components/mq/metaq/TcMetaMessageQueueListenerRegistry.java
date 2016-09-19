@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.components.mq.metaq;
 
-import com.taobao.gecko.core.util.StringUtils;
 import com.taobao.metamorphosis.client.consumer.MessageConsumer;
 import com.taobao.metamorphosis.client.consumer.MessageListener;
 import com.taobao.metamorphosis.client.extension.spring.DefaultMessageListener;
@@ -8,6 +7,7 @@ import com.taobao.metamorphosis.client.extension.spring.MessageListenerContainer
 import com.taobao.metamorphosis.client.extension.spring.MetaqTopic;
 import com.taobao.metamorphosis.consumer.ConsumerMessageFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.HashSet;
 import java.util.Map;

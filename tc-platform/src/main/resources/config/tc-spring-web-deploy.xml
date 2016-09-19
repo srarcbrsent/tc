@@ -22,6 +22,11 @@
     <aop:aspectj-autoproxy proxy-target-class="true"
                            expose-proxy="true"/>
 
+    <!--- !!!! Swagger !!!! -->
+    <bean class="com.ysu.zyw.tc.conf.TcSwaggerConfig">
+        <property name="basePackage" value="com.ysu.zyw.tc.conf.TcSwaggerConfig"/>
+    </bean>
+
     <!-- !!!! Import !!!! -->
     <context:property-placeholder file-encoding="UTF-8"
                                   location="classpath*:/properties/web-local.properties"/>

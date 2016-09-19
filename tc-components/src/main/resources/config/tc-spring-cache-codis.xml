@@ -14,9 +14,7 @@
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).DEFAULT_CACHE}"/>
-                </bean>
+                <ref bean="guavaCache"/>
                 <ref bean="codisCache"/>
             </set>
         </property>
@@ -60,6 +58,18 @@
 
     <bean id="codisService" class="com.ysu.zyw.tc.components.cache.codis.TcCodisService">
         <property name="codisTemplate" ref="stringKeyCodisTemplate"/>
+    </bean>
+
+    <bean id="cacheBuilder" class="com.google.common.cache.CacheBuilder" factory-method="newBuilder"/>
+
+    <bean id="guavaCache" class="org.springframework.cache.guava.GuavaCache">
+        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).DEFAULT_CACHE}"/>
+        <constructor-arg index="1">
+            <bean class="com.google.common.cache.LoadingCache"
+                  factory-bean="cacheBuilder"
+                  factory-method="build"/>
+        </constructor-arg>
+        <constructor-arg index="2" value="false"/>
     </bean>
 
     <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">

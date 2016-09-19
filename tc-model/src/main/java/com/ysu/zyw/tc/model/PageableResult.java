@@ -5,11 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageableResult<T> extends Result<T> {
+public class PageableResult<T> extends Result<T> implements Serializable {
 
     private int currentPage = -1;
 
