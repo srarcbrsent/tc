@@ -17,7 +17,7 @@ public class TcDataflowJob implements DataflowJob<String> {
 
     @Override
     public void processData(ShardingContext shardingContext, List<String> data) {
-        data.stream().forEach(d -> {
+        data.forEach(d -> {
             log.info("data -> [{}]", d);
         });
     }

@@ -49,18 +49,6 @@ public class TcConstant {
 
     }
 
-    public static abstract class R {
-
-        public static final int SUCCESS = 200;
-
-        public static final int NO_PERMISSIONS = 300;
-
-        public static final int CLIENT_ERROR = 400;
-
-        public static final int SERVER_ERROR = 500;
-
-    }
-
     public static abstract class C {
 
         public static final String FULL_DATE_FORMAT_VALUE = "yyyy-MM-dd HH:mm:ss zzz";

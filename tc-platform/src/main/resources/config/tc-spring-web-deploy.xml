@@ -27,8 +27,8 @@
                                   location="classpath*:/properties/web-local.properties"/>
 
     <!-- !!!! Import !!!! -->
-    <import resource="classpath*:config/tc-spring-web-front-end.xml"/>
+    <import resource="classpath*:/config/tc-spring-web-front-end.xml"/>
 
-    <import resource="classpath*:config/tc-spring-web-websocket.xml"/>
+    <import resource="classpath*:/config/tc-spring-web-websocket.xml"/>
 
 </beans>

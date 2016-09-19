@@ -59,6 +59,29 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!-- druid monitor -->
+    <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+        <init-param>
+            <param-name>resetEnable</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginUsername</param-name>
+            <param-value>tc_admin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginPassword</param-name>
+            <param-value>123456</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/druid-monitor/*</url-pattern>
+    </servlet-mapping>
+
     <!-- exception handler -->
     <error-page>
         <error-code>404</error-code>
