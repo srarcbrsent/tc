@@ -23,21 +23,43 @@ public class Result<T> implements Serializable {
 
     private T body;
 
+    public Result(int code, String description) {
+        this.code = code;
+        this.description = description;
+    }
+
+    public Result(T body) {
+        this.code = R.SUCCESS;
+        this.body = body;
+    }
+
     public static abstract class R {
 
         public static final int SUCCESS = 0;
 
         public static final int UNAUTHORIZED = 401;
 
+        public static final String UNAUTHORIZED_DESCRIPTION = "未认证！";
+
         public static final int FORBIDDEN = 403;
+
+        public static final String FORBIDDEN_DESCRIPTION = "未授权！";
 
         public static final int NOT_FOUND = 404;
 
+        public static final String NOT_FOUND_DESCRIPTION = "您请求的资源不存在！";
+
         public static final int CONFLICT = 409;
+
+        public static final String CONFLICT_DESCRIPTION = "冲突！";
 
         public static final int DEPRECATED = 415;
 
+        public static final String DEPRECATED_DESCRIPTION = "Api已过期！";
+
         public static final int SERVER_ERROR = 500;
+
+        public static final String SERVER_ERROR_DESCRIPTION = "服务器异常，请稍后再试！";
 
     }
 
