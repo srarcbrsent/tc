@@ -127,6 +127,17 @@
             <artifactId>mybatis-typehandlers-jsr310</artifactId>
         </dependency>
 
+        <!-- httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+        </dependency>
+
         <!-- util -->
         <dependency>
             <groupId>commons-io</groupId>
