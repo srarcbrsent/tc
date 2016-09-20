@@ -1,25 +1,26 @@
 package com.ysu.zyw.tc.components.httpx;
 
-import com.google.common.base.Preconditions;
+import com.google.common.base.Throwables;
+import com.ysu.zyw.tc.sys.constant.TcConstant;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.util.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
 public class TcHttpxService {
@@ -32,8 +33,10 @@ public class TcHttpxService {
     public void getText4Entity(@Nonnull String uri,
                                @Nullable Map<String, String> pathVariables,
                                @Nullable HttpHeaders httpHeaders,
-                               @Nonnull MultiValueMap<String, String> requestBody,
+                               @Nullable MultiValueMap<String, String> requestBody,
                                @Nonnull ParameterizedTypeReference typeReference) {
+        checkNotNull(uri);
+        checkNotNull(typeReference);
     }
 
     public void postText4Entity(@Nonnull String uri,
@@ -41,7 +44,9 @@ public class TcHttpxService {
                                 @Nullable HttpHeaders httpHeaders,
                                 @Nonnull MultiValueMap<String, String> requestBody,
                                 @Nonnull ParameterizedTypeReference typeReference) {
-
+        checkNotNull(uri);
+        checkNotNull(requestBody);
+        checkNotNull(typeReference);
     }
 
     public void postJson4Entity(@Nonnull String uri,
@@ -49,42 +54,98 @@ public class TcHttpxService {
                                 @Nullable HttpHeaders httpHeaders,
                                 @Nonnull Object requestBody,
                                 @Nonnull ParameterizedTypeReference typeReference) {
-
+        checkNotNull(uri);
+        checkNotNull(requestBody);
+        checkNotNull(typeReference);
     }
 
-    public MultiValueMap<String, String> wrapObj2MultiValueMap(@Nullable Object obj) {
+    public MultiValueMap<String, String> copy2MultiValueMap(@Nullable Object obj) {
         if (Objects.isNull(obj)) {
             return new LinkedMultiValueMap<>();
         }
-        if (ClassUtils.isPrimitiveOrWrapper(obj.getClass())) {
-            throw new TcException("primitive or wrapper value is invalid");
+        if (obj instanceof Collection ||
+                obj.getClass().isArray() ||
+                ClassUtils.isPrimitiveOrWrapper(obj.getClass()) ||
+                obj instanceof String) {
+            throw new TcException("list / primitive / string value is not supported");
         }
 
-
-        return null;
+        MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+        copy2MultiValueMap(multiValueMap, TcConstant.Str.BLANK, obj);
+        return multiValueMap;
     }
 
-    private void wrapObj2MultiValueMap(MultiValueMap<String, String> multiValueMap, String currentPath, Object obj) {
-        if (ClassUtils.isPrimitiveOrWrapper(obj.getClass())) {
+    private void copy2MultiValueMap(MultiValueMap<String, String> multiValueMap,
+                                    String currentPath,
+                                    Object obj) {
+        if (Objects.isNull(obj)) {
+            return;
+        }
+        if (ClassUtils.isPrimitiveOrWrapper(obj.getClass()) || obj instanceof String) {
             // is primitive type
-
+            multiValueMap.set(currentPath, String.valueOf(obj));
         } else if (obj instanceof Map) {
             // is map
+            Map<?, ?> rValue = (Map) obj;
+            rValue.entrySet().forEach(entry -> {
+                checkArgument(entry.getKey() instanceof String, "map key must is string");
+                String key = String.valueOf(entry.getKey());
+                String oKey = StringUtils.hasText(currentPath) ?
+                        (currentPath + TcConstant.Str.DOT + key) : key;
+                Object oValue = entry.getValue();
+                copy2MultiValueMap(multiValueMap, oKey, oValue);
+            });
         } else if (obj instanceof Collection) {
             // is collection
-
+            Collection value = (Collection) obj;
+            int index = 0;
+            for (Object oValue : value) {
+                String oKey = currentPath + "[" + index + "]";
+                copy2MultiValueMap(multiValueMap, oKey, oValue);
+                index++;
+            }
         } else if (obj.getClass().isArray()) {
             // is array
             for (int i = 0; i < Array.getLength(obj); i++) {
-
+                String oKey = currentPath + "[" + i + "]";
+                copy2MultiValueMap(multiValueMap, oKey, Array.get(obj, i));
             }
         } else {
             // is pojo
+            ReflectionUtils.doWithFields(obj.getClass(), field -> {
+                try {
+                    String key = field.getName();
+                    Method readMethod = findPropertyReadMethod(key, field.getDeclaringClass());
+                    String oKey = StringUtils.hasText(currentPath) ?
+                            (currentPath + TcConstant.Str.DOT + key) : key;
+                    Object oValue = readMethod.invoke(obj);
+                    copy2MultiValueMap(multiValueMap, oKey, oValue);
+                } catch (InvocationTargetException | NoSuchMethodException e) {
+                    Throwables.propagate(e);
+                }
+            });
         }
     }
 
+    private Method findPropertyReadMethod(String propertyName, Class<?> clazz) throws NoSuchMethodException {
+        Method propertyReadMethod = null;
+        String methodName = "get" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) + propertyName.substring
+                (1);
+        try {
+            propertyReadMethod = clazz.getMethod(methodName);
+        } catch (NoSuchMethodException e) {
+            // ignore
+        }
+        if (propertyReadMethod == null) {
+            methodName = "is" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) + propertyName.substring(1);
+            propertyReadMethod = clazz.getMethod(methodName);
+        }
+        checkArgument(propertyReadMethod.getParameterCount() == 0, "get method can not have args");
+        return propertyReadMethod;
+    }
+
     private String expandVars(MultiValueMap<String, String> form) {
-        Preconditions.checkNotNull(form);
+        checkNotNull(form);
         StringBuilder builder = new StringBuilder();
         for (Iterator<String> nameIterator = form.keySet().iterator(); nameIterator.hasNext(); ) {
             String name = nameIterator.next();
@@ -107,7 +168,6 @@ public class TcHttpxService {
     }
 
     private void execute() {
-//        restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
     }
 
 }
