@@ -50,7 +50,7 @@ public class TcMetaMessageQueueListenerRegistry extends MessageListenerContainer
         log.info("Initialize message listener container successfully.");
     }
 
-    private ConsumerMessageFilter tryConvertListener2ConsumerFilter(MessageListener messageListener) {
+    protected ConsumerMessageFilter tryConvertListener2ConsumerFilter(MessageListener messageListener) {
         if (Objects.nonNull(messageListener) && messageListener instanceof ConsumerMessageFilter) {
             return (ConsumerMessageFilter) messageListener;
         }

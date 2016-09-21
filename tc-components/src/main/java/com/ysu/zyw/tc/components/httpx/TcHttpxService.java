@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.*;
 import org.springframework.util.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,6 +17,9 @@ import javax.annotation.Resource;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -30,33 +33,44 @@ public class TcHttpxService {
     @Resource
     private RestTemplate restTemplate;
 
-    public void getText4Entity(@Nonnull String uri,
-                               @Nullable Map<String, String> pathVariables,
-                               @Nullable HttpHeaders httpHeaders,
-                               @Nullable MultiValueMap<String, String> requestBody,
-                               @Nonnull ParameterizedTypeReference typeReference) {
-        checkNotNull(uri);
+    public <T> ResponseEntity<T> getText4Entity(@Nonnull String url,
+                                                @Nullable Map<String, String> pathVariables,
+                                                @Nullable HttpHeaders httpHeaders,
+                                                @Nullable MultiValueMap<String, String> requestBody,
+                                                @Nonnull ParameterizedTypeReference<T> typeReference) {
+        checkNotNull(url);
         checkNotNull(typeReference);
+        HttpEntity<Void> httpEntity = new HttpEntity<>(null,
+                this.addReqContentType(httpHeaders, MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+        String expandVars = this.expandVars(requestBody);
+        String expandUrl = StringUtils.hasText(expandVars) ? (url + "?" + expandVars) : url;
+        return this.execute(expandUrl, HttpMethod.GET, httpEntity, typeReference, pathVariables);
     }
 
-    public void postText4Entity(@Nonnull String uri,
-                                @Nullable Map<String, String> pathVariables,
-                                @Nullable HttpHeaders httpHeaders,
-                                @Nonnull MultiValueMap<String, String> requestBody,
-                                @Nonnull ParameterizedTypeReference typeReference) {
-        checkNotNull(uri);
+    public <T> ResponseEntity<T> postText4Entity(@Nonnull String url,
+                                                 @Nullable Map<String, String> pathVariables,
+                                                 @Nullable HttpHeaders httpHeaders,
+                                                 @Nonnull MultiValueMap<String, String> requestBody,
+                                                 @Nonnull ParameterizedTypeReference<T> typeReference) {
+        checkNotNull(url);
         checkNotNull(requestBody);
         checkNotNull(typeReference);
+        HttpEntity<?> httpEntity = new HttpEntity<>(requestBody,
+                this.addReqContentType(httpHeaders, MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+        return this.execute(url, HttpMethod.POST, httpEntity, typeReference, pathVariables);
     }
 
-    public void postJson4Entity(@Nonnull String uri,
-                                @Nullable Map<String, String> pathVariables,
-                                @Nullable HttpHeaders httpHeaders,
-                                @Nonnull Object requestBody,
-                                @Nonnull ParameterizedTypeReference typeReference) {
-        checkNotNull(uri);
+    public <T> ResponseEntity<T> postJson4Entity(@Nonnull String url,
+                                                 @Nullable Map<String, String> pathVariables,
+                                                 @Nullable HttpHeaders httpHeaders,
+                                                 @Nonnull Object requestBody,
+                                                 @Nonnull ParameterizedTypeReference<T> typeReference) {
+        checkNotNull(url);
         checkNotNull(requestBody);
         checkNotNull(typeReference);
+        HttpEntity<?> httpEntity = new HttpEntity<>(requestBody,
+                this.addReqContentType(httpHeaders, MediaType.APPLICATION_JSON_UTF8_VALUE));
+        return this.execute(url, HttpMethod.POST, httpEntity, typeReference, pathVariables);
     }
 
     public MultiValueMap<String, String> copy2MultiValueMap(@Nullable Object obj) {
@@ -75,9 +89,9 @@ public class TcHttpxService {
         return multiValueMap;
     }
 
-    private void copy2MultiValueMap(MultiValueMap<String, String> multiValueMap,
-                                    String currentPath,
-                                    Object obj) {
+    protected void copy2MultiValueMap(MultiValueMap<String, String> multiValueMap,
+                                      String currentPath,
+                                      Object obj) {
         if (Objects.isNull(obj)) {
             return;
         }
@@ -127,24 +141,25 @@ public class TcHttpxService {
         }
     }
 
-    private Method findPropertyReadMethod(String propertyName, Class<?> clazz) throws NoSuchMethodException {
+    protected Method findPropertyReadMethod(String propertyName, Class<?> clazz) throws NoSuchMethodException {
         Method propertyReadMethod = null;
-        String methodName = "get" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) + propertyName.substring
-                (1);
+        String methodName = "get" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) +
+                propertyName.substring(1);
         try {
             propertyReadMethod = clazz.getMethod(methodName);
         } catch (NoSuchMethodException e) {
             // ignore
         }
         if (propertyReadMethod == null) {
-            methodName = "is" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) + propertyName.substring(1);
+            methodName = "is" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) +
+                    propertyName.substring(1);
             propertyReadMethod = clazz.getMethod(methodName);
         }
         checkArgument(propertyReadMethod.getParameterCount() == 0, "get method can not have args");
         return propertyReadMethod;
     }
 
-    private String expandVars(MultiValueMap<String, String> form) {
+    protected String expandVars(MultiValueMap<String, String> form) {
         checkNotNull(form);
         StringBuilder builder = new StringBuilder();
         for (Iterator<String> nameIterator = form.keySet().iterator(); nameIterator.hasNext(); ) {
@@ -167,7 +182,34 @@ public class TcHttpxService {
         return builder.toString();
     }
 
-    private void execute() {
+    protected HttpHeaders addReqContentType(HttpHeaders httpHeaders, String mediaType) {
+        HttpHeaders newHttpHeaders = new HttpHeaders();
+        newHttpHeaders.putAll(httpHeaders);
+        newHttpHeaders.set(HttpHeaders.CONTENT_TYPE, mediaType);
+        return newHttpHeaders;
+    }
+
+    protected <T> ResponseEntity<T> execute(String url,
+                                            HttpMethod httpMethod,
+                                            HttpEntity<?> httpEntity,
+                                            ParameterizedTypeReference<T> typeReference,
+                                            Map<String, String> uriVariables) {
+        if (log.isInfoEnabled()) {
+            log.info("start call api [{}:{}], url vars [{}], request body [{}]",
+                    httpMethod, url, uriVariables, httpEntity);
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        ResponseEntity<T> responseEntity =
+                restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
+
+        if (log.isInfoEnabled()) {
+            log.info("call api [{}:{}] finish, response code [{}], has body [{}], take time [{}s]",
+                    httpMethod, url, Objects.nonNull(responseEntity.getBody()), httpEntity,
+                    Duration.between(now, LocalDateTime.now()).get(ChronoUnit.SECONDS));
+        }
+
+        return responseEntity;
     }
 
 }

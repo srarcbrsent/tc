@@ -30,18 +30,18 @@ public class TcEnableNDateJavaTypeResolverImpl extends JavaTypeResolverDefaultIm
         return answer;
     }
 
-    private FullyQualifiedJavaType calculateLocalDateReplacement(IntrospectedColumn column,
-                                                                 FullyQualifiedJavaType defaultType) {
+    protected FullyQualifiedJavaType calculateLocalDateReplacement(IntrospectedColumn column,
+                                                                   FullyQualifiedJavaType defaultType) {
         return new FullyQualifiedJavaType("java.time.LocalDate");
     }
 
-    private FullyQualifiedJavaType calculateLocalTimeReplacement(IntrospectedColumn column,
-                                                                 FullyQualifiedJavaType defaultType) {
+    protected FullyQualifiedJavaType calculateLocalTimeReplacement(IntrospectedColumn column,
+                                                                   FullyQualifiedJavaType defaultType) {
         return new FullyQualifiedJavaType("java.time.LocalTime");
     }
 
-    private FullyQualifiedJavaType calculateLocalDateTimeReplacement(IntrospectedColumn column,
-                                                                     FullyQualifiedJavaType defaultType) {
+    protected FullyQualifiedJavaType calculateLocalDateTimeReplacement(IntrospectedColumn column,
+                                                                       FullyQualifiedJavaType defaultType) {
         return new FullyQualifiedJavaType("java.time.LocalDateTime");
     }
 

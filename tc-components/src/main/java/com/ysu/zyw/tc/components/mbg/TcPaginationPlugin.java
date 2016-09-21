@@ -55,7 +55,7 @@ public class TcPaginationPlugin extends PluginAdapter {
         return super.sqlMapSelectByExampleWithBLOBsElementGenerated(element, introspectedTable);
     }
 
-    private void addLimit(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, String name) {
+    protected void addLimit(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, String name) {
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
         Field field = new Field();

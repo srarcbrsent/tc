@@ -36,7 +36,7 @@ public class TcBatchInsertPlugin extends PluginAdapter {
         return super.sqlMapDocumentGenerated(document, introspectedTable);
     }
 
-    private void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
+    protected void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
         Method method = new Method(BATCH_INSERT);
         String modelType = introspectedTable.getBaseRecordType();
         FullyQualifiedJavaType modelListType = new FullyQualifiedJavaType("java.util.List<" + modelType + ">");
@@ -46,7 +46,7 @@ public class TcBatchInsertPlugin extends PluginAdapter {
         interfaze.addMethod(method);
     }
 
-    private void generateSqlMap(Document document, IntrospectedTable introspectedTable) {
+    protected void generateSqlMap(Document document, IntrospectedTable introspectedTable) {
         XmlElement xmlElement = new XmlElement("insert");
 
         // id
@@ -80,7 +80,7 @@ public class TcBatchInsertPlugin extends PluginAdapter {
         document.getRootElement().addElement(xmlElement);
     }
 
-    private Function<IntrospectedColumn, String> introspectedColumn2InsertSql() {
+    protected Function<IntrospectedColumn, String> introspectedColumn2InsertSql() {
         // transform column like 'id' to insert part like '#{item.id,jdbcType=VARCHAR}'
         return introspectedColumn ->
                 "#{item." + introspectedColumn.getJavaProperty() + ",jdbcType=" + introspectedColumn

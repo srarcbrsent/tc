@@ -38,11 +38,11 @@ public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
         return super.sqlMapDocumentGenerated(document, introspectedTable);
     }
 
-    private boolean hasOnlyOnePrimaryKeyColumn(IntrospectedTable introspectedTable) {
+    protected boolean hasOnlyOnePrimaryKeyColumn(IntrospectedTable introspectedTable) {
         return introspectedTable.getPrimaryKeyColumns().size() == 1;
     }
 
-    private void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
+    protected void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
         Method method = new Method(SELECT_KEY_BY_EXAMPLE);
         FullyQualifiedJavaType exampleParamType = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         method.addParameter(new Parameter(exampleParamType, "example"));
@@ -56,7 +56,7 @@ public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
         interfaze.addMethod(method);
     }
 
-    private void generateSqlMap(Document document, IntrospectedTable introspectedTable) {
+    protected void generateSqlMap(Document document, IntrospectedTable introspectedTable) {
         XmlElement xmlElement = new XmlElement("select");
 
         // id
@@ -101,7 +101,7 @@ public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
         document.getRootElement().addElement(xmlElement);
     }
 
-    private void generatePrimaryKeyBaseMap(Document document, IntrospectedTable introspectedTable) {
+    protected void generatePrimaryKeyBaseMap(Document document, IntrospectedTable introspectedTable) {
         XmlElement xmlElement = new XmlElement("resultMap");
 
         // id
