@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+        <property name="simpleDateFormat"
+                  value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).SIMPLE_DATE_FORMAT_VALUE}"/>
+    </bean>
+
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper"/>
+            </bean>
+        </mvc:message-converters>
+        <mvc:async-support default-timeout="30000" task-executor="threadPoolTaskScheduler"/>
+    </mvc:annotation-driven>
+
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="com.ysu.zyw.tc.components.utils.converters.TcSimpleDateFormatter">
+                    <property name="simpleDateFormat"
+                              value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).SIMPLE_DATE_FORMAT_VALUE}"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <mvc:default-servlet-handler/>
+
+    <context:component-scan base-package="com.ysu.zyw.tc.web"/>
+
+    <bean class="com.ysu.zyw.tc.components.utils.handler.TcHandleExceptionHandler">
+        <property name="view5xx" value="/server_error.html"/>
+        <property name="ajax5xx" value="/server_error.json"/>
+    </bean>
+
+</beans>

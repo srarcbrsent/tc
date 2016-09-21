@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 /**
  * @warn every business part must have it's own cache impl(or impl a cache key generator),
- * and this place only for test cacheable annotation, it will clear the codis(default) cache.
+ * and this place only for com.ysu.zyw.tc.component.mbg.test cacheable annotation, it will clear the codis(default) cache.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {

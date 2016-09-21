@@ -35,7 +35,7 @@ public class TcPaginationPlugin extends PluginAdapter {
     public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element,
                                                                      IntrospectedTable introspectedTable) {
         XmlElement paginationWrapElement = new XmlElement("if");
-        paginationWrapElement.addAttribute(new Attribute("test",
+        paginationWrapElement.addAttribute(new Attribute("com.ysu.zyw.tc.component.mbg.test",
                 START_LINE + " != null and " + PAGE_SIZE + " != null and " + PAGE_SIZE + " > 0"));
         paginationWrapElement
                 .addElement(new TextElement("limit #{" + START_LINE + "} , #{" + PAGE_SIZE + "}"));
@@ -47,7 +47,7 @@ public class TcPaginationPlugin extends PluginAdapter {
     public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(XmlElement element,
                                                                   IntrospectedTable introspectedTable) {
         XmlElement paginationWrapElement = new XmlElement("if");
-        paginationWrapElement.addAttribute(new Attribute("test",
+        paginationWrapElement.addAttribute(new Attribute("com.ysu.zyw.tc.component.mbg.test",
                 START_LINE + " != null and " + PAGE_SIZE + " != null and " + PAGE_SIZE + " > 0"));
         paginationWrapElement
                 .addElement(new TextElement("limit #{" + START_LINE + "}, #{" + PAGE_SIZE + "}"));

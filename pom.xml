@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>tc-platform</module>
+        <module>tc-api-gateway</module>
         <module>tc-base</module>
         <module>tc-system</module>
         <module>tc-components</module>
@@ -34,11 +34,12 @@
         <pom.version.curator>2.9.1</pom.version.curator>
         <pom.version.mybatis>3.4.1</pom.version.mybatis>
         <pom.version.mybatis.spring>1.3.0</pom.version.mybatis.spring>
+        <pom.version.hystrix>1.5.5</pom.version.hystrix>
         <pom.version.swagger>2.5.0</pom.version.swagger>
     </properties>
 
     <dependencies>
-        <!-- test -->
+        <!-- com.ysu.zyw.tc.component.mbg.test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -178,7 +179,7 @@
 
             <dependency>
                 <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
+                <artifactId>spring-com.ysu.zyw.tc.component.mbg.test</artifactId>
                 <version>${pom.version.spring}</version>
             </dependency>
 
@@ -431,7 +432,7 @@
 
             <dependency>
                 <groupId>org.apache.curator</groupId>
-                <artifactId>curator-test</artifactId>
+                <artifactId>curator-com.ysu.zyw.tc.component.mbg.test</artifactId>
                 <version>${pom.version.curator}</version>
             </dependency>
 
@@ -475,6 +476,13 @@
                         <artifactId>log4j</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <!-- hystrix -->
+            <dependency>
+                <groupId>com.netflix.hystrix</groupId>
+                <artifactId>hystrix-core</artifactId>
+                <version>${pom.version.hystrix}</version>
             </dependency>
 
             <!-- commons utils -->
@@ -526,7 +534,7 @@
                 <version>3.10.5.Final</version>
             </dependency>
 
-            <!-- test -->
+            <!-- com.ysu.zyw.tc.component.mbg.test -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -651,7 +659,7 @@
 
         <testResources>
             <testResource>
-                <directory>src/test/resources</directory>
+                <directory>src/com.ysu.zyw.tc.component.mbg.test/resources</directory>
                 <filtering>true</filtering>
             </testResource>
         </testResources>
@@ -703,7 +711,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- maven test plugin -->
+            <!-- maven com.ysu.zyw.tc.component.mbg.test plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

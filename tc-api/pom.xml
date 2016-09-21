@@ -46,7 +46,7 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
+            <artifactId>spring-com.ysu.zyw.tc.component.mbg.test</artifactId>
         </dependency>
 
         <dependency>
