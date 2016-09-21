@@ -2,7 +2,7 @@ package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.base.tools.IdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.After;
@@ -60,8 +60,8 @@ public class TcCodisServiceTest {
 
         long simpleStrDuration = invoke(() -> {
             IntStream.range(0, 30 * loop).parallel().forEach(i -> {
-                String uuid = IdWorker.upperCaseUuid();
-                String value = IdWorker.upperCaseUuid();
+                String uuid = TcIdWorker.upperCaseUuid();
+                String value = TcIdWorker.upperCaseUuid();
                 tcCodisService.set(uuid, value, duration);
                 String sValue = tcCodisService.get(uuid, String.class);
                 Assert.assertEquals(value, sValue);
@@ -72,9 +72,9 @@ public class TcCodisServiceTest {
 
         long simpleObjDuration = invoke(() -> {
             IntStream.range(0, 15 * loop).parallel().forEach(i -> {
-                String uuid = IdWorker.upperCaseUuid();
-                Mongo value = new Mongo(IdWorker.upperCaseUuid(),
-                        Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+                String uuid = TcIdWorker.upperCaseUuid();
+                Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
+                        Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
                 tcCodisService.set(uuid, value, duration);
                 Mongo sValue = tcCodisService.get(uuid, Mongo.class);
                 Assert.assertEquals(value, sValue);
@@ -85,11 +85,11 @@ public class TcCodisServiceTest {
 
         long objListDuration = invoke(() -> {
             IntStream.range(0, loop).parallel().forEach(i -> {
-                String uuid = IdWorker.upperCaseUuid();
+                String uuid = TcIdWorker.upperCaseUuid();
                 ArrayList<Mongo> mongoList = Lists.newArrayList();
                 for (int j = 0; j < 50; j++) {
-                    Mongo value = new Mongo(IdWorker.upperCaseUuid(),
-                            Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+                    Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
+                            Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
                     mongoList.add(value);
                 }
                 tcCodisService.set(uuid, mongoList, duration);
@@ -117,8 +117,8 @@ public class TcCodisServiceTest {
 
         long simpleStrDuration = invoke(() -> {
             IntStream.range(0, 30 * loop).parallel().forEach(i -> {
-                String uuid = IdWorker.upperCaseUuid();
-                String value = IdWorker.upperCaseUuid();
+                String uuid = TcIdWorker.upperCaseUuid();
+                String value = TcIdWorker.upperCaseUuid();
                 long duration = durationBase + RandomUtils.nextInt(1000);
                 tcCodisService.set(uuid, value, duration);
                 Assert.assertTrue(tcCodisService.exists(uuid));
@@ -143,8 +143,8 @@ public class TcCodisServiceTest {
 
         long simpleStrDuration = invoke(() -> {
             IntStream.range(0, 30 * loop).parallel().forEach(i -> {
-                String uuid = IdWorker.upperCaseUuid();
-                String value = IdWorker.upperCaseUuid();
+                String uuid = TcIdWorker.upperCaseUuid();
+                String value = TcIdWorker.upperCaseUuid();
                 long duration = durationBase + RandomUtils.nextInt(1000);
                 tcCodisService.set(uuid, value, duration);
                 Assert.assertTrue(tcCodisService.exists(uuid));
@@ -165,7 +165,7 @@ public class TcCodisServiceTest {
         });
         log.info("process [{}] simple string take time [{}s] ...", 30 * loop, simpleStrDuration);
 
-        tcCodisService.expire(IdWorker.upperCaseUuid(), 1000);
+        tcCodisService.expire(TcIdWorker.upperCaseUuid(), 1000);
     }
 
     @Test
@@ -177,8 +177,8 @@ public class TcCodisServiceTest {
 
         long simpleStrDuration = invoke(() -> {
             IntStream.range(0, 30 * loop).parallel().forEach(i -> {
-                String uuid = IdWorker.upperCaseUuid();
-                String value = IdWorker.upperCaseUuid();
+                String uuid = TcIdWorker.upperCaseUuid();
+                String value = TcIdWorker.upperCaseUuid();
                 long duration = durationBase + RandomUtils.nextInt(500);
                 tcCodisService.set(uuid, value, duration);
                 Assert.assertTrue(tcCodisService.exists(uuid));
@@ -211,9 +211,9 @@ public class TcCodisServiceTest {
 
         long simpleStrDuration = invoke(() -> {
             IntStream.range(0, 30 * loop).parallel().forEach(i -> {
-                String uuid = IdWorker.upperCaseUuid();
-                Mongo value = new Mongo(IdWorker.upperCaseUuid(),
-                        Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+                String uuid = TcIdWorker.upperCaseUuid();
+                Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
+                        Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
                 tcCodisService.opsForGroupedValue().set(group1, uuid, value, durationBase);
                 Mongo sValue1 = tcCodisService.opsForGroupedValue().get(group1, uuid, Mongo.class);
@@ -237,15 +237,15 @@ public class TcCodisServiceTest {
         log.info("start ...");
 
         long simpleStrDuration = invoke(() -> {
-            String uuid1 = IdWorker.upperCaseUuid();
-            String uuid2 = IdWorker.upperCaseUuid();
-            String uuid3 = IdWorker.upperCaseUuid();
-            Mongo value1 = new Mongo(IdWorker.upperCaseUuid(),
-                    Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
-            Mongo value2 = new Mongo(IdWorker.upperCaseUuid(),
-                    Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
-            Mongo value3 = new Mongo(IdWorker.upperCaseUuid(),
-                    Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+            String uuid1 = TcIdWorker.upperCaseUuid();
+            String uuid2 = TcIdWorker.upperCaseUuid();
+            String uuid3 = TcIdWorker.upperCaseUuid();
+            Mongo value1 = new Mongo(TcIdWorker.upperCaseUuid(),
+                    Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
+            Mongo value2 = new Mongo(TcIdWorker.upperCaseUuid(),
+                    Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
+            Mongo value3 = new Mongo(TcIdWorker.upperCaseUuid(),
+                    Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
             tcCodisService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
             tcCodisService.opsForGroupedValue().set(group1, uuid2, value2, 3 * durationBase);
@@ -308,9 +308,9 @@ public class TcCodisServiceTest {
 
         Assert.assertEquals(3, tcCodisService.opsForGroupedValue().keys(group1).size());
 
-        String uuid1 = IdWorker.upperCaseUuid();
-        Mongo value1 = new Mongo(IdWorker.upperCaseUuid(),
-                Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+        String uuid1 = TcIdWorker.upperCaseUuid();
+        Mongo value1 = new Mongo(TcIdWorker.upperCaseUuid(),
+                Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
         tcCodisService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
 
@@ -330,9 +330,9 @@ public class TcCodisServiceTest {
         final long durationBase = 2000;
         final String group1 = "group1";
 
-        String uuid1 = IdWorker.upperCaseUuid();
-        Mongo value1 = new Mongo(IdWorker.upperCaseUuid(),
-                Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+        String uuid1 = TcIdWorker.upperCaseUuid();
+        Mongo value1 = new Mongo(TcIdWorker.upperCaseUuid(),
+                Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
         tcCodisService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
 
@@ -352,9 +352,9 @@ public class TcCodisServiceTest {
         final long durationBase = 2000;
         final String group1 = "group1";
 
-        String uuid1 = IdWorker.upperCaseUuid();
-        Mongo value1 = new Mongo(IdWorker.upperCaseUuid(),
-                Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+        String uuid1 = TcIdWorker.upperCaseUuid();
+        Mongo value1 = new Mongo(TcIdWorker.upperCaseUuid(),
+                Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
         tcCodisService.opsForGroupedValue().set(group1, uuid1, value1, durationBase);
 
@@ -376,9 +376,9 @@ public class TcCodisServiceTest {
         final String group1 = "group1";
 
         IntStream.range(0, 30 * loop).parallel().forEach(i -> {
-            String uuid = IdWorker.upperCaseUuid();
-            Mongo value = new Mongo(IdWorker.upperCaseUuid(),
-                    Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+            String uuid = TcIdWorker.upperCaseUuid();
+            Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
+                    Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
             tcCodisService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
         });
@@ -397,24 +397,24 @@ public class TcCodisServiceTest {
         final String group2 = "group2";
 
         IntStream.range(0, 30 * loop).parallel().forEach(i -> {
-            String uuid = IdWorker.upperCaseUuid();
-            Mongo value = new Mongo(IdWorker.upperCaseUuid(),
-                    Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+            String uuid = TcIdWorker.upperCaseUuid();
+            Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
+                    Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
             tcCodisService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
         });
 
         IntStream.range(0, 30 * loop).parallel().forEach(i -> {
-            String uuid = IdWorker.upperCaseUuid();
-            Mongo value = new Mongo(IdWorker.upperCaseUuid(),
-                    Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+            String uuid = TcIdWorker.upperCaseUuid();
+            Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
+                    Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
             tcCodisService.opsForGroupedValue().set(group2, uuid, value, durationBase + RandomUtils.nextInt(2000));
         });
 
-        String uuid = IdWorker.upperCaseUuid();
-        Mongo value = new Mongo(IdWorker.upperCaseUuid(),
-                Lists.newArrayList(new Mongo.Orange(IdWorker.upperCaseUuid())));
+        String uuid = TcIdWorker.upperCaseUuid();
+        Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
+                Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
         tcCodisService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
 
         Assert.assertTrue(tcCodisService.opsForGroupedValue().exists(group1, uuid));

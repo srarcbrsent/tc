@@ -7,19 +7,17 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * Triple impl, use for pass three object.
+ * tuple impl, use for pass two object.
  *
  * @author yaowu.zhang
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Triple<K, V, T> implements Serializable {
+public class TcTuple<K, V> implements Serializable {
 
     private K firstValue;
 
     private V secondValue;
-
-    private T thirdValue;
 
 }

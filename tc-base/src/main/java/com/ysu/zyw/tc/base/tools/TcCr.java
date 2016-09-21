@@ -3,18 +3,18 @@ package com.ysu.zyw.tc.base.tools;
 import java.io.Serializable;
 
 /**
- * Cr is a class use for cross function call's object transform.
+ * TcCr is a class use for cross function call's object transform.
  *
  * @author yaowu.zhang
  */
-public class Cr<T> implements Serializable {
+public class TcCr<T> implements Serializable {
 
     private T object;
 
-    public Cr() {
+    public TcCr() {
     }
 
-    public Cr(T object) {
+    public TcCr(T object) {
         this.object = object;
     }
 

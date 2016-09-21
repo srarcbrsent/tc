@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Validator.
+ * TcValidator.
  *
  * @author yaowu.zhang
  */
-public class Validator {
+public class TcValidator {
 
     public static final Pattern PATTERN_CHINESE = Pattern.compile("^[\\u4e00-\\u9fa5]+$");
 

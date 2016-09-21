@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.dao.mappers.TcMbgMapper;
 import com.ysu.zyw.tc.api.dao.po.TcMbg;
 import com.ysu.zyw.tc.api.dao.po.TcMbgExample;
-import com.ysu.zyw.tc.base.tools.IdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.math.RandomUtils;
@@ -85,8 +85,8 @@ public class MbgTest {
             TcMbgMapper tcMbgMapper = sqlSession.getMapper(TcMbgMapper.class);
             IntStream.range(0, 500).parallel().forEach(i -> {
                 tcMbgMapper.insert(new TcMbg(
-                        IdWorker.upperCaseUuid(),
-                        IdWorker.upperCaseUuid(),
+                        TcIdWorker.upperCaseUuid(),
+                        TcIdWorker.upperCaseUuid(),
                         false,
                         LocalDateTime.of(
                                 RandomUtils.nextInt(5000),
@@ -140,8 +140,8 @@ public class MbgTest {
             List<TcMbg> tcMbgList = Lists.newArrayList();
             IntStream.range(0, 50).parallel().forEach(i -> {
                 tcMbgList.add(new TcMbg(
-                        IdWorker.upperCaseUuid(),
-                        IdWorker.upperCaseUuid(),
+                        TcIdWorker.upperCaseUuid(),
+                        TcIdWorker.upperCaseUuid(),
                         false,
                         LocalDateTime.of(
                                 RandomUtils.nextInt(5000),

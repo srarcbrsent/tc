@@ -13,12 +13,12 @@ import java.io.IOException;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * JsonUtil provide an set of operation to json.
+ * TcJsonUtil provide an set of operation to json.
  *
  * @author yaowu.zhang
  */
 @Slf4j
-public class JsonUtil {
+public class TcJsonUtil {
 
     private static final ObjectMapper objectMapper;
 

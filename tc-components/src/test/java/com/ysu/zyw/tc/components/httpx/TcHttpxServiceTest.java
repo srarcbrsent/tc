@@ -2,7 +2,7 @@ package com.ysu.zyw.tc.components.httpx;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ysu.zyw.tc.base.tools.IdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.math.RandomUtils;
@@ -104,7 +104,7 @@ public class TcHttpxServiceTest {
         apleMap.put("helo3", new Apple.Aple(RandomUtils.nextInt(50), true, true));
         //noinspection unchecked
         Apple apple = new Apple(RandomUtils.nextInt(500),
-                IdWorker.upperCaseUuid(),
+                TcIdWorker.upperCaseUuid(),
                 new Apple.Aple(RandomUtils.nextInt(), false, true),
                 (List) Lists.newArrayList("1", "2"),
                 (List) Lists.newArrayList(
@@ -117,10 +117,10 @@ public class TcHttpxServiceTest {
 
         // build orange
         HashMap<String, Orange.Tank.Chair> chairMap = Maps.newHashMap();
-        chairMap.put(IdWorker.upperCaseUuid(), new Orange.Tank.Chair(new boolean[]{true}));
-        chairMap.put(IdWorker.upperCaseUuid(), new Orange.Tank.Chair(new boolean[]{true, false}));
+        chairMap.put(TcIdWorker.upperCaseUuid(), new Orange.Tank.Chair(new boolean[]{true}));
+        chairMap.put(TcIdWorker.upperCaseUuid(), new Orange.Tank.Chair(new boolean[]{true, false}));
         Orange orange = new Orange(
-                IdWorker.upperCaseUuid(),
+                TcIdWorker.upperCaseUuid(),
                 Lists.newArrayList(
                         new Orange.Tank(RandomUtils.nextLong(), chairMap),
                         new Orange.Tank(RandomUtils.nextLong(), chairMap)

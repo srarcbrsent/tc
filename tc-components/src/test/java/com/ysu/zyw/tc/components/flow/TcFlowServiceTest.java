@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.flow;
 
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.base.tools.IdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.After;
 import org.junit.Assert;
@@ -86,8 +86,8 @@ public class TcFlowServiceTest {
 
     @Test
     public void testExistsFlow() {
-        String flowId = IdWorker.upperCaseUuid();
-        String bizKey = IdWorker.upperCaseUuid();
+        String flowId = TcIdWorker.upperCaseUuid();
+        String bizKey = TcIdWorker.upperCaseUuid();
         TcFlow<TcLeaveApplication> tcLeaveApplicationTcFlow = new TcFlow<TcLeaveApplication>()
                 .setId(null)
                 .setFlowId(flowId)
@@ -98,9 +98,9 @@ public class TcFlowServiceTest {
                 .setFlowCandidateAssigneeList(Lists.newArrayList())
                 .setFlowCandidateRoleList(Lists.newArrayList())
                 .setFlowBizKey(bizKey)
-                .setCreatedPerson(IdWorker.upperCaseUuid())
+                .setCreatedPerson(TcIdWorker.upperCaseUuid())
                 .setCreatedTimestamp(new Date())
-                .setUpdatedPerson(IdWorker.upperCaseUuid())
+                .setUpdatedPerson(TcIdWorker.upperCaseUuid())
                 .setUpdatedTimestamp(new Date());
 
         mongoTemplate.insert(tcLeaveApplicationTcFlow);
@@ -108,7 +108,7 @@ public class TcFlowServiceTest {
         boolean flowExist = tcFlowService.existFlow(flowId);
         Assert.assertTrue(flowExist);
 
-        Assert.assertFalse(tcFlowService.existFlow(IdWorker.upperCaseUuid()));
+        Assert.assertFalse(tcFlowService.existFlow(TcIdWorker.upperCaseUuid()));
     }
 
     private void assertCountFlowWithFilter(String currUser, List<String> currRole, long expectCount) {
@@ -118,10 +118,10 @@ public class TcFlowServiceTest {
                                                                    List<String> assigneeList,
                                                                    List<String> roleList,
                                                                    String state) {
-        String bizKey = IdWorker.upperCaseUuid();
+        String bizKey = TcIdWorker.upperCaseUuid();
         return new TcFlow<TcLeaveApplication>()
                 .setId(null)
-                .setFlowId(IdWorker.upperCaseUuid())
+                .setFlowId(TcIdWorker.upperCaseUuid())
                 .setFlowType(LEAVE_APPLICATION)
                 .setFlowState(state)
                 .setFlowData(new TcLeaveApplication(bizKey, who, RandomUtils
@@ -129,9 +129,9 @@ public class TcFlowServiceTest {
                 .setFlowCandidateAssigneeList(assigneeList)
                 .setFlowCandidateRoleList(roleList)
                 .setFlowBizKey(bizKey)
-                .setCreatedPerson(IdWorker.upperCaseUuid())
+                .setCreatedPerson(TcIdWorker.upperCaseUuid())
                 .setCreatedTimestamp(new Date())
-                .setUpdatedPerson(IdWorker.upperCaseUuid())
+                .setUpdatedPerson(TcIdWorker.upperCaseUuid())
                 .setUpdatedTimestamp(new Date());
     }
 
@@ -139,20 +139,20 @@ public class TcFlowServiceTest {
                                                                                List<String> assigneeList,
                                                                                List<String> roleList,
                                                                                String state) {
-        String bizKey = IdWorker.upperCaseUuid();
+        String bizKey = TcIdWorker.upperCaseUuid();
         return new TcFlow<TcSalaryRaiseApplication>()
                 .setId(null)
-                .setFlowId(IdWorker.upperCaseUuid())
+                .setFlowId(TcIdWorker.upperCaseUuid())
                 .setFlowType(SALARY_RAISE_APPLICATION)
                 .setFlowState(state)
-                .setFlowData(new TcSalaryRaiseApplication(IdWorker.upperCaseUuid(), who,
+                .setFlowData(new TcSalaryRaiseApplication(TcIdWorker.upperCaseUuid(), who,
                         RandomUtils.nextInt(3000) + 3000L, RandomUtils.nextInt(3000) + 1000L))
                 .setFlowCandidateAssigneeList(assigneeList)
                 .setFlowCandidateRoleList(roleList)
                 .setFlowBizKey(bizKey)
-                .setCreatedPerson(IdWorker.upperCaseUuid())
+                .setCreatedPerson(TcIdWorker.upperCaseUuid())
                 .setCreatedTimestamp(new Date())
-                .setUpdatedPerson(IdWorker.upperCaseUuid())
+                .setUpdatedPerson(TcIdWorker.upperCaseUuid())
                 .setUpdatedTimestamp(new Date());
     }
 

@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import com.ysu.zyw.tc.api.dao.mappers.*;
 import com.ysu.zyw.tc.api.dao.penum.TcPermissionType;
 import com.ysu.zyw.tc.api.dao.po.*;
-import com.ysu.zyw.tc.base.tools.IdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -43,7 +43,7 @@ public class TcAuthService {
                 .parallelStream()
                 .map(permissionSetId ->
                         new TcAccountMapPermissionSet(
-                                IdWorker.upperCaseUuid(),
+                                TcIdWorker.upperCaseUuid(),
                                 accountId,
                                 permissionSetId,
                                 now,
@@ -62,7 +62,7 @@ public class TcAuthService {
                 .parallelStream()
                 .map(permissionId ->
                         new TcAccountMapPermission(
-                                IdWorker.upperCaseUuid(),
+                                TcIdWorker.upperCaseUuid(),
                                 accountId,
                                 permissionId,
                                 now,

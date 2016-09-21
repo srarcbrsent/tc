@@ -8,12 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * PaginationUtil. start page start by 1.
+ * TcPaginationUtil. start page start by 1.
  *
  * @author yaowu.zhang
  */
 @Slf4j
-public class PaginationUtil {
+public class TcPaginationUtil {
 
     /**
      * give every page size and current page, then return start line number and page size.
