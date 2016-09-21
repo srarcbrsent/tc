@@ -40,6 +40,10 @@ public class TcR<T> implements Serializable {
 
         public static final String SUCCESS_DESCRIPTION = "请求成功！";
 
+        public static final int BAD_REQUEST = 400;
+
+        public static final String BAD_REQUEST_DESCRIPTION = "错误请求！";
+
         public static final int UNAUTHORIZED = 401;
 
         public static final String UNAUTHORIZED_DESCRIPTION = "未认证！";

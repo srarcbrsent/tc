@@ -1,7 +1,6 @@
 package com.ysu.zyw.tc.web;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import org.springframework.http.MediaType;
@@ -29,7 +28,6 @@ public class TcMainController {
             notes = "跳转到首页",
             produces = MediaType.TEXT_HTML_VALUE)
     @ApiResponse(code = 200, message = "成功")
-    @ApiModelProperty
     @RequestMapping(value = "index.html")
     public ModelAndView index() {
         return new ModelAndView("/WEB-INF/templates/index.ftl");
