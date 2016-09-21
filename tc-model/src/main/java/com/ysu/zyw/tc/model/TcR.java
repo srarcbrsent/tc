@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Result<T> implements Serializable {
+public class TcR<T> implements Serializable {
 
     private int code;
 
@@ -23,19 +23,22 @@ public class Result<T> implements Serializable {
 
     private T body;
 
-    public Result(int code, String description) {
+    public TcR(int code, String description) {
         this.code = code;
         this.description = description;
     }
 
-    public Result(T body) {
+    public TcR(T body) {
         this.code = R.SUCCESS;
+        this.description = R.SUCCESS_DESCRIPTION;
         this.body = body;
     }
 
     public static abstract class R {
 
         public static final int SUCCESS = 0;
+
+        public static final String SUCCESS_DESCRIPTION = "请求成功！";
 
         public static final int UNAUTHORIZED = 401;
 

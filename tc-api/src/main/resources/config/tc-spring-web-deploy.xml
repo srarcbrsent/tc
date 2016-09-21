@@ -23,8 +23,8 @@
                            expose-proxy="true"/>
 
     <!--- !!!! Swagger !!!! -->
-    <bean class="com.ysu.zyw.tc.conf.TcSwaggerConfig">
-        <property name="basePackage" value="com.ysu.zyw.tc.web"/>
+    <bean class="com.ysu.zyw.tc.api.conf.TcSwaggerConfig">
+        <property name="basePackage" value="com.ysu.zyw.tc.api.openapi"/>
     </bean>
 
     <!-- !!!! Import !!!! -->
@@ -33,5 +33,7 @@
 
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:/config/tc-spring-web-front-end.xml"/>
+
+    <import resource="classpath*:/config/tc-spring-web-websocket.xml"/>
 
 </beans>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!-- !!!! Properties !!!! -->
+    <properties resource="properties/mbg-config.properties"/>
+
+    <classPathEntry location="${mbg.jdbc.driver}"/>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <!-- !!!! Plugins !!!! -->
+        <plugin type="com.ysu.zyw.tc.components.mbg.TcLombokModelPlugin"/>
+
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <plugin type="com.ysu.zyw.tc.components.mbg.TcPaginationPlugin"/>
+
+        <plugin type="com.ysu.zyw.tc.components.mbg.TcSelectPrimaryKeyPlugin"/>
+
+        <plugin type="com.ysu.zyw.tc.components.mbg.TcBatchInsertPlugin"/>
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- !!!! Database Configurations !!!! -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="${mbg.jdbc.url}"
+                        userId="${mbg.jdbc.username}"
+                        password="${mbg.jdbc.password}">
+        </jdbcConnection>
+
+        <javaTypeResolver type="com.ysu.zyw.tc.components.mbg.TcEnableNDateJavaTypeResolverImpl"/>
+
+        <!-- !!!! Model Configurations !!!! -->
+        <javaModelGenerator targetPackage="${mbg.po.package}"
+                            targetProject="${mbg.project.base}/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaModelGenerator>
+
+        <!-- !!!! Mapper XML Configurations !!!! -->
+        <sqlMapGenerator targetPackage="${mbg.mapper.folder}"
+                         targetProject="${mbg.project.base}/src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- !!!! Mapper Interface Configurations !!!! -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="${mbg.interface.package}"
+                             targetProject="${mbg.project.base}/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- !!!! Table Configurations !!!! -->
+
+    </context>
+
+</generatorConfiguration>

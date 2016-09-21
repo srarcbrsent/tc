@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.components.security.shiro;
 
+import com.ysu.zyw.tc.sys.ex.TcException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 
@@ -9,8 +10,7 @@ public class TcSessionDao extends CachingSessionDAO {
 
     @Override
     public String getActiveSessionsCacheName() {
-        return
-                "TODO";
+        throw new TcException("not supported method");
     }
 
     @Override

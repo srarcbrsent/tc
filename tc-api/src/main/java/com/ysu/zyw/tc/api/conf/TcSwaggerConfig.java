@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.conf;
+package com.ysu.zyw.tc.api.conf;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;

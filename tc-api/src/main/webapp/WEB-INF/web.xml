@@ -12,4 +12,117 @@
         <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
 
+    <!-- gzip filter -->
+    <!--<filter>-->
+    <!--<filter-name>gzipFilter</filter-name>-->
+    <!--<filter-class>net.sf.ehcache.constructs.web.filter.GzipFilter</filter-class>-->
+    <!--<async-supported>true</async-supported>-->
+    <!--</filter>-->
+
+    <!--<filter-mapping>-->
+    <!--<filter-name>gzipFilter</filter-name>-->
+    <!--<url-pattern>*.html</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!--<filter-mapping>-->
+    <!--<filter-name>gzipFilter</filter-name>-->
+    <!--<url-pattern>*.json</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!--<filter-mapping>-->
+    <!--<filter-name>gzipFilter</filter-name>-->
+    <!--<url-pattern>*.js</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!--<filter-mapping>-->
+    <!--<filter-name>gzipFilter</filter-name>-->
+    <!--<url-pattern>*.css</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!-- character encoding filter -->
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>*.json</url-pattern>
+    </filter-mapping>
+
+    <!-- etag filter -->
+    <filter>
+        <filter-name>etagFilter</filter-name>
+        <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>etagFilter</filter-name>
+        <servlet-name>dispatcher</servlet-name>
+    </filter-mapping>
+
+    <!-- spring config -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:/config/tc-spring-deploy.xml
+        </param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- spring mvc config -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                classpath*:/config/tc-spring-web-deploy.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.json</url-pattern>
+    </servlet-mapping>
+
+    <!-- druid monitor -->
+    <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+        <init-param>
+            <param-name>resetEnable</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginUsername</param-name>
+            <param-value>tc_admin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginPassword</param-name>
+            <param-value>123456</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/druid-monitor/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

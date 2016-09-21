@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageableResult<T> extends Result<T> implements Serializable {
+public class TcP<T> extends TcR<T> implements Serializable {
 
     private int currentPage = -1;
 

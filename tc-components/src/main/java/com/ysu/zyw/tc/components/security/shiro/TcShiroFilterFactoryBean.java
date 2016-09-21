@@ -28,7 +28,6 @@ public class TcShiroFilterFactoryBean extends ShiroFilterFactoryBean {
             log.info("start load shiro filter definition [{}]", realPath);
             definitions = FileUtils.readFileToString(filterChainDefinitionResource.getFile(), "UTF-8");
         } catch (IOException e) {
-            log.error("", e);
             throw new TcException("shiro filter initialize need an valid filter chain definition resource file, "
                     + "it's must start with [classpath:], and then is a valid file path, but get [" + definitionFile
                     + "]", e);
