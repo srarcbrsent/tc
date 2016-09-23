@@ -102,7 +102,7 @@ public class TcHttpxServiceTest {
         apleMap.put("helo1", new Apple.Aple(RandomUtils.nextInt(50), true, true));
         apleMap.put("helo2", new Apple.Aple(RandomUtils.nextInt(50), true, true));
         apleMap.put("helo3", new Apple.Aple(RandomUtils.nextInt(50), true, true));
-        //noinspection unchecked
+        @SuppressWarnings(value = "unchecked")
         Apple apple = new Apple(RandomUtils.nextInt(500),
                 TcIdWorker.upperCaseUuid(),
                 new Apple.Aple(RandomUtils.nextInt(), false, true),

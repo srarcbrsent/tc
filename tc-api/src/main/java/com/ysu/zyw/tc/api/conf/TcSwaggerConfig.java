@@ -9,10 +9,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMethod;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -32,6 +34,15 @@ public class TcSwaggerConfig {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
+                .apiInfo(
+                        new ApiInfoBuilder()
+                                .title("TcApi")
+                                .description("TcApiDescription")
+                                .contact(new Contact("yaowu.zhang", null, "zhang_yao_wu1993@yeah.net"))
+                                .license("MIT License")
+                                .licenseUrl("https://github.com/srarcbrsent/tc/blob/master/LICENSE")
+                                .version("1.0")
+                                .build())
                 .pathMapping("/")
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(false)

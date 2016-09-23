@@ -24,7 +24,7 @@ public class TcJsonUtil {
 
     static {
         objectMapper = new ObjectMapper();
-        objectMapper.setDateFormat(TcConstant.C.SIMPLE_DATE_FORMAT);
+        objectMapper.setDateFormat(TcConstant.C.FULL_DATE_FORMAT);
     }
 
     public static String serialize(@Nonnull Object object) {

@@ -17,6 +17,13 @@
             <artifactId>jackson-databind</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

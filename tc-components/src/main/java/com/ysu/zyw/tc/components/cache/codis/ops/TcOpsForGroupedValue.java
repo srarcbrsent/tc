@@ -36,6 +36,7 @@ public class TcOpsForGroupedValue extends TcAbstractOpsForGroup {
         codisTemplate.opsForZSet().add(group, groupedKey, buildGroupedZSetFieldScore(timeout));
     }
 
+    @SuppressWarnings(value = "unchecked")
     public <T> T get(@Nonnull String group,
                      @Nonnull String key,
                      @Nonnull Class<T> clazz) {
@@ -50,14 +51,13 @@ public class TcOpsForGroupedValue extends TcAbstractOpsForGroup {
                 codisTemplate.delete(group);
             }
         }
-        //noinspection unchecked
         return (T) sValue;
     }
 
+    @SuppressWarnings(value = "unchecked")
     public boolean exists(@Nonnull String group, @Nonnull String key) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
-        //noinspection unchecked
         return codisTemplate.execute((RedisCallback<Boolean>) connection -> connection
                 .exists(((RedisSerializer<String>) codisTemplate.getKeySerializer())
                         .serialize(buildGroupedKey(group, key))));

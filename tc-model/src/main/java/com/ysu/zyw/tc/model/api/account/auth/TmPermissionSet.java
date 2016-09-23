@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Accessors(chain = true)
@@ -17,11 +17,11 @@ public class TmPermissionSet implements Serializable {
 
     private String description;
 
-    private LocalDateTime createdTimestamp;
+    private Date createdTimestamp;
 
     private String createdPerson;
 
-    private LocalDateTime updatedTimestamp;
+    private Date updatedTimestamp;
 
     private String updatedPerson;
 }

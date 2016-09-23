@@ -55,10 +55,6 @@ public class TcConstant {
 
         public static final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat(FULL_DATE_FORMAT_VALUE);
 
-        public static final String SIMPLE_DATE_FORMAT_VALUE = "yyyy-MM-dd HH:mm:ss";
-
-        public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(SIMPLE_DATE_FORMAT_VALUE);
-
     }
 
     public static abstract class S {

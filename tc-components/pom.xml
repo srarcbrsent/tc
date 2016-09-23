@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-com.ysu.zyw.tc.component.mbg.test</artifactId>
+            <artifactId>spring-test</artifactId>
         </dependency>
 
         <dependency>
@@ -120,11 +120,6 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-typehandlers-jsr310</artifactId>
         </dependency>
 
         <!-- httpclient -->

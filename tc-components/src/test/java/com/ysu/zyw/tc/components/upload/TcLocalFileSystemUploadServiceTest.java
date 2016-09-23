@@ -15,7 +15,9 @@ import java.util.UUID;
 public class TcLocalFileSystemUploadServiceTest {
 
     private TcLocalFileSystemUploadService tcLocalFileSystemUploadService;
+
     private String localFileSystemUploadBase = "/home/zhangyaowu/local/storage";
+
     private String visitResourceBase = "http://resource.tc.com";
 
     @Before

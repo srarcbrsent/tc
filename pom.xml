@@ -179,7 +179,7 @@
 
             <dependency>
                 <groupId>org.springframework</groupId>
-                <artifactId>spring-com.ysu.zyw.tc.component.mbg.test</artifactId>
+                <artifactId>spring-test</artifactId>
                 <version>${pom.version.spring}</version>
             </dependency>
 
@@ -333,12 +333,6 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-spring</artifactId>
                 <version>${pom.version.mybatis.spring}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis-typehandlers-jsr310</artifactId>
-                <version>1.0.1</version>
             </dependency>
 
             <dependency>

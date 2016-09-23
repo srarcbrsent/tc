@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,32 +29,70 @@ public class TcAccountApi {
     @Resource
     private TcAccountService tcAccountService;
 
-    public void createAccount() {
-
+    @ApiOperation(
+            value = "创建用户",
+            notes = "创建用户",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
+    @ApiResponse(code = 200, message = "OK")
+    @RequestMapping(value = "/create_account", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<TcR<Boolean>> createAccount() {
+        return null;
     }
 
     @ApiOperation(
             value = "删除指定用户",
             notes = "通过id删除指定用户",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiImplicitParam(paramType = "header", name = "X-ApiVersion", defaultValue = "1.0", dataType = "string")
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    @RequestMapping(value = "/delete_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcR<Boolean>> deleteAccount() {
         return new ResponseEntity<>(new TcR<>(null), HttpStatus.OK);
     }
 
-    public void updateAccount() {
-
+    @ApiOperation(
+            value = "更新指定用户",
+            notes = "通过id更新指定用户",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
+    @ApiResponse(code = 200, message = "OK")
+    @RequestMapping(value = "update_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<TcR<Boolean>> updateAccount() {
+        return null;
     }
 
     @ApiOperation(
             value = "查询用户列表",
             notes = "查询用户列表，且逻辑",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiImplicitParam(paramType = "header", name = "X-ApiVersion", defaultValue = "1.0", dataType = "string")
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
+    @RequestMapping(value = "/find_accounts", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcP<List<TmAccount>>> findAccounts(
             @ApiParam(value = "账号id") @RequestParam(value = "id", required = false) String id,
             @ApiParam(value = "账号name") @RequestParam(value = "name", required = false) String name,
@@ -65,18 +104,28 @@ public class TcAccountApi {
             @ApiParam(value = "每页条数") @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         List<TmAccount> tmAccounts = Lists.newArrayList();
         // TODO
+        TmAccount tmAccount = new TmAccount();
+        tmAccount.setCreatedTimestamp(new Date());
+        tmAccounts.add(tmAccount);
         return new ResponseEntity<>(new TcP<>(tmAccounts, currentPage, -1, pageSize), HttpStatus.OK);
     }
 
     @ApiOperation(
             value = "查询指定用户",
             notes = "通过id查询指定用户",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiImplicitParam(paramType = "header", name = "X-ApiVersion", defaultValue = "1.0", dataType = "string")
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
+    @RequestMapping(
+            value = "/find_account/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcR<TmAccount>> findAccount(
-            @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId) {
+            @ApiParam(value = "账号id", required = true) @PathVariable(value = "id") String accountId) {
 
         TmAccount account = tcAccountService.findAccount(accountId);
 

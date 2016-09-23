@@ -13,16 +13,16 @@ public class TcSimpleDateFormatter implements Formatter<Date> {
 
     @Getter
     @Setter
-    private SimpleDateFormat simpleDateFormat;
+    private SimpleDateFormat dateFormat;
 
     @Override
     public Date parse(String text, Locale locale) throws ParseException {
-        return simpleDateFormat.parse(text);
+        return dateFormat.parse(text);
     }
 
     @Override
     public String print(Date object, Locale locale) {
-        return simpleDateFormat.format(object);
+        return dateFormat.format(object);
     }
 
 }

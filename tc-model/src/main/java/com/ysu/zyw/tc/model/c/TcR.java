@@ -1,6 +1,8 @@
 package com.ysu.zyw.tc.model.c;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +17,16 @@ import java.util.function.Supplier;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "响应包裹类型")
 public class TcR<T> implements Serializable {
 
+    @ApiModelProperty(value = "响应码")
     private int code;
 
+    @ApiModelProperty(value = "响应描述")
     private String description;
 
+    @ApiModelProperty(value = "响应体")
     private T body;
 
     public TcR(int code, String description) {
@@ -36,7 +42,7 @@ public class TcR<T> implements Serializable {
 
     public static abstract class R {
 
-        public static final int SUCCESS = 0;
+        public static final int SUCCESS = 200;
 
         public static final String SUCCESS_DESCRIPTION = "请求成功！";
 
