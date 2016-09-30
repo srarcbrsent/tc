@@ -149,10 +149,21 @@
             <artifactId>mybatis-generator-core</artifactId>
         </dependency>
 
-        <!-- hystrix -->
+        <!-- aliyun sms -->
         <dependency>
-            <groupId>com.netflix.hystrix</groupId>
-            <artifactId>hystrix-core</artifactId>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-sms</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-dm</artifactId>
+            <version>3.0.0-rc2</version>
         </dependency>
     </dependencies>
 
