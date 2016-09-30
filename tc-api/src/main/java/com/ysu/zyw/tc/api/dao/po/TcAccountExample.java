@@ -2,8 +2,8 @@ package com.ysu.zyw.tc.api.dao.po;
 
 import com.ysu.zyw.tc.api.dao.penum.TcSigninPlatform;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TcAccountExample {
@@ -116,8 +116,7 @@ public class TcAccountExample {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
-            signinPlatformCriteria.add(new Criterion(condition, value1, value2, "org.apache.ibatis.type" +
-                    ".EnumTypeHandler"));
+            signinPlatformCriteria.add(new Criterion(condition, value1, value2, "org.apache.ibatis.type.EnumTypeHandler"));
             allCriteria = null;
         }
 
@@ -593,52 +592,52 @@ public class TcAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeEqualTo(LocalDateTime value) {
+        public Criteria andSigninTimeEqualTo(Date value) {
             addCriterion("signin_time =", value, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeNotEqualTo(LocalDateTime value) {
+        public Criteria andSigninTimeNotEqualTo(Date value) {
             addCriterion("signin_time <>", value, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeGreaterThan(LocalDateTime value) {
+        public Criteria andSigninTimeGreaterThan(Date value) {
             addCriterion("signin_time >", value, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andSigninTimeGreaterThanOrEqualTo(Date value) {
             addCriterion("signin_time >=", value, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeLessThan(LocalDateTime value) {
+        public Criteria andSigninTimeLessThan(Date value) {
             addCriterion("signin_time <", value, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andSigninTimeLessThanOrEqualTo(Date value) {
             addCriterion("signin_time <=", value, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeIn(List<LocalDateTime> values) {
+        public Criteria andSigninTimeIn(List<Date> values) {
             addCriterion("signin_time in", values, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeNotIn(List<LocalDateTime> values) {
+        public Criteria andSigninTimeNotIn(List<Date> values) {
             addCriterion("signin_time not in", values, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andSigninTimeBetween(Date value1, Date value2) {
             addCriterion("signin_time between", value1, value2, "signinTime");
             return (Criteria) this;
         }
 
-        public Criteria andSigninTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andSigninTimeNotBetween(Date value1, Date value2) {
             addCriterion("signin_time not between", value1, value2, "signinTime");
             return (Criteria) this;
         }
@@ -653,52 +652,52 @@ public class TcAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeEqualTo(LocalDateTime value) {
+        public Criteria andLockReleaseTimeEqualTo(Date value) {
             addCriterion("lock_release_time =", value, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeNotEqualTo(LocalDateTime value) {
+        public Criteria andLockReleaseTimeNotEqualTo(Date value) {
             addCriterion("lock_release_time <>", value, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeGreaterThan(LocalDateTime value) {
+        public Criteria andLockReleaseTimeGreaterThan(Date value) {
             addCriterion("lock_release_time >", value, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andLockReleaseTimeGreaterThanOrEqualTo(Date value) {
             addCriterion("lock_release_time >=", value, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeLessThan(LocalDateTime value) {
+        public Criteria andLockReleaseTimeLessThan(Date value) {
             addCriterion("lock_release_time <", value, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andLockReleaseTimeLessThanOrEqualTo(Date value) {
             addCriterion("lock_release_time <=", value, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeIn(List<LocalDateTime> values) {
+        public Criteria andLockReleaseTimeIn(List<Date> values) {
             addCriterion("lock_release_time in", values, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeNotIn(List<LocalDateTime> values) {
+        public Criteria andLockReleaseTimeNotIn(List<Date> values) {
             addCriterion("lock_release_time not in", values, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andLockReleaseTimeBetween(Date value1, Date value2) {
             addCriterion("lock_release_time between", value1, value2, "lockReleaseTime");
             return (Criteria) this;
         }
 
-        public Criteria andLockReleaseTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andLockReleaseTimeNotBetween(Date value1, Date value2) {
             addCriterion("lock_release_time not between", value1, value2, "lockReleaseTime");
             return (Criteria) this;
         }
@@ -773,52 +772,52 @@ public class TcAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampEqualTo(Date value) {
             addCriterion("created_timestamp =", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampNotEqualTo(Date value) {
             addCriterion("created_timestamp <>", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampGreaterThan(LocalDateTime value) {
+        public Criteria andCreatedTimestampGreaterThan(Date value) {
             addCriterion("created_timestamp >", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampGreaterThanOrEqualTo(Date value) {
             addCriterion("created_timestamp >=", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampLessThan(LocalDateTime value) {
+        public Criteria andCreatedTimestampLessThan(Date value) {
             addCriterion("created_timestamp <", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampLessThanOrEqualTo(Date value) {
             addCriterion("created_timestamp <=", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampIn(List<LocalDateTime> values) {
+        public Criteria andCreatedTimestampIn(List<Date> values) {
             addCriterion("created_timestamp in", values, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotIn(List<LocalDateTime> values) {
+        public Criteria andCreatedTimestampNotIn(List<Date> values) {
             addCriterion("created_timestamp not in", values, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
             addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
             addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
@@ -903,52 +902,52 @@ public class TcAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampEqualTo(Date value) {
             addCriterion("updated_timestamp =", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampNotEqualTo(Date value) {
             addCriterion("updated_timestamp <>", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampGreaterThan(LocalDateTime value) {
+        public Criteria andUpdatedTimestampGreaterThan(Date value) {
             addCriterion("updated_timestamp >", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(Date value) {
             addCriterion("updated_timestamp >=", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampLessThan(LocalDateTime value) {
+        public Criteria andUpdatedTimestampLessThan(Date value) {
             addCriterion("updated_timestamp <", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampLessThanOrEqualTo(Date value) {
             addCriterion("updated_timestamp <=", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampIn(List<LocalDateTime> values) {
+        public Criteria andUpdatedTimestampIn(List<Date> values) {
             addCriterion("updated_timestamp in", values, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotIn(List<LocalDateTime> values) {
+        public Criteria andUpdatedTimestampNotIn(List<Date> values) {
             addCriterion("updated_timestamp not in", values, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
             addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
             addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }

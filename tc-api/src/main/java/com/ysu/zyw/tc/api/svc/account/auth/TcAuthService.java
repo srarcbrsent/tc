@@ -1,16 +1,21 @@
 package com.ysu.zyw.tc.api.svc.account.auth;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.ysu.zyw.tc.api.dao.mappers.*;
 import com.ysu.zyw.tc.api.dao.penum.TcPermissionType;
 import com.ysu.zyw.tc.api.dao.po.*;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.model.api.account.auth.TmPermission;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +43,7 @@ public class TcAuthService {
     public int grantPermissionSet(String accountId, List<String> permissionSetIdList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionSetIdList));
-        LocalDateTime now = LocalDateTime.now();
+        Date now = Calendar.getInstance().getTime();
         List<TcAccountMapPermissionSet> accountMapPermissionSetList = permissionSetIdList
                 .parallelStream()
                 .map(permissionSetId ->
@@ -57,7 +62,7 @@ public class TcAuthService {
     public int grantPermission(String accountId, List<String> permissionIdList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionIdList));
-        LocalDateTime now = LocalDateTime.now();
+        Date now = Calendar.getInstance().getTime();
         List<TcAccountMapPermission> accountMapPermissionList = permissionIdList
                 .parallelStream()
                 .map(permissionId ->
@@ -168,4 +173,17 @@ public class TcAuthService {
         return tcPermissionMapper.selectByExample(tcPermissionExample);
     }
 
+    public List<TmPermission> findMenus(String accountId) {
+        List<TcPermission> tcPermissions =
+                this.fetchPermissionList(accountId, Lists.newArrayList(TcPermissionType.MENU));
+        return tcPermissions.stream().map(tcPermission -> {
+            TmPermission tmPermission = new TmPermission();
+            try {
+                BeanUtils.copyProperties(tcPermission, tmPermission);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw Throwables.propagate(e);
+            }
+            return tmPermission;
+        }).collect(Collectors.toList());
+    }
 }

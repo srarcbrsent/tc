@@ -41,16 +41,4 @@ public class TmAccount implements Serializable {
 
     @ApiModelProperty(value = "账号lockReleaseTime", example = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date lockReleaseTime;
-
-    @ApiModelProperty(value = "账号createdTimestamp", example = "yyyy-MM-dd HH:mm:ss.SSS")
-    private Date createdTimestamp;
-
-    @ApiModelProperty(value = "账号createdPerson")
-    private String createdPerson;
-
-    @ApiModelProperty(value = "账号updatedTimestamp", example = "yyyy-MM-dd HH:mm:ss.SSS")
-    private Date updatedTimestamp;
-
-    @ApiModelProperty(value = "账号updatedPerson")
-    private String updatedPerson;
 }

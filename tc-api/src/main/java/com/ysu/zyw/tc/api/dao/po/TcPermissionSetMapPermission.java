@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Accessors(chain = true)
@@ -19,7 +19,7 @@ public class TcPermissionSetMapPermission implements Serializable {
 
     private String permissionId;
 
-    private LocalDateTime createdTimestamp;
+    private Date createdTimestamp;
 
     private String createdPerson;
 

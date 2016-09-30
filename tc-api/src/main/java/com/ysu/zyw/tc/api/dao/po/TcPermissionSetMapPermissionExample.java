@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.api.dao.po;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TcPermissionSetMapPermissionExample {
@@ -345,52 +345,52 @@ public class TcPermissionSetMapPermissionExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampEqualTo(Date value) {
             addCriterion("created_timestamp =", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampNotEqualTo(Date value) {
             addCriterion("created_timestamp <>", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampGreaterThan(LocalDateTime value) {
+        public Criteria andCreatedTimestampGreaterThan(Date value) {
             addCriterion("created_timestamp >", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampGreaterThanOrEqualTo(Date value) {
             addCriterion("created_timestamp >=", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampLessThan(LocalDateTime value) {
+        public Criteria andCreatedTimestampLessThan(Date value) {
             addCriterion("created_timestamp <", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampLessThanOrEqualTo(Date value) {
             addCriterion("created_timestamp <=", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampIn(List<LocalDateTime> values) {
+        public Criteria andCreatedTimestampIn(List<Date> values) {
             addCriterion("created_timestamp in", values, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotIn(List<LocalDateTime> values) {
+        public Criteria andCreatedTimestampNotIn(List<Date> values) {
             addCriterion("created_timestamp not in", values, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
             addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
             addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }

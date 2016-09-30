@@ -2,8 +2,8 @@ package com.ysu.zyw.tc.api.dao.po;
 
 import com.ysu.zyw.tc.api.dao.penum.TcPermissionType;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TcPermissionExample {
@@ -432,6 +432,146 @@ public class TcPermissionExample {
             return (Criteria) this;
         }
 
+        public Criteria andDataUrlIsNull() {
+            addCriterion("data_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlIsNotNull() {
+            addCriterion("data_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlEqualTo(String value) {
+            addCriterion("data_url =", value, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlNotEqualTo(String value) {
+            addCriterion("data_url <>", value, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlGreaterThan(String value) {
+            addCriterion("data_url >", value, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("data_url >=", value, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLessThan(String value) {
+            addCriterion("data_url <", value, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLessThanOrEqualTo(String value) {
+            addCriterion("data_url <=", value, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLike(String value) {
+            addCriterion("data_url like", value, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlNotLike(String value) {
+            addCriterion("data_url not like", value, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlIn(List<String> values) {
+            addCriterion("data_url in", values, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlNotIn(List<String> values) {
+            addCriterion("data_url not in", values, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlBetween(String value1, String value2) {
+            addCriterion("data_url between", value1, value2, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlNotBetween(String value1, String value2) {
+            addCriterion("data_url not between", value1, value2, "dataUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelIsNull() {
+            addCriterion("data_url_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelIsNotNull() {
+            addCriterion("data_url_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelEqualTo(String value) {
+            addCriterion("data_url_level =", value, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelNotEqualTo(String value) {
+            addCriterion("data_url_level <>", value, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelGreaterThan(String value) {
+            addCriterion("data_url_level >", value, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelGreaterThanOrEqualTo(String value) {
+            addCriterion("data_url_level >=", value, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelLessThan(String value) {
+            addCriterion("data_url_level <", value, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelLessThanOrEqualTo(String value) {
+            addCriterion("data_url_level <=", value, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelLike(String value) {
+            addCriterion("data_url_level like", value, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelNotLike(String value) {
+            addCriterion("data_url_level not like", value, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelIn(List<String> values) {
+            addCriterion("data_url_level in", values, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelNotIn(List<String> values) {
+            addCriterion("data_url_level not in", values, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelBetween(String value1, String value2) {
+            addCriterion("data_url_level between", value1, value2, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataUrlLevelNotBetween(String value1, String value2) {
+            addCriterion("data_url_level not between", value1, value2, "dataUrlLevel");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedTimestampIsNull() {
             addCriterion("created_timestamp is null");
             return (Criteria) this;
@@ -442,52 +582,52 @@ public class TcPermissionExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampEqualTo(Date value) {
             addCriterion("created_timestamp =", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampNotEqualTo(Date value) {
             addCriterion("created_timestamp <>", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampGreaterThan(LocalDateTime value) {
+        public Criteria andCreatedTimestampGreaterThan(Date value) {
             addCriterion("created_timestamp >", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampGreaterThanOrEqualTo(Date value) {
             addCriterion("created_timestamp >=", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampLessThan(LocalDateTime value) {
+        public Criteria andCreatedTimestampLessThan(Date value) {
             addCriterion("created_timestamp <", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampLessThanOrEqualTo(Date value) {
             addCriterion("created_timestamp <=", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampIn(List<LocalDateTime> values) {
+        public Criteria andCreatedTimestampIn(List<Date> values) {
             addCriterion("created_timestamp in", values, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotIn(List<LocalDateTime> values) {
+        public Criteria andCreatedTimestampNotIn(List<Date> values) {
             addCriterion("created_timestamp not in", values, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
             addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
             addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
@@ -572,52 +712,52 @@ public class TcPermissionExample {
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampEqualTo(Date value) {
             addCriterion("updated_timestamp =", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampNotEqualTo(Date value) {
             addCriterion("updated_timestamp <>", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampGreaterThan(LocalDateTime value) {
+        public Criteria andUpdatedTimestampGreaterThan(Date value) {
             addCriterion("updated_timestamp >", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(Date value) {
             addCriterion("updated_timestamp >=", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampLessThan(LocalDateTime value) {
+        public Criteria andUpdatedTimestampLessThan(Date value) {
             addCriterion("updated_timestamp <", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampLessThanOrEqualTo(Date value) {
             addCriterion("updated_timestamp <=", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampIn(List<LocalDateTime> values) {
+        public Criteria andUpdatedTimestampIn(List<Date> values) {
             addCriterion("updated_timestamp in", values, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotIn(List<LocalDateTime> values) {
+        public Criteria andUpdatedTimestampNotIn(List<Date> values) {
             addCriterion("updated_timestamp not in", values, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
             addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
             addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }

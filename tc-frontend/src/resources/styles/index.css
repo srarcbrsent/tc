@@ -1,0 +1,19 @@
+body > div {
+    margin-top: 15px;
+}
+
+#hit_div {
+    margin-top: 15px;
+}
+
+#carousel_div div.cards.cards-borderless div.card-actions > button {
+    margin-top: 5px;
+}
+
+#footer_div {
+    margin-top: 20px;
+}
+
+.board-item.drag-shadow {
+    z-index: 9999
+}

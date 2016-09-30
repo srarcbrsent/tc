@@ -80,18 +80,18 @@ public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
                 (IntrospectedColumn::getActualColumnName).collect(Collectors.toList()));
         String content =
                 "select\n" +
-                        "    <if com.ysu.zyw.tc.component.mbg.test=\"distinct\">\n" +
+                        "    <if test=\"distinct\">\n" +
                         "      distinct\n" +
                         "    </if>\n" +
                         "    " + primaryKeyColumnNames + "\n" +
                         "    from " + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName() + "\n" +
-                        "    <if com.ysu.zyw.tc.component.mbg.test=\"_parameter != null\">\n" +
+                        "    <if test=\"_parameter != null\">\n" +
                         "      <include refid=\"" + introspectedTable.getExampleWhereClauseId() + "\" />\n" +
                         "    </if>\n" +
-                        "    <if com.ysu.zyw.tc.component.mbg.test=\"orderByClause != null\">\n" +
+                        "    <if test=\"orderByClause != null\">\n" +
                         "      order by ${orderByClause}\n" +
                         "    </if>\n" +
-                        "    <if com.ysu.zyw.tc.component.mbg.test=\"" + TcPaginationPlugin.START_LINE + " != null and " + TcPaginationPlugin
+                        "    <if test=\"" + TcPaginationPlugin.START_LINE + " != null and " + TcPaginationPlugin
                         .PAGE_SIZE + " != null and " + TcPaginationPlugin.PAGE_SIZE + " > 0\">\n" +
                         "      limit #{" + TcPaginationPlugin.START_LINE + "}, #{" + TcPaginationPlugin.PAGE_SIZE +
                         "}\n" +

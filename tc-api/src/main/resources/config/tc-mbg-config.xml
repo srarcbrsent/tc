@@ -33,8 +33,6 @@
                         password="${mbg.jdbc.password}">
         </jdbcConnection>
 
-        <javaTypeResolver type="com.ysu.zyw.tc.components.mbg.TcEnableNDateJavaTypeResolverImpl"/>
-
         <!-- !!!! Model Configurations !!!! -->
         <javaModelGenerator targetPackage="${mbg.po.package}"
                             targetProject="${mbg.project.base}/src/main/java">
@@ -55,6 +53,40 @@
         </javaClientGenerator>
 
         <!-- !!!! Table Configurations !!!! -->
+        <table tableName="member_account"
+               domainObjectName="TcAccount"
+               mapperName="TcAccountMapper">
+            <columnOverride column="signin_platform"
+                            javaType="com.ysu.zyw.tc.api.dao.penum.TcSigninPlatform"
+                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+            <columnOverride column="delected"
+                            javaType="java.lang.Boolean"/>
+        </table>
+
+        <table tableName="member_account_map_permission"
+               domainObjectName="TcAccountMapPermission"
+               mapperName="TcAccountMapPermissionMapper"/>
+
+        <table tableName="member_account_map_permission_set"
+               domainObjectName="TcAccountMapPermissionSet"
+               mapperName="TcAccountMapPermissionSetMapper">
+        </table>
+
+        <table tableName="member_permission"
+               domainObjectName="TcPermission"
+               mapperName="TcPermissionMapper">
+            <columnOverride column="type"
+                            javaType="com.ysu.zyw.tc.api.dao.penum.TcPermissionType"
+                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+        </table>
+
+        <table tableName="member_permission_set"
+               domainObjectName="TcPermissionSet"
+               mapperName="TcPermissionSetMapper"/>
+
+        <table tableName="member_permission_set_map_permission"
+               domainObjectName="TcPermissionSetMapPermission"
+               mapperName="TcPermissionSetMapPermissionMapper"/>
 
     </context>
 

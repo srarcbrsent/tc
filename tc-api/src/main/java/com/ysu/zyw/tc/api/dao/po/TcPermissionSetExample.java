@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.api.dao.po;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TcPermissionSetExample {
@@ -275,52 +275,52 @@ public class TcPermissionSetExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampEqualTo(Date value) {
             addCriterion("created_timestamp =", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampNotEqualTo(Date value) {
             addCriterion("created_timestamp <>", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampGreaterThan(LocalDateTime value) {
+        public Criteria andCreatedTimestampGreaterThan(Date value) {
             addCriterion("created_timestamp >", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampGreaterThanOrEqualTo(Date value) {
             addCriterion("created_timestamp >=", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampLessThan(LocalDateTime value) {
+        public Criteria andCreatedTimestampLessThan(Date value) {
             addCriterion("created_timestamp <", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andCreatedTimestampLessThanOrEqualTo(Date value) {
             addCriterion("created_timestamp <=", value, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampIn(List<LocalDateTime> values) {
+        public Criteria andCreatedTimestampIn(List<Date> values) {
             addCriterion("created_timestamp in", values, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotIn(List<LocalDateTime> values) {
+        public Criteria andCreatedTimestampNotIn(List<Date> values) {
             addCriterion("created_timestamp not in", values, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
             addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andCreatedTimestampNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
             addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
@@ -405,52 +405,52 @@ public class TcPermissionSetExample {
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampEqualTo(Date value) {
             addCriterion("updated_timestamp =", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampNotEqualTo(Date value) {
             addCriterion("updated_timestamp <>", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampGreaterThan(LocalDateTime value) {
+        public Criteria andUpdatedTimestampGreaterThan(Date value) {
             addCriterion("updated_timestamp >", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(Date value) {
             addCriterion("updated_timestamp >=", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampLessThan(LocalDateTime value) {
+        public Criteria andUpdatedTimestampLessThan(Date value) {
             addCriterion("updated_timestamp <", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampLessThanOrEqualTo(LocalDateTime value) {
+        public Criteria andUpdatedTimestampLessThanOrEqualTo(Date value) {
             addCriterion("updated_timestamp <=", value, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampIn(List<LocalDateTime> values) {
+        public Criteria andUpdatedTimestampIn(List<Date> values) {
             addCriterion("updated_timestamp in", values, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotIn(List<LocalDateTime> values) {
+        public Criteria andUpdatedTimestampNotIn(List<Date> values) {
             addCriterion("updated_timestamp not in", values, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
             addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
-        public Criteria andUpdatedTimestampNotBetween(LocalDateTime value1, LocalDateTime value2) {
+        public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
             addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Accessors(chain = true)
@@ -26,17 +26,17 @@ public class TcAccount implements Serializable {
 
     private TcSigninPlatform signinPlatform;
 
-    private LocalDateTime signinTime;
+    private Date signinTime;
 
-    private LocalDateTime lockReleaseTime;
+    private Date lockReleaseTime;
 
     private Boolean delected;
 
-    private LocalDateTime createdTimestamp;
+    private Date createdTimestamp;
 
     private String createdPerson;
 
-    private LocalDateTime updatedTimestamp;
+    private Date updatedTimestamp;
 
     private String updatedPerson;
 

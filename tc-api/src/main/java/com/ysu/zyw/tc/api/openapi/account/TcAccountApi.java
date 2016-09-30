@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -105,7 +104,6 @@ public class TcAccountApi {
         List<TmAccount> tmAccounts = Lists.newArrayList();
         // TODO
         TmAccount tmAccount = new TmAccount();
-        tmAccount.setCreatedTimestamp(new Date());
         tmAccounts.add(tmAccount);
         return new ResponseEntity<>(new TcP<>(tmAccounts, currentPage, -1, pageSize), HttpStatus.OK);
     }
