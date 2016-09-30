@@ -3,7 +3,7 @@ package com.ysu.zyw.tc.base.utils;
 import java.util.Date;
 import java.util.function.Supplier;
 
-public class TcLambdaUtil {
+public class TcLambdaUtils {
 
     public static class I {
 

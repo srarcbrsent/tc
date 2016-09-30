@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author yaowu.zhang
  */
 @Slf4j
-public class TcSerializeUtil {
+public class TcSerializeUtils {
 
     public static byte[] serialize(@Nonnull Serializable value) {
         checkNotNull(value, "null serialize value is not allowed");

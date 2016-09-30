@@ -3,7 +3,7 @@ package com.ysu.zyw.tc.components.region;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ysu.zyw.tc.base.utils.TcJsonUtil;
+import com.ysu.zyw.tc.base.utils.TcJsonUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class TcRegionService implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         InputStream regionInputStream = this.getClass().getResourceAsStream(regionFilepath);
         String regionJson = IOUtils.toString(regionInputStream, "UTF-8");
-        tcCompletedProvinceList = TcJsonUtil.deserialize(regionJson, new TypeReference<List<TcProvince>>() {
+        tcCompletedProvinceList = TcJsonUtils.deserialize(regionJson, new TypeReference<List<TcProvince>>() {
         });
         // build completed province list
         tcCompletedProvinceList = buildTwoWayLink(tcCompletedProvinceList);
