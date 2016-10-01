@@ -10,11 +10,6 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-        <property name="dateFormat"
-                  value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).FULL_DATE_FORMAT}"/>
-    </bean>
-
     <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
@@ -43,6 +38,38 @@
     <bean class="com.ysu.zyw.tc.components.utils.handler.TcHandleExceptionHandler">
         <property name="view5xx" value="/server_error.html"/>
         <property name="ajax5xx" value="/server_error.json"/>
+    </bean>
+
+    <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value=""/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">30</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">0.##</prop>
+                <prop key="template_exception_handler">
+                    com.ysu.zyw.tc.components.utils.handler.TcFreemarkerExceptionHandler
+                </prop>
+            </props>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="base" value="${properties.web.freemarker.vars.base}"/>
+                <entry key="staticBase" value="${properties.web.freemarker.vars.static.base}"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="order" value="0"/>
+        <property name="suffix" value=""/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
 </beans>

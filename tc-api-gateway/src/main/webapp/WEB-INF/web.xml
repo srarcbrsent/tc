@@ -28,33 +28,6 @@
         <url-pattern>*.json</url-pattern>
     </filter-mapping>
 
-    <!-- gzip filter -->
-    <!--<filter>-->
-    <!--<filter-name>gzipFilter</filter-name>-->
-    <!--<filter-class>net.sf.ehcache.constructs.web.filter.GzipFilter</filter-class>-->
-    <!--<async-supported>true</async-supported>-->
-    <!--</filter>-->
-
-    <!--<filter-mapping>-->
-    <!--<filter-name>gzipFilter</filter-name>-->
-    <!--<url-pattern>*.html</url-pattern>-->
-    <!--</filter-mapping>-->
-
-    <!--<filter-mapping>-->
-    <!--<filter-name>gzipFilter</filter-name>-->
-    <!--<url-pattern>*.json</url-pattern>-->
-    <!--</filter-mapping>-->
-
-    <!--<filter-mapping>-->
-    <!--<filter-name>gzipFilter</filter-name>-->
-    <!--<url-pattern>*.js</url-pattern>-->
-    <!--</filter-mapping>-->
-
-    <!--<filter-mapping>-->
-    <!--<filter-name>gzipFilter</filter-name>-->
-    <!--<url-pattern>*.css</url-pattern>-->
-    <!--</filter-mapping>-->
-
     <!-- character encoding filter -->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>

@@ -2,92 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>首页</title>
-    <script src="http://static.tc.com/libs/jquery-3.1.0.min.js" type="application/javascript"></script>
-    <link href="http://static.tc.com/libs/normalize.css" type="text/css" rel="stylesheet"/>
-    <link href="http://static.tc.com/libs/zui/css/zui.min.css" type="text/css" rel="stylesheet"/>
-    <link href="http://static.tc.com/libs/zui/zui-theme.min.css" type="text/css" rel="stylesheet"/>
-    <link href="http://static.tc.com/libs/layer/skin/layer.min.css" type="text/css" rel="stylesheet"/>
-    <link href="http://static.tc.com/styles/index.css" type="text/css" rel="stylesheet"/>
+    <title>Tc交易平台</title>
+<#include "/WEB-INF/templates/common/pre-lib.ftl"/>
+    <link href="${.vars.staticBase}/styles/index.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container container-fixed">
     <!-- nav start -->
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container-fluid">
-            <!-- 导航头部 -->
-            <div class="navbar-header">
-                <!-- 品牌名称或logo -->
-                <a class="navbar-brand" href="#">Tc</a>
-            </div>
-            <!-- 导航项目 -->
-            <div class="collapse navbar-collapse navbar-collapse-example">
-                <!-- 一般导航项目 -->
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">首页</a>
-                    </li>
-                    <!-- 导航中的下拉菜单 -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">商品列表<b class="caret"></b></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="your/nice/url">商品</a></li>
-                            <li><a href="your/nice/url">产品</a></li>
-                            <li><a href="your/nice/url">书籍</a></li>
-                            <li><a href="your/nice/url">杂货</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">订单列表</a>
-                    </li>
-                    <li>
-                        <a href="#">个人信息</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="your/nice/url">注册</a></li>
-                    <li><a href="your/nice/url">登陆</a></li>
-                    <li><a href="your/nice/url">综合搜索</a></li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
+<#include "/WEB-INF/templates/common/header.ftl"/>
     <!-- nav end -->
-
     <!-- container start -->
     <div class="row">
         <!-- menu start -->
-        <div id="menu_div" class="col-md-2">
-            <ul class="nav nav-secondary nav-stacked">
-                <li class="active">
-                    <a href="#">首页 </a>
-                </li>
-                <li>
-                    <a href="#">动态 <span class="label label-badge label-success pull-right">4</span></a>
-                </li>
-                <li class="">
-                    <a href="#">项目 </a>
-                </li>
-                <li class="">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">更多 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="">任务</a>
-                        </li>
-                        <li>
-                            <a href="">Bug</a>
-                        </li>
-                        <li>
-                            <a href="">需求</a>
-                        </li>
-                        <li>
-                            <a href="">用例</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+    <#include "/WEB-INF/templates/common/menus.ftl"/>
         <!-- menu end -->
 
         <!-- section start -->
@@ -162,7 +89,7 @@
 
             <!-- card start -->
             <div class="cards cards-borderless">
-                <div class="col-md-4 col-sm-6 col-lg-3">
+                <div class="col-lg-3">
                     <a class="card" href="#">
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
@@ -173,7 +100,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-4 col-sm-6 col-lg-3">
+                <div class="col-lg-3">
                     <a class="card" href="#">
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
@@ -184,7 +111,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-4 col-sm-6 col-lg-3">
+                <div class="col-lg-3">
                     <a class="card" href="#">
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
@@ -195,7 +122,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-4 col-sm-6 col-lg-3">
+                <div class="col-lg-3">
                     <a class="card" href="#">
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
@@ -252,24 +179,11 @@
     <hr/>
 
     <!-- footer start -->
-    <ul id="footer_div" class="nav nav-tabs">
-        <li class="active"><a href="###" data-target="#_tab_c1" data-toggle="tab">关于作者</a></li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane fade active in" id="_tab_c1">
-            <p>
-            <div class="github-card" data-github="srarcbrsent" data-width="400" data-height=""
-                 data-theme="medium"></div>
-            <script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
-            </p>
-        </div>
-    </div>
+<#include "/WEB-INF/templates/common/footer.ftl"/>
     <!-- footer end -->
 </div>
 
-
-<script src="http://static.tc.com/libs/zui/js/zui.min.js" type="application/javascript"></script>
-<script src="http://static.tc.com/libs/layer/layer.min.js" type="application/javascript"></script>
-<script src="http://static.tc.com/scripts/index.js" type="application/javascript"></script>
+<#include "/WEB-INF/templates/common/post-lib.ftl"/>
+<script src="${.vars.staticBase}/scripts/index.js" type="application/javascript"></script>
 </body>
 </html>

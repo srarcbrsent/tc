@@ -22,6 +22,12 @@
         </property>
     </bean>
 
+    <!-- jackson -->
+    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+        <property name="dateFormat"
+                  value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).FULL_DATE_FORMAT}"/>
+    </bean>
+
     <!-- !!!! Import !!!! -->
     <context:property-placeholder file-encoding="UTF-8"
                                   location="${properties.pom.activation.spring.profile}"/>
