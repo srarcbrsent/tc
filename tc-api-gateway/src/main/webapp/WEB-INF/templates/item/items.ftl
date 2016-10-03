@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Tc交易平台</title>
 <#include "/WEB-INF/templates/common/pre-lib.ftl"/>
-    <link href="${.vars.staticBase}/styles/account/signin.css" type="text/css" rel="stylesheet"/>
+    <link href="${.vars.staticBase}/styles/item/items.css" type="text/css" rel="stylesheet"/>
+    <link href="${.vars.staticBase}/libs/typeahead/jquery.typeahead.min.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container container-fixed">
@@ -20,206 +21,124 @@
 
         <!-- section start -->
         <div id="section_div" class="col-md-10">
+            <h1>商品列表</h1>
+            <hr/>
+
             <!-- filter start -->
             <div id="filter_div" class="table-responsive">
                 <form>
                     <table class="table">
                         <tbody>
                         <tr>
-                            <td style="width: 140px;">
-                                <div style="line-height: 39px;">
-                                    <i class="icon icon-search"></i> <strong>复选框 1</strong>
-                                </div>
-                            </td>
                             <td>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
+                                <div class="with-padding">
+                                    <div class="form-group">
+                                        <label for="exampleInputAccount7" class="col-sm-2">商品名/卖家名</label>
+                                        <form id="form-country_v1" name="form-country_v1">
+                                            <div class="typeahead__container">
+                                                <div class="typeahead__field">
+                                                <span class="typeahead__query">
+                                                    <input class="js-typeahead-country_v1"
+                                                           name="country_v1[query]"
+                                                           type="search"
+                                                           placeholder="Search"
+                                                           autocomplete="off"/>
+                                                </span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 140px;">
-                                <div style="line-height: 39px;">
-                                    <i class="icon icon-search"></i> <strong>复选框 1</strong>
-                                </div>
-                            </td>
                             <td>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="checkbox"> 复选框 1
-                                    </label>
+                                <div id="filterbox_div">
+                                    <div class="col-md-12 with-padding">
+                                        <div class="col-md-1">
+                                            <h6>品牌：</h6>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <button class="btn" type="button">主要3按钮</button>
+                                            <button class="btn" type="button">主要f按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要fsd按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按fsd钮</button>
+                                            <button class="btn" type="button">主要asdf按钮</button>
+                                            <button class="btn" type="button">主要a按钮</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 with-padding">
+                                        <div class="col-md-1">
+                                            <h6>品牌：</h6>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                            <button class="btn" type="button">主要按钮</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 with-padding">
+                                        <div class="col-md-1">
+                                            <h6>品牌：</h6>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <button class="btn " type="button">
+                                                <i class="icon icon-double-angle-down"></i> 价格降序
+                                            </button>
+                                            <button class="btn " type="button">
+                                                <i class="icon icon-double-angle-down"></i> 名称降序
+                                            </button>
+                                            <button class="btn " type="button">
+                                                <i class="icon icon-filter"></i> 仅显示有货
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 140px;">
-                                <div style="line-height: 39px;">
-                                    <i class="icon icon-search"></i> <strong>复选框 1</strong>
-                                </div>
-                            </td>
                             <td>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="radio"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="radio"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="radio"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="radio"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="radio"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="radio"> 复选框 1
-                                    </label>
-                                </div>
-                                <div class="pull-left with-padding">
-                                    <label>
-                                        <input type="radio"> 复选框 1
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 140px;">
-                                <div style="line-height: 39px;">
-                                    <i class="icon icon-search"></i> <strong>复选框 1</strong>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-group">
-                                    <select class="form-control">
-                                        <option value="1">卖家所在省份</option>
-                                        <option value="2">北京</option>
-                                    </select>
-                                    <span class="input-group-addon fix-border fix-padding"></span>
-                                    <select class="form-control">
-                                        <option value="1">卖家所在市区</option>
-                                        <option value="1">...</option>
-                                    </select>
-                                    <span class="input-group-addon fix-border fix-padding"></span>
-                                    <input type="text" class="form-control" placeholder="模糊搜索卖家名"/>
-                                    <span class="input-group-addon fix-border fix-padding"></span>
-                                    <input type="text" class="form-control" placeholder="模糊搜索商品名"/>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 140px;" colspan="2">
-                                <div style="line-height: 39px;" class="text-center">
-                                    <button id="loadingBtnExample"
-                                            type="button"
-                                            class="btn btn-primary"
-                                            data-loading-text="正在加载...">加载状态
-                                    </button>
-                                    <button type="reset" class="btn">重置所有</button>
+                                <div class="with-padding">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-2">
+                                        <div>
+                                            <button class="btn btn-block btn-primary" type="button">
+                                                <i class="icon icon-search"></i> 搜索
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div>
+                                            <button class="btn btn-block" type="button">
+                                                <i class="icon icon-refresh"></i> 清空
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4"></div>
                                 </div>
                             </td>
                         </tr>
@@ -230,7 +149,7 @@
             <!-- filter end -->
 
             <!-- items start -->
-            <div class="cards cards-borderless">
+            <div class="cards cards-condensed">
                 <div class="col-md-4 col-sm-6 col-lg-3">
                     <a class="card" href="#">
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
@@ -387,10 +306,9 @@
     <!-- footer end -->
 </div>
 
-
-
 <#include "/WEB-INF/templates/common/post-lib.ftl"/>
-<script src="${.vars.staticBase}/libs/jqplugin/jquery.validate.min.js" type="application/javascript"></script>
-<script src="${.vars.staticBase}/scripts/account/signin.js" type="application/javascript"></script>
+<script src="${.vars.staticBase}/scripts/item/items.js" type="application/javascript"></script>
+<script src="${.vars.staticBase}/libs/typeahead/jquery.typeahead.min.js" type="application/javascript"></script>
+
 </body>
 </html>

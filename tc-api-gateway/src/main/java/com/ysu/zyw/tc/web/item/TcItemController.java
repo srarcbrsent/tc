@@ -8,14 +8,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/item")
 public class TcItemController {
 
-    @RequestMapping(value = "/go2items")
+    @RequestMapping(value = "/p/items")
     public ModelAndView go2items() {
-        return new ModelAndView("/WEB-INF/templates/item/item_list.ftl");
+        return new ModelAndView("/WEB-INF/templates/item/items.ftl");
     }
 
-    @RequestMapping(value = "/go2item")
+    @RequestMapping(value = "/p/item")
     public ModelAndView go2item() {
-        return new ModelAndView("/WEB-INF/templates/item/item_detail.ftl");
+        return new ModelAndView("/WEB-INF/templates/item/item.ftl");
     }
 
 }

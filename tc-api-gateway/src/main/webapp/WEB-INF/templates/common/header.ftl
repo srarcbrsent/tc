@@ -14,16 +14,10 @@
                 </li>
                 <!-- 导航中的下拉菜单 -->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">商品列表<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="your/nice/url">商品</a></li>
-                        <li><a href="your/nice/url">产品</a></li>
-                        <li><a href="your/nice/url">书籍</a></li>
-                        <li><a href="your/nice/url">杂货</a></li>
-                    </ul>
+                    <a href="${.vars.base}/item/p/items.html">商品列表</a>
                 </li>
                 <li>
-                    <a href="#">订单列表</a>
+                    <a href="${.vars.base}/order/p/orders.html">订单列表</a>
                 </li>
                 <li>
                     <a href="#">收藏列表</a>
@@ -39,10 +33,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a id="nav_signup_btn" href="${.vars.base}/account/go2signup.html">注册</a></li>
-                <li><a id="nav_signin_btn" href="${.vars.base}/account/go2signin.html">登陆</a></li>
-                <li><a id="nav_search_btn" href="javascript:void(0)">综合搜索</a></li>
-
+                <li><a id="nav_signup_btn" href="${.vars.base}/account/p/signup.html">注册</a></li>
+                <li><a id="nav_signin_btn" href="${.vars.base}/account/p/signin.html">登陆</a></li>
             </ul>
         </div>
     </div>
@@ -52,3 +44,38 @@
         padding-top: 15px;
     }
 </style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // totop logic
+        $("<div id='to_top_div'><img src='http://static.tc.com/images/totop.png'></div>").appendTo('body');
+        $('#to_top_div').css({
+            width: '50px',
+            height: '50px',
+            bottom: '10px',
+            right: '15px',
+            position: 'fixed',
+            cursor: 'pointer',
+            zIndex: '999999'
+        });
+        if ($(this).scrollTop() == 0) {
+            $('#to_top_div').hide();
+        }
+        $(window).scroll(function (event) {
+            /* Act on the event */
+            if ($(this).scrollTop() == 0) {
+                $('#to_top_div').hide();
+            }
+            if ($(this).scrollTop() != 0) {
+                $('#to_top_div').show();
+            }
+        });
+        $('#to_top_div').click(function (event) {
+            /* Act on the event */
+            $("html,body").animate({
+                        scrollTop: "0px"
+                    },
+                    666
+            );
+        });
+    });
+</script>

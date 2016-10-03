@@ -8,12 +8,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/account")
 public class TcAccountController {
 
-    @RequestMapping(value = "/go2signup")
+    @RequestMapping(value = "/p/signup")
     public ModelAndView go2signup() {
         return new ModelAndView("/WEB-INF/templates/account/signup.ftl");
     }
 
-    @RequestMapping(value = "/go2signin")
+    @RequestMapping(value = "/p/signin")
     public ModelAndView go2signin() {
         return new ModelAndView("/WEB-INF/templates/account/signin.ftl");
     }
