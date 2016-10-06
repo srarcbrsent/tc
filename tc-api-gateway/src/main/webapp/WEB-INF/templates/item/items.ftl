@@ -58,7 +58,7 @@
                                         <div class="col-md-1">
                                             <h6>品牌：</h6>
                                         </div>
-                                        <div class="col-md-11">
+                                        <div id="filterbox_brand_div" class="col-md-11">
                                             <button class="btn" type="button">主要3按钮</button>
                                             <button class="btn" type="button">主要f按钮</button>
                                             <button class="btn" type="button">主要按钮</button>
@@ -74,7 +74,7 @@
                                         <div class="col-md-1">
                                             <h6>品牌：</h6>
                                         </div>
-                                        <div class="col-md-11">
+                                        <div id="filterbox_category_div" class="col-md-11">
                                             <button class="btn" type="button">主要按钮</button>
                                             <button class="btn" type="button">主要按钮</button>
                                             <button class="btn" type="button">主要按钮</button>
@@ -106,14 +106,14 @@
                                             <h6>品牌：</h6>
                                         </div>
                                         <div class="col-md-11">
-                                            <button class="btn " type="button">
+                                            <button id="filterbox_sort_price" class="btn" type="button">
                                                 <i class="icon icon-double-angle-down"></i> 价格降序
                                             </button>
-                                            <button class="btn " type="button">
+                                            <button id="filterbox_sort_name" class="btn" type="button">
                                                 <i class="icon icon-double-angle-down"></i> 名称降序
                                             </button>
-                                            <button class="btn " type="button">
-                                                <i class="icon icon-filter"></i> 仅显示有货
+                                            <button id="filterbox_only_in_stock" class="btn" type="button">
+                                                <i class="icon icon-filter"></i> 全部显示
                                             </button>
                                         </div>
                                     </div>
@@ -133,7 +133,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div>
-                                            <button class="btn btn-block" type="button">
+                                            <button id="filterbox_reset" class="btn btn-block" type="button">
                                                 <i class="icon icon-refresh"></i> 清空
                                             </button>
                                         </div>
@@ -149,15 +149,21 @@
             <!-- filter end -->
 
             <!-- items start -->
-            <div class="cards cards-condensed">
+            <div id="items_div" class="cards cards-condensed">
                 <div class="col-md-4 col-sm-6 col-lg-3">
                     <a class="card" href="#">
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -166,9 +172,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -177,9 +189,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -188,9 +206,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -199,9 +223,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -210,9 +240,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -221,9 +257,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -232,9 +274,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -243,9 +291,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -254,9 +308,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -265,9 +325,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -276,9 +342,15 @@
                         <img src="http://zui.sexy/docs/img/img2.jpg" alt="">
                         <div class="card-heading"><strong>良辰美景</strong></div>
                         <div class="card-content text-muted">良辰美景奈何天，赏心乐事谁家院。</div>
+                        <div class="card-content text-muted">张耀武售</div>
                         <div class="card-actions">
-                            <button type="button" class="btn btn-danger btn-mini">加入收藏</button>
-                            <div class="pull-right text-danger"><i class="icon-yen"></i> 520.00</div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-mini">立即购买</button>
+                                <button type="button" class="btn btn-primary btn-mini">加入收藏</button>
+                            </div>
+                            <div class="pull-right text-danger"><i class="icon-yen"></i>
+                                <strong class="items_price">520.00</strong>
+                            </div>
                         </div>
                     </a>
                 </div>

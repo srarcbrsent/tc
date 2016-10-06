@@ -1,5 +1,61 @@
 $(document).ready(function () {
 
+    // brand div radio
+    $('#filterbox_brand_div').find('> button').click(function () {
+        if ($(this).hasClass('btn-primary')) {
+            $(this).removeClass('btn-primary');
+        } else {
+            $(this).siblings().removeClass('btn-primary');
+            $(this).addClass('btn-primary');
+        }
+    });
+
+    // category div checkbox
+    $('#filterbox_category_div').find('> button').click(function () {
+        if ($(this).hasClass('btn-primary')) {
+            $(this).removeClass('btn-primary');
+        } else {
+            $(this).addClass('btn-primary');
+        }
+    });
+
+    // sort by price
+    $('#filterbox_sort_price').click(function () {
+        if ($(this).hasClass('btn-primary')) {
+            $(this).removeClass('btn-primary');
+            $(this).html('<i class="icon icon-double-angle-down"></i> 价格降序');
+        } else {
+            $(this).addClass('btn-primary');
+            $(this).html('<i class="icon icon-double-angle-up"></i> 价格升序');
+        }
+    });
+
+    // sort by name
+    $('#filterbox_sort_name').click(function () {
+        if ($(this).hasClass('btn-primary')) {
+            $(this).removeClass('btn-primary');
+            $(this).html('<i class="icon icon-double-angle-down"></i> 名称降序');
+        } else {
+            $(this).addClass('btn-primary');
+            $(this).html('<i class="icon icon-double-angle-up"></i> 名称升序');
+        }
+    });
+
+    // filterbox_only_in_stock
+    $('#filterbox_only_in_stock').click(function () {
+        if ($(this).hasClass('btn-primary')) {
+            $(this).removeClass('btn-primary');
+            $(this).html('<i class="icon icon-filter"></i> 全部显示');
+        } else {
+            $(this).addClass('btn-primary');
+            $(this).html('<i class="icon icon-filter"></i> 显示有货');
+        }
+    });
+
+    // filterbox_reset
+    $('#filterbox_reset').click(function () {
+        $('#filterbox_div').find('button').removeClass('btn-primary');
+    });
 
     // typeahead
     $.typeahead({

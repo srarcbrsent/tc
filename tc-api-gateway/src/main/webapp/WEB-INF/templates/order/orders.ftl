@@ -42,15 +42,16 @@
                                                         <table class="table">
                                                             <tbody>
                                                             <tr>
-                                                                <td style="width: 100px"><code>&lt;header&gt;</code>
+                                                                <td>
+                                                                    <code>&lt;header&gt;</code>
                                                                 </td>
-                                                                <td style="width: 80px">头部</td>
+                                                                <td>头部</td>
                                                                 <td>标题等信息</td>
                                                             </tr>
                                                             <tr>
-                                                                <td><code>.items</code></td>
-                                                                <td>列表项组</td>
-                                                                <td>可以在 <code>.list</code> 内堆叠多个列表项组。</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
                                                             </tr>
                                                             <tr>
                                                                 <td><code>&lt;footer&gt;</code></td>
@@ -74,28 +75,158 @@
                 <!-- filterbox end -->
 
                 <!-- table start -->
-                <div class="col-md-12">
-                    <table id="orders_table" class="table datatable">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>时间</th>
-                            <th>评分</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>123</td>
-                            <td>123</td>
-                            <td>123</td>
-                        </tr>
-                        <tr>
-                            <td>123</td>
-                            <td>123</td>
-                            <td>123</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div id="orders_div" class="col-md-12">
+                    <div id="orders_header" class="row text-center">
+                        <table class="col-md-12">
+                            <tbody>
+                            <tr>
+                                <td class="col-md-5">宝贝</td>
+                                <td class="col-md-2">卖家</td>
+                                <td class="col-md-1">单价</td>
+                                <td class="col-md-1">数量</td>
+                                <td class="col-md-1">付款</td>
+                                <td class="col-md-1">状态</td>
+                                <td class="col-md-1">操作</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row order_table">
+                        <table class="col-md-12 order_table_header">
+                            <tbody>
+                            <tr>
+                                <td class="col-md-4">订单号：456456123231</td>
+                                <td class="col-md-4">支付号：123123123123123</td>
+                                <td class="col-md-4"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="col-md-12 order_table_body">
+                            <tbody>
+                            <tr>
+                                <td class="col-md-5">
+                                    <div class="col-md-4">
+                                        <img src="http://zui.sexy/docs/img/img1.jpg"
+                                             alt="圆角图片"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="lead text-ellipsis">123123jgjkdfsdfsadfasasdfasdf123</p>
+                                        <p class="text-ellipsis">fasdjdfasjlkasdfjk</p>
+                                    </div>
+                                </td>
+                                <td class="col-md-2">支付</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1" rowspan="3">123</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1" rowspan="3">
+                                    <div class="btn-group btn-group-vertical">
+                                        <button type="button" class="btn">付款</button>
+                                        <button type="button" class="btn">发货</button>
+                                        <button type="button" class="btn">收货</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-5">
+                                    <div class="col-md-4">
+                                        <img src="http://zui.sexy/docs/img/img1.jpg"
+                                             alt="圆角图片"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="lead text-ellipsis">123123jgjkdfsdfsadfasasdfasdf123</p>
+                                        <p class="text-ellipsis">fasdjdfasjlkasdfjk</p>
+                                    </div>
+                                </td>
+                                <td class="col-md-2">支付</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-5">
+                                    <div class="col-md-4">
+                                        <img src="http://zui.sexy/docs/img/img1.jpg"
+                                             alt="圆角图片"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="lead text-ellipsis">123123jgjkdfsdfsadfasasdfasdf123</p>
+                                        <p class="text-ellipsis">fasdjdfasjlkasdfjk</p>
+                                    </div>
+                                </td>
+                                <td class="col-md-2">支付</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row order_table">
+                        <table class="col-md-12 order_table_header">
+                            <tbody>
+                            <tr>
+                                <td class="col-md-4">订单号：456456123231</td>
+                                <td class="col-md-4">支付号：123123123123123</td>
+                                <td class="col-md-4"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="col-md-12 order_table_body">
+                            <tbody>
+                            <tr>
+                                <td class="col-md-5">
+                                    <div class="col-md-4">
+                                        <img src="http://zui.sexy/docs/img/img1.jpg"
+                                             alt="圆角图片"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="lead text-ellipsis">123123jgjkdfsdfsadfasasdfasdf123</p>
+                                        <p class="text-ellipsis">fasdjdfasjlkasdfjk</p>
+                                    </div>
+                                </td>
+                                <td class="col-md-2">支付</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1" rowspan="3">123</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1" rowspan="3">123</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-5">
+                                    <div class="col-md-4">
+                                        <img src="http://zui.sexy/docs/img/img1.jpg"
+                                             alt="圆角图片"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="lead text-ellipsis">123123jgjkdfsdfsadfasasdfasdf123</p>
+                                        <p class="text-ellipsis">fasdjdfasjlkasdfjk</p>
+                                    </div>
+                                </td>
+                                <td class="col-md-2">支付</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-5">
+                                    <div class="col-md-4">
+                                        <img src="http://zui.sexy/docs/img/img1.jpg"
+                                             alt="圆角图片"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="lead text-ellipsis">123123jgjkdfsdfsadfasasdfasdf123</p>
+                                        <p class="text-ellipsis">fasdjdfasjlkasdfjk</p>
+                                    </div>
+                                </td>
+                                <td class="col-md-2">支付</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                                <td class="col-md-1">123</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- table end -->
 

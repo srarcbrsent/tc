@@ -241,7 +241,7 @@
                             ${project.build.outputDirectory}/jetty/webdefault.xml
                         </defaultsDescriptor>
                     </webApp>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
                     <jettyXml>
                         ${project.build.outputDirectory}/jetty/jetty.xml,
                         ${project.build.outputDirectory}/jetty/jetty-http.xml,

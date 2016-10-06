@@ -4,8 +4,6 @@ public enum TcPermissionType {
 
     MENU,
 
-    PAGE_ELEMENT,
-
-    API
+    PAGE_ELEMENT
 
 }
