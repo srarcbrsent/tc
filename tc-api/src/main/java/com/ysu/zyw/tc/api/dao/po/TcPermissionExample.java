@@ -111,8 +111,7 @@ public class TcPermissionExample {
             allCriteria = null;
         }
 
-        protected void addTypeCriterion(String condition, TcPermissionType value1, TcPermissionType value2, String
-                property) {
+        protected void addTypeCriterion(String condition, TcPermissionType value1, TcPermissionType value2, String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -122,7 +121,7 @@ public class TcPermissionExample {
 
         public boolean isValid() {
             return criteria.size() > 0
-                    || typeCriteria.size() > 0;
+                || typeCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {

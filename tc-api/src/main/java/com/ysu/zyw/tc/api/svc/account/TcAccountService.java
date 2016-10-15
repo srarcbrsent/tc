@@ -4,9 +4,9 @@ import com.ysu.zyw.tc.api.dao.mappers.TcAccountMapper;
 import com.ysu.zyw.tc.api.dao.po.TcAccount;
 import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import com.ysu.zyw.tc.model.api.account.TmAccount;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;

@@ -53,26 +53,48 @@
         </javaClientGenerator>
 
         <!-- !!!! Table Configurations !!!! -->
-        <table tableName="member_account"
+        <!-- account -->
+        <table tableName="mb_account"
                domainObjectName="TcAccount"
                mapperName="TcAccountMapper">
-            <columnOverride column="signin_platform"
-                            javaType="com.ysu.zyw.tc.api.dao.penum.TcSigninPlatform"
-                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
             <columnOverride column="delected"
                             javaType="java.lang.Boolean"/>
         </table>
 
-        <table tableName="member_account_map_permission"
+        <table tableName="mb_account_assist"
+               domainObjectName="TcAccountAssist"
+               mapperName="TcAccountAssistMapper">
+            <columnOverride column="signin_platform"
+                            javaType="com.ysu.zyw.tc.api.dao.penum.TcSigninPlatform"
+                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+            <columnOverride column="phone_activated"
+                            javaType="java.lang.Boolean"/>
+            <columnOverride column="email_activated"
+                            javaType="java.lang.Boolean"/>
+        </table>
+
+        <table tableName="mb_account_payment"
+               domainObjectName="TcAccountPayment"
+               mapperName="TcAccountPaymentMapper">
+            <columnOverride column="sup_weixin"
+                            javaType="java.lang.Boolean"/>
+            <columnOverride column="sup_zhifubao"
+                            javaType="java.lang.Boolean"/>
+            <columnOverride column="sup_cod"
+                            javaType="java.lang.Boolean"/>
+        </table>
+
+        <!-- permission -->
+        <table tableName="pv_account_map_permission"
                domainObjectName="TcAccountMapPermission"
                mapperName="TcAccountMapPermissionMapper"/>
 
-        <table tableName="member_account_map_permission_set"
+        <table tableName="pv_account_map_permission_set"
                domainObjectName="TcAccountMapPermissionSet"
                mapperName="TcAccountMapPermissionSetMapper">
         </table>
 
-        <table tableName="member_permission"
+        <table tableName="pv_permission"
                domainObjectName="TcPermission"
                mapperName="TcPermissionMapper">
             <columnOverride column="type"
@@ -80,13 +102,49 @@
                             typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         </table>
 
-        <table tableName="member_permission_set"
+        <table tableName="pv_permission_set"
                domainObjectName="TcPermissionSet"
                mapperName="TcPermissionSetMapper"/>
 
-        <table tableName="member_permission_set_map_permission"
+        <table tableName="pv_permission_set_map_permission"
                domainObjectName="TcPermissionSetMapPermission"
                mapperName="TcPermissionSetMapPermissionMapper"/>
+
+        <!-- item -->
+        <table tableName="tm_item"
+               domainObjectName="TcItem"
+               mapperName="TcItemMapper">
+            <columnOverride column="state"
+                            javaType="com.ysu.zyw.tc.api.dao.penum.TcItemState"
+                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+        </table>
+
+        <table tableName="tm_item_detail"
+               domainObjectName="TcItemDetail"
+               mapperName="TcItemDetailMapper"/>
+
+        <table tableName="tm_item_classify"
+               domainObjectName="TcItemClassify"
+               mapperName="TcItemClassifyMapper"/>
+
+        <table tableName="tm_item_pic"
+               domainObjectName="TcItemPic"
+               mapperName="TcItemPicMapper">
+            <columnOverride column="covers"
+                            javaType="java.lang.Boolean"/>
+        </table>
+
+        <table tableName="tm_item_icon"
+               domainObjectName="TcItemIcon"
+               mapperName="TcItemIconMapper"/>
+
+        <table tableName="tm_item_icon_mapping"
+               domainObjectName="TcItemIconMapping"
+               mapperName="TcItemIconMappingMapper"/>
+
+        <table tableName="tm_item_property"
+               domainObjectName="TcItemProperty"
+               mapperName="TcItemPropertyMapper"/>
 
     </context>
 

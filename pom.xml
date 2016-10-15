@@ -384,6 +384,19 @@
                 </exclusions>
             </dependency>
 
+            <!-- elasticsearch -->
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>2.4.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>2.0.4.RELEASE</version>
+            </dependency>
+
             <!-- template -->
             <dependency>
                 <groupId>org.freemarker</groupId>
@@ -396,19 +409,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.16</version>
-            </dependency>
-
-            <!-- elastic job -->
-            <dependency>
-                <groupId>com.dangdang</groupId>
-                <artifactId>elastic-job-lite-core</artifactId>
-                <version>${pom.version.elastic.job}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.dangdang</groupId>
-                <artifactId>elastic-job-lite-spring</artifactId>
-                <version>${pom.version.elastic.job}</version>
             </dependency>
 
             <!-- curator -->
@@ -426,7 +426,7 @@
 
             <dependency>
                 <groupId>org.apache.curator</groupId>
-                <artifactId>curator-com.ysu.zyw.tc.component.mbg.test</artifactId>
+                <artifactId>curator-test</artifactId>
                 <version>${pom.version.curator}</version>
             </dependency>
 
@@ -470,13 +470,6 @@
                         <artifactId>log4j</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-
-            <!-- hystrix -->
-            <dependency>
-                <groupId>com.netflix.hystrix</groupId>
-                <artifactId>hystrix-core</artifactId>
-                <version>${pom.version.hystrix}</version>
             </dependency>
 
             <!-- commons utils -->
@@ -545,6 +538,13 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-dm</artifactId>
                 <version>3.0.0-rc2</version>
+            </dependency>
+
+            <!-- util -->
+            <dependency>
+                <groupId>net.sourceforge.jexcelapi</groupId>
+                <artifactId>jxl</artifactId>
+                <version>2.6.12</version>
             </dependency>
 
             <!-- test -->

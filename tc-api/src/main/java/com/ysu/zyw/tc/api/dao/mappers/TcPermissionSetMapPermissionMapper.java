@@ -21,11 +21,9 @@ public interface TcPermissionSetMapPermissionMapper {
 
     TcPermissionSetMapPermission selectByPrimaryKey(String id);
 
-    int updateByExampleSelective(@Param("record") TcPermissionSetMapPermission record, @Param("example")
-            TcPermissionSetMapPermissionExample example);
+    int updateByExampleSelective(@Param("record") TcPermissionSetMapPermission record, @Param("example") TcPermissionSetMapPermissionExample example);
 
-    int updateByExample(@Param("record") TcPermissionSetMapPermission record, @Param("example")
-            TcPermissionSetMapPermissionExample example);
+    int updateByExample(@Param("record") TcPermissionSetMapPermission record, @Param("example") TcPermissionSetMapPermissionExample example);
 
     int updateByPrimaryKeySelective(TcPermissionSetMapPermission record);
 

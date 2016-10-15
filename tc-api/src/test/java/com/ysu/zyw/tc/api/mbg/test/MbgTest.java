@@ -41,7 +41,7 @@ public class MbgTest {
     @Before
     public void setUp() throws Exception {
         dataSource = new DruidDataSource();
-        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/tc_platform");
+        dataSource.setUrl("jdbc:mysql://rdb.tc.com:3306/tc_platform");
         Properties properties = new Properties();
         properties.put("useUnicode", Boolean.TRUE.toString());
         properties.put("characterEncoding", "UTF-8");

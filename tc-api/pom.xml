@@ -115,6 +115,12 @@
             <artifactId>mybatis-spring</artifactId>
         </dependency>
 
+        <!-- util -->
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+        </dependency>
+
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>

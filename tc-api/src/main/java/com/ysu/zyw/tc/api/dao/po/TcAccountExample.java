@@ -1,7 +1,5 @@
 package com.ysu.zyw.tc.api.dao.po;
 
-import com.ysu.zyw.tc.api.dao.penum.TcSigninPlatform;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -87,51 +85,19 @@ public class TcAccountExample {
     }
 
     protected abstract static class GeneratedCriteria {
-        protected List<Criterion> signinPlatformCriteria;
-
-        protected List<Criterion> allCriteria;
-
         protected List<Criterion> criteria;
 
         protected GeneratedCriteria() {
             super();
             criteria = new ArrayList<Criterion>();
-            signinPlatformCriteria = new ArrayList<Criterion>();
-        }
-
-        public List<Criterion> getSigninPlatformCriteria() {
-            return signinPlatformCriteria;
-        }
-
-        protected void addSigninPlatformCriterion(String condition, Object value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            signinPlatformCriteria.add(new Criterion(condition, value, "org.apache.ibatis.type.EnumTypeHandler"));
-            allCriteria = null;
-        }
-
-        protected void addSigninPlatformCriterion(String condition, TcSigninPlatform value1, TcSigninPlatform value2,
-                                                  String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            signinPlatformCriteria.add(new Criterion(condition, value1, value2, "org.apache.ibatis.type.EnumTypeHandler"));
-            allCriteria = null;
         }
 
         public boolean isValid() {
-            return criteria.size() > 0
-                    || signinPlatformCriteria.size() > 0;
+            return criteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
-            if (allCriteria == null) {
-                allCriteria = new ArrayList<Criterion>();
-                allCriteria.addAll(criteria);
-                allCriteria.addAll(signinPlatformCriteria);
-            }
-            return allCriteria;
+            return criteria;
         }
 
         public List<Criterion> getCriteria() {
@@ -143,7 +109,6 @@ public class TcAccountExample {
                 throw new RuntimeException("Value for condition cannot be null");
             }
             criteria.add(new Criterion(condition));
-            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value, String property) {
@@ -151,7 +116,6 @@ public class TcAccountExample {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value));
-            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
@@ -159,7 +123,6 @@ public class TcAccountExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-            allCriteria = null;
         }
 
         public Criteria andIdIsNull() {
@@ -299,6 +262,76 @@ public class TcAccountExample {
 
         public Criteria andNameNotBetween(String value1, String value2) {
             addCriterion("name not between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountIsNull() {
+            addCriterion("account is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountIsNotNull() {
+            addCriterion("account is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountEqualTo(String value) {
+            addCriterion("account =", value, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountNotEqualTo(String value) {
+            addCriterion("account <>", value, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountGreaterThan(String value) {
+            addCriterion("account >", value, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountGreaterThanOrEqualTo(String value) {
+            addCriterion("account >=", value, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountLessThan(String value) {
+            addCriterion("account <", value, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountLessThanOrEqualTo(String value) {
+            addCriterion("account <=", value, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountLike(String value) {
+            addCriterion("account like", value, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountNotLike(String value) {
+            addCriterion("account not like", value, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountIn(List<String> values) {
+            addCriterion("account in", values, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountNotIn(List<String> values) {
+            addCriterion("account not in", values, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountBetween(String value1, String value2) {
+            addCriterion("account between", value1, value2, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountNotBetween(String value1, String value2) {
+            addCriterion("account not between", value1, value2, "account");
             return (Criteria) this;
         }
 
@@ -512,133 +545,73 @@ public class TcAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformIsNull() {
-            addCriterion("signin_platform is null");
+        public Criteria andSelfDescribingIsNull() {
+            addCriterion("self_describing is null");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformIsNotNull() {
-            addCriterion("signin_platform is not null");
+        public Criteria andSelfDescribingIsNotNull() {
+            addCriterion("self_describing is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformEqualTo(TcSigninPlatform value) {
-            addSigninPlatformCriterion("signin_platform =", value, "signinPlatform");
+        public Criteria andSelfDescribingEqualTo(String value) {
+            addCriterion("self_describing =", value, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformNotEqualTo(TcSigninPlatform value) {
-            addSigninPlatformCriterion("signin_platform <>", value, "signinPlatform");
+        public Criteria andSelfDescribingNotEqualTo(String value) {
+            addCriterion("self_describing <>", value, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformGreaterThan(TcSigninPlatform value) {
-            addSigninPlatformCriterion("signin_platform >", value, "signinPlatform");
+        public Criteria andSelfDescribingGreaterThan(String value) {
+            addCriterion("self_describing >", value, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformGreaterThanOrEqualTo(TcSigninPlatform value) {
-            addSigninPlatformCriterion("signin_platform >=", value, "signinPlatform");
+        public Criteria andSelfDescribingGreaterThanOrEqualTo(String value) {
+            addCriterion("self_describing >=", value, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformLessThan(TcSigninPlatform value) {
-            addSigninPlatformCriterion("signin_platform <", value, "signinPlatform");
+        public Criteria andSelfDescribingLessThan(String value) {
+            addCriterion("self_describing <", value, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformLessThanOrEqualTo(TcSigninPlatform value) {
-            addSigninPlatformCriterion("signin_platform <=", value, "signinPlatform");
+        public Criteria andSelfDescribingLessThanOrEqualTo(String value) {
+            addCriterion("self_describing <=", value, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformLike(TcSigninPlatform value) {
-            addSigninPlatformCriterion("signin_platform like", value, "signinPlatform");
+        public Criteria andSelfDescribingLike(String value) {
+            addCriterion("self_describing like", value, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformNotLike(TcSigninPlatform value) {
-            addSigninPlatformCriterion("signin_platform not like", value, "signinPlatform");
+        public Criteria andSelfDescribingNotLike(String value) {
+            addCriterion("self_describing not like", value, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformIn(List<TcSigninPlatform> values) {
-            addSigninPlatformCriterion("signin_platform in", values, "signinPlatform");
+        public Criteria andSelfDescribingIn(List<String> values) {
+            addCriterion("self_describing in", values, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformNotIn(List<TcSigninPlatform> values) {
-            addSigninPlatformCriterion("signin_platform not in", values, "signinPlatform");
+        public Criteria andSelfDescribingNotIn(List<String> values) {
+            addCriterion("self_describing not in", values, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformBetween(TcSigninPlatform value1, TcSigninPlatform value2) {
-            addSigninPlatformCriterion("signin_platform between", value1, value2, "signinPlatform");
+        public Criteria andSelfDescribingBetween(String value1, String value2) {
+            addCriterion("self_describing between", value1, value2, "selfDescribing");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformNotBetween(TcSigninPlatform value1, TcSigninPlatform value2) {
-            addSigninPlatformCriterion("signin_platform not between", value1, value2, "signinPlatform");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeIsNull() {
-            addCriterion("signin_time is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeIsNotNull() {
-            addCriterion("signin_time is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeEqualTo(Date value) {
-            addCriterion("signin_time =", value, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeNotEqualTo(Date value) {
-            addCriterion("signin_time <>", value, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeGreaterThan(Date value) {
-            addCriterion("signin_time >", value, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("signin_time >=", value, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeLessThan(Date value) {
-            addCriterion("signin_time <", value, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeLessThanOrEqualTo(Date value) {
-            addCriterion("signin_time <=", value, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeIn(List<Date> values) {
-            addCriterion("signin_time in", values, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeNotIn(List<Date> values) {
-            addCriterion("signin_time not in", values, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeBetween(Date value1, Date value2) {
-            addCriterion("signin_time between", value1, value2, "signinTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSigninTimeNotBetween(Date value1, Date value2) {
-            addCriterion("signin_time not between", value1, value2, "signinTime");
+        public Criteria andSelfDescribingNotBetween(String value1, String value2) {
+            addCriterion("self_describing not between", value1, value2, "selfDescribing");
             return (Criteria) this;
         }
 
@@ -759,136 +732,6 @@ public class TcAccountExample {
 
         public Criteria andDelectedNotBetween(Boolean value1, Boolean value2) {
             addCriterion("delected not between", value1, value2, "delected");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampIsNull() {
-            addCriterion("created_timestamp is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampIsNotNull() {
-            addCriterion("created_timestamp is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampEqualTo(Date value) {
-            addCriterion("created_timestamp =", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampNotEqualTo(Date value) {
-            addCriterion("created_timestamp <>", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampGreaterThan(Date value) {
-            addCriterion("created_timestamp >", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampGreaterThanOrEqualTo(Date value) {
-            addCriterion("created_timestamp >=", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampLessThan(Date value) {
-            addCriterion("created_timestamp <", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampLessThanOrEqualTo(Date value) {
-            addCriterion("created_timestamp <=", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampIn(List<Date> values) {
-            addCriterion("created_timestamp in", values, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampNotIn(List<Date> values) {
-            addCriterion("created_timestamp not in", values, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonIsNull() {
-            addCriterion("created_person is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonIsNotNull() {
-            addCriterion("created_person is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonEqualTo(String value) {
-            addCriterion("created_person =", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonNotEqualTo(String value) {
-            addCriterion("created_person <>", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonGreaterThan(String value) {
-            addCriterion("created_person >", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonGreaterThanOrEqualTo(String value) {
-            addCriterion("created_person >=", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonLessThan(String value) {
-            addCriterion("created_person <", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonLessThanOrEqualTo(String value) {
-            addCriterion("created_person <=", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonLike(String value) {
-            addCriterion("created_person like", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonNotLike(String value) {
-            addCriterion("created_person not like", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonIn(List<String> values) {
-            addCriterion("created_person in", values, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonNotIn(List<String> values) {
-            addCriterion("created_person not in", values, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonBetween(String value1, String value2) {
-            addCriterion("created_person between", value1, value2, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonNotBetween(String value1, String value2) {
-            addCriterion("created_person not between", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
@@ -1019,6 +862,136 @@ public class TcAccountExample {
 
         public Criteria andUpdatedPersonNotBetween(String value1, String value2) {
             addCriterion("updated_person not between", value1, value2, "updatedPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonIsNull() {
+            addCriterion("created_person is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonIsNotNull() {
+            addCriterion("created_person is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonEqualTo(String value) {
+            addCriterion("created_person =", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonNotEqualTo(String value) {
+            addCriterion("created_person <>", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonGreaterThan(String value) {
+            addCriterion("created_person >", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonGreaterThanOrEqualTo(String value) {
+            addCriterion("created_person >=", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonLessThan(String value) {
+            addCriterion("created_person <", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonLessThanOrEqualTo(String value) {
+            addCriterion("created_person <=", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonLike(String value) {
+            addCriterion("created_person like", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonNotLike(String value) {
+            addCriterion("created_person not like", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonIn(List<String> values) {
+            addCriterion("created_person in", values, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonNotIn(List<String> values) {
+            addCriterion("created_person not in", values, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonBetween(String value1, String value2) {
+            addCriterion("created_person between", value1, value2, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonNotBetween(String value1, String value2) {
+            addCriterion("created_person not between", value1, value2, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampIsNull() {
+            addCriterion("created_timestamp is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampIsNotNull() {
+            addCriterion("created_timestamp is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampEqualTo(Date value) {
+            addCriterion("created_timestamp =", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampNotEqualTo(Date value) {
+            addCriterion("created_timestamp <>", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampGreaterThan(Date value) {
+            addCriterion("created_timestamp >", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampGreaterThanOrEqualTo(Date value) {
+            addCriterion("created_timestamp >=", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampLessThan(Date value) {
+            addCriterion("created_timestamp <", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampLessThanOrEqualTo(Date value) {
+            addCriterion("created_timestamp <=", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampIn(List<Date> values) {
+            addCriterion("created_timestamp in", values, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampNotIn(List<Date> values) {
+            addCriterion("created_timestamp not in", values, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
+            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
+            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
     }

@@ -21,8 +21,7 @@ public interface TcPermissionSetMapper {
 
     TcPermissionSet selectByPrimaryKey(String id);
 
-    int updateByExampleSelective(@Param("record") TcPermissionSet record, @Param("example") TcPermissionSetExample
-            example);
+    int updateByExampleSelective(@Param("record") TcPermissionSet record, @Param("example") TcPermissionSetExample example);
 
     int updateByExample(@Param("record") TcPermissionSet record, @Param("example") TcPermissionSetExample example);
 

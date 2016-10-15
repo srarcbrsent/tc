@@ -5,14 +5,14 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- aliyun sms -->
-    <bean class="com.ysu.zyw.tc.components.sms.TcSmsService">
+    <bean class="com.ysu.zyw.tc.components.svc.sms.TcSmsService">
         <property name="regionId" value=""/>
         <property name="accessKey" value=""/>
         <property name="accessSecret" value=""/>
     </bean>
 
     <!-- aliyun mail -->
-    <bean class="com.ysu.zyw.tc.components.mail.TcMailService">
+    <bean class="com.ysu.zyw.tc.components.svc.mail.TcMailService">
         <property name="regionId" value=""/>
         <property name="accessKey" value=""/>
         <property name="accessSecret" value=""/>

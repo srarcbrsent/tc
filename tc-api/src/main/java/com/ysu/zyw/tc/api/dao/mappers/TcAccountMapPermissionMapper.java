@@ -21,8 +21,7 @@ public interface TcAccountMapPermissionMapper {
 
     TcAccountMapPermission selectByPrimaryKey(String id);
 
-    int updateByExampleSelective(@Param("record") TcAccountMapPermission record, @Param("example")
-            TcAccountMapPermissionExample example);
+    int updateByExampleSelective(@Param("record") TcAccountMapPermission record, @Param("example") TcAccountMapPermissionExample example);
 
     int updateByExample(@Param("record") TcAccountMapPermission record, @Param("example") TcAccountMapPermissionExample example);
 

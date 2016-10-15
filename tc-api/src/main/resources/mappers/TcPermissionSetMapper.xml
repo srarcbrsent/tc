@@ -1,272 +1,266 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ysu.zyw.tc.api.dao.mappers.TcPermissionSetMapper">
-    <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="description" jdbcType="VARCHAR" property="description"/>
-        <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp"/>
-        <result column="created_person" jdbcType="VARCHAR" property="createdPerson"/>
-        <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp"/>
-        <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson"/>
-    </resultMap>
-    <sql id="Example_Where_Clause">
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+  <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
+    <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
+    <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
+    <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Update_By_Example_Where_Clause">
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Base_Column_List">
-        id, description, created_timestamp, created_person, updated_timestamp, updated_person
-    </sql>
-    <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSetExample"
-            resultMap="BaseResultMap">
-        select
-        <if test="distinct">
-            distinct
+          </trim>
         </if>
-        <include refid="Base_Column_List"/>
-        from member_permission_set
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-        <if test="startLine != null and pageSize != null and pageSize > 0">
-            limit #{startLine} , #{pageSize}
-        </if>
-    </select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from member_permission_set
-        where id = #{id,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        DELETE FROM member_permission_set
-        WHERE id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSetExample">
-        delete from member_permission_set
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </delete>
-    <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
-        INSERT INTO member_permission_set (id, description, created_timestamp,
-                                           created_person, updated_timestamp, updated_person
-        )
-        VALUES (#{id,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP},
-                #{createdPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP},
-                #{updatedPerson,jdbcType=VARCHAR}
-        )
-    </insert>
-    <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
-        insert into member_permission_set
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="description != null">
-                description,
-            </if>
-            <if test="createdTimestamp != null">
-                created_timestamp,
-            </if>
-            <if test="createdPerson != null">
-                created_person,
-            </if>
-            <if test="updatedTimestamp != null">
-                updated_timestamp,
-            </if>
-            <if test="updatedPerson != null">
-                updated_person,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=VARCHAR},
-            </if>
-            <if test="description != null">
-                #{description,jdbcType=VARCHAR},
-            </if>
-            <if test="createdTimestamp != null">
-                #{createdTimestamp,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createdPerson != null">
-                #{createdPerson,jdbcType=VARCHAR},
-            </if>
-            <if test="updatedTimestamp != null">
-                #{updatedTimestamp,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedPerson != null">
-                #{updatedPerson,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <select id="countByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSetExample"
-            resultType="java.lang.Long">
-        select count(*) from member_permission_set
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </select>
-    <update id="updateByExampleSelective" parameterType="map">
-        update member_permission_set
-        <set>
-            <if test="record.id != null">
-                id = #{record.id,jdbcType=VARCHAR},
-            </if>
-            <if test="record.description != null">
-                description = #{record.description,jdbcType=VARCHAR},
-            </if>
-            <if test="record.createdTimestamp != null">
-                created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
-            </if>
-            <if test="record.createdPerson != null">
-                created_person = #{record.createdPerson,jdbcType=VARCHAR},
-            </if>
-            <if test="record.updatedTimestamp != null">
-                updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
-            </if>
-            <if test="record.updatedPerson != null">
-                updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
-            </if>
-        </set>
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByExample" parameterType="map">
-        update member_permission_set
-        set id = #{record.id,jdbcType=VARCHAR},
-        description = #{record.description,jdbcType=VARCHAR},
-        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
-        created_person = #{record.createdPerson,jdbcType=VARCHAR},
-        updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
-        updated_person = #{record.updatedPerson,jdbcType=VARCHAR}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
-        update member_permission_set
-        <set>
-            <if test="description != null">
-                description = #{description,jdbcType=VARCHAR},
-            </if>
-            <if test="createdTimestamp != null">
-                created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createdPerson != null">
-                created_person = #{createdPerson,jdbcType=VARCHAR},
-            </if>
-            <if test="updatedTimestamp != null">
-                updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedPerson != null">
-                updated_person = #{updatedPerson,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=VARCHAR}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
-        UPDATE member_permission_set
-        SET description       = #{description,jdbcType=VARCHAR},
-            created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
-            created_person    = #{createdPerson,jdbcType=VARCHAR},
-            updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-            updated_person    = #{updatedPerson,jdbcType=VARCHAR}
-        WHERE id = #{id,jdbcType=VARCHAR}
-    </update>
-    <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSetExample"
-            resultType="java.lang.String">
-        select
-        <if test="distinct">
-            distinct
-        </if>
-        id
-        from member_permission_set
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-        <if test="startLine != null and pageSize != null and pageSize > 0">
-            limit #{startLine}, #{pageSize}
-        </if>
-    </select>
-    <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
-        insert into member_permission_set (
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, description, created_timestamp, created_person, updated_timestamp, updated_person
+  </sql>
+  <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSetExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pv_permission_set
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startLine != null and pageSize != null and pageSize > 0">
+      limit #{startLine} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pv_permission_set
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pv_permission_set
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSetExample">
+    delete from pv_permission_set
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
+    insert into pv_permission_set (id, description, created_timestamp, 
+      created_person, updated_timestamp, updated_person
+      )
+    values (#{id,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP}, 
+      #{createdPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{updatedPerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
+    insert into pv_permission_set
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         id,
+      </if>
+      <if test="description != null">
         description,
+      </if>
+      <if test="createdTimestamp != null">
         created_timestamp,
+      </if>
+      <if test="createdPerson != null">
         created_person,
+      </if>
+      <if test="updatedTimestamp != null">
         updated_timestamp,
-        updated_person
-        ) values
-        <foreach collection="list" item="item" separator=", ">
-            (#{item.id,jdbcType=VARCHAR},
-            #{item.description,jdbcType=VARCHAR},
-            #{item.createdTimestamp,jdbcType=TIMESTAMP},
-            #{item.createdPerson,jdbcType=VARCHAR},
-            #{item.updatedTimestamp,jdbcType=TIMESTAMP},
-            #{item.updatedPerson,jdbcType=VARCHAR})
-        </foreach>
-    </insert>
+      </if>
+      <if test="updatedPerson != null">
+        updated_person,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimestamp != null">
+        #{createdTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdPerson != null">
+        #{createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTimestamp != null">
+        #{updatedTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedPerson != null">
+        #{updatedPerson,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSetExample" resultType="java.lang.Long">
+    select count(*) from pv_permission_set
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pv_permission_set
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTimestamp != null">
+        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdPerson != null">
+        created_person = #{record.createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedTimestamp != null">
+        updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedPerson != null">
+        updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pv_permission_set
+    set id = #{record.id,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
+      created_person = #{record.createdPerson,jdbcType=VARCHAR},
+      updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
+      updated_person = #{record.updatedPerson,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
+    update pv_permission_set
+    <set>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimestamp != null">
+        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdPerson != null">
+        created_person = #{createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTimestamp != null">
+        updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedPerson != null">
+        updated_person = #{updatedPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
+    update pv_permission_set
+    set description = #{description,jdbcType=VARCHAR},
+      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
+      created_person = #{createdPerson,jdbcType=VARCHAR},
+      updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
+      updated_person = #{updatedPerson,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSetExample" resultType="java.lang.String">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    id
+    from pv_permission_set
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startLine != null and pageSize != null and pageSize > 0">
+      limit #{startLine}, #{pageSize}
+    </if>
+  </select>
+  <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcPermissionSet">
+    insert into pv_permission_set (
+      id, 
+      description, 
+      created_timestamp, 
+      created_person, 
+      updated_timestamp, 
+      updated_person
+    ) values 
+    <foreach collection="list" item="item" separator=", ">
+      (#{item.id,jdbcType=VARCHAR}, 
+      #{item.description,jdbcType=VARCHAR}, 
+      #{item.createdTimestamp,jdbcType=TIMESTAMP}, 
+      #{item.createdPerson,jdbcType=VARCHAR}, 
+      #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 
+      #{item.updatedPerson,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
 </mapper>
