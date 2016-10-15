@@ -1,4 +1,4 @@
 package com.ysu.zyw.tc.model.constant.account.auth;
 
-public class TmAuthC {
+public class TmAuthConst {
 }

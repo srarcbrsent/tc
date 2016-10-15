@@ -64,10 +64,10 @@
         <table tableName="mb_account_assist"
                domainObjectName="TcAccountAssist"
                mapperName="TcAccountAssistMapper">
-            <columnOverride column="signin_platform"
-                            javaType="com.ysu.zyw.tc.api.dao.penum.TcSigninPlatform"
+            <columnOverride column="signup_platform"
+                            javaType="com.ysu.zyw.tc.api.dao.penum.TcSignupPlatform"
                             typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-            <columnOverride column="phone_activated"
+            <columnOverride column="mobile_activated"
                             javaType="java.lang.Boolean"/>
             <columnOverride column="email_activated"
                             javaType="java.lang.Boolean"/>

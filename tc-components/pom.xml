@@ -23,6 +23,11 @@
             <artifactId>tc-base</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-model</artifactId>
+        </dependency>
+
         <!-- spring framework -->
         <dependency>
             <groupId>org.springframework</groupId>

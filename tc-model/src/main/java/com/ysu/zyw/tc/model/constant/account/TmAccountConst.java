@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.model.constant.account;
 
-public class TmAccountC {
+public class TmAccountConst {
 
     public static final String CREATE_ACCOUNT_API = "/accounts";
 

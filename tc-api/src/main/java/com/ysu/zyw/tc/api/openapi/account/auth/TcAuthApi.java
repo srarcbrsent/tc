@@ -41,7 +41,7 @@ public class TcAuthApi {
             @ApiParam(value = "账号", required = true) @RequestParam(value = "username") String username,
             @ApiParam(value = "密码", required = true) @RequestParam(value = "password") String password) {
 
-        return new ResponseEntity<>(new TcR<>(1), HttpStatus.OK);
+        return new ResponseEntity<>(TcR.ok(1), HttpStatus.OK);
     }
 
     @ApiOperation(

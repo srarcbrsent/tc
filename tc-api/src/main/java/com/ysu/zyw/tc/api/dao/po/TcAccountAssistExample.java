@@ -1,5 +1,7 @@
 package com.ysu.zyw.tc.api.dao.po;
 
+import com.ysu.zyw.tc.api.dao.penum.TcSignupPlatform;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -85,19 +87,50 @@ public class TcAccountAssistExample {
     }
 
     protected abstract static class GeneratedCriteria {
+        protected List<Criterion> signupPlatformCriteria;
+
+        protected List<Criterion> allCriteria;
+
         protected List<Criterion> criteria;
 
         protected GeneratedCriteria() {
             super();
             criteria = new ArrayList<Criterion>();
+            signupPlatformCriteria = new ArrayList<Criterion>();
+        }
+
+        public List<Criterion> getSignupPlatformCriteria() {
+            return signupPlatformCriteria;
+        }
+
+        protected void addSignupPlatformCriterion(String condition, Object value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            signupPlatformCriteria.add(new Criterion(condition, value, "org.apache.ibatis.type.EnumTypeHandler"));
+            allCriteria = null;
+        }
+
+        protected void addSignupPlatformCriterion(String condition, TcSignupPlatform value1, TcSignupPlatform value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            signupPlatformCriteria.add(new Criterion(condition, value1, value2, "org.apache.ibatis.type.EnumTypeHandler"));
+            allCriteria = null;
         }
 
         public boolean isValid() {
-            return criteria.size() > 0;
+            return criteria.size() > 0
+                || signupPlatformCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
-            return criteria;
+            if (allCriteria == null) {
+                allCriteria = new ArrayList<Criterion>();
+                allCriteria.addAll(criteria);
+                allCriteria.addAll(signupPlatformCriteria);
+            }
+            return allCriteria;
         }
 
         public List<Criterion> getCriteria() {
@@ -109,6 +142,7 @@ public class TcAccountAssistExample {
                 throw new RuntimeException("Value for condition cannot be null");
             }
             criteria.add(new Criterion(condition));
+            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value, String property) {
@@ -116,6 +150,7 @@ public class TcAccountAssistExample {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value));
+            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
@@ -123,6 +158,7 @@ public class TcAccountAssistExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
+            allCriteria = null;
         }
 
         public Criteria andIdIsNull() {
@@ -205,63 +241,63 @@ public class TcAccountAssistExample {
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformEqualTo(String value) {
-            addCriterion("signup_platform =", value, "signupPlatform");
+        public Criteria andSignupPlatformEqualTo(TcSignupPlatform value) {
+            addSignupPlatformCriterion("signup_platform =", value, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformNotEqualTo(String value) {
-            addCriterion("signup_platform <>", value, "signupPlatform");
+        public Criteria andSignupPlatformNotEqualTo(TcSignupPlatform value) {
+            addSignupPlatformCriterion("signup_platform <>", value, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformGreaterThan(String value) {
-            addCriterion("signup_platform >", value, "signupPlatform");
+        public Criteria andSignupPlatformGreaterThan(TcSignupPlatform value) {
+            addSignupPlatformCriterion("signup_platform >", value, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformGreaterThanOrEqualTo(String value) {
-            addCriterion("signup_platform >=", value, "signupPlatform");
+        public Criteria andSignupPlatformGreaterThanOrEqualTo(TcSignupPlatform value) {
+            addSignupPlatformCriterion("signup_platform >=", value, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformLessThan(String value) {
-            addCriterion("signup_platform <", value, "signupPlatform");
+        public Criteria andSignupPlatformLessThan(TcSignupPlatform value) {
+            addSignupPlatformCriterion("signup_platform <", value, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformLessThanOrEqualTo(String value) {
-            addCriterion("signup_platform <=", value, "signupPlatform");
+        public Criteria andSignupPlatformLessThanOrEqualTo(TcSignupPlatform value) {
+            addSignupPlatformCriterion("signup_platform <=", value, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformLike(String value) {
-            addCriterion("signup_platform like", value, "signupPlatform");
+        public Criteria andSignupPlatformLike(TcSignupPlatform value) {
+            addSignupPlatformCriterion("signup_platform like", value, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformNotLike(String value) {
-            addCriterion("signup_platform not like", value, "signupPlatform");
+        public Criteria andSignupPlatformNotLike(TcSignupPlatform value) {
+            addSignupPlatformCriterion("signup_platform not like", value, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformIn(List<String> values) {
-            addCriterion("signup_platform in", values, "signupPlatform");
+        public Criteria andSignupPlatformIn(List<TcSignupPlatform> values) {
+            addSignupPlatformCriterion("signup_platform in", values, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformNotIn(List<String> values) {
-            addCriterion("signup_platform not in", values, "signupPlatform");
+        public Criteria andSignupPlatformNotIn(List<TcSignupPlatform> values) {
+            addSignupPlatformCriterion("signup_platform not in", values, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformBetween(String value1, String value2) {
-            addCriterion("signup_platform between", value1, value2, "signupPlatform");
+        public Criteria andSignupPlatformBetween(TcSignupPlatform value1, TcSignupPlatform value2) {
+            addSignupPlatformCriterion("signup_platform between", value1, value2, "signupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSignupPlatformNotBetween(String value1, String value2) {
-            addCriterion("signup_platform not between", value1, value2, "signupPlatform");
+        public Criteria andSignupPlatformNotBetween(TcSignupPlatform value1, TcSignupPlatform value2) {
+            addSignupPlatformCriterion("signup_platform not between", value1, value2, "signupPlatform");
             return (Criteria) this;
         }
 
@@ -325,73 +361,73 @@ public class TcAccountAssistExample {
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedIsNull() {
-            addCriterion("phone_activated is null");
+        public Criteria andMobileActivatedIsNull() {
+            addCriterion("mobile_activated is null");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedIsNotNull() {
-            addCriterion("phone_activated is not null");
+        public Criteria andMobileActivatedIsNotNull() {
+            addCriterion("mobile_activated is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedEqualTo(Boolean value) {
-            addCriterion("phone_activated =", value, "phoneActivated");
+        public Criteria andMobileActivatedEqualTo(Boolean value) {
+            addCriterion("mobile_activated =", value, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedNotEqualTo(Boolean value) {
-            addCriterion("phone_activated <>", value, "phoneActivated");
+        public Criteria andMobileActivatedNotEqualTo(Boolean value) {
+            addCriterion("mobile_activated <>", value, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedGreaterThan(Boolean value) {
-            addCriterion("phone_activated >", value, "phoneActivated");
+        public Criteria andMobileActivatedGreaterThan(Boolean value) {
+            addCriterion("mobile_activated >", value, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("phone_activated >=", value, "phoneActivated");
+        public Criteria andMobileActivatedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("mobile_activated >=", value, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedLessThan(Boolean value) {
-            addCriterion("phone_activated <", value, "phoneActivated");
+        public Criteria andMobileActivatedLessThan(Boolean value) {
+            addCriterion("mobile_activated <", value, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedLessThanOrEqualTo(Boolean value) {
-            addCriterion("phone_activated <=", value, "phoneActivated");
+        public Criteria andMobileActivatedLessThanOrEqualTo(Boolean value) {
+            addCriterion("mobile_activated <=", value, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedLike(Boolean value) {
-            addCriterion("phone_activated like", value, "phoneActivated");
+        public Criteria andMobileActivatedLike(Boolean value) {
+            addCriterion("mobile_activated like", value, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedNotLike(Boolean value) {
-            addCriterion("phone_activated not like", value, "phoneActivated");
+        public Criteria andMobileActivatedNotLike(Boolean value) {
+            addCriterion("mobile_activated not like", value, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedIn(List<Boolean> values) {
-            addCriterion("phone_activated in", values, "phoneActivated");
+        public Criteria andMobileActivatedIn(List<Boolean> values) {
+            addCriterion("mobile_activated in", values, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedNotIn(List<Boolean> values) {
-            addCriterion("phone_activated not in", values, "phoneActivated");
+        public Criteria andMobileActivatedNotIn(List<Boolean> values) {
+            addCriterion("mobile_activated not in", values, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedBetween(Boolean value1, Boolean value2) {
-            addCriterion("phone_activated between", value1, value2, "phoneActivated");
+        public Criteria andMobileActivatedBetween(Boolean value1, Boolean value2) {
+            addCriterion("mobile_activated between", value1, value2, "mobileActivated");
             return (Criteria) this;
         }
 
-        public Criteria andPhoneActivatedNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("phone_activated not between", value1, value2, "phoneActivated");
+        public Criteria andMobileActivatedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("mobile_activated not between", value1, value2, "mobileActivated");
             return (Criteria) this;
         }
 

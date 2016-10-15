@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.api.conf;
+package com.ysu.zyw.tc.api.fk;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -44,6 +44,7 @@ public class TcSwaggerConfig {
                                 .version("1.0")
                                 .build())
                 .pathMapping("/")
+                .host("api.tc.com")
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(false)
                 .globalResponseMessage(

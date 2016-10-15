@@ -21,23 +21,29 @@ import java.util.function.Supplier;
 public class TcR<T> implements Serializable {
 
     @ApiModelProperty(value = "响应码")
-    private int code;
+    protected int code;
 
     @ApiModelProperty(value = "响应描述")
-    private String description;
+    protected String description;
 
     @ApiModelProperty(value = "响应体")
-    private T body;
+    protected T body;
 
     public TcR(int code, String description) {
         this.code = code;
         this.description = description;
     }
 
-    public TcR(T body) {
-        this.code = R.SUCCESS;
-        this.description = R.SUCCESS_DESCRIPTION;
-        this.body = body;
+    public static <T> TcR<T> ok(T body) {
+        TcR<T> tcR = new TcR<>();
+        tcR.code = R.SUCCESS;
+        tcR.description = R.SUCCESS_DESCRIPTION;
+        tcR.body = body;
+        return tcR;
+    }
+
+    public static <T> TcR<T> ok() {
+        return ok(null);
     }
 
     public static abstract class R {

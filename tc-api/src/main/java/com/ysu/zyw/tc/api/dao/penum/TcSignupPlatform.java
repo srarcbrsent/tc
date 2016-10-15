@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.dao.penum;
 
-public enum TcSigninPlatform {
+public enum TcSignupPlatform {
 
     PC_PLATFORM,
 

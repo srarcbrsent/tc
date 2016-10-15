@@ -1,6 +1,5 @@
-package com.ysu.zyw.tc.components.region;
+package com.ysu.zyw.tc.model.components.region;
 
-import com.ysu.zyw.tc.sys.constant.TcConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,7 +43,7 @@ public class TcProvince implements Serializable {
         private List<TcDistrict> tcDistrictList;
 
         public String completeName() {
-            return tcProvince.completeName() + TcConstant.Str.HYPHEN + name;
+            return tcProvince.completeName() + "-" + name;
         }
 
         public TcCity copy() {
@@ -64,7 +63,7 @@ public class TcProvince implements Serializable {
             private TcCity tcCity;
 
             public String completeName() {
-                return tcCity.completeName() + TcConstant.Str.HYPHEN + name;
+                return tcCity.completeName() + "-" + name;
             }
 
             public TcDistrict copy() {

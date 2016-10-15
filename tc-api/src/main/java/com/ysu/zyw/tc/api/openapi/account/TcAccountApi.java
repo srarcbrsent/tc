@@ -1,16 +1,16 @@
 package com.ysu.zyw.tc.api.openapi.account;
 
-import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.svc.account.TcAccountService;
 import com.ysu.zyw.tc.model.api.account.TmAccount;
-import com.ysu.zyw.tc.model.api.menum.TmSigninPlatform;
 import com.ysu.zyw.tc.model.c.TcP;
 import com.ysu.zyw.tc.model.c.TcR;
 import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +23,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping(value = "/accounts")
 @Api(value = "账号控制器")
+@Slf4j
 public class TcAccountApi {
 
     @Resource
@@ -58,8 +59,12 @@ public class TcAccountApi {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/delete_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Boolean>> deleteAccount() {
-        return new ResponseEntity<>(new TcR<>(null), HttpStatus.OK);
+    @Transactional
+    public ResponseEntity<TcR<Boolean>> deleteAccount(@PathVariable(value = "id") String accountId) {
+
+        tcAccountService.deleteAccount(accountId);
+
+        return ResponseEntity.ok(TcR.ok());
     }
 
     @ApiOperation(
@@ -80,35 +85,6 @@ public class TcAccountApi {
     }
 
     @ApiOperation(
-            value = "查询用户列表",
-            notes = "查询用户列表，且逻辑",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiImplicitParam(
-            value = "Api版本号",
-            paramType = "header",
-            name = "X-ApiVersion",
-            required = true,
-            defaultValue = "1.0")
-    @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "/find_accounts", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcP<List<TmAccount>>> findAccounts(
-            @ApiParam(value = "账号id") @RequestParam(value = "id", required = false) String id,
-            @ApiParam(value = "账号name") @RequestParam(value = "name", required = false) String name,
-            @ApiParam(value = "账号email") @RequestParam(value = "email", required = false) String email,
-            @ApiParam(value = "账号mobile") @RequestParam(value = "mobile", required = false) String mobile,
-            @ApiParam(value = "账号signinPlatform") @RequestParam(value = "signinPlatform", required = false)
-                    TmSigninPlatform signinPlatform,
-            @ApiParam(value = "当前页") @RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
-            @ApiParam(value = "每页条数") @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        List<TmAccount> tmAccounts = Lists.newArrayList();
-        // TODO
-        TmAccount tmAccount = new TmAccount();
-        tmAccounts.add(tmAccount);
-        return new ResponseEntity<>(new TcP<>(tmAccounts, currentPage, -1, pageSize), HttpStatus.OK);
-    }
-
-    @ApiOperation(
             value = "查询指定用户",
             notes = "通过id查询指定用户",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
@@ -123,15 +99,76 @@ public class TcAccountApi {
     @RequestMapping(
             value = "/find_account/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcR<TmAccount>> findAccount(
-            @ApiParam(value = "账号id", required = true) @PathVariable(value = "id") String accountId) {
+            @ApiParam(value = "账号id", required = true) @PathVariable(value = "id") String accountId,
+            @ApiParam(value = "包含辅助信息") @RequestParam(value = "includeAssistField", defaultValue = "false")
+                    boolean includeAssistField,
+            @ApiParam(value = "包含支付信息") @RequestParam(value = "includePaymentField", defaultValue = "false")
+                    boolean includePaymentField) {
 
-        TmAccount account = tcAccountService.findAccount(accountId);
+        TmAccount account = tcAccountService.findAccount(accountId, includeAssistField, includePaymentField);
 
         if (Objects.isNull(account)) {
             return new ResponseEntity<>(new TcR<>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(new TcR<>(account), HttpStatus.OK);
+        return new ResponseEntity<>(TcR.ok(account), HttpStatus.OK);
+    }
+
+    @ApiOperation(
+            value = "查询用户列表数量",
+            notes = "查询用户列表数量，且逻辑",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
+    @ApiResponse(code = 200, message = "OK")
+    @RequestMapping(value = "/count_accounts", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<TcR<Long>> countAccounts(
+            @ApiParam(value = "账号ids") @RequestParam(value = "ids", required = false) List<String> ids,
+            @ApiParam(value = "账号name 精确匹配") @RequestParam(value = "name", required = false) String name,
+            @ApiParam(value = "账号account") @RequestParam(value = "account", required = false) String account,
+            @ApiParam(value = "账号email") @RequestParam(value = "email", required = false) String email,
+            @ApiParam(value = "账号mobile") @RequestParam(value = "mobile", required = false) String mobile) {
+
+        long count = tcAccountService.countAccounts(ids, name, account, email, mobile);
+
+        return ResponseEntity.ok(TcR.ok(count));
+    }
+
+    @ApiOperation(
+            value = "查询用户列表",
+            notes = "查询用户列表，且逻辑",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
+    @ApiResponse(code = 200, message = "OK")
+    @RequestMapping(value = "/find_accounts", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<TcP<List<TmAccount>>> findAccounts(
+            @ApiParam(value = "账号ids") @RequestParam(value = "ids", required = false) List<String> ids,
+            @ApiParam(value = "账号name 精确匹配") @RequestParam(value = "name", required = false) String name,
+            @ApiParam(value = "账号account") @RequestParam(value = "account", required = false) String account,
+            @ApiParam(value = "账号email") @RequestParam(value = "email", required = false) String email,
+            @ApiParam(value = "账号mobile") @RequestParam(value = "mobile", required = false) String mobile,
+            @ApiParam(value = "包含辅助信息") @RequestParam(value = "includeAssistField", defaultValue = "false")
+                    boolean includeAssistField,
+            @ApiParam(value = "包含支付信息") @RequestParam(value = "includePaymentField", defaultValue = "false")
+                    boolean includePaymentField,
+            @ApiParam(value = "当前页") @RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+            @ApiParam(value = "每页条数") @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+
+        List<TmAccount> tmAccounts = tcAccountService.findAccounts(
+                ids, name, account, email, mobile, includeAssistField, includePaymentField, currentPage, pageSize);
+
+        return ResponseEntity.ok(TcP.ok(tmAccounts, currentPage, -1, pageSize));
     }
 
 }

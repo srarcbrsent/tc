@@ -11,6 +11,7 @@ import com.ysu.zyw.tc.model.api.account.auth.TmPermission;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Service
 public class TcAuthService {
 
     @Resource

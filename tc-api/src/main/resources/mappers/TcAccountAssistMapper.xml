@@ -3,9 +3,9 @@
 <mapper namespace="com.ysu.zyw.tc.api.dao.mappers.TcAccountAssistMapper">
   <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="signup_platform" jdbcType="VARCHAR" property="signupPlatform" />
+    <result column="signup_platform" jdbcType="VARCHAR" property="signupPlatform" typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
     <result column="signup_timestamp" jdbcType="TIMESTAMP" property="signupTimestamp" />
-    <result column="phone_activated" jdbcType="VARCHAR" property="phoneActivated" />
+    <result column="mobile_activated" jdbcType="VARCHAR" property="mobileActivated" />
     <result column="email_activated" jdbcType="VARCHAR" property="emailActivated" />
     <result column="last_login_timestamp" jdbcType="TIMESTAMP" property="lastLoginTimestamp" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
@@ -33,6 +33,25 @@
                   and ${criterion.condition}
                   <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.signupPlatformCriteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler} and #{criterion.secondValue,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
                   </foreach>
                 </when>
               </choose>
@@ -66,13 +85,32 @@
                 </when>
               </choose>
             </foreach>
+            <foreach collection="criteria.signupPlatformCriteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler} and #{criterion.secondValue,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
           </trim>
         </if>
       </foreach>
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, signup_platform, signup_timestamp, phone_activated, email_activated, last_login_timestamp, 
+    id, signup_platform, signup_timestamp, mobile_activated, email_activated, last_login_timestamp, 
     updated_person, updated_timestamp, created_person, created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssistExample" resultMap="BaseResultMap">
@@ -109,14 +147,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
-    insert into mb_account_assist (id, signup_platform, signup_timestamp, 
-      phone_activated, email_activated, last_login_timestamp, 
-      updated_person, updated_timestamp, created_person, 
-      created_timestamp)
-    values (#{id,jdbcType=VARCHAR}, #{signupPlatform,jdbcType=VARCHAR}, #{signupTimestamp,jdbcType=TIMESTAMP}, 
-      #{phoneActivated,jdbcType=VARCHAR}, #{emailActivated,jdbcType=VARCHAR}, #{lastLoginTimestamp,jdbcType=TIMESTAMP}, 
-      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
-      #{createdTimestamp,jdbcType=TIMESTAMP})
+    insert into mb_account_assist (id, signup_platform, 
+      signup_timestamp, mobile_activated, email_activated, 
+      last_login_timestamp, updated_person, updated_timestamp, 
+      created_person, created_timestamp)
+    values (#{id,jdbcType=VARCHAR}, #{signupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler}, 
+      #{signupTimestamp,jdbcType=TIMESTAMP}, #{mobileActivated,jdbcType=VARCHAR}, #{emailActivated,jdbcType=VARCHAR}, 
+      #{lastLoginTimestamp,jdbcType=TIMESTAMP}, #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, 
+      #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     insert into mb_account_assist
@@ -130,8 +168,8 @@
       <if test="signupTimestamp != null">
         signup_timestamp,
       </if>
-      <if test="phoneActivated != null">
-        phone_activated,
+      <if test="mobileActivated != null">
+        mobile_activated,
       </if>
       <if test="emailActivated != null">
         email_activated,
@@ -157,13 +195,13 @@
         #{id,jdbcType=VARCHAR},
       </if>
       <if test="signupPlatform != null">
-        #{signupPlatform,jdbcType=VARCHAR},
+        #{signupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       </if>
       <if test="signupTimestamp != null">
         #{signupTimestamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="phoneActivated != null">
-        #{phoneActivated,jdbcType=VARCHAR},
+      <if test="mobileActivated != null">
+        #{mobileActivated,jdbcType=VARCHAR},
       </if>
       <if test="emailActivated != null">
         #{emailActivated,jdbcType=VARCHAR},
@@ -198,13 +236,13 @@
         id = #{record.id,jdbcType=VARCHAR},
       </if>
       <if test="record.signupPlatform != null">
-        signup_platform = #{record.signupPlatform,jdbcType=VARCHAR},
+        signup_platform = #{record.signupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       </if>
       <if test="record.signupTimestamp != null">
         signup_timestamp = #{record.signupTimestamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.phoneActivated != null">
-        phone_activated = #{record.phoneActivated,jdbcType=VARCHAR},
+      <if test="record.mobileActivated != null">
+        mobile_activated = #{record.mobileActivated,jdbcType=VARCHAR},
       </if>
       <if test="record.emailActivated != null">
         email_activated = #{record.emailActivated,jdbcType=VARCHAR},
@@ -232,9 +270,9 @@
   <update id="updateByExample" parameterType="map">
     update mb_account_assist
     set id = #{record.id,jdbcType=VARCHAR},
-      signup_platform = #{record.signupPlatform,jdbcType=VARCHAR},
+      signup_platform = #{record.signupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       signup_timestamp = #{record.signupTimestamp,jdbcType=TIMESTAMP},
-      phone_activated = #{record.phoneActivated,jdbcType=VARCHAR},
+      mobile_activated = #{record.mobileActivated,jdbcType=VARCHAR},
       email_activated = #{record.emailActivated,jdbcType=VARCHAR},
       last_login_timestamp = #{record.lastLoginTimestamp,jdbcType=TIMESTAMP},
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
@@ -249,13 +287,13 @@
     update mb_account_assist
     <set>
       <if test="signupPlatform != null">
-        signup_platform = #{signupPlatform,jdbcType=VARCHAR},
+        signup_platform = #{signupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       </if>
       <if test="signupTimestamp != null">
         signup_timestamp = #{signupTimestamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="phoneActivated != null">
-        phone_activated = #{phoneActivated,jdbcType=VARCHAR},
+      <if test="mobileActivated != null">
+        mobile_activated = #{mobileActivated,jdbcType=VARCHAR},
       </if>
       <if test="emailActivated != null">
         email_activated = #{emailActivated,jdbcType=VARCHAR},
@@ -280,9 +318,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     update mb_account_assist
-    set signup_platform = #{signupPlatform,jdbcType=VARCHAR},
+    set signup_platform = #{signupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       signup_timestamp = #{signupTimestamp,jdbcType=TIMESTAMP},
-      phone_activated = #{phoneActivated,jdbcType=VARCHAR},
+      mobile_activated = #{mobileActivated,jdbcType=VARCHAR},
       email_activated = #{emailActivated,jdbcType=VARCHAR},
       last_login_timestamp = #{lastLoginTimestamp,jdbcType=TIMESTAMP},
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
@@ -313,7 +351,7 @@
       id, 
       signup_platform, 
       signup_timestamp, 
-      phone_activated, 
+      mobile_activated, 
       email_activated, 
       last_login_timestamp, 
       updated_person, 
@@ -325,7 +363,7 @@
       (#{item.id,jdbcType=VARCHAR}, 
       #{item.signupPlatform,jdbcType=VARCHAR}, 
       #{item.signupTimestamp,jdbcType=TIMESTAMP}, 
-      #{item.phoneActivated,jdbcType=VARCHAR}, 
+      #{item.mobileActivated,jdbcType=VARCHAR}, 
       #{item.emailActivated,jdbcType=VARCHAR}, 
       #{item.lastLoginTimestamp,jdbcType=TIMESTAMP}, 
       #{item.updatedPerson,jdbcType=VARCHAR}, 

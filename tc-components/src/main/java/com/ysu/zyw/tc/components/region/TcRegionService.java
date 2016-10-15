@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.base.utils.TcSerializationUtils;
+import com.ysu.zyw.tc.model.components.region.TcProvince;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +13,10 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -57,6 +60,20 @@ public class TcRegionService implements InitializingBean {
         List<TcProvince.TcCity.TcDistrict> tcDistrictList = tcDistrictListGroup.get(cityCode);
         checkNotNull(tcDistrictList);
         return tcDistrictList;
+    }
+
+    public TcProvince.TcCity.TcDistrict findDistrict(String code) {
+        checkNotNull(code);
+        Optional<TcProvince.TcCity.TcDistrict> tcDistrictOptional = tcDistrictListGroup.values()
+                .parallelStream()
+                .flatMap(Collection::parallelStream)
+                .filter(tcDistrict -> tcDistrict.getCode().equals(code)).findFirst();
+        TcProvince.TcCity.TcDistrict tcDistrict = tcDistrictOptional.orElseThrow(
+                () -> new NullPointerException("code [" + code + "] area not exists"));
+        TcProvince.TcCity.TcDistrict copyDistrict = tcDistrict.copy();
+        TcProvince.TcCity copyCity = tcDistrict.getTcCity().copy();
+        TcProvince copyProvince = tcDistrict.getTcCity().getTcProvince().copy();
+        return copyDistrict.setTcCity(copyCity.setTcProvince(copyProvince));
     }
 
     @Override
@@ -104,9 +121,12 @@ public class TcRegionService implements InitializingBean {
     private Map<String, List<TcProvince.TcCity>> buildCityListGroup(List<TcProvince> tcCompletedProvinceList) {
         Map<String, List<TcProvince.TcCity>> cityListGroup = Maps.newLinkedHashMap();
         tcCompletedProvinceList.parallelStream().forEach(tcProvince -> {
+            TcProvince copyProvince = tcProvince.copy();
             List<TcProvince.TcCity> tcCityListCopy = Lists.newLinkedList();
             tcProvince.getTcCityList().parallelStream().forEach(tcCity -> {
-                tcCityListCopy.add(tcCity.copy());
+                TcProvince.TcCity copyCity = tcCity.copy();
+                copyCity.setTcProvince(copyProvince);
+                tcCityListCopy.add(copyCity);
             });
             cityListGroup.put(tcProvince.getCode(), tcCityListCopy);
         });
@@ -117,10 +137,15 @@ public class TcRegionService implements InitializingBean {
             List<TcProvince> tcCompletedProvinceList) {
         Map<String, List<TcProvince.TcCity.TcDistrict>> districtListGroup = Maps.newLinkedHashMap();
         tcCompletedProvinceList.parallelStream().forEach(tcProvince -> {
+            TcProvince copyProvince = tcProvince.copy();
             tcProvince.getTcCityList().parallelStream().forEach(tcCity -> {
+                TcProvince.TcCity copyCity = tcCity.copy();
+                copyCity.setTcProvince(copyProvince);
                 List<TcProvince.TcCity.TcDistrict> tcDistrictListCopy = Lists.newLinkedList();
                 tcCity.getTcDistrictList().parallelStream().forEach(tcDistrict -> {
-                    tcDistrictListCopy.add(tcDistrict.copy());
+                    TcProvince.TcCity.TcDistrict copyDistrict = tcDistrict.copy();
+                    copyDistrict.setTcCity(copyCity);
+                    tcDistrictListCopy.add(copyDistrict);
                 });
                 districtListGroup.put(tcCity.getCode(), tcDistrictListCopy);
             });

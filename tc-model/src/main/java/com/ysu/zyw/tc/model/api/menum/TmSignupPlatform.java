@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.model.api.menum;
 
-public enum TmSigninPlatform {
+public enum TmSignupPlatform {
 
     PC_PLATFORM,
 

@@ -39,6 +39,8 @@
 
     <context:component-scan base-package="com.ysu.zyw.tc.api.openapi"/>
 
+    <bean class="com.ysu.zyw.tc.api.fk.TcExceptionResponseDecorator"/>
+
     <bean class="com.ysu.zyw.tc.components.utils.handler.TcHandleExceptionHandler">
         <property name="view5xx" value="/server_error.json"/>
         <property name="ajax5xx" value="/server_error.json"/>

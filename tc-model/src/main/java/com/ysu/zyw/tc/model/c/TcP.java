@@ -27,15 +27,23 @@ public class TcP<T> extends TcR<T> implements Serializable {
         super(code, description);
     }
 
-    public TcP(T body) {
-        super(body);
+    public static <T> TcP<T> ok(T body) {
+        TcP<T> tcP = new TcP<>();
+        tcP.code = R.SUCCESS;
+        tcP.description = R.SUCCESS_DESCRIPTION;
+        tcP.body = body;
+        return tcP;
     }
 
-    public TcP(T body, int currentPage, int totalPage, int pageSize) {
-        super(body);
-        this.currentPage = currentPage;
-        this.totalPage = totalPage;
-        this.pageSize = pageSize;
+    public static <T> TcP<T> ok(T body, int currentPage, int totalPage, int pageSize) {
+        TcP<T> tcP = new TcP<>();
+        tcP.code = R.SUCCESS;
+        tcP.description = R.SUCCESS_DESCRIPTION;
+        tcP.body = body;
+        tcP.currentPage = currentPage;
+        tcP.totalPage = totalPage;
+        tcP.pageSize = pageSize;
+        return tcP;
     }
 
 }
