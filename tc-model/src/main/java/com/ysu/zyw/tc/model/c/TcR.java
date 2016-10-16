@@ -29,6 +29,9 @@ public class TcR<T> implements Serializable {
     @ApiModelProperty(value = "响应体")
     protected T body;
 
+    @ApiModelProperty(value = "附加信息")
+    protected Object extra;
+
     public TcR(int code, String description) {
         this.code = code;
         this.description = description;

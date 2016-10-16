@@ -15,8 +15,4 @@ public class TcLambdaUtils {
 
     }
 
-    public static class D {
-
-    }
-
 }

@@ -14,7 +14,7 @@
         <property name="dateFormat" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).FULL_DATE_FORMAT}"/>
     </bean>
 
-    <mvc:annotation-driven conversion-service="conversionService">
+    <mvc:annotation-driven conversion-service="conversionService" validator="validator">
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>
@@ -34,6 +34,12 @@
             </set>
         </property>
     </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+    </bean>
+
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
 
     <mvc:default-servlet-handler/>
 

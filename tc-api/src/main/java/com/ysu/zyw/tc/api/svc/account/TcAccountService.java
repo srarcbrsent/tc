@@ -9,16 +9,19 @@ import com.ysu.zyw.tc.api.dao.po.TcAccountAssist;
 import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import com.ysu.zyw.tc.api.dao.po.TcAccountPayment;
 import com.ysu.zyw.tc.api.fk.ex.TcResourceNotFoundException;
+import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
+import com.ysu.zyw.tc.components.utils.validator.mode.TcCreateMode;
+import com.ysu.zyw.tc.components.utils.validator.mode.TcUpdateMode;
 import com.ysu.zyw.tc.model.api.account.TmAccount;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,11 +42,14 @@ public class TcAccountService {
     @Resource
     private TcAccountPaymentMapper tcAccountPaymentMapper;
 
-    public void createAccount() {
+    public @NotNull String createAccount(@NotNull @Validated(value = TcCreateMode.class) TmAccount tmAccount) {
+        String accountId = TcIdWorker.upperCaseUuid();
 
+
+        return accountId;
     }
 
-    public void deleteAccount(@Nonnull String accountId) {
+    public void deleteAccount(@NotNull String accountId) {
         checkNotNull(accountId);
         if (!existAccount(accountId)) {
             throw new TcResourceNotFoundException("account [" + accountId + "] can not be deleted because it does" +
@@ -58,14 +64,13 @@ public class TcAccountService {
         checkArgument(count == 1);
     }
 
-    public void updateAccount() {
+    public void updateAccount(@NotNull @Validated(value = TcUpdateMode.class) TmAccount tmAccount) {
 
     }
 
-    public TmAccount findAccount(@Nonnull String accountId,
+    public TmAccount findAccount(@NotNull String accountId,
                                  boolean includeAssistField,
                                  boolean includePaymentField) {
-        checkNotNull(accountId);
         TcAccountExample tcAccountExample = new TcAccountExample();
         tcAccountExample.createCriteria()
                 .andIdEqualTo(accountId)
@@ -96,11 +101,11 @@ public class TcAccountService {
         return tmAccount;
     }
 
-    public long countAccounts(@Nullable List<String> ids,
-                              @Nullable String name,
-                              @Nullable String account,
-                              @Nullable String email,
-                              @Nullable String mobile) {
+    public long countAccounts(List<String> ids,
+                              String name,
+                              String account,
+                              String email,
+                              String mobile) {
         TcAccountExample tcAccountExample = new TcAccountExample();
         TcAccountExample.Criteria criteria = tcAccountExample.createCriteria();
         criteria.andDelectedEqualTo(false);
@@ -122,11 +127,11 @@ public class TcAccountService {
         return tcAccountMapper.countByExample(tcAccountExample);
     }
 
-    public List<TmAccount> findAccounts(@Nullable List<String> ids,
-                                        @Nullable String name,
-                                        @Nullable String account,
-                                        @Nullable String email,
-                                        @Nullable String mobile,
+    public @NotNull List<TmAccount> findAccounts(List<String> ids,
+                                        String name,
+                                        String account,
+                                        String email,
+                                        String mobile,
                                         boolean includeAssistField,
                                         boolean includePaymentField,
                                         int currentPage,

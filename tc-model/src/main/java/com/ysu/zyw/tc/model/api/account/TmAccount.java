@@ -18,7 +18,7 @@ import java.util.Date;
 @ApiModel
 public class TmAccount implements Serializable {
 
-    @ApiModelProperty(value = "id")
+    @ApiModelProperty(value = "账号id")
     private String id;
 
     @ApiModelProperty(value = "企业名")
@@ -39,10 +39,10 @@ public class TmAccount implements Serializable {
     @ApiModelProperty(value = "自我描述")
     private String selfDescribing;
 
-    @ApiModelProperty(value = "账号signinTime", example = "yyyy-MM-dd HH:mm:ss.SSS")
+    @ApiModelProperty(value = "注册时间", example = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date signinTime;
 
-    @ApiModelProperty(value = "账号lockReleaseTime", example = "yyyy-MM-dd HH:mm:ss.SSS")
+    @ApiModelProperty(value = "解锁时间", example = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date lockReleaseTime;
 
     @ApiModelProperty(value = "注册渠道")
