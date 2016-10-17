@@ -47,6 +47,7 @@ public class TmAccount implements Serializable {
             message = "【企业名】限制为6-48个字符（一个中文计为两个字符）")
     private String name;
 
+    // FIXME 必须不能有@ 至少含有一个英文 （登陆时和邮箱手机存在一致性问题）
     @ApiModelProperty(value = "账号")
     @Length(min = 6,
             max = 16,

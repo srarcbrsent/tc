@@ -1,10 +1,10 @@
 package com.ysu.zyw.tc.api.openapi.account.auth;
 
+import com.ysu.zyw.tc.api.svc.account.TcAccountService;
 import com.ysu.zyw.tc.api.svc.account.auth.TcAuthService;
 import com.ysu.zyw.tc.model.api.account.auth.TmPermission;
 import com.ysu.zyw.tc.model.c.TcR;
 import io.swagger.annotations.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,10 +24,13 @@ public class TcAuthApi {
     @Resource
     private TcAuthService tcAuthService;
 
+    @Resource
+    private TcAccountService tcAccountService;
+
     @ApiOperation(
-            value = "判断用户是否可以登录",
-            notes = "判断用户是否可以登录<br/> code == 0可以登录 <br/>code == 1用户存在但密码错误",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            value = "登录",
+            notes = "登录",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiImplicitParam(
             value = "Api版本号",
@@ -35,13 +38,27 @@ public class TcAuthApi {
             name = "X-ApiVersion",
             required = true,
             defaultValue = "1.0")
-    @ApiResponse(code = 200, message = "", response = TcR.class)
-    @RequestMapping(value = "/can_login", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Integer>> canLogin(
-            @ApiParam(value = "账号", required = true) @RequestParam(value = "username") String username,
-            @ApiParam(value = "密码", required = true) @RequestParam(value = "password") String password) {
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 422, message = "验证错误，参见extra")
+    })
+    @RequestMapping(value = "/login", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<TcR<String>> canLogin(
+            @ApiParam(value = "用户名") @RequestParam(value = "username") String username,
+            @ApiParam(value = "密码") @RequestParam(value = "password") String password,
+            @ApiParam(value = "账号可登陆") @RequestParam(value = "canAccountLogin", defaultValue = "true")
+                    Boolean canAccountLogin,
+            @ApiParam(value = "邮箱可登陆") @RequestParam(value = "canEmailLogin", defaultValue = "true")
+                    Boolean canEmailLogin,
+            @ApiParam(value = "手机可登陆") @RequestParam(value = "canMobileLogin", defaultValue = "true")
+                    Boolean canMobileLogin) {
 
-        return new ResponseEntity<>(TcR.ok(1), HttpStatus.OK);
+        String succLoginAccountId = tcAccountService.login(
+                username, password, canAccountLogin, canEmailLogin, canMobileLogin);
+
+        // TODO mq
+
+        return ResponseEntity.ok(TcR.ok(succLoginAccountId));
     }
 
     @ApiOperation(

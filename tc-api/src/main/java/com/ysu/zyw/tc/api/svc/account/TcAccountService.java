@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.api.svc.account;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountAssistMapper;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountMapper;
@@ -8,7 +9,6 @@ import com.ysu.zyw.tc.api.dao.po.TcAccount;
 import com.ysu.zyw.tc.api.dao.po.TcAccountAssist;
 import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import com.ysu.zyw.tc.api.dao.po.TcAccountPayment;
-import com.ysu.zyw.tc.api.fk.ex.TcResourceNotFoundException;
 import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
@@ -20,6 +20,7 @@ import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -48,6 +49,51 @@ public class TcAccountService {
 
     @Resource
     private TcAccountPaymentMapper tcAccountPaymentMapper;
+
+    @Transactional(readOnly = true)
+    public @NotEmpty String login(@NotEmpty String username,
+                        @NotEmpty String password,
+                        @NotNull Boolean canAccountLogin,
+                        @NotNull Boolean canEmailLogin,
+                        @NotNull Boolean canMobileLogin) {
+        Preconditions.checkArgument(canAccountLogin || canEmailLogin || canMobileLogin);
+
+        TcAccountExample tcAccountExample = new TcAccountExample();
+        // prevent some mistake leading to performance problem
+        tcAccountExample.setStartLine(0);
+        tcAccountExample.setPageSize(2);
+        TcAccountExample.Criteria criteria = tcAccountExample.createCriteria();
+        if (canAccountLogin) {
+            criteria.andAccountEqualTo(username);
+        }
+        if (canEmailLogin) {
+            tcAccountExample.or().andEmailEqualTo(username);
+        }
+        if (canMobileLogin) {
+            tcAccountExample.or().andMobileEqualTo(username);
+        }
+        List<TcAccount> tcAccounts = tcAccountMapper.selectByExample(tcAccountExample);
+
+        if (CollectionUtils.isEmpty(tcAccounts)) {
+            // 账号不存在
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请重试！"));
+        }
+
+        TcAccount tcAccount = tcAccounts.get(0);
+        if (!Objects.equals(tcAccount.getPassword(), password)) {
+            // 账号存在 密码不对
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("密码错误，请重试！"));
+        }
+
+        if (Objects.nonNull(tcAccount.getLockReleaseTime()) &&
+                // 当前时间在解锁之前之前
+                Calendar.getInstance().getTime().before(tcAccount.getLockReleaseTime())) {
+            // 被锁定
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号被锁定，请联系管理员！"));
+        }
+
+        return tcAccount.getId();
+    }
 
     @Transactional
     public @NotNull String createAccount(@NotNull @Validated(value = TcCreateMode.class) TmAccount tmAccount) {
@@ -137,10 +183,8 @@ public class TcAccountService {
 
     @Transactional
     public void deleteAccount(@NotNull String accountId) {
-        checkNotNull(accountId);
-        if (!existAccount(accountId)) {
-            throw new TcResourceNotFoundException("id [" + accountId + "] can not be deleted because it does" +
-                    "not exists");
+        if (!existId(accountId)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
         }
 
         TcAccount tcAccount = new TcAccount();
@@ -154,7 +198,7 @@ public class TcAccountService {
     @Transactional
     public void updateAccount(@NotNull @Validated(value = TcUpdateMode.class) TmAccount tmAccount) {
         // check
-        if (existId(tmAccount.getId())) {
+        if (!existId(tmAccount.getId())) {
             throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
         }
 
@@ -206,6 +250,30 @@ public class TcAccountService {
         int cAccountPayment = tcAccountPaymentMapper.updateByPrimaryKeySelective(tcAccountPayment);
 
         checkArgument(cAccount == 1 && cAccountAssist == 1 && cAccountPayment == 1);
+    }
+
+    @Transactional
+    public void updatePassword(String accountId, String oPassword, String nPassword) {
+        TcAccountExample tcAccountExample = new TcAccountExample();
+        tcAccountExample.createCriteria()
+                .andIdEqualTo(accountId)
+                .andDelectedEqualTo(false);
+        List<TcAccount> tcAccounts = tcAccountMapper.selectByExample(tcAccountExample);
+        if (CollectionUtils.isEmpty(tcAccounts)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+        }
+        TcAccount tcAccount = tcAccounts.get(0);
+
+        if (!Objects.equals(tcAccount.getPassword(), oPassword)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("原密码错误，请更换重试！"));
+        }
+
+        TcAccount mTcAccount = new TcAccount();
+        mTcAccount.setId(accountId).setPassword(nPassword);
+
+        int cAccount = tcAccountMapper.updateByPrimaryKeySelective(mTcAccount);
+
+        checkArgument(cAccount == 1);
     }
 
     @Transactional(readOnly = true)

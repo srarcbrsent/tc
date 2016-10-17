@@ -9,6 +9,7 @@ import com.ysu.zyw.tc.model.validator.mode.TcCreateMode;
 import com.ysu.zyw.tc.model.validator.mode.TcUpdateMode;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,11 @@ public class TcAccountApi {
             name = "X-ApiVersion",
             required = true,
             defaultValue = "1.0")
-    @ApiResponse(code = 200, message = "OK")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "参数错误，参见extra"),
+            @ApiResponse(code = 422, message = "验证错误，参见extra")
+    })
     @RequestMapping(value = "/create_account", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcR<String>> createAccount(
             @ApiParam(value = "账号信息") @Validated(value = TcCreateMode.class) @RequestBody TmAccount tmAccount,
@@ -77,7 +82,10 @@ public class TcAccountApi {
             name = "X-ApiVersion",
             required = true,
             defaultValue = "1.0")
-    @ApiResponse(code = 200, message = "OK")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 422, message = "验证错误，参见extra")
+    })
     @RequestMapping(value = "/delete_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
     @Transactional
     public ResponseEntity<TcR<Boolean>> deleteAccount(
@@ -99,7 +107,11 @@ public class TcAccountApi {
             name = "X-ApiVersion",
             required = true,
             defaultValue = "1.0")
-    @ApiResponse(code = 200, message = "OK")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "参数错误，参见extra"),
+            @ApiResponse(code = 422, message = "验证错误，参见extra")
+    })
     @RequestMapping(value = "update_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcR<Void>> updateAccount(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
@@ -118,6 +130,44 @@ public class TcAccountApi {
     }
 
     @ApiOperation(
+            value = "更换密码",
+            notes = "更换密码",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "参数错误，参见extra"),
+            @ApiResponse(code = 422, message = "验证错误，参见extra")
+    })
+    @RequestMapping(value = "update_password/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<TcR<Void>> updatePassword(
+            @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
+            @ApiParam(value = "旧密码") @RequestParam(value = "oPassword")
+            @Length(min = 64, max = 64, message = "【密码】限制为64个字符") String oPassword,
+            BindingResult oBindingResult,
+            @ApiParam(value = "新密码") @RequestParam(value = "nPassword")
+            @Length(min = 64, max = 64, message = "【密码】限制为64个字符") String nPassword,
+            BindingResult nBindingResult) {
+
+        if (oBindingResult.hasErrors() || nBindingResult.hasErrors()) {
+            TcR<Void> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
+            nBindingResult.getAllErrors().forEach(oBindingResult::addError);
+            tcR.setExtra(new TcValidator.TcVerifyFailure(nBindingResult));
+            return ResponseEntity.ok(tcR);
+        }
+
+        tcAccountService.updatePassword(accountId, oPassword, nPassword);
+
+        return ResponseEntity.ok(TcR.ok());
+    }
+
+    @ApiOperation(
             value = "查询指定用户",
             notes = "通过id查询指定用户",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
@@ -128,7 +178,9 @@ public class TcAccountApi {
             name = "X-ApiVersion",
             required = true,
             defaultValue = "1.0")
-    @ApiResponse(code = 200, message = "OK")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+    })
     @RequestMapping(
             value = "/find_account/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcR<TmAccount>> findAccount(
@@ -158,7 +210,9 @@ public class TcAccountApi {
             name = "X-ApiVersion",
             required = true,
             defaultValue = "1.0")
-    @ApiResponse(code = 200, message = "OK")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK")
+    })
     @RequestMapping(value = "/count_accounts", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcR<Long>> countAccounts(
             @ApiParam(value = "账号ids") @RequestParam(value = "ids", required = false) List<String> ids,
@@ -183,7 +237,9 @@ public class TcAccountApi {
             name = "X-ApiVersion",
             required = true,
             defaultValue = "1.0")
-    @ApiResponse(code = 200, message = "OK")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK")
+    })
     @RequestMapping(value = "/find_accounts", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcP<List<TmAccount>>> findAccounts(
             @ApiParam(value = "账号ids") @RequestParam(value = "ids", required = false) List<String> ids,
