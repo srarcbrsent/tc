@@ -1,10 +1,11 @@
-package com.ysu.zyw.tc.components.utils.validator;
+package com.ysu.zyw.tc.model.validator;
 
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.Errors;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -33,6 +34,10 @@ public class TcValidator extends GenericValidator {
             }
         }
 
+        public TcVerifyFailure(String... errors) {
+            super(Arrays.asList(errors));
+        }
+
     }
 
     public static boolean isNull(Object value) {
@@ -47,7 +52,7 @@ public class TcValidator extends GenericValidator {
         return !GenericValidator.isBlankOrNull(value);
     }
 
-    public static boolean isValidCharacter(String value, int min, int max, boolean chineseAs2Char) {
+    public static boolean isSafeString(String value, int min, int max, boolean oneChineseAs2Char) {
         if (isNull(value)) {
             return false;
         }
@@ -57,7 +62,7 @@ public class TcValidator extends GenericValidator {
             if (englishCharPattern.matcher(token).matches()) {
                 chars += 1;
             } else if (chineseCharPattern.matcher(token).matches()) {
-                chars += chineseAs2Char ? 2 : 1;
+                chars += oneChineseAs2Char ? 2 : 1;
             } else {
                 return false;
             }

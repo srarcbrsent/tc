@@ -79,6 +79,10 @@ public class TcR<T> implements Serializable {
 
         public static final String DEPRECATED_DESCRIPTION = "Api已过期！";
 
+        public static final int UNPROCESSABLE_ENTITY = 422;
+
+        public static final String UNPROCESSABLE_ENTITY_DESCRIPTION = "无法处理的请求！";
+
         public static final int SERVER_ERROR = 500;
 
         public static final String SERVER_ERROR_DESCRIPTION = "服务器异常，请稍后再试！";

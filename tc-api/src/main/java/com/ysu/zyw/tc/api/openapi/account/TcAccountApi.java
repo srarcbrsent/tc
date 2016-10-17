@@ -1,12 +1,12 @@
 package com.ysu.zyw.tc.api.openapi.account;
 
 import com.ysu.zyw.tc.api.svc.account.TcAccountService;
-import com.ysu.zyw.tc.components.utils.validator.TcValidator;
-import com.ysu.zyw.tc.components.utils.validator.mode.TcCreateMode;
-import com.ysu.zyw.tc.components.utils.validator.mode.TcUpdateMode;
 import com.ysu.zyw.tc.model.api.account.TmAccount;
 import com.ysu.zyw.tc.model.c.TcP;
 import com.ysu.zyw.tc.model.c.TcR;
+import com.ysu.zyw.tc.model.validator.TcValidator;
+import com.ysu.zyw.tc.model.validator.mode.TcCreateMode;
+import com.ysu.zyw.tc.model.validator.mode.TcUpdateMode;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +31,6 @@ public class TcAccountApi {
 
     @Resource
     private TcAccountService tcAccountService;
-
-    @Resource
-    private Validator validator;
 
     @ApiOperation(
             value = "创建用户",
@@ -52,6 +49,12 @@ public class TcAccountApi {
             @ApiParam(value = "账号信息") @Validated(value = TcCreateMode.class) @RequestBody TmAccount tmAccount,
             BindingResult bindingResult) {
 
+        boolean nonePrincipal = TcValidator.isBlankOrNull(tmAccount.getAccount()) &&
+                TcValidator.isBlankOrNull(tmAccount.getEmail()) &&
+                TcValidator.isBlankOrNull(tmAccount.getMobile());
+        if (nonePrincipal) {
+            bindingResult.addError(new ObjectError("tmAccount", "账号/邮箱/手机必须至少设置一项"));
+        }
         if (bindingResult.hasErrors()) {
             TcR<String> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
             tcR.setExtra(new TcValidator.TcVerifyFailure(bindingResult));
@@ -98,19 +101,20 @@ public class TcAccountApi {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "update_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Boolean>> updateAccount(
+    public ResponseEntity<TcR<Void>> updateAccount(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
             @ApiParam(value = "账号信息") @Validated(value = TcUpdateMode.class) @RequestBody TmAccount tmAccount,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            TcR<Boolean> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
+            TcR<Void> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
             tcR.setExtra(new TcValidator.TcVerifyFailure(bindingResult));
             return ResponseEntity.ok(tcR);
         }
 
+        tcAccountService.updateAccount(tmAccount);
 
-        return null;
+        return ResponseEntity.ok(TcR.ok());
     }
 
     @ApiOperation(
