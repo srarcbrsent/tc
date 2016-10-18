@@ -51,11 +51,11 @@ public class TcAccountService {
     private TcAccountPaymentMapper tcAccountPaymentMapper;
 
     @Transactional(readOnly = true)
-    public @NotEmpty String login(@NotEmpty String username,
-                        @NotEmpty String password,
-                        @NotNull Boolean canAccountLogin,
-                        @NotNull Boolean canEmailLogin,
-                        @NotNull Boolean canMobileLogin) {
+    public @NotEmpty String canSignin(@NotEmpty String username,
+                                      @NotEmpty String password,
+                                      @NotNull Boolean canAccountLogin,
+                                      @NotNull Boolean canEmailLogin,
+                                      @NotNull Boolean canMobileLogin) {
         Preconditions.checkArgument(canAccountLogin || canEmailLogin || canMobileLogin);
 
         TcAccountExample tcAccountExample = new TcAccountExample();

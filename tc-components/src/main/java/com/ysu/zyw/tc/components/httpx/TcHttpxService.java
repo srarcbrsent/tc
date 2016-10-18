@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,6 +22,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -210,6 +212,27 @@ public class TcHttpxService {
         }
 
         return responseEntity;
+    }
+
+    public <T> T orElseGet(@NotNull ResponseEntity<T> responseEntity,
+                           @Nullable T value) {
+        checkNotNull(responseEntity);
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            return responseEntity.getBody();
+        } else {
+            return value;
+        }
+    }
+
+    public <T> T orElseThrow(@NotNull ResponseEntity<T> responseEntity,
+                             @NotNull Supplier<RuntimeException> supplier) {
+        checkNotNull(responseEntity);
+        checkNotNull(supplier);
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            return responseEntity.getBody();
+        } else {
+            throw supplier.get();
+        }
     }
 
 }

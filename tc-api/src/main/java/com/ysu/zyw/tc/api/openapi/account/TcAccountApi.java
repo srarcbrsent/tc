@@ -68,6 +68,8 @@ public class TcAccountApi {
 
         String accountId = tcAccountService.createAccount(tmAccount);
 
+        // TODO mq
+
         return ResponseEntity.ok(TcR.ok(accountId));
     }
 
@@ -92,6 +94,8 @@ public class TcAccountApi {
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId) {
 
         tcAccountService.deleteAccount(accountId);
+
+        // TODO mq
 
         return ResponseEntity.ok(TcR.ok());
     }
@@ -125,6 +129,8 @@ public class TcAccountApi {
         }
 
         tcAccountService.updateAccount(tmAccount);
+
+        // TODO mq
 
         return ResponseEntity.ok(TcR.ok());
     }
@@ -163,6 +169,8 @@ public class TcAccountApi {
         }
 
         tcAccountService.updatePassword(accountId, oPassword, nPassword);
+
+        // TODO mq
 
         return ResponseEntity.ok(TcR.ok());
     }

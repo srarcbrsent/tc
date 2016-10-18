@@ -42,8 +42,8 @@ public class TcAuthApi {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 422, message = "验证错误，参见extra")
     })
-    @RequestMapping(value = "/login", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<String>> canLogin(
+    @RequestMapping(value = "/can_signin", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<TcR<String>> canSignin(
             @ApiParam(value = "用户名") @RequestParam(value = "username") String username,
             @ApiParam(value = "密码") @RequestParam(value = "password") String password,
             @ApiParam(value = "账号可登陆") @RequestParam(value = "canAccountLogin", defaultValue = "true")
@@ -53,7 +53,7 @@ public class TcAuthApi {
             @ApiParam(value = "手机可登陆") @RequestParam(value = "canMobileLogin", defaultValue = "true")
                     Boolean canMobileLogin) {
 
-        String succLoginAccountId = tcAccountService.login(
+        String succLoginAccountId = tcAccountService.canSignin(
                 username, password, canAccountLogin, canEmailLogin, canMobileLogin);
 
         // TODO mq
