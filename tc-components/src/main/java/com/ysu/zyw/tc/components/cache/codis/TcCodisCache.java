@@ -87,10 +87,11 @@ public class TcCodisCache implements Cache {
             }
             return value;
         } else {
-            // lock value loader, and if more than one value loader spec, then they are don't exclusive
-            // FIXME if there is a same logic difference lambda, then it will cause a conflict.
+            // FIXME only lock key will lead to a data race, such like one obj '1' and another obj '1'
+            // and they standard by the same key-value pair, but they are not the same key, so if
+            // two thread use them call this method the same time, the value loader will be call twice
             //noinspection SynchronizationOnLocalVariableOrMethodParameter
-            synchronized (valueLoader) {
+            synchronized (key) {
                 // lock and get
                 @SuppressWarnings("unchecked")
                 T sValue = (T) codisTemplate.opsForValue().get(key);

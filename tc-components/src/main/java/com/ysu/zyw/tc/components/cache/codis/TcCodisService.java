@@ -64,7 +64,8 @@ public class TcCodisService {
             }
             return value;
         } else {
-            synchronized (this) {
+            // FIXME 大量的动态key可能造成常量池泄露
+            synchronized (key.intern()) {
                 // lock and get
                 @SuppressWarnings("unchecked")
                 T sValue = (T) codisTemplate.opsForValue().get(key);
