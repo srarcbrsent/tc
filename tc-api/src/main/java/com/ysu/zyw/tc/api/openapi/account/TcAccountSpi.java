@@ -126,7 +126,7 @@ public class TcAccountSpi {
 
         // TODO mq
 
-        return ResponseEntity.ok(TcR.ok(null));
+        return ResponseEntity.ok(TcR.ok());
     }
 
 }
