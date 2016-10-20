@@ -64,7 +64,8 @@ public class TcCodisService {
             }
             return value;
         } else {
-            // FIXME 大量的动态key可能造成常量池泄露
+            // FIXME if the key is a dynamic key(the key has so many enumerated values), this place may lead
+            // to constant pool memory leak, this place we suppose the key is not inconstancy
             synchronized (key.intern()) {
                 // lock and get
                 @SuppressWarnings("unchecked")
