@@ -1,10 +1,10 @@
 package com.ysu.zyw.tc.api.svc.account;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Throwables;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountAssistMapper;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountMapper;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountPaymentMapper;
+import com.ysu.zyw.tc.api.dao.penum.TcSignupPlatform;
 import com.ysu.zyw.tc.api.dao.po.TcAccount;
 import com.ysu.zyw.tc.api.dao.po.TcAccountAssist;
 import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
@@ -17,17 +17,16 @@ import com.ysu.zyw.tc.model.validator.TcValidator;
 import com.ysu.zyw.tc.model.validator.mode.TcCreateMode;
 import com.ysu.zyw.tc.model.validator.mode.TcUpdateMode;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -117,13 +116,10 @@ public class TcAccountService {
         String id = TcIdWorker.upperCaseUuid();
         Date now = Calendar.getInstance().getTime();
 
-        // account
+        // accountId
         TcAccount tcAccount = new TcAccount();
-        try {
-            BeanUtils.copyProperties(tcAccount, tmAccount);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
+        BeanUtils.copyProperties(tmAccount, tcAccount);
+
         tcAccount.setId(id)
                 .setDelected(false)
                 .setLockReleaseTime(null)
@@ -132,13 +128,11 @@ public class TcAccountService {
                 .setCreatedPerson(TcConstant.Sys.TC_ADMIN_ID)
                 .setCreatedTimestamp(now);
 
-        // account assist
+        // accountId assist
         TcAccountAssist tcAccountAssist = new TcAccountAssist();
-        try {
-            BeanUtils.copyProperties(tcAccountAssist, tmAccount);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
+
+        BeanUtils.copyProperties(tmAccount, tcAccountAssist);
+        tcAccountAssist.setSignupPlatform(TcSignupPlatform.convert(tmAccount.getSignupPlatform()));
         if (StringUtils.isBlank(tcAccount.getMobile())) {
             tcAccountAssist.setMobileActivated(false);
         }
@@ -146,19 +140,17 @@ public class TcAccountService {
             tcAccountAssist.setEmailActivated(false);
         }
         tcAccountAssist.setId(id)
+                .setSignupTimestamp(now)
                 .setLastLoginTimestamp(null)
                 .setUpdatedPerson(TcConstant.Sys.TC_ADMIN_ID)
                 .setUpdatedTimestamp(now)
                 .setCreatedPerson(TcConstant.Sys.TC_ADMIN_ID)
                 .setCreatedTimestamp(now);
 
-        // account payment
+        // accountId payment
         TcAccountPayment tcAccountPayment = new TcAccountPayment();
-        try {
-            BeanUtils.copyProperties(tcAccountPayment, tmAccount);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
+
+        BeanUtils.copyProperties(tmAccount, tcAccountPayment);
         if (StringUtils.isBlank(tcAccountPayment.getWeixinAccount())) {
             tcAccountPayment.setSupWeixin(false);
         }
@@ -204,25 +196,20 @@ public class TcAccountService {
 
         Date now = Calendar.getInstance().getTime();
 
-        // account
+        // accountId
         TcAccount tcAccount = new TcAccount();
-        try {
-            BeanUtils.copyProperties(tcAccount, tmAccount);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
+
+        BeanUtils.copyProperties(tmAccount, tcAccount);
         tcAccount
                 .setLockReleaseTime(null)
                 .setUpdatedPerson(TcConstant.Sys.TC_ADMIN_ID)
                 .setUpdatedTimestamp(now);
 
-        // account assist
+        // accountId assist
         TcAccountAssist tcAccountAssist = new TcAccountAssist();
-        try {
-            BeanUtils.copyProperties(tcAccountAssist, tmAccount);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
+
+        BeanUtils.copyProperties(tmAccount, tcAccountAssist);
+        tcAccountAssist.setSignupPlatform(TcSignupPlatform.convert(tmAccount.getSignupPlatform()));
         if (StringUtils.isNotBlank(tcAccount.getMobile()) && Objects.isNull(tcAccountAssist.getMobileActivated())) {
             tcAccountAssist.setMobileActivated(false);
         }
@@ -233,13 +220,10 @@ public class TcAccountService {
                 .setUpdatedPerson(TcConstant.Sys.TC_ADMIN_ID)
                 .setUpdatedTimestamp(now);
 
-        // account payment
+        // accountId payment
         TcAccountPayment tcAccountPayment = new TcAccountPayment();
-        try {
-            BeanUtils.copyProperties(tcAccountPayment, tmAccount);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
+
+        BeanUtils.copyProperties(tmAccount, tcAccountPayment);
         tcAccountPayment
                 .setUpdatedPerson(TcConstant.Sys.TC_ADMIN_ID)
                 .setUpdatedTimestamp(now);
@@ -291,12 +275,8 @@ public class TcAccountService {
 
         checkArgument(tcAccounts.size() == 1);
         TmAccount tmAccount = new TmAccount();
-        try {
 
-            BeanUtils.copyProperties(tmAccount, tcAccounts.get(0));
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
+        BeanUtils.copyProperties(tcAccounts.get(0), tmAccount);
         tmAccount.setPassword(null);
 
         if (includeAssistField) {
@@ -372,21 +352,18 @@ public class TcAccountService {
 
         Stream<TmAccount> tmAccountsStream = tcAccountList.stream().map(tcAccount -> {
             TmAccount tmAccount = new TmAccount();
-            try {
-                BeanUtils.copyProperties(tmAccount, tcAccount);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                Throwables.propagate(e);
-            }
+
+            BeanUtils.copyProperties(tcAccount, tmAccount);
             tmAccount.setPassword(null);
             return tmAccount;
         });
 
         if (includeAssistField) {
-            tmAccountsStream.map(this::replenishAccountAssistField);
+            tmAccountsStream = tmAccountsStream.map(this::replenishAccountAssistField);
         }
 
         if (includePaymentField) {
-            tmAccountsStream.map(this::replenishAccountPaymentField);
+            tmAccountsStream = tmAccountsStream.map(this::replenishAccountPaymentField);
         }
 
         return tmAccountsStream.collect(Collectors.toList());
@@ -436,6 +413,91 @@ public class TcAccountService {
         return count == 1;
     }
 
+    @Transactional
+    public void activeMobile(@NotNull String accountId) {
+        // check
+        if (!existId(accountId)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+        }
+
+        TcAccountAssist tcAccountAssist = new TcAccountAssist()
+                .setId(accountId).setMobileActivated(true);
+        int count = tcAccountAssistMapper.updateByPrimaryKeySelective(tcAccountAssist);
+        checkArgument(count == 1);
+    }
+
+    @Transactional
+    public void activeEmail(@NotNull String accountId) {
+        // check
+        if (!existId(accountId)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+        }
+
+        TcAccountAssist tcAccountAssist = new TcAccountAssist()
+                .setId(accountId).setEmailActivated(true);
+        int count = tcAccountAssistMapper.updateByPrimaryKeySelective(tcAccountAssist);
+        checkArgument(count == 1);
+    }
+
+    @Transactional
+    public void activeSupWeixin(@NotNull String accountId) {
+        // check
+        if (!existId(accountId)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+        }
+
+        TcAccountPayment tcAccountPayment = new TcAccountPayment()
+                .setId(accountId).setSupWeixin(true);
+        int count = tcAccountPaymentMapper.updateByPrimaryKeySelective(tcAccountPayment);
+        checkArgument(count == 1);
+    }
+
+    @Transactional
+    public void activeSupZhifubao(@NotNull String accountId) {
+        // check
+        if (!existId(accountId)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+        }
+
+        TcAccountPayment tcAccountPayment = new TcAccountPayment()
+                .setId(accountId).setSupZhifubao(true);
+        int count = tcAccountPaymentMapper.updateByPrimaryKeySelective(tcAccountPayment);
+        checkArgument(count == 1);
+    }
+
+    @Transactional
+    public void activeSupCod(@NotNull String accountId) {
+        // check
+        if (!existId(accountId)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+        }
+
+        TcAccountPayment tcAccountPayment = new TcAccountPayment()
+                .setId(accountId).setSupCod(true);
+        int count = tcAccountPaymentMapper.updateByPrimaryKeySelective(tcAccountPayment);
+        checkArgument(count == 1);
+    }
+
+    @Transactional
+    public void lockAccount(@NotNull String accountId, @NotNull Date lockReleaseTime) {
+        // check
+        TmAccount tmAccount = findAccount(accountId, false, false);
+        if (Objects.isNull(tmAccount)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+        }
+
+        if (Objects.nonNull(tmAccount.getLockReleaseTime()) &&
+                tmAccount.getLockReleaseTime().after(lockReleaseTime)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号已经被锁定更长时间！"));
+        }
+
+        TcAccount tcAccount = new TcAccount()
+                .setId(accountId)
+                .setLockReleaseTime(lockReleaseTime);
+        int count = tcAccountMapper.updateByPrimaryKeySelective(tcAccount);
+        checkArgument(count == 1);
+    }
+
     private TmAccount replenishAccountAssistField(TmAccount tmAccount) {
         checkNotNull(tmAccount);
         String accountId = tmAccount.getId();
@@ -443,12 +505,8 @@ public class TcAccountService {
         TcAccountAssist tcAccountAssist = tcAccountAssistMapper.selectByPrimaryKey(accountId);
         checkNotNull(tcAccountAssist);
 
-        try {
-            BeanUtils.copyProperties(tmAccount, tcAccountAssist);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
-
+        BeanUtils.copyProperties(tcAccountAssist, tmAccount);
+        tmAccount.setSignupPlatform(TcSignupPlatform.convert(tcAccountAssist.getSignupPlatform()));
         return tmAccount;
     }
 
@@ -459,12 +517,7 @@ public class TcAccountService {
         TcAccountPayment tcAccountPayment = tcAccountPaymentMapper.selectByPrimaryKey(accountId);
         checkNotNull(tcAccountPayment);
 
-        try {
-            BeanUtils.copyProperties(tmAccount, tcAccountPayment);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Throwables.propagate(e);
-        }
-
+        BeanUtils.copyProperties(tcAccountPayment, tmAccount);
         return tmAccount;
     }
 

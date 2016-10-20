@@ -21,8 +21,12 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -163,25 +167,11 @@ public class TcHttpxService {
 
     protected String expandVars(MultiValueMap<String, String> form) {
         checkNotNull(form);
-        StringBuilder builder = new StringBuilder();
-        for (Iterator<String> nameIterator = form.keySet().iterator(); nameIterator.hasNext(); ) {
-            String name = nameIterator.next();
-            for (Iterator<String> valueIterator = form.get(name).iterator(); valueIterator.hasNext(); ) {
-                String value = valueIterator.next();
-                builder.append(name);
-                if (value != null) {
-                    builder.append('=');
-                    builder.append(value);
-                    if (valueIterator.hasNext()) {
-                        builder.append('&');
-                    }
-                }
-            }
-            if (nameIterator.hasNext()) {
-                builder.append('&');
-            }
-        }
-        return builder.toString();
+        return form.entrySet().stream()
+                .map(pair -> pair.getValue().stream()
+                        .map(value -> pair.getKey() + "=" + value)
+                        .collect(Collectors.joining("&")))
+                .collect(Collectors.joining("&"));
     }
 
     protected HttpHeaders addReqContentType(HttpHeaders httpHeaders, String mediaType) {

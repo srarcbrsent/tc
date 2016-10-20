@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -47,12 +48,10 @@ public class TmAccount implements Serializable {
             message = "【企业名】限制为6-48个字符（一个中文计为两个字符）")
     private String name;
 
-    // FIXME 必须不能有@ 至少含有一个英文 （登陆时和邮箱手机存在一致性问题）
     @ApiModelProperty(value = "账号")
-    @Length(min = 6,
-            max = 16,
+    @Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9-_]{5,15}$",
             groups = {TcCreateMode.class, TcUpdateMode.class},
-            message = "【账号】限制为6-16个英文字符")
+            message = "【账号】限制为6-16个英文开头的字符或数字")
     private String account;
 
     @ApiModelProperty(value = "邮箱")
@@ -112,11 +111,6 @@ public class TmAccount implements Serializable {
     @Null(groups = TcUpdateMode.class,
             message = "更新账号时必须不传递参数【邮箱已激活】")
     private Boolean emailActivated;
-
-    @ApiModelProperty(value = "上次登陆时间", example = "yyyy-MM-dd HH:mm:ss.SSS")
-    @Null(groups = {TcCreateMode.class, TcUpdateMode.class},
-            message = "【上次登陆时间】不允许设置")
-    private Date lastLoginTimestamp;
 
     @ApiModelProperty(value = "支持微信付款")
     @NotNull(groups = TcCreateMode.class,

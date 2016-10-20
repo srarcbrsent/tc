@@ -8,6 +8,7 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -243,6 +244,48 @@ public class DbTest {
             }
         });
 
+    }
+
+    @Test
+    public void test6() throws SQLException {
+        String base = "curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' " +
+                "--header 'X-ApiVersion: 1.0' -d '{\n" +
+                "  \"account\": \"${account}\",\n" +
+                "  \"email\": \"${email}\",\n" +
+                "  \"emailActivated\": false,\n" +
+                "  \"mobile\": \"${mobile}\",\n" +
+                "  \"mobileActivated\": false,\n" +
+                "  \"name\": \"${name}\",\n" +
+                "  \"password\": \"1234567890123456789012345678901234567890123456789012345678901234\",\n" +
+                "  \"selfDescribing\": \"${describing}\",\n" +
+                "  \"signupPlatform\": \"PC_PLATFORM\",\n" +
+                "  \"supCod\": false,\n" +
+                "  \"supWeixin\": false,\n" +
+                "  \"supZhifubao\": false,\n" +
+                "  \"weixinAccount\": \"${weixinAccount}\",\n" +
+                "  \"zhifubaoAccount\": \"${zhifubaoAccount}\"\n" +
+                "}' 'http://api.tc.com/accounts/create_account'";
+
+        DruidPooledConnection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT name FROM tmp_company");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<String> nameList = Lists.newArrayList();
+        while (resultSet.next()) {
+            String id = resultSet.getString(1);
+            nameList.add(id);
+        }
+
+        nameList.forEach(name -> {
+            String s = base.replace("${account}", RandomStringUtils.randomAlphabetic(6 + RandomUtils.nextInt(6)))
+                    .replace("${email}", RandomStringUtils.randomAlphabetic(6 + RandomUtils.nextInt(10)) + "@yeah.net")
+                    .replace("${mobile}", "188" + RandomStringUtils.randomNumeric(8))
+                    .replace("${name}", name)
+                    .replace("${describing}", "Hello World, Every One.")
+                    .replace("${weixinAccount}", "150" + RandomStringUtils.randomNumeric(8))
+                    .replace("${zhifubaoAccount}", "138" + RandomStringUtils.randomNumeric(8));
+            System.out.println(s);
+        });
     }
 
     private List<String> findTag() throws SQLException {

@@ -90,7 +90,7 @@ public class TcAccountApi {
     })
     @RequestMapping(value = "/delete_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
     @Transactional
-    public ResponseEntity<TcR<Boolean>> deleteAccount(
+    public ResponseEntity<TcR<Void>> deleteAccount(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId) {
 
         tcAccountService.deleteAccount(accountId);

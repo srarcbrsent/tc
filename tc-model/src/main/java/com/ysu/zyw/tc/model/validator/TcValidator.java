@@ -15,9 +15,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class TcValidator extends GenericValidator {
 
     // regexp
-    private static final Pattern chineseCharPattern = Pattern.compile("\\u4E00-\\u9FA5");
+    private static final Pattern chineseCharPattern = Pattern.compile("[\\u4E00-\\u9FA5]");
 
-    private static final Pattern englishCharPattern = Pattern.compile("A-Za-z0-9_-");
+    private static final Pattern englishCharPattern = Pattern.compile("[A-Za-z0-9_-]");
 
     private static final Pattern englishPattern = Pattern.compile("[A-Za-z0-9_-]+]");
 
