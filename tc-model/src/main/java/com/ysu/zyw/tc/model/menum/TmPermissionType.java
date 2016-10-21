@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.model.api.menum;
+package com.ysu.zyw.tc.model.menum;
 
 public enum TmPermissionType {
 

@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.api.svc.account;
+package com.ysu.zyw.tc.api.svc.accounts;
 
 import com.google.common.base.Preconditions;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountAssistMapper;
@@ -12,7 +12,7 @@ import com.ysu.zyw.tc.api.dao.po.TcAccountPayment;
 import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
-import com.ysu.zyw.tc.model.api.account.TmAccount;
+import com.ysu.zyw.tc.model.api.accounts.TmAccount;
 import com.ysu.zyw.tc.model.validator.TcValidator;
 import com.ysu.zyw.tc.model.validator.mode.TcCreateMode;
 import com.ysu.zyw.tc.model.validator.mode.TcUpdateMode;
@@ -141,7 +141,6 @@ public class TcAccountService {
         }
         tcAccountAssist.setId(id)
                 .setSignupTimestamp(now)
-                .setLastLoginTimestamp(null)
                 .setUpdatedPerson(TcConstant.Sys.TC_ADMIN_ID)
                 .setUpdatedTimestamp(now)
                 .setCreatedPerson(TcConstant.Sys.TC_ADMIN_ID)

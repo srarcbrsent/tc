@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.model.api.account.auth;
+package com.ysu.zyw.tc.model.api.accounts.auth;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

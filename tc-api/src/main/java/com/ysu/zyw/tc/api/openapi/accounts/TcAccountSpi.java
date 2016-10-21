@@ -1,6 +1,6 @@
-package com.ysu.zyw.tc.api.openapi.account;
+package com.ysu.zyw.tc.api.openapi.accounts;
 
-import com.ysu.zyw.tc.api.svc.account.TcAccountService;
+import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.model.c.TcR;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;

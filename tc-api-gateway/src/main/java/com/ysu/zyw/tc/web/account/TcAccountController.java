@@ -10,12 +10,12 @@ public class TcAccountController {
 
     @RequestMapping(value = "/p/signup")
     public ModelAndView go2signup() {
-        return new ModelAndView("/WEB-INF/templates/account/signup.ftl");
+        return new ModelAndView("/WEB-INF/templates/accounts/signup.ftl");
     }
 
     @RequestMapping(value = "/p/signin")
     public ModelAndView go2signin() {
-        return new ModelAndView("/WEB-INF/templates/account/signin.ftl");
+        return new ModelAndView("/WEB-INF/templates/accounts/signin.ftl");
     }
 
 }

@@ -168,7 +168,7 @@ public class DbTest {
 
                 DruidPooledConnection connection = dataSource.getConnection();
 
-                // item
+                // items
                 PreparedStatement preparedStatement1 = connection.prepareStatement(
                         "INSERT INTO tm_item VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
                 );
@@ -187,7 +187,7 @@ public class DbTest {
                 preparedStatement1.setDate(11, new java.sql.Date(now.getTime()));
                 preparedStatement1.execute();
 
-                // item detail
+                // items detail
                 PreparedStatement preparedStatement2 = connection.prepareStatement(
                         "INSERT INTO tm_item_detail VALUES(?, ?, ?, ?, ?, ?)"
                 );
@@ -203,14 +203,14 @@ public class DbTest {
 
                 int c = RandomUtils.nextInt(6) + 5;
                 for (int i = 0; i < c; i++) {
-                    // item pic
+                    // items pic
                     PreparedStatement preparedStatement3 = connection.prepareStatement(
                             "INSERT INTO tm_item_pic VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
                     );
 
                     preparedStatement3.setString(1, UUID.randomUUID().toString().toUpperCase().replace("-", ""));
                     preparedStatement3.setString(2, id);
-                    preparedStatement3.setString(3, "http://static.tc.com/resources/item/" + picList.get(RandomUtils.nextInt(picList.size())));
+                    preparedStatement3.setString(3, "http://static.tc.com/resources/items/" + picList.get(RandomUtils.nextInt(picList.size())));
                     if (i == 0) {
                         preparedStatement3.setString(4, "1");
                     } else {
@@ -226,7 +226,7 @@ public class DbTest {
                 // tag
                 int d = RandomUtils.nextInt(3) + 1;
                 for (int i = 0; i < d; i++) {
-                    // item pic
+                    // items pic
                     PreparedStatement preparedStatement4 = connection.prepareStatement(
                             "INSERT INTO tm_item_icon_mapping VALUES(?, ?, ?, ?, ?, ?, ?)"
                     );
@@ -253,7 +253,7 @@ public class DbTest {
     public void test6() throws SQLException {
         String base = "curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' " +
                 "--header 'X-ApiVersion: 1.0' -d '{\n" +
-                "  \"account\": \"${account}\",\n" +
+                "  \"accounts\": \"${accounts}\",\n" +
                 "  \"email\": \"${email}\",\n" +
                 "  \"emailActivated\": false,\n" +
                 "  \"mobile\": \"${mobile}\",\n" +
@@ -280,7 +280,7 @@ public class DbTest {
         }
 
         nameList.forEach(name -> {
-            String s = base.replace("${account}", RandomStringUtils.randomAlphabetic(6 + RandomUtils.nextInt(6)))
+            String s = base.replace("${accounts}", RandomStringUtils.randomAlphabetic(6 + RandomUtils.nextInt(6)))
                     .replace("${email}", RandomStringUtils.randomAlphabetic(6 + RandomUtils.nextInt(10)) + "@yeah.net")
                     .replace("${mobile}", "188" + RandomStringUtils.randomNumeric(8))
                     .replace("${name}", name)

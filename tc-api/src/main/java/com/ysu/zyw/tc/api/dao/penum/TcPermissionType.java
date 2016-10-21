@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.dao.penum;
 
-import com.ysu.zyw.tc.model.api.menum.TmPermissionType;
+import com.ysu.zyw.tc.model.menum.TmPermissionType;
 
 public enum TcPermissionType {
 

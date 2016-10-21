@@ -1,6 +1,6 @@
-package com.ysu.zyw.tc.model.api.account;
+package com.ysu.zyw.tc.model.api.accounts;
 
-import com.ysu.zyw.tc.model.api.menum.TmSignupPlatform;
+import com.ysu.zyw.tc.model.menum.TmSignupPlatform;
 import com.ysu.zyw.tc.model.validator.constraints.Mobile;
 import com.ysu.zyw.tc.model.validator.constraints.SafeString;
 import com.ysu.zyw.tc.model.validator.mode.TcCreateMode;

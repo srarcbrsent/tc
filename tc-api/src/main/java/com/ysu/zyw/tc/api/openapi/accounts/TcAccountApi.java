@@ -1,7 +1,7 @@
-package com.ysu.zyw.tc.api.openapi.account;
+package com.ysu.zyw.tc.api.openapi.accounts;
 
-import com.ysu.zyw.tc.api.svc.account.TcAccountService;
-import com.ysu.zyw.tc.model.api.account.TmAccount;
+import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
+import com.ysu.zyw.tc.model.api.accounts.TmAccount;
 import com.ysu.zyw.tc.model.c.TcP;
 import com.ysu.zyw.tc.model.c.TcR;
 import com.ysu.zyw.tc.model.validator.TcValidator;
@@ -192,7 +192,7 @@ public class TcAccountApi {
     @RequestMapping(
             value = "/find_account/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<TcR<TmAccount>> findAccount(
-            @ApiParam(value = "账号id", required = true) @PathVariable(value = "id") String accountId,
+            @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
             @ApiParam(value = "包含辅助信息") @RequestParam(value = "includeAssistField", defaultValue = "false")
                     boolean includeAssistField,
             @ApiParam(value = "包含支付信息") @RequestParam(value = "includePaymentField", defaultValue = "false")
@@ -225,7 +225,7 @@ public class TcAccountApi {
     public ResponseEntity<TcR<Long>> countAccounts(
             @ApiParam(value = "账号ids") @RequestParam(value = "ids", required = false) List<String> ids,
             @ApiParam(value = "企业名 精确匹配") @RequestParam(value = "name", required = false) String name,
-            @ApiParam(value = "账号") @RequestParam(value = "account", required = false) String account,
+            @ApiParam(value = "账号") @RequestParam(value = "accounts", required = false) String account,
             @ApiParam(value = "邮箱") @RequestParam(value = "email", required = false) String email,
             @ApiParam(value = "手机") @RequestParam(value = "mobile", required = false) String mobile) {
 
@@ -252,7 +252,7 @@ public class TcAccountApi {
     public ResponseEntity<TcP<List<TmAccount>>> findAccounts(
             @ApiParam(value = "账号ids") @RequestParam(value = "ids", required = false) List<String> ids,
             @ApiParam(value = "企业名 精确匹配") @RequestParam(value = "name", required = false) String name,
-            @ApiParam(value = "账号") @RequestParam(value = "account", required = false) String account,
+            @ApiParam(value = "账号") @RequestParam(value = "accounts", required = false) String account,
             @ApiParam(value = "邮箱") @RequestParam(value = "email", required = false) String email,
             @ApiParam(value = "手机") @RequestParam(value = "mobile", required = false) String mobile,
             @ApiParam(value = "包含辅助信息") @RequestParam(value = "includeAssistField", defaultValue = "false")

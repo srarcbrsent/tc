@@ -266,72 +266,72 @@ public class TcAccountExample {
         }
 
         public Criteria andAccountIsNull() {
-            addCriterion("account is null");
+            addCriterion("accounts is null");
             return (Criteria) this;
         }
 
         public Criteria andAccountIsNotNull() {
-            addCriterion("account is not null");
+            addCriterion("accounts is not null");
             return (Criteria) this;
         }
 
         public Criteria andAccountEqualTo(String value) {
-            addCriterion("account =", value, "account");
+            addCriterion("accounts =", value, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountNotEqualTo(String value) {
-            addCriterion("account <>", value, "account");
+            addCriterion("accounts <>", value, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountGreaterThan(String value) {
-            addCriterion("account >", value, "account");
+            addCriterion("accounts >", value, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountGreaterThanOrEqualTo(String value) {
-            addCriterion("account >=", value, "account");
+            addCriterion("accounts >=", value, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountLessThan(String value) {
-            addCriterion("account <", value, "account");
+            addCriterion("accounts <", value, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountLessThanOrEqualTo(String value) {
-            addCriterion("account <=", value, "account");
+            addCriterion("accounts <=", value, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountLike(String value) {
-            addCriterion("account like", value, "account");
+            addCriterion("accounts like", value, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountNotLike(String value) {
-            addCriterion("account not like", value, "account");
+            addCriterion("accounts not like", value, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountIn(List<String> values) {
-            addCriterion("account in", values, "account");
+            addCriterion("accounts in", values, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountNotIn(List<String> values) {
-            addCriterion("account not in", values, "account");
+            addCriterion("accounts not in", values, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountBetween(String value1, String value2) {
-            addCriterion("account between", value1, value2, "account");
+            addCriterion("accounts between", value1, value2, "accounts");
             return (Criteria) this;
         }
 
         public Criteria andAccountNotBetween(String value1, String value2) {
-            addCriterion("account not between", value1, value2, "account");
+            addCriterion("accounts not between", value1, value2, "accounts");
             return (Criteria) this;
         }
 

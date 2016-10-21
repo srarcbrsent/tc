@@ -1,6 +1,7 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
 import io.codis.jodis.RoundRobinJedisPool;
+import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Slf4j
 public class TcCodisPool extends JedisPool {
 
     private final RoundRobinJedisPool roundRobinJedisPool;
@@ -22,13 +24,14 @@ public class TcCodisPool extends JedisPool {
                        int connectionTimeout,
                        String password) {
         super();
-
         checkNotNull(zkAddr, "empty zk addr is not allowed");
         checkArgument(zkSessionTimeoutMs > 0, "negative zk service timeout ms is not allowed");
         checkNotNull(zkProxyDir, "empty zk proxy dir is not allowed");
         checkNotNull(codisPoolConfig, "null codis pool config is not allowed");
         checkArgument(connectionTimeout > 0, "negative connection timeout is not allowed");
         checkNotNull(password, "codis password is required");
+        log.info("init round robin jedis pool, zkAddr [{}], zkSessionTimeout [{}], zkProxyDir [{}]",
+                zkAddr, zkSessionTimeoutMs, zkProxyDir);
         roundRobinJedisPool = RoundRobinJedisPool
                 .create()
                 .curatorClient(zkAddr, zkSessionTimeoutMs)

@@ -1,8 +1,8 @@
-package com.ysu.zyw.tc.api.openapi.account.auth;
+package com.ysu.zyw.tc.api.openapi.accounts.auth;
 
-import com.ysu.zyw.tc.api.svc.account.TcAccountService;
-import com.ysu.zyw.tc.api.svc.account.auth.TcAuthService;
-import com.ysu.zyw.tc.model.api.account.auth.TmPermission;
+import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
+import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
+import com.ysu.zyw.tc.model.api.accounts.auth.TmPermission;
 import com.ysu.zyw.tc.model.c.TcR;
 import io.swagger.annotations.*;
 import org.springframework.http.MediaType;
@@ -73,7 +73,7 @@ public class TcAuthApi {
             required = true,
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "", response = TcR.class)
-    @RequestMapping(value = "/find_menus/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    @RequestMapping(value = "/find_menus/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<List<TmPermission>> findMenus(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId) {
         List<TmPermission> menuList = tcAuthService.findMenus(accountId);
@@ -92,7 +92,7 @@ public class TcAuthApi {
             required = true,
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "", response = TcR.class)
-    @RequestMapping(value = "/find_pms/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    @RequestMapping(value = "/find_pms/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
     public ResponseEntity<List<TmPermission>> findPms(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId) {
         List<TmPermission> pms = tcAuthService.findPms(accountId);

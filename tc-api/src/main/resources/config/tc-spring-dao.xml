@@ -24,6 +24,7 @@
                 <prop key="useUnicode">true</prop>
                 <prop key="characterEncoding">UTF-8</prop>
                 <prop key="zeroDateTimeBehavior">convertToNull</prop>
+                <prop key="useSSL">false</prop>
             </props>
         </property>
         <property name="proxyFilters">

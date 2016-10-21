@@ -1,9 +1,9 @@
 package com.ysu.zyw.tc.svc.components.security.shiro;
 
 import com.ysu.zyw.tc.components.httpx.TcHttpxService;
-import com.ysu.zyw.tc.model.api.account.TmAccount;
-import com.ysu.zyw.tc.model.api.account.auth.TmPermission;
-import com.ysu.zyw.tc.model.api.account.auth.TmPermissionSet;
+import com.ysu.zyw.tc.model.api.accounts.TmAccount;
+import com.ysu.zyw.tc.model.api.accounts.auth.TmPermission;
+import com.ysu.zyw.tc.model.api.accounts.auth.TmPermissionSet;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.dao.penum;
 
-import com.ysu.zyw.tc.model.api.menum.TmSignupPlatform;
+import com.ysu.zyw.tc.model.menum.TmSignupPlatform;
 
 public enum TcSignupPlatform {
 

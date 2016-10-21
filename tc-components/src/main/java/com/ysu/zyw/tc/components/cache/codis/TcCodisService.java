@@ -53,11 +53,21 @@ public class TcCodisService {
         return (T) sValue;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T get(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout) {
+        // special, other api if the cache service itself is offline, they may throw an exception(such
+        // as JodisPool is empty), but this api is different, because this api means load by cache, if
+        // not loaded, then load by value loader, this not loaded include the cache is not exists and
+        // also the cache service itself is offline. so it will catch the other exception.
         checkNotNull(key, "null key is not allowed");
         checkNotNull(valueLoader, "null value loader is not allowed");
-        @SuppressWarnings("unchecked")
-        T value = (T) codisTemplate.opsForValue().get(key);
+        T value;
+        try {
+            value = (T) codisTemplate.opsForValue().get(key);
+        } catch (Exception e) {
+            log.error("", e);
+            return loadValue(key, valueLoader, timeout);
+        }
         if (Objects.nonNull(value)) {
             if (log.isDebugEnabled()) {
                 log.debug("get object [{}] from cache by key [{}]", value, key);
@@ -68,8 +78,12 @@ public class TcCodisService {
             // to constant pool memory leak, this place we suppose the key is not inconstancy
             synchronized (key.intern()) {
                 // lock and get
-                @SuppressWarnings("unchecked")
-                T sValue = (T) codisTemplate.opsForValue().get(key);
+                T sValue = null;
+                try {
+                    sValue = (T) codisTemplate.opsForValue().get(key);
+                } catch (Exception e) {
+                    log.error("", e);
+                }
                 if (Objects.nonNull(sValue)) {
                     if (log.isDebugEnabled()) {
                         log.debug("get object [{}] from cache by key [{}]", sValue, key);
@@ -77,20 +91,29 @@ public class TcCodisService {
                     return sValue;
                 }
                 // not found, try load value.
-                T loadedValue;
-                try {
-                    loadedValue = valueLoader.call();
-                } catch (Exception e) {
-                    throw new TcException(e, key, valueLoader);
-                }
-                checkNotNull(loadedValue, "empty loaded value is not allowed");
-                codisTemplate.opsForValue().set(key, (Serializable) loadedValue, timeout, TimeUnit.MILLISECONDS);
-                if (log.isDebugEnabled()) {
-                    log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, key, timeout);
-                }
-                return loadedValue;
+                return loadValue(key, valueLoader, timeout);
             }
         }
+    }
+
+    private <T> T loadValue(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout) {
+        T loadedValue;
+        try {
+            loadedValue = valueLoader.call();
+        } catch (Exception e) {
+            throw new TcException(e, key, valueLoader);
+        }
+        checkNotNull(loadedValue, "empty loaded value is not allowed");
+        try {
+            codisTemplate.opsForValue().set(key, (Serializable) loadedValue, timeout, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            // if cache failed, let the load value succ.
+            log.error("", e);
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, key, timeout);
+        }
+        return loadedValue;
     }
 
     public boolean exists(@Nonnull String key) {

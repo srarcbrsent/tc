@@ -10,12 +10,12 @@ public class TcItemController {
 
     @RequestMapping(value = "/p/items")
     public ModelAndView go2items() {
-        return new ModelAndView("/WEB-INF/templates/item/items.ftl");
+        return new ModelAndView("/WEB-INF/templates/items/items.ftl");
     }
 
     @RequestMapping(value = "/p/item")
     public ModelAndView go2item() {
-        return new ModelAndView("/WEB-INF/templates/item/item.ftl");
+        return new ModelAndView("/WEB-INF/templates/items/items.ftl");
     }
 
 }

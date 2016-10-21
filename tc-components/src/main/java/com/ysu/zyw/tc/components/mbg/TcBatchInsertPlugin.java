@@ -65,7 +65,7 @@ public class TcBatchInsertPlugin extends PluginAdapter {
 
         XmlElement foreachXmlElement = new XmlElement("foreach");
         foreachXmlElement.addAttribute(new Attribute("collection", "list"));
-        foreachXmlElement.addAttribute(new Attribute("item", "item"));
+        foreachXmlElement.addAttribute(new Attribute("items", "items"));
         foreachXmlElement.addAttribute(new Attribute("separator", ", "));
 
         String contentB = String.join(", \n      ", introspectedTable.getAllColumns().stream().map
@@ -81,9 +81,9 @@ public class TcBatchInsertPlugin extends PluginAdapter {
     }
 
     protected Function<IntrospectedColumn, String> introspectedColumn2InsertSql() {
-        // transform column like 'id' to insert part like '#{item.id,jdbcType=VARCHAR}'
+        // transform column like 'id' to insert part like '#{items.id,jdbcType=VARCHAR}'
         return introspectedColumn ->
-                "#{item." + introspectedColumn.getJavaProperty() + ",jdbcType=" + introspectedColumn
+                "#{items." + introspectedColumn.getJavaProperty() + ",jdbcType=" + introspectedColumn
                         .getJdbcTypeName() + "}";
     }
 

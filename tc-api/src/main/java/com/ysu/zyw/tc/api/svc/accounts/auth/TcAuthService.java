@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.api.svc.account.auth;
+package com.ysu.zyw.tc.api.svc.accounts.auth;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -6,7 +6,7 @@ import com.ysu.zyw.tc.api.dao.mappers.*;
 import com.ysu.zyw.tc.api.dao.penum.TcPermissionType;
 import com.ysu.zyw.tc.api.dao.po.*;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
-import com.ysu.zyw.tc.model.api.account.auth.TmPermission;
+import com.ysu.zyw.tc.model.api.accounts.auth.TmPermission;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -152,7 +152,7 @@ public class TcAuthService {
                             .collect(Collectors.toList());
         }
 
-        // find all permission id by account
+        // find all permission id by accounts
         TcAccountMapPermissionExample tcAccountMapPermissionExample = new TcAccountMapPermissionExample();
         tcAccountMapPermissionExample.createCriteria()
                 .andAccountIdEqualTo(accountId);

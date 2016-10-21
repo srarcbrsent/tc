@@ -13,21 +13,21 @@ public class TcLogAuthenticationListener implements AuthenticationListener {
     @Override
     public void onSuccess(AuthenticationToken token, AuthenticationInfo info) {
         if (log.isInfoEnabled()) {
-            log.info("account [{}] login success.", token.getPrincipal());
+            log.info("accounts [{}] login success.", token.getPrincipal());
         }
     }
 
     @Override
     public void onFailure(AuthenticationToken token, AuthenticationException ae) {
         if (log.isInfoEnabled()) {
-            log.info("account [{}] login failure.", token.getPrincipal());
+            log.info("accounts [{}] login failure.", token.getPrincipal());
         }
     }
 
     @Override
     public void onLogout(PrincipalCollection principals) {
         if (log.isInfoEnabled()) {
-            log.info("account [{}] logout success.", principals.getPrimaryPrincipal());
+            log.info("accounts [{}] logout success.", principals.getPrimaryPrincipal());
         }
     }
 

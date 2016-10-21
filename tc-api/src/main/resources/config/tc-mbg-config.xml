@@ -53,7 +53,7 @@
         </javaClientGenerator>
 
         <!-- !!!! Table Configurations !!!! -->
-        <!-- account -->
+        <!-- accounts -->
         <table tableName="mb_account"
                domainObjectName="TcAccount"
                mapperName="TcAccountMapper">
@@ -110,7 +110,7 @@
                domainObjectName="TcPermissionSetMapPermission"
                mapperName="TcPermissionSetMapPermissionMapper"/>
 
-        <!-- item -->
+        <!-- items -->
         <table tableName="tm_item"
                domainObjectName="TcItem"
                mapperName="TcItemMapper">
