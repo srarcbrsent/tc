@@ -501,66 +501,6 @@ public class TcAccountAssistExample {
             return (Criteria) this;
         }
 
-        public Criteria andLastLoginTimestampIsNull() {
-            addCriterion("last_login_timestamp is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampIsNotNull() {
-            addCriterion("last_login_timestamp is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampEqualTo(Date value) {
-            addCriterion("last_login_timestamp =", value, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampNotEqualTo(Date value) {
-            addCriterion("last_login_timestamp <>", value, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampGreaterThan(Date value) {
-            addCriterion("last_login_timestamp >", value, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampGreaterThanOrEqualTo(Date value) {
-            addCriterion("last_login_timestamp >=", value, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampLessThan(Date value) {
-            addCriterion("last_login_timestamp <", value, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampLessThanOrEqualTo(Date value) {
-            addCriterion("last_login_timestamp <=", value, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampIn(List<Date> values) {
-            addCriterion("last_login_timestamp in", values, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampNotIn(List<Date> values) {
-            addCriterion("last_login_timestamp not in", values, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampBetween(Date value1, Date value2) {
-            addCriterion("last_login_timestamp between", value1, value2, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastLoginTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("last_login_timestamp not between", value1, value2, "lastLoginTimestamp");
-            return (Criteria) this;
-        }
-
         public Criteria andUpdatedPersonIsNull() {
             addCriterion("updated_person is null");
             return (Criteria) this;

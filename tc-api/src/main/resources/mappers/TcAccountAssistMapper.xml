@@ -7,7 +7,6 @@
     <result column="signup_timestamp" jdbcType="TIMESTAMP" property="signupTimestamp" />
     <result column="mobile_activated" jdbcType="VARCHAR" property="mobileActivated" />
     <result column="email_activated" jdbcType="VARCHAR" property="emailActivated" />
-    <result column="last_login_timestamp" jdbcType="TIMESTAMP" property="lastLoginTimestamp" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
     <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
     <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
@@ -110,8 +109,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, signup_platform, signup_timestamp, mobile_activated, email_activated, last_login_timestamp, 
-    updated_person, updated_timestamp, created_person, created_timestamp
+    id, signup_platform, signup_timestamp, mobile_activated, email_activated, updated_person, 
+    updated_timestamp, created_person, created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssistExample" resultMap="BaseResultMap">
     select
@@ -149,12 +148,12 @@
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     insert into mb_account_assist (id, signup_platform, 
       signup_timestamp, mobile_activated, email_activated, 
-      last_login_timestamp, updated_person, updated_timestamp, 
-      created_person, created_timestamp)
+      updated_person, updated_timestamp, created_person, 
+      created_timestamp)
     values (#{id,jdbcType=VARCHAR}, #{signupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler}, 
       #{signupTimestamp,jdbcType=TIMESTAMP}, #{mobileActivated,jdbcType=VARCHAR}, #{emailActivated,jdbcType=VARCHAR}, 
-      #{lastLoginTimestamp,jdbcType=TIMESTAMP}, #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, 
-      #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP})
+      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
+      #{createdTimestamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     insert into mb_account_assist
@@ -173,9 +172,6 @@
       </if>
       <if test="emailActivated != null">
         email_activated,
-      </if>
-      <if test="lastLoginTimestamp != null">
-        last_login_timestamp,
       </if>
       <if test="updatedPerson != null">
         updated_person,
@@ -205,9 +201,6 @@
       </if>
       <if test="emailActivated != null">
         #{emailActivated,jdbcType=VARCHAR},
-      </if>
-      <if test="lastLoginTimestamp != null">
-        #{lastLoginTimestamp,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedPerson != null">
         #{updatedPerson,jdbcType=VARCHAR},
@@ -247,9 +240,6 @@
       <if test="record.emailActivated != null">
         email_activated = #{record.emailActivated,jdbcType=VARCHAR},
       </if>
-      <if test="record.lastLoginTimestamp != null">
-        last_login_timestamp = #{record.lastLoginTimestamp,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.updatedPerson != null">
         updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       </if>
@@ -274,7 +264,6 @@
       signup_timestamp = #{record.signupTimestamp,jdbcType=TIMESTAMP},
       mobile_activated = #{record.mobileActivated,jdbcType=VARCHAR},
       email_activated = #{record.emailActivated,jdbcType=VARCHAR},
-      last_login_timestamp = #{record.lastLoginTimestamp,jdbcType=TIMESTAMP},
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{record.createdPerson,jdbcType=VARCHAR},
@@ -298,9 +287,6 @@
       <if test="emailActivated != null">
         email_activated = #{emailActivated,jdbcType=VARCHAR},
       </if>
-      <if test="lastLoginTimestamp != null">
-        last_login_timestamp = #{lastLoginTimestamp,jdbcType=TIMESTAMP},
-      </if>
       <if test="updatedPerson != null">
         updated_person = #{updatedPerson,jdbcType=VARCHAR},
       </if>
@@ -322,7 +308,6 @@
       signup_timestamp = #{signupTimestamp,jdbcType=TIMESTAMP},
       mobile_activated = #{mobileActivated,jdbcType=VARCHAR},
       email_activated = #{emailActivated,jdbcType=VARCHAR},
-      last_login_timestamp = #{lastLoginTimestamp,jdbcType=TIMESTAMP},
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{createdPerson,jdbcType=VARCHAR},
@@ -353,7 +338,6 @@
       signup_timestamp, 
       mobile_activated, 
       email_activated, 
-      last_login_timestamp, 
       updated_person, 
       updated_timestamp, 
       created_person, 
@@ -365,7 +349,6 @@
       #{item.signupTimestamp,jdbcType=TIMESTAMP}, 
       #{item.mobileActivated,jdbcType=VARCHAR}, 
       #{item.emailActivated,jdbcType=VARCHAR}, 
-      #{item.lastLoginTimestamp,jdbcType=TIMESTAMP}, 
       #{item.updatedPerson,jdbcType=VARCHAR}, 
       #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 
       #{item.createdPerson,jdbcType=VARCHAR}, 

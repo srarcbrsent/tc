@@ -73,10 +73,30 @@ public class TcAuthApi {
             required = true,
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "", response = TcR.class)
-    @RequestMapping(value = "/menus/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<List<TmPermission>> getMenus(@PathVariable(value = "id") String accountId) {
+    @RequestMapping(value = "/find_menus/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<List<TmPermission>> findMenus(
+            @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId) {
         List<TmPermission> menuList = tcAuthService.findMenus(accountId);
         return ResponseEntity.ok(menuList);
+    }
+
+    @ApiOperation(
+            value = "获取菜单",
+            notes = "根据当前用户的权限获取对应的菜单",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiImplicitParam(
+            value = "Api版本号",
+            paramType = "header",
+            name = "X-ApiVersion",
+            required = true,
+            defaultValue = "1.0")
+    @ApiResponse(code = 200, message = "", response = TcR.class)
+    @RequestMapping(value = "/find_pms/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
+    public ResponseEntity<List<TmPermission>> findPms(
+            @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId) {
+        List<TmPermission> pms = tcAuthService.findPms(accountId);
+        return ResponseEntity.ok(pms);
     }
 
 }

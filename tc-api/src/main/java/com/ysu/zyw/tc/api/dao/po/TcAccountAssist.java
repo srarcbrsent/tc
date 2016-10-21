@@ -24,8 +24,6 @@ public class TcAccountAssist implements Serializable {
 
     private Boolean emailActivated;
 
-    private Date lastLoginTimestamp;
-
     private String updatedPerson;
 
     private Date updatedTimestamp;

@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.api.svc.account.auth;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.ysu.zyw.tc.api.dao.mappers.*;
@@ -9,12 +8,12 @@ import com.ysu.zyw.tc.api.dao.po.*;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.model.api.account.auth.TmPermission;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,6 +41,7 @@ public class TcAuthService {
     @Resource
     private TcPermissionMapper tcPermissionMapper;
 
+    @Transactional
     public int grantPermissionSet(String accountId, List<String> permissionSetIdList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionSetIdList));
@@ -61,6 +61,7 @@ public class TcAuthService {
         return tcAccountMapPermissionSetMapper.batchInsert(accountMapPermissionSetList);
     }
 
+    @Transactional
     public int grantPermission(String accountId, List<String> permissionIdList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionIdList));
@@ -80,6 +81,7 @@ public class TcAuthService {
         return tcAccountMapPermissionMapper.batchInsert(accountMapPermissionList);
     }
 
+    @Transactional
     public int revokePermissionSet(String accountId, List<String> permissionSetIdList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionSetIdList));
@@ -90,6 +92,7 @@ public class TcAuthService {
         return tcAccountMapPermissionSetMapper.deleteByExample(tcAccountMapPermissionSetExample);
     }
 
+    @Transactional
     public int revokePermission(String accountId, List<String> permissionIdList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionIdList));
@@ -100,6 +103,7 @@ public class TcAuthService {
         return tcAccountMapPermissionMapper.deleteByExample(tcAccountMapPermissionExample);
     }
 
+    @Transactional(readOnly = true)
     public List<TcPermissionSet> fetchPermissionSetList(String accountId) {
         checkNotNull(accountId);
         TcAccountMapPermissionSetExample tcAccountMapPermissionSetExample = new TcAccountMapPermissionSetExample();
@@ -121,6 +125,7 @@ public class TcAuthService {
         return tcPermissionSetMapper.selectByExample(tcPermissionSetExample);
     }
 
+    @Transactional(readOnly = true)
     public List<TcPermission> fetchPermissionList(String accountId, List<TcPermissionType> permissionTypeList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionTypeList));
@@ -175,17 +180,27 @@ public class TcAuthService {
         return tcPermissionMapper.selectByExample(tcPermissionExample);
     }
 
+    @Transactional(readOnly = true)
     public List<TmPermission> findMenus(String accountId) {
         List<TcPermission> tcPermissions =
                 this.fetchPermissionList(accountId, Lists.newArrayList(TcPermissionType.MENU));
+        return this.convert2TmPermission(tcPermissions);
+    }
+
+    @Transactional(readOnly = true)
+    public List<TmPermission> findPms(String accountId) {
+        List<TcPermission> tcPermissions =
+                this.fetchPermissionList(accountId, Lists.newArrayList(TcPermissionType.PAGE_ELEMENT));
+        return this.convert2TmPermission(tcPermissions);
+    }
+
+    private List<TmPermission> convert2TmPermission(List<TcPermission> tcPermissions) {
         return tcPermissions.stream().map(tcPermission -> {
             TmPermission tmPermission = new TmPermission();
-            try {
-                BeanUtils.copyProperties(tcPermission, tmPermission);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                throw Throwables.propagate(e);
-            }
+            BeanUtils.copyProperties(tcPermission, tmPermission);
+            tmPermission.setType(TcPermissionType.convert(tcPermission.getType()));
             return tmPermission;
         }).collect(Collectors.toList());
     }
+
 }

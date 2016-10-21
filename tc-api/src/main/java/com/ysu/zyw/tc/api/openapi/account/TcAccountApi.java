@@ -201,7 +201,7 @@ public class TcAccountApi {
         TmAccount account = tcAccountService.findAccount(accountId, includeAssistField, includePaymentField);
 
         if (Objects.isNull(account)) {
-            return new ResponseEntity<>(new TcR<>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION), HttpStatus.OK);
+            return new ResponseEntity<>(new TcR<TmAccount>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(TcR.ok(account), HttpStatus.OK);

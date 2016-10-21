@@ -3,6 +3,7 @@ package com.ysu.zyw.tc.api.mbg.test;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidPooledConnection;
 import com.google.common.collect.Lists;
+import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.base.tools.TcTuple;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -12,6 +13,8 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -286,6 +289,188 @@ public class DbTest {
                     .replace("${zhifubaoAccount}", "138" + RandomStringUtils.randomNumeric(8));
             System.out.println(s);
         });
+    }
+
+    @Test
+    public void test7() throws SQLException {
+        DruidPooledConnection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement1 = connection.prepareStatement(
+                "SELECT id FROM tm_item");
+        ResultSet resultSet1 = preparedStatement1.executeQuery();
+        List<String> itemIds = Lists.newArrayList();
+        while (resultSet1.next()) {
+            String id = resultSet1.getString(1);
+            itemIds.add(id);
+        }
+        System.out.println(itemIds.size());
+
+        PreparedStatement preparedStatement2 = connection.prepareStatement(
+                "SELECT id FROM mb_account");
+        ResultSet resultSet2 = preparedStatement2.executeQuery();
+        List<String> sellerIds = Lists.newArrayList();
+        while (resultSet2.next()) {
+            String id = resultSet2.getString(1);
+            sellerIds.add(id);
+        }
+        System.out.println(sellerIds.size());
+
+
+        for (String itemId : itemIds) {
+            PreparedStatement preparedStatement3 = connection.prepareStatement(
+                    "UPDATE tm_item SET seller_id = ? WHERE id = ?");
+            preparedStatement3.setString(1, sellerIds.get(RandomUtils.nextInt(sellerIds.size())));
+            preparedStatement3.setString(2, itemId);
+            int resultSet3 = preparedStatement3.executeUpdate();
+        }
+    }
+
+    private static final MultiValueMap<String, String> PROPERTIES = new LinkedMultiValueMap<>();
+
+    @Test
+    public void test8() throws SQLException {
+        PROPERTIES.put("上市年份季节", Arrays.asList(
+                "2012年春季",
+                "2012年秋季",
+                "2013年春季",
+                "2013年秋季",
+                "2014年春季",
+                "2014年秋季",
+                "2015年春季",
+                "2015年秋季",
+                "2016年春季",
+                "2016年秋季")
+        );
+        PROPERTIES.put("品牌", Arrays.asList(
+                "Moeyu/萌羽",
+                "Xiaomi/小米",
+                "AS/爱特斯",
+                "赢虎/YOUTHOW",
+                "boelginol/步津浓",
+                "Philips/飞利浦",
+                "Asus/华硕",
+                "鑫福华",
+                "干果",
+                "奇美",
+                "Haagen-Dazs/哈根达斯",
+                "Onda/昂达",
+                "Juicy Couture",
+                "菲灵",
+                "Joyoung/九阳",
+                "聚元",
+                "Vero Moda",
+                "Givenchy/纪梵希",
+                "兰歌",
+                "J.ESTINA",
+                "宁美国度",
+                "裸心安家",
+                "依博源",
+                "初语",
+                "Gap",
+                "ELLE",
+                "feiyue/飞跃",
+                "都市丽人",
+                "Kenneth Cole",
+                "other/其他",
+                "RMO＆JUL",
+                "Meizu/魅族")
+        );
+        PROPERTIES.put("颜色分类", Arrays.asList(
+                "麻花灰",
+                "深灰色",
+                "黑色",
+                "咖啡",
+                "绿色",
+                "紫色",
+                "紫橙色",
+                "红色")
+        );
+        PROPERTIES.put("产地", Arrays.asList(
+                "中国",
+                "美国",
+                "欧美",
+                "日本",
+                "海外")
+        );
+        PROPERTIES.put("风格", Arrays.asList(
+                "休闲",
+                "可爱",
+                "学院",
+                "简约",
+                "运动",
+                "时尚潮流",
+                "街头",
+                "日系")
+        );
+        PROPERTIES.put("大小", Arrays.asList(
+                "S",
+                "M",
+                "L",
+                "XL",
+                "XXL")
+        );
+        PROPERTIES.put("出售状态", Arrays.asList(
+                "现货",
+                "预售")
+        );
+        PROPERTIES.put("型号", Arrays.asList(
+                "TRJ50",
+                "TRS30",
+                "TSD10",
+                "KC4729",
+                "KC3994",
+                "KC264",
+                "TSD50",
+                "TDX30",
+                "TWD10",
+                "TWD15")
+        );
+        PROPERTIES.put("适用对象", Arrays.asList(
+                "学生",
+                "青年",
+                "中年",
+                "老年")
+        );
+
+        DruidPooledConnection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement1 = connection.prepareStatement(
+                "SELECT id FROM tm_item");
+        ResultSet resultSet1 = preparedStatement1.executeQuery();
+        List<String> itemIds = Lists.newArrayList();
+        while (resultSet1.next()) {
+            String id = resultSet1.getString(1);
+            itemIds.add(id);
+        }
+        System.out.println(itemIds.size());
+
+        for (String itemId : itemIds) {
+            int sequence = 10;
+            for (Map.Entry<String, List<String>> entry : PROPERTIES.entrySet()) {
+                if (RandomUtils.nextInt(10) < 5) {
+                    continue;
+                }
+
+                String key = entry.getKey();
+                String value = entry.getValue().get(RandomUtils.nextInt(entry.getValue().size()));
+                String valueType = "STRING";
+
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "INSERT INTO tm_item_property VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                Date now = new Date();
+                preparedStatement.setString(1, TcIdWorker.upperCaseUuid());
+                preparedStatement.setString(2, itemId);
+                preparedStatement.setString(3, key);
+                preparedStatement.setString(4, value);
+                preparedStatement.setString(5, valueType);
+                preparedStatement.setInt(6, sequence);
+                preparedStatement.setString(7, "00000000000000000000000000000000");
+                preparedStatement.setDate(8, new java.sql.Date(now.getTime()));
+                preparedStatement.setString(9, "00000000000000000000000000000000");
+                preparedStatement.setDate(10, new java.sql.Date(now.getTime()));
+                preparedStatement.execute();
+
+                sequence += 10;
+            }
+        }
     }
 
     private List<String> findTag() throws SQLException {
