@@ -8,6 +8,7 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -75,12 +76,18 @@ public class TcCodisCache implements Cache {
         return value;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Object key, Callable<T> valueLoader) {
         checkNotNull(key, "null key is not allowed");
         checkNotNull(valueLoader, "null value loader is not allowed");
-        @SuppressWarnings("unchecked")
-        T value = (T) codisTemplate.opsForValue().get(key);
+        T value = null;
+        try {
+            value = (T) codisTemplate.opsForValue().get(key);
+        } catch (Exception e) {
+            log.error("", e);
+            return loadValue(key, valueLoader, expiration);
+        }
         if (Objects.nonNull(value)) {
             if (log.isDebugEnabled()) {
                 log.debug("get object [{}] from cache by key [{}]", value, key);
@@ -93,8 +100,12 @@ public class TcCodisCache implements Cache {
             //noinspection SynchronizationOnLocalVariableOrMethodParameter
             synchronized (key) {
                 // lock and get
-                @SuppressWarnings("unchecked")
-                T sValue = (T) codisTemplate.opsForValue().get(key);
+                T sValue = null;
+                try {
+                    sValue = (T) codisTemplate.opsForValue().get(key);
+                } catch (Exception e) {
+                    log.error("", e);
+                }
                 if (Objects.nonNull(sValue)) {
                     if (log.isDebugEnabled()) {
                         log.debug("get object [{}] from cache by key [{}]", sValue, key);
@@ -102,20 +113,30 @@ public class TcCodisCache implements Cache {
                     return sValue;
                 }
                 // not found, try load value
-                try {
-                    T loadedValue = valueLoader.call();
-                    codisTemplate.opsForValue().set((Serializable) key, (Serializable) loadedValue, expiration,
-                            TimeUnit.MILLISECONDS);
-                    if (log.isDebugEnabled()) {
-                        log.debug("put object [{}] into cache by key [{}], expiration [{}]", loadedValue, key,
-                                expiration);
-                    }
-                    return loadedValue;
-                } catch (Exception e) {
-                    throw new ValueRetrievalException(key, valueLoader, e);
-                }
+                return loadValue(key, valueLoader, expiration);
             }
         }
+    }
+
+    private <T> T loadValue(@Nonnull Object key, @Nonnull Callable<T> valueLoader, long timeout) {
+        T loadedValue;
+        try {
+            loadedValue = valueLoader.call();
+        } catch (Exception e) {
+            throw new TcException(e, key, valueLoader);
+        }
+        checkNotNull(loadedValue, "empty loaded value is not allowed");
+        try {
+            codisTemplate.opsForValue().set((Serializable) key, (Serializable) loadedValue, timeout,
+                    TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            // if cache failed, let the load value succ.
+            log.error("", e);
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, key, timeout);
+        }
+        return loadedValue;
     }
 
     @Override
