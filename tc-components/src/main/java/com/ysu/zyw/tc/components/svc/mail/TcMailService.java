@@ -4,12 +4,11 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dm.model.v20151123.SingleSendMailRequest;
 import com.aliyuncs.dm.model.v20151123.SingleSendMailResponse;
-import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.google.common.base.Throwables;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -44,6 +43,7 @@ public class TcMailService implements InitializingBean {
 
     private IAcsClient client;
 
+    @SneakyThrows
     public void send(@Nonnull String toAddress,
                      @Nonnull String subject,
                      @Nonnull String htmlBody) {
@@ -56,16 +56,12 @@ public class TcMailService implements InitializingBean {
         request.setToAddress(toAddress);
         request.setSubject(subject);
         request.setHtmlBody(htmlBody);
-        try {
-            if (log.isInfoEnabled()) {
-                log.info("start send mail to [{}] [{}] [{}] [{}]", toAddress, tagName, subject, htmlBody);
-            }
-            SingleSendMailResponse httpResponse = client.getAcsResponse(request);
-            if (log.isInfoEnabled()) {
-                log.info("finish send mail to [{}] [{}]", toAddress, httpResponse);
-            }
-        } catch (ClientException e) {
-            throw Throwables.propagate(e);
+        if (log.isInfoEnabled()) {
+            log.info("start send mail to [{}] [{}] [{}] [{}]", toAddress, tagName, subject, htmlBody);
+        }
+        SingleSendMailResponse httpResponse = client.getAcsResponse(request);
+        if (log.isInfoEnabled()) {
+            log.info("finish send mail to [{}] [{}]", toAddress, httpResponse);
         }
     }
 

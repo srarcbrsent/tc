@@ -43,7 +43,7 @@ public class TcAuthApi {
             @ApiResponse(code = 422, message = "验证错误，参见extra")
     })
     @RequestMapping(value = "/can_signin", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<String>> canSignin(
+    public ResponseEntity<TcR<String, Void>> canSignin(
             @ApiParam(value = "用户名") @RequestParam(value = "username") String username,
             @ApiParam(value = "密码") @RequestParam(value = "password") String password,
             @ApiParam(value = "账号可登陆") @RequestParam(value = "canAccountLogin", defaultValue = "true")
@@ -61,6 +61,7 @@ public class TcAuthApi {
         return ResponseEntity.ok(TcR.ok(succLoginAccountId));
     }
 
+    // TODO
     @ApiOperation(
             value = "获取菜单",
             notes = "根据当前用户的权限获取对应的菜单",
@@ -80,6 +81,7 @@ public class TcAuthApi {
         return ResponseEntity.ok(menuList);
     }
 
+    // TODO
     @ApiOperation(
             value = "获取菜单",
             notes = "根据当前用户的权限获取对应的菜单",

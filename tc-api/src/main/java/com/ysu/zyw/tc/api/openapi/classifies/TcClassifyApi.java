@@ -45,7 +45,7 @@ public class TcClassifyApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/find_classify/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<TmClassify>> findClassify(
+    public ResponseEntity<TcR<TmClassify, Void>> findClassify(
             @ApiParam(value = "分类id") @PathVariable(value = "id") String classifyId,
             @ApiParam(value = "包含父分类") @RequestParam(value = "includeParentClassify", defaultValue = "false")
                     Boolean includeParentClassify) {
@@ -75,7 +75,7 @@ public class TcClassifyApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/find_classifies", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<TmClassify>> findClassifies() {
+    public ResponseEntity<TcR<TmClassify, Void>> findClassifies() {
 
         final String group = "OpenApi_com_ysu_zyw_tc_api_openapi_classifies_TcClassifyApi_findClassifies";
         final String key = "All";
@@ -102,7 +102,7 @@ public class TcClassifyApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/find_sub_classifies/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<TmClassify>> findSubClassifies(
+    public ResponseEntity<TcR<TmClassify, Void>> findSubClassifies(
             @ApiParam(value = "分类id") @PathVariable(value = "id") String classifyId,
             @ApiParam(value = "递归子分类") @RequestParam(value = "recursive", defaultValue = "false") Boolean recursive) {
 

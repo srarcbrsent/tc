@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "响应包裹类型")
-public class TcR<T> implements Serializable {
+public class TcR<T, E> implements Serializable {
 
     @ApiModelProperty(value = "响应码")
     protected int code;
@@ -30,22 +30,22 @@ public class TcR<T> implements Serializable {
     protected T body;
 
     @ApiModelProperty(value = "附加信息")
-    protected Object extra;
+    protected E extra;
 
     public TcR(int code, String description) {
         this.code = code;
         this.description = description;
     }
 
-    public static <T> TcR<T> ok(T body) {
-        TcR<T> tcR = new TcR<>();
+    public static <T, E> TcR<T, E> ok(T body) {
+        TcR<T, E> tcR = new TcR<>();
         tcR.code = R.SUCCESS;
         tcR.description = R.SUCCESS_DESCRIPTION;
         tcR.body = body;
         return tcR;
     }
 
-    public static <T> TcR<T> ok() {
+    public static <T, E> TcR<T, E> ok() {
         return ok(null);
     }
 

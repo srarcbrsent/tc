@@ -33,7 +33,7 @@ public class TcServerApi {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_health_state", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Void>> findHealthState() {
+    public ResponseEntity<TcR<Void, Void>> findHealthState() {
         return ResponseEntity.ok(TcR.ok());
     }
 
@@ -50,7 +50,7 @@ public class TcServerApi {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_current_time", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Date>> findCurrentTime() {
+    public ResponseEntity<TcR<Date, Void>> findCurrentTime() {
         return ResponseEntity.ok(TcR.ok(new Date()));
     }
 

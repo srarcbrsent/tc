@@ -43,7 +43,7 @@ public class TcAccountSpi {
             @ApiResponse(code = 422, message = "验证错误，参见extra")
     })
     @RequestMapping(value = "/active_contact_way/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Void>> activeContactWay(
+    public ResponseEntity<TcR<Void, Void>> activeContactWay(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
             @ApiParam(value = "激活手机") @RequestParam(value = "activeMobile", required = false) Boolean activeMobile,
             @ApiParam(value = "激活邮箱") @RequestParam(value = "activeEmail", required = false) Boolean activeEmail) {
@@ -78,7 +78,7 @@ public class TcAccountSpi {
             @ApiResponse(code = 422, message = "验证错误，参见extra")
     })
     @RequestMapping(value = "/active_payment_way/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Void>> activePaymentWay(
+    public ResponseEntity<TcR<Void, Void>> activePaymentWay(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
             @ApiParam(value = "支持微信支付") @RequestParam(value = "supWeixin", required = false) Boolean supWeixin,
             @ApiParam(value = "支持支付宝支付") @RequestParam(value = "supZhifubao", required = false) Boolean supZhifubao,
@@ -118,7 +118,7 @@ public class TcAccountSpi {
             @ApiResponse(code = 422, message = "验证错误，参见extra")
     })
     @RequestMapping(value = "/lock_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Void>> lockAccount(
+    public ResponseEntity<TcR<Void, Void>> lockAccount(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
             @ApiParam(value = "所定至") @Future @RequestParam(value = "lockReleaseTime") Date lockReleaseTime) {
 

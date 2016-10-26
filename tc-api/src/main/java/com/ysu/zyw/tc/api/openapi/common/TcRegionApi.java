@@ -42,7 +42,7 @@ public class TcRegionApi {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_provinces", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<List<TcProvince>>> findProvinces() {
+    public ResponseEntity<TcR<List<TcProvince>, Void>> findProvinces() {
         List<TcProvince> provinceList;
         try {
              provinceList = tcRegionService.findProvinceList();
@@ -66,7 +66,7 @@ public class TcRegionApi {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_cities/{code}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<List<TcProvince.TcCity>>> findCities(
+    public ResponseEntity<TcR<List<TcProvince.TcCity>, Void>> findCities(
             @PathVariable(value = "code") String provinceCode) {
         List<TcProvince.TcCity> cityList;
         try {
@@ -91,7 +91,7 @@ public class TcRegionApi {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_districts/{code}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<List<TcProvince.TcCity.TcDistrict>>> findDistricts(
+    public ResponseEntity<TcR<List<TcProvince.TcCity.TcDistrict>, Void>> findDistricts(
             @PathVariable(value = "code") String cityCode) {
         List<TcProvince.TcCity.TcDistrict> districtList;
         try {
@@ -116,7 +116,7 @@ public class TcRegionApi {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_district/{code}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<TcProvince.TcCity.TcDistrict>> findDistrict(
+    public ResponseEntity<TcR<TcProvince.TcCity.TcDistrict, Void>> findDistrict(
             @PathVariable(value = "code") String code) {
         TcProvince.TcCity.TcDistrict district;
         try {

@@ -37,7 +37,8 @@ public class TcExceptionResponseDecorator {
         } catch (TcVerifyFailureException e) {
             // 如果内部抛出了验证错误异常 则对页面返回 422 无法处理的请求
             TcValidator.TcVerifyFailure tcVerifyFailure = e.getTcVerifyFailure();
-            TcR<Object> tcR = new TcR<>(TcR.R.UNPROCESSABLE_ENTITY, TcR.R.UNPROCESSABLE_ENTITY_DESCRIPTION);
+            TcR<Object, TcValidator.TcVerifyFailure> tcR =
+                    new TcR<>(TcR.R.UNPROCESSABLE_ENTITY, TcR.R.UNPROCESSABLE_ENTITY_DESCRIPTION);
             tcR.setExtra(tcVerifyFailure);
             log.error("[{}][{}][{}][{}]", "OpenApi切面-无法处理的请求", "切面异常捕获", proceedingJoinPoint.getArgs(),
                     tcVerifyFailure, e);

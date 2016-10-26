@@ -2,15 +2,14 @@ package com.ysu.zyw.tc.components.svc.sms;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
-import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.aliyuncs.sms.model.v20160927.SingleSendSmsRequest;
 import com.aliyuncs.sms.model.v20160927.SingleSendSmsResponse;
-import com.google.common.base.Throwables;
 import com.ysu.zyw.tc.base.utils.TcSerializationUtils;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -36,6 +35,7 @@ public class TcSmsService implements InitializingBean {
 
     private IAcsClient client;
 
+    @SneakyThrows
     public void send(@Nonnull String signName,
                      @Nonnull String templateCode,
                      @Nullable Map<String, String> param,
@@ -47,16 +47,12 @@ public class TcSmsService implements InitializingBean {
             request.setParamString(TcSerializationUtils.writeJson(param));
         }
         request.setRecNum(target);
-        try {
-            if (log.isInfoEnabled()) {
-                log.info("start send sms to [{}] [{}] [{}]", target, templateCode, param);
-            }
-            SingleSendSmsResponse httpResponse = client.getAcsResponse(request);
-            if (log.isInfoEnabled()) {
-                log.info("finish send sms to [{}] [{}]", target, httpResponse);
-            }
-        } catch (ClientException e) {
-            throw Throwables.propagate(e);
+        if (log.isInfoEnabled()) {
+            log.info("start send sms to [{}] [{}] [{}]", target, templateCode, param);
+        }
+        SingleSendSmsResponse httpResponse = client.getAcsResponse(request);
+        if (log.isInfoEnabled()) {
+            log.info("finish send sms to [{}] [{}]", target, httpResponse);
         }
     }
 

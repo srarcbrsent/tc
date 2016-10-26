@@ -34,7 +34,7 @@ public class TcItemApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/create_item", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<String>> createItem() {
+    public ResponseEntity<TcR<String, Void>> createItem() {
 
         // TODO
 
@@ -56,7 +56,7 @@ public class TcItemApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/change_item_state/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcP<List<TmAccount>>> changeItemState() {
+    public ResponseEntity<TcP<List<TmAccount>, Void>> changeItemState() {
 
         return ResponseEntity.ok(TcP.ok(null));
     }
@@ -76,7 +76,7 @@ public class TcItemApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/find_item/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcP<List<TmAccount>>> findItem() {
+    public ResponseEntity<TcP<List<TmAccount>, Void>> findItem() {
 
         return ResponseEntity.ok(TcP.ok(null));
     }
@@ -96,7 +96,7 @@ public class TcItemApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/find_items", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcP<List<TmAccount>>> findItems() {
+    public ResponseEntity<TcP<List<TmAccount>, Void>> findItems() {
 
         return ResponseEntity.ok(TcP.ok(null));
     }

@@ -9,12 +9,12 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>tc-api-gateway</module>
         <module>tc-base</module>
         <module>tc-system</module>
+        <module>tc-model</module>
         <module>tc-components</module>
         <module>tc-api</module>
-        <module>tc-model</module>
+        <module>tc-api-gateway</module>
     </modules>
 
     <properties>

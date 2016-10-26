@@ -50,7 +50,7 @@ public class TcAccountApi {
             @ApiResponse(code = 422, message = "验证错误，参见extra")
     })
     @RequestMapping(value = "/create_account", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<String>> createAccount(
+    public ResponseEntity<TcR<String, TcValidator.TcVerifyFailure>> createAccount(
             @ApiParam(value = "账号信息") @Validated(value = TcCreateMode.class) @RequestBody TmAccount tmAccount,
             BindingResult bindingResult) {
 
@@ -61,7 +61,7 @@ public class TcAccountApi {
             bindingResult.addError(new ObjectError("tmAccount", "账号/邮箱/手机必须至少设置一项"));
         }
         if (bindingResult.hasErrors()) {
-            TcR<String> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
+            TcR<String, TcValidator.TcVerifyFailure> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
             tcR.setExtra(new TcValidator.TcVerifyFailure(bindingResult));
             return ResponseEntity.ok(tcR);
         }
@@ -90,7 +90,7 @@ public class TcAccountApi {
     })
     @RequestMapping(value = "/delete_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
     @Transactional
-    public ResponseEntity<TcR<Void>> deleteAccount(
+    public ResponseEntity<TcR<Void, Void>> deleteAccount(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId) {
 
         tcAccountService.deleteAccount(accountId);
@@ -117,13 +117,13 @@ public class TcAccountApi {
             @ApiResponse(code = 422, message = "验证错误，参见extra")
     })
     @RequestMapping(value = "update_account/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Void>> updateAccount(
+    public ResponseEntity<TcR<Void, TcValidator.TcVerifyFailure>> updateAccount(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
             @ApiParam(value = "账号信息") @Validated(value = TcUpdateMode.class) @RequestBody TmAccount tmAccount,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            TcR<Void> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
+            TcR<Void, TcValidator.TcVerifyFailure> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
             tcR.setExtra(new TcValidator.TcVerifyFailure(bindingResult));
             return ResponseEntity.ok(tcR);
         }
@@ -152,7 +152,7 @@ public class TcAccountApi {
             @ApiResponse(code = 422, message = "验证错误，参见extra")
     })
     @RequestMapping(value = "update_password/{id}", method = RequestMethod.POST, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Void>> updatePassword(
+    public ResponseEntity<TcR<Void, TcValidator.TcVerifyFailure>> updatePassword(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
             @ApiParam(value = "旧密码") @RequestParam(value = "oPassword")
             @Length(min = 64, max = 64, message = "【密码】限制为64个字符") String oPassword,
@@ -162,7 +162,7 @@ public class TcAccountApi {
             BindingResult nBindingResult) {
 
         if (oBindingResult.hasErrors() || nBindingResult.hasErrors()) {
-            TcR<Void> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
+            TcR<Void, TcValidator.TcVerifyFailure> tcR = new TcR<>(TcR.R.BAD_REQUEST, TcR.R.BAD_REQUEST_DESCRIPTION);
             nBindingResult.getAllErrors().forEach(oBindingResult::addError);
             tcR.setExtra(new TcValidator.TcVerifyFailure(nBindingResult));
             return ResponseEntity.ok(tcR);
@@ -191,7 +191,7 @@ public class TcAccountApi {
     })
     @RequestMapping(
             value = "/find_account/{id}", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<TmAccount>> findAccount(
+    public ResponseEntity<TcR<TmAccount, Void>> findAccount(
             @ApiParam(value = "账号id") @PathVariable(value = "id") String accountId,
             @ApiParam(value = "包含辅助信息") @RequestParam(value = "includeAssistField", defaultValue = "false")
                     boolean includeAssistField,
@@ -201,10 +201,11 @@ public class TcAccountApi {
         TmAccount account = tcAccountService.findAccount(accountId, includeAssistField, includePaymentField);
 
         if (Objects.isNull(account)) {
-            return new ResponseEntity<>(new TcR<TmAccount>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION), HttpStatus.OK);
+            return new ResponseEntity<>(
+                    new TcR<TmAccount, Void>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(TcR.ok(account), HttpStatus.OK);
+        return ResponseEntity.ok(TcR.ok(account));
     }
 
     @ApiOperation(
@@ -222,7 +223,7 @@ public class TcAccountApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/count_accounts", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcR<Long>> countAccounts(
+    public ResponseEntity<TcR<Long, Void>> countAccounts(
             @ApiParam(value = "账号ids") @RequestParam(value = "ids", required = false) List<String> ids,
             @ApiParam(value = "企业名 精确匹配") @RequestParam(value = "name", required = false) String name,
             @ApiParam(value = "账号") @RequestParam(value = "accounts", required = false) String account,
@@ -249,7 +250,7 @@ public class TcAccountApi {
             @ApiResponse(code = 200, message = "OK")
     })
     @RequestMapping(value = "/find_accounts", method = RequestMethod.GET, headers = "X-ApiVersion=1.0")
-    public ResponseEntity<TcP<List<TmAccount>>> findAccounts(
+    public ResponseEntity<TcP<List<TmAccount>, Void>> findAccounts(
             @ApiParam(value = "账号ids") @RequestParam(value = "ids", required = false) List<String> ids,
             @ApiParam(value = "企业名 精确匹配") @RequestParam(value = "name", required = false) String name,
             @ApiParam(value = "账号") @RequestParam(value = "accounts", required = false) String account,

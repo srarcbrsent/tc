@@ -1,17 +1,16 @@
 package com.ysu.zyw.tc.components.upload;
 
-import com.google.common.base.Throwables;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -35,6 +34,7 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
     @Setter
     public String visitResourceBase;
 
+    @SneakyThrows
     @Override
     public String upload(@Nonnull TcUploadResourceData metadata, @Nonnull InputStream inputStream) {
         log.info("upload file [{}]", metadata);
@@ -45,14 +45,11 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
         if (exists(metadata)) {
             throw new TcException("the file already exists, please delete it then upload.", metadata);
         }
-        try {
-            FileUtils.copyInputStreamToFile(inputStream, new File(resourceFullPath));
-        } catch (IOException e) {
-            throw Throwables.propagate(e);
-        }
+        FileUtils.copyInputStreamToFile(inputStream, new File(resourceFullPath));
         return metadata.getFolder() + metadata.getName() + metadata.getExtension();
     }
 
+    @SneakyThrows
     @Override
     public OutputStream download(@Nonnull TcUploadResourceData metadata) {
         log.info("download file [{}]", metadata);
@@ -64,13 +61,10 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
         if (!file.exists()) {
             throw new TcException("resource [" + resourceFullPath + "] can not found");
         }
-        try {
-            return FileUtils.openOutputStream(file);
-        } catch (IOException e) {
-            throw Throwables.propagate(e);
-        }
+        return FileUtils.openOutputStream(file);
     }
 
+    @SneakyThrows
     @Override
     public void delete(@Nonnull TcUploadResourceData metadata) {
         log.info("delete file [{}]", metadata);
@@ -79,11 +73,7 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
                 .getExtension();
         File file = new File(resourceFullPath);
         checkArgument(file.isFile(), "resource [" + resourceFullPath + "] is a directory");
-        try {
-            FileUtils.forceDelete(file);
-        } catch (IOException e) {
-            throw Throwables.propagate(e);
-        }
+        FileUtils.forceDelete(file);
     }
 
     @Override
@@ -108,15 +98,12 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
         checkArgument(metadata.getExtension().startsWith(TcConstant.Str.DOT), "extension must be start with .");
     }
 
+    @SneakyThrows
     private void mkdirIfNecessary(TcUploadResourceData metadata) {
         String fullFolderPath = localFileSystemUploadBase + metadata.getFolder();
         File file = new File(fullFolderPath);
         if (!file.exists()) {
-            try {
-                FileUtils.forceMkdir(file);
-            } catch (IOException e) {
-                throw Throwables.propagate(e);
-            }
+            FileUtils.forceMkdir(file);
         }
     }
 
