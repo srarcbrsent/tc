@@ -25,7 +25,7 @@
     <!-- jackson -->
     <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
         <property name="dateFormat"
-                  value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).FULL_DATE_FORMAT}"/>
+                  value="#{T(com.ysu.zyw.tc.base.utils.TcDateUtils).FULL_DATE_FORMAT_VALUE}"/>
     </bean>
 
     <!-- !!!! Import !!!! -->

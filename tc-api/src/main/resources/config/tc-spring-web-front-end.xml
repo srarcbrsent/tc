@@ -10,10 +10,6 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-        <property name="dateFormat" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).FULL_DATE_FORMAT}"/>
-    </bean>
-
     <mvc:annotation-driven conversion-service="conversionService" validator="validator">
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
