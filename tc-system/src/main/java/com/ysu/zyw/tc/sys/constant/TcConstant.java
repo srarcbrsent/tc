@@ -1,7 +1,5 @@
 package com.ysu.zyw.tc.sys.constant;
 
-import java.text.SimpleDateFormat;
-
 /**
  * TcConstant defines tc system level constant.
  *
@@ -46,14 +44,6 @@ public class TcConstant {
         public static final String DOUBLE_QUOTE = "\"";
 
         public static final String DOT = ".";
-
-    }
-
-    public static abstract class C {
-
-        public static final String FULL_DATE_FORMAT_VALUE = "yyyy-MM-dd HH:mm:ss.SSS";
-
-        public static final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat(FULL_DATE_FORMAT_VALUE);
 
     }
 

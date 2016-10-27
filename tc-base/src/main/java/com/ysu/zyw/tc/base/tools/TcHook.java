@@ -3,18 +3,18 @@ package com.ysu.zyw.tc.base.tools;
 import java.io.Serializable;
 
 /**
- * TcCr is a class use for cross function call's object transform.
+ * TcHook is a class use for cross function call's object transform.
  *
  * @author yaowu.zhang
  */
-public class TcCr<T> implements Serializable {
+public class TcHook<T> implements Serializable {
 
     private T object;
 
-    public TcCr() {
+    public TcHook() {
     }
 
-    public TcCr(T object) {
+    public TcHook(T object) {
         this.object = object;
     }
 

@@ -30,4 +30,8 @@ public class FreeTest {
         System.out.println(s1.intern() == s3.intern());
     }
 
+    @Test
+    public void test02() {
+    }
+
 }

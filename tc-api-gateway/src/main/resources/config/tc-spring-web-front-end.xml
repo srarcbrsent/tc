@@ -23,9 +23,9 @@
           class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="formatters">
             <set>
-                <bean class="com.ysu.zyw.tc.components.utils.converters.TcSimpleDateFormatter">
+                <bean class="com.ysu.zyw.tc.components.utils.converters.TcDateFormatter">
                     <property name="dateFormat"
-                              value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.C).FULL_DATE_FORMAT}"/>
+                              value="#{T(com.ysu.zyw.tc.base.utils.TcDateUtils).FULL_DATE_FORMAT_VALUE}"/>
                 </bean>
             </set>
         </property>
