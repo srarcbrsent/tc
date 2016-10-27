@@ -68,7 +68,6 @@
             classpath*:/config/tc-spring-cache-codis.xml,
             classpath*:/config/tc-spring-mq-metaq.xml,
             classpath*:/config/tc-spring-module-region.xml,
-            classpath*:/config/tc-spring-security-shiro.xml,
             classpath*:/config/tc-spring-rpc-httpx.xml
         </param-value>
     </context-param>
