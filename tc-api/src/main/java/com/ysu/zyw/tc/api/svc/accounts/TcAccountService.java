@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.api.svc.accounts;
 
-import com.google.common.base.Preconditions;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountAssistMapper;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountMapper;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountPaymentMapper;
@@ -55,7 +54,7 @@ public class TcAccountService {
                                       @NotNull Boolean canAccountLogin,
                                       @NotNull Boolean canEmailLogin,
                                       @NotNull Boolean canMobileLogin) {
-        Preconditions.checkArgument(canAccountLogin || canEmailLogin || canMobileLogin);
+        checkArgument(canAccountLogin || canEmailLogin || canMobileLogin);
 
         TcAccountExample tcAccountExample = new TcAccountExample();
         // prevent some mistake leading to performance problem

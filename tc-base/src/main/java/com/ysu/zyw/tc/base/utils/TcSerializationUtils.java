@@ -2,12 +2,12 @@ package com.ysu.zyw.tc.base.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ysu.zyw.tc.sys.constant.TcConstant;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
 import java.io.*;
+import java.text.SimpleDateFormat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -23,7 +23,7 @@ public class TcSerializationUtils {
 
     static {
         objectMapper = new ObjectMapper();
-        objectMapper.setDateFormat(TcConstant.C.FULL_DATE_FORMAT);
+        objectMapper.setDateFormat(new SimpleDateFormat(TcDateUtils.FULL_DATE_FORMAT_VALUE));
     }
 
     @SneakyThrows
