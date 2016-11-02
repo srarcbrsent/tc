@@ -243,14 +243,17 @@ public class NettyTest {
 //            }
 //        }
         long l = System.currentTimeMillis();
-                for (int j = 0; j < 5000; j++) {
-                    try {
-                        Socket socket = new Socket("rdb.tc.com", 18002);
-                        socket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+        for (int j = 0; j < 50000; j++) {
+            try {
+                Socket socket = new Socket("localhost", 18002);
+                socket.close();
+                TimeUnit.MICROSECONDS.sleep(1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         System.out.println(System.currentTimeMillis() - l);
     }
 

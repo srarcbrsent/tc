@@ -1,6 +1,8 @@
 package com.ysu.zyw.tc.components.httpx;
 
 import com.google.common.base.Throwables;
+import com.google.common.collect.Maps;
+import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
@@ -18,13 +20,7 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -176,7 +172,9 @@ public class TcHttpxService {
 
     protected HttpHeaders addReqContentType(HttpHeaders httpHeaders, String mediaType) {
         HttpHeaders newHttpHeaders = new HttpHeaders();
-        newHttpHeaders.putAll(httpHeaders);
+        if (Objects.nonNull(httpHeaders)) {
+            newHttpHeaders.putAll(httpHeaders);
+        }
         newHttpHeaders.set(HttpHeaders.CONTENT_TYPE, mediaType);
         return newHttpHeaders;
     }
@@ -191,14 +189,18 @@ public class TcHttpxService {
                     httpMethod, url, uriVariables, httpEntity);
         }
 
-        LocalDateTime now = LocalDateTime.now();
+        if (Objects.isNull(uriVariables)) {
+            uriVariables = Maps.newHashMap();
+        }
+
+        Date now = Calendar.getInstance().getTime();
         ResponseEntity<T> responseEntity =
                 restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
 
         if (log.isInfoEnabled()) {
             log.info("call api [{}:{}] finish, response code [{}], has body [{}], take time [{}s]",
                     httpMethod, url, Objects.nonNull(responseEntity.getBody()), httpEntity,
-                    Duration.between(now, LocalDateTime.now()).get(ChronoUnit.SECONDS));
+                    TcDateUtils.between(now, new Date()));
         }
 
         return responseEntity;

@@ -1,6 +1,7 @@
 package com.ysu.zyw.tc.base.utils;
 
 import com.jcraft.jsch.*;
+import lombok.SneakyThrows;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -35,26 +36,21 @@ public class SSHTest {
                     "172.16.75.32"
             };
 
-    public static final String USERNAME = "*****";
+    public static final String USERNAME = "****";
 
-    public static final String PASSWORD = "*****";
+    public static final String PASSWORD = "****";
 
     @Test
     public void test1() throws JSchException, IOException, InterruptedException {
-        Arrays.stream(HOSTS).forEach(host -> {
-            try {
-                exec(host, 22, USERNAME, PASSWORD, "date");
-            } catch (JSchException | IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
+        Arrays.stream(HOSTS).forEach(host -> exec(host, 22, USERNAME, PASSWORD, "hostname"));
     }
 
+    @SneakyThrows
     public void exec(String host,
                      int port,
                      String username,
                      String password,
-                     String cmd) throws JSchException, IOException, InterruptedException {
+                     String cmd) {
         JSch jSch = new JSch();
 
         Session session = jSch.getSession(username, host, port);
@@ -77,7 +73,7 @@ public class SSHTest {
 
         StringBuilder sb = new StringBuilder();
         byte[] bytes = new byte[1024];
-        int exitStatus = -99;
+        int exitStatus;
         while (true) {
             while (inputStream.available() > 0) {
                 int i = inputStream.read(bytes, 0, 1024);
@@ -94,7 +90,7 @@ public class SSHTest {
             Thread.sleep(1000);
         }
         System.out.print("> cmd-rs \n" + sb);
-        System.out.println("# exit-status [" + channel.getExitStatus() + "]");
+        System.out.println("# exit-status [" + exitStatus + "]");
         System.out.println();
         channel.disconnect();
         session.disconnect();
