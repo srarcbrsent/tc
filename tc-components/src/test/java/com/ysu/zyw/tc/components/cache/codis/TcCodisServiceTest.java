@@ -1,8 +1,8 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.math.RandomUtils;
 import org.junit.After;
@@ -434,12 +434,9 @@ public class TcCodisServiceTest {
     public void testGuavaCache() {
     }
 
+    @SneakyThrows
     private void sleep(long timeout) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(timeout);
-        } catch (InterruptedException e) {
-            Throwables.propagate(e);
-        }
+        TimeUnit.MILLISECONDS.sleep(timeout);
     }
 
 }

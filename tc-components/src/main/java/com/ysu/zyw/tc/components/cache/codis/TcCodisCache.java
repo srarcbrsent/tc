@@ -64,11 +64,11 @@ public class TcCodisCache implements Cache {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Object key, Class<T> type) {
         checkNotNull(key, "null key is not allowed");
         checkArgument(key instanceof Serializable, "key must implements Serializable");
-        //noinspection unchecked
         T value = (T) codisTemplate.opsForValue().get(key);
         if (log.isDebugEnabled()) {
             log.debug("get object [{}] from cache by key [{}]", value, key);
