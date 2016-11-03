@@ -4,6 +4,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="shiroCache" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager.TcShiroCache">
+        <constructor-arg>
+            <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
+                <property name="name" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).CODIS_CACHE}"/>
+                <property name="codisTemplate" ref="objectKeyCodisTemplate"/>
+                <property name="expiration" value="${properties.security.shiro.session.cache.expiration.millis}"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
     <bean id="shiroCacheManager" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager">
         <property name="shiroCacheContainer">
             <map>
@@ -130,25 +140,5 @@
     </bean>
 
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-
-    <beans profile="dev">
-        <bean id="shiroCache" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager.TcShiroCache">
-            <constructor-arg>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"/>
-            </constructor-arg>
-        </bean>
-    </beans>
-
-    <beans profile="pdu">
-        <bean id="shiroCache" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager.TcShiroCache">
-            <constructor-arg>
-                <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
-                    <property name="name" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).CODIS_CACHE}"/>
-                    <property name="codisTemplate" ref="objectKeyCodisTemplate"/>
-                    <property name="expiration" value="${properties.security.shiro.session.cache.expiration.millis}"/>
-                </bean>
-            </constructor-arg>
-        </bean>
-    </beans>
 
 </beans>

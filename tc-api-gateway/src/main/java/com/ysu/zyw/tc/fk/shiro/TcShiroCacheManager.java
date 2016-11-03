@@ -18,7 +18,7 @@ public class TcShiroCacheManager implements CacheManager {
 
     @Getter
     @Setter
-    Map<String, TcShiroCache> shiroCacheContainer;
+    private Map<String, TcShiroCache> shiroCacheContainer;
 
     @Override
     @SuppressWarnings("unchecked")
