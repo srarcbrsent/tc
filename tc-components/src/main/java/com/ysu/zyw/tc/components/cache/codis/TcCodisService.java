@@ -42,6 +42,7 @@ public class TcCodisService {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T get(@Nonnull String key, @Nonnull Class<T> clazz) {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(clazz, "null clazz is not allowed");
@@ -49,7 +50,6 @@ public class TcCodisService {
         if (log.isDebugEnabled()) {
             log.debug("cache get key [{}], value [{}], clazz [{}]", key, sValue, clazz);
         }
-        //noinspection unchecked
         return (T) sValue;
     }
 
@@ -116,9 +116,9 @@ public class TcCodisService {
         return loadedValue;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean exists(@Nonnull String key) {
         checkNotNull(key, "empty key is not allowed");
-        //noinspection unchecked
         return codisTemplate.execute((RedisCallback<Boolean>) connection -> connection
                 .exists(((RedisSerializer<String>) codisTemplate.getKeySerializer()).serialize(key)));
     }

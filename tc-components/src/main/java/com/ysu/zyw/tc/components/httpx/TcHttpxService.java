@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.components.httpx;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
@@ -137,7 +136,7 @@ public class TcHttpxService {
                     Object oValue = readMethod.invoke(obj);
                     copy2MultiValueMap(multiValueMap, oKey, oValue);
                 } catch (InvocationTargetException | NoSuchMethodException e) {
-                    Throwables.propagate(e);
+                    throw new RuntimeException(e);
                 }
             });
         }
