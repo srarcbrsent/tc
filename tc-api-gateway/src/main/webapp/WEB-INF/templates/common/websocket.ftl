@@ -1,7 +1,7 @@
 <div id="panel"></div>
 
 <script type="text/javascript">
-    var socket = new WebSocket('ws://localhost:8080/myHandler');
+    var socket = new WebSocket('ws://localhost:8080/demo.ws');
     socket.onopen = function(event) {
         // 发送一个初始化消息
         socket.send('I am the client and I\'m listening!');

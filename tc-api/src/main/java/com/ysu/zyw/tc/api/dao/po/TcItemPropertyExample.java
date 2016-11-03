@@ -186,12 +186,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andIdBetween(String value1, String value2) {
-            addCriterion("id between", value1, value2, "id");
+            addCriterion("id duration", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(String value1, String value2) {
-            addCriterion("id not between", value1, value2, "id");
+            addCriterion("id not duration", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -256,12 +256,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andItemIdBetween(String value1, String value2) {
-            addCriterion("item_id between", value1, value2, "itemId");
+            addCriterion("item_id duration", value1, value2, "itemId");
             return (Criteria) this;
         }
 
         public Criteria andItemIdNotBetween(String value1, String value2) {
-            addCriterion("item_id not between", value1, value2, "itemId");
+            addCriterion("item_id not duration", value1, value2, "itemId");
             return (Criteria) this;
         }
 
@@ -326,12 +326,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andKeyBetween(String value1, String value2) {
-            addCriterion("key between", value1, value2, "key");
+            addCriterion("key duration", value1, value2, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyNotBetween(String value1, String value2) {
-            addCriterion("key not between", value1, value2, "key");
+            addCriterion("key not duration", value1, value2, "key");
             return (Criteria) this;
         }
 
@@ -396,12 +396,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andValueBetween(String value1, String value2) {
-            addCriterion("value between", value1, value2, "value");
+            addCriterion("value duration", value1, value2, "value");
             return (Criteria) this;
         }
 
         public Criteria andValueNotBetween(String value1, String value2) {
-            addCriterion("value not between", value1, value2, "value");
+            addCriterion("value not duration", value1, value2, "value");
             return (Criteria) this;
         }
 
@@ -466,12 +466,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andValueTypeBetween(String value1, String value2) {
-            addCriterion("value_type between", value1, value2, "valueType");
+            addCriterion("value_type duration", value1, value2, "valueType");
             return (Criteria) this;
         }
 
         public Criteria andValueTypeNotBetween(String value1, String value2) {
-            addCriterion("value_type not between", value1, value2, "valueType");
+            addCriterion("value_type not duration", value1, value2, "valueType");
             return (Criteria) this;
         }
 
@@ -526,12 +526,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andSequenceBetween(Integer value1, Integer value2) {
-            addCriterion("sequence between", value1, value2, "sequence");
+            addCriterion("sequence duration", value1, value2, "sequence");
             return (Criteria) this;
         }
 
         public Criteria andSequenceNotBetween(Integer value1, Integer value2) {
-            addCriterion("sequence not between", value1, value2, "sequence");
+            addCriterion("sequence not duration", value1, value2, "sequence");
             return (Criteria) this;
         }
 
@@ -596,12 +596,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andUpdatedPersonBetween(String value1, String value2) {
-            addCriterion("updated_person between", value1, value2, "updatedPerson");
+            addCriterion("updated_person duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedPersonNotBetween(String value1, String value2) {
-            addCriterion("updated_person not between", value1, value2, "updatedPerson");
+            addCriterion("updated_person not duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
@@ -656,12 +656,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp not duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
@@ -726,12 +726,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andCreatedPersonBetween(String value1, String value2) {
-            addCriterion("created_person between", value1, value2, "createdPerson");
+            addCriterion("created_person duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
         public Criteria andCreatedPersonNotBetween(String value1, String value2) {
-            addCriterion("created_person not between", value1, value2, "createdPerson");
+            addCriterion("created_person not duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
@@ -786,12 +786,12 @@ public class TcItemPropertyExample {
         }
 
         public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp not duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
     }

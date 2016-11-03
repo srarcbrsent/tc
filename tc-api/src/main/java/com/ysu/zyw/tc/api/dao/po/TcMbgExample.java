@@ -188,12 +188,12 @@ public class TcMbgExample {
         }
 
         public Criteria andIdBetween(String value1, String value2) {
-            addCriterion("id between", value1, value2, "id");
+            addCriterion("id duration", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(String value1, String value2) {
-            addCriterion("id not between", value1, value2, "id");
+            addCriterion("id not duration", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -258,12 +258,12 @@ public class TcMbgExample {
         }
 
         public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("name between", value1, value2, "name");
+            addCriterion("name duration", value1, value2, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("name not between", value1, value2, "name");
+            addCriterion("name not duration", value1, value2, "name");
             return (Criteria) this;
         }
 
@@ -328,12 +328,12 @@ public class TcMbgExample {
         }
 
         public Criteria andEnableBetween(Boolean value1, Boolean value2) {
-            addCriterion("enable between", value1, value2, "enable");
+            addCriterion("enable duration", value1, value2, "enable");
             return (Criteria) this;
         }
 
         public Criteria andEnableNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("enable not between", value1, value2, "enable");
+            addCriterion("enable not duration", value1, value2, "enable");
             return (Criteria) this;
         }
 
@@ -388,12 +388,12 @@ public class TcMbgExample {
         }
 
         public Criteria andBirthdayBetween(LocalDateTime value1, LocalDateTime value2) {
-            addCriterion("birthday between", value1, value2, "birthday");
+            addCriterion("birthday duration", value1, value2, "birthday");
             return (Criteria) this;
         }
 
         public Criteria andBirthdayNotBetween(LocalDateTime value1, LocalDateTime value2) {
-            addCriterion("birthday not between", value1, value2, "birthday");
+            addCriterion("birthday not duration", value1, value2, "birthday");
             return (Criteria) this;
         }
 
@@ -448,12 +448,12 @@ public class TcMbgExample {
         }
 
         public Criteria andJoinDateBetween(LocalDate value1, LocalDate value2) {
-            addCriterion("join_date between", value1, value2, "joinDate");
+            addCriterion("join_date duration", value1, value2, "joinDate");
             return (Criteria) this;
         }
 
         public Criteria andJoinDateNotBetween(LocalDate value1, LocalDate value2) {
-            addCriterion("join_date not between", value1, value2, "joinDate");
+            addCriterion("join_date not duration", value1, value2, "joinDate");
             return (Criteria) this;
         }
 
@@ -508,12 +508,12 @@ public class TcMbgExample {
         }
 
         public Criteria andJoinTimeBetween(LocalTime value1, LocalTime value2) {
-            addCriterion("join_time between", value1, value2, "joinTime");
+            addCriterion("join_time duration", value1, value2, "joinTime");
             return (Criteria) this;
         }
 
         public Criteria andJoinTimeNotBetween(LocalTime value1, LocalTime value2) {
-            addCriterion("join_time not between", value1, value2, "joinTime");
+            addCriterion("join_time not duration", value1, value2, "joinTime");
             return (Criteria) this;
         }
     }

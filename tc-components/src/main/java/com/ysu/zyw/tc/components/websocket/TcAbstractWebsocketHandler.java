@@ -22,8 +22,6 @@ public class TcAbstractWebsocketHandler extends TextWebSocketHandler {
             session.close();
             return;
         }
-
-        
     }
 
     @Override

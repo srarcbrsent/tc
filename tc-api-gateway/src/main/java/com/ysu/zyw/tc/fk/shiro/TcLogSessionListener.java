@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.security.shiro;
+package com.ysu.zyw.tc.fk.shiro;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.Session;

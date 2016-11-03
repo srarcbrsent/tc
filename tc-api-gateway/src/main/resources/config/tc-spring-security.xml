@@ -4,22 +4,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="shiroCache" class="com.ysu.zyw.tc.components.security.shiro.TcShiroCacheManager.TcShiroCache">
-        <constructor-arg>
-            <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
-                <property name="name" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).CODIS_CACHE}"/>
-                <property name="codisTemplate" ref="objectKeyCodisTemplate"/>
-                <property name="expiration" value="${properties.security.shiro.session.cache.expiration.millis}"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
-    <bean id="shiroCacheManager" class="com.ysu.zyw.tc.components.security.shiro.TcShiroCacheManager">
+    <bean id="shiroCacheManager" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager">
         <property name="shiroCacheContainer">
             <map>
                 <entry key="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).SHIRO_AUTHENTICATION_CACHE}"
                        value-ref="shiroCache"/>
                 <entry key="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).SHIRO_AUTHORIZATION_CACHE}"
+                       value-ref="shiroCache"/>
+                <entry key="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).SHIRO_ACTIVE_SESSION_CACHE}"
                        value-ref="shiroCache"/>
             </map>
         </property>
@@ -31,9 +23,9 @@
         <!-- no necessary to validate session, because codis not support values operation -->
         <property name="sessionValidationSchedulerEnabled" value="false"/>
         <property name="sessionDAO">
-            <bean class="com.ysu.zyw.tc.components.security.shiro.TcSessionDao">
+            <bean class="com.ysu.zyw.tc.fk.shiro.TcSessionDao">
                 <property name="sessionIdGenerator">
-                    <bean class="com.ysu.zyw.tc.components.security.shiro.TcClusterSessionIdGenerator"/>
+                    <bean class="com.ysu.zyw.tc.fk.shiro.TcClusterSessionIdGenerator"/>
                 </property>
             </bean>
         </property>
@@ -48,13 +40,13 @@
         </property>
         <property name="sessionListeners">
             <list>
-                <bean id="sessionLogger" class="com.ysu.zyw.tc.components.security.shiro.TcLogSessionListener"/>
+                <bean id="sessionLogger" class="com.ysu.zyw.tc.fk.shiro.TcLogSessionListener"/>
             </list>
         </property>
     </bean>
 
     <bean id="md5Sha256CredentialsMatcher"
-          class="com.ysu.zyw.tc.components.security.shiro.TcMd5Sha256CredentialsMatcher"/>
+          class="com.ysu.zyw.tc.fk.shiro.TcMd5Sha256CredentialsMatcher"/>
 
     <bean id="abstractAuthorizingRealm" abstract="true" class="org.apache.shiro.realm.AuthorizingRealm">
         <property name="credentialsMatcher" ref="md5Sha256CredentialsMatcher"/>
@@ -70,7 +62,7 @@
 
     <bean id="authorizingRealm"
           parent="abstractAuthorizingRealm"
-          class="com.ysu.zyw.tc.svc.components.security.shiro.TcAuthorizingRealm"/>
+          class="com.ysu.zyw.tc.fk.shiro.TcAuthorizingRealm"/>
 
     <bean id="shiroRealms"
           class="org.springframework.beans.factory.config.ListFactoryBean">
@@ -86,7 +78,7 @@
         <property name="authenticator">
             <bean class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
                 <property name="authenticationListeners">
-                    <bean class="com.ysu.zyw.tc.components.security.shiro.TcLogAuthenticationListener"/>
+                    <bean class="com.ysu.zyw.tc.fk.shiro.TcLogAuthenticationListener"/>
                 </property>
                 <property name="authenticationStrategy">
                     <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"/>
@@ -112,7 +104,7 @@
         </property>
     </bean>
 
-    <bean id="shiroFilter" class="com.ysu.zyw.tc.components.security.shiro.TcShiroFilterFactoryBean">
+    <bean id="shiroFilter" class="com.ysu.zyw.tc.fk.shiro.TcShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="${properties.security.shiro.login.url}"/>
         <property name="unauthorizedUrl" value="${properties.security.shiro.unauthorized.url}"/>
@@ -139,5 +131,24 @@
 
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
+    <beans profile="dev">
+        <bean id="shiroCache" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager.TcShiroCache">
+            <constructor-arg>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"/>
+            </constructor-arg>
+        </bean>
+    </beans>
+
+    <beans profile="pdu">
+        <bean id="shiroCache" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager.TcShiroCache">
+            <constructor-arg>
+                <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
+                    <property name="name" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).CODIS_CACHE}"/>
+                    <property name="codisTemplate" ref="objectKeyCodisTemplate"/>
+                    <property name="expiration" value="${properties.security.shiro.session.cache.expiration.millis}"/>
+                </bean>
+            </constructor-arg>
+        </bean>
+    </beans>
 
 </beans>

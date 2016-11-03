@@ -222,12 +222,12 @@ public class TcItemExample {
         }
 
         public Criteria andIdBetween(String value1, String value2) {
-            addCriterion("id between", value1, value2, "id");
+            addCriterion("id duration", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(String value1, String value2) {
-            addCriterion("id not between", value1, value2, "id");
+            addCriterion("id not duration", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -292,12 +292,12 @@ public class TcItemExample {
         }
 
         public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("name between", value1, value2, "name");
+            addCriterion("name duration", value1, value2, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("name not between", value1, value2, "name");
+            addCriterion("name not duration", value1, value2, "name");
             return (Criteria) this;
         }
 
@@ -352,12 +352,12 @@ public class TcItemExample {
         }
 
         public Criteria andPriceBetween(Integer value1, Integer value2) {
-            addCriterion("price between", value1, value2, "price");
+            addCriterion("price duration", value1, value2, "price");
             return (Criteria) this;
         }
 
         public Criteria andPriceNotBetween(Integer value1, Integer value2) {
-            addCriterion("price not between", value1, value2, "price");
+            addCriterion("price not duration", value1, value2, "price");
             return (Criteria) this;
         }
 
@@ -412,12 +412,12 @@ public class TcItemExample {
         }
 
         public Criteria andStockBetween(Integer value1, Integer value2) {
-            addCriterion("stock between", value1, value2, "stock");
+            addCriterion("stock duration", value1, value2, "stock");
             return (Criteria) this;
         }
 
         public Criteria andStockNotBetween(Integer value1, Integer value2) {
-            addCriterion("stock not between", value1, value2, "stock");
+            addCriterion("stock not duration", value1, value2, "stock");
             return (Criteria) this;
         }
 
@@ -482,12 +482,12 @@ public class TcItemExample {
         }
 
         public Criteria andSellerIdBetween(String value1, String value2) {
-            addCriterion("seller_id between", value1, value2, "sellerId");
+            addCriterion("seller_id duration", value1, value2, "sellerId");
             return (Criteria) this;
         }
 
         public Criteria andSellerIdNotBetween(String value1, String value2) {
-            addCriterion("seller_id not between", value1, value2, "sellerId");
+            addCriterion("seller_id not duration", value1, value2, "sellerId");
             return (Criteria) this;
         }
 
@@ -552,12 +552,12 @@ public class TcItemExample {
         }
 
         public Criteria andStateBetween(TcItemState value1, TcItemState value2) {
-            addStateCriterion("state between", value1, value2, "state");
+            addStateCriterion("state duration", value1, value2, "state");
             return (Criteria) this;
         }
 
         public Criteria andStateNotBetween(TcItemState value1, TcItemState value2) {
-            addStateCriterion("state not between", value1, value2, "state");
+            addStateCriterion("state not duration", value1, value2, "state");
             return (Criteria) this;
         }
 
@@ -622,12 +622,12 @@ public class TcItemExample {
         }
 
         public Criteria andClassifyIdBetween(String value1, String value2) {
-            addCriterion("classify_id between", value1, value2, "classifyId");
+            addCriterion("classify_id duration", value1, value2, "classifyId");
             return (Criteria) this;
         }
 
         public Criteria andClassifyIdNotBetween(String value1, String value2) {
-            addCriterion("classify_id not between", value1, value2, "classifyId");
+            addCriterion("classify_id not duration", value1, value2, "classifyId");
             return (Criteria) this;
         }
 
@@ -692,12 +692,12 @@ public class TcItemExample {
         }
 
         public Criteria andUpdatedPersonBetween(String value1, String value2) {
-            addCriterion("updated_person between", value1, value2, "updatedPerson");
+            addCriterion("updated_person duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedPersonNotBetween(String value1, String value2) {
-            addCriterion("updated_person not between", value1, value2, "updatedPerson");
+            addCriterion("updated_person not duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
@@ -752,12 +752,12 @@ public class TcItemExample {
         }
 
         public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp not duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
@@ -822,12 +822,12 @@ public class TcItemExample {
         }
 
         public Criteria andCreatedPersonBetween(String value1, String value2) {
-            addCriterion("created_person between", value1, value2, "createdPerson");
+            addCriterion("created_person duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
         public Criteria andCreatedPersonNotBetween(String value1, String value2) {
-            addCriterion("created_person not between", value1, value2, "createdPerson");
+            addCriterion("created_person not duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
@@ -882,12 +882,12 @@ public class TcItemExample {
         }
 
         public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp not duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
     }

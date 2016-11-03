@@ -186,12 +186,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andIdBetween(String value1, String value2) {
-            addCriterion("id between", value1, value2, "id");
+            addCriterion("id duration", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(String value1, String value2) {
-            addCriterion("id not between", value1, value2, "id");
+            addCriterion("id not duration", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -256,12 +256,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andSupWeixinBetween(Boolean value1, Boolean value2) {
-            addCriterion("sup_weixin between", value1, value2, "supWeixin");
+            addCriterion("sup_weixin duration", value1, value2, "supWeixin");
             return (Criteria) this;
         }
 
         public Criteria andSupWeixinNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("sup_weixin not between", value1, value2, "supWeixin");
+            addCriterion("sup_weixin not duration", value1, value2, "supWeixin");
             return (Criteria) this;
         }
 
@@ -326,12 +326,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andSupZhifubaoBetween(Boolean value1, Boolean value2) {
-            addCriterion("sup_zhifubao between", value1, value2, "supZhifubao");
+            addCriterion("sup_zhifubao duration", value1, value2, "supZhifubao");
             return (Criteria) this;
         }
 
         public Criteria andSupZhifubaoNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("sup_zhifubao not between", value1, value2, "supZhifubao");
+            addCriterion("sup_zhifubao not duration", value1, value2, "supZhifubao");
             return (Criteria) this;
         }
 
@@ -396,12 +396,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andSupCodBetween(Boolean value1, Boolean value2) {
-            addCriterion("sup_cod between", value1, value2, "supCod");
+            addCriterion("sup_cod duration", value1, value2, "supCod");
             return (Criteria) this;
         }
 
         public Criteria andSupCodNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("sup_cod not between", value1, value2, "supCod");
+            addCriterion("sup_cod not duration", value1, value2, "supCod");
             return (Criteria) this;
         }
 
@@ -466,12 +466,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andWeixinAccountBetween(String value1, String value2) {
-            addCriterion("weixin_account between", value1, value2, "weixinAccount");
+            addCriterion("weixin_account duration", value1, value2, "weixinAccount");
             return (Criteria) this;
         }
 
         public Criteria andWeixinAccountNotBetween(String value1, String value2) {
-            addCriterion("weixin_account not between", value1, value2, "weixinAccount");
+            addCriterion("weixin_account not duration", value1, value2, "weixinAccount");
             return (Criteria) this;
         }
 
@@ -536,12 +536,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andZhifubaoAccountBetween(String value1, String value2) {
-            addCriterion("zhifubao_account between", value1, value2, "zhifubaoAccount");
+            addCriterion("zhifubao_account duration", value1, value2, "zhifubaoAccount");
             return (Criteria) this;
         }
 
         public Criteria andZhifubaoAccountNotBetween(String value1, String value2) {
-            addCriterion("zhifubao_account not between", value1, value2, "zhifubaoAccount");
+            addCriterion("zhifubao_account not duration", value1, value2, "zhifubaoAccount");
             return (Criteria) this;
         }
 
@@ -606,12 +606,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andUpdatedPersonBetween(String value1, String value2) {
-            addCriterion("updated_person between", value1, value2, "updatedPerson");
+            addCriterion("updated_person duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedPersonNotBetween(String value1, String value2) {
-            addCriterion("updated_person not between", value1, value2, "updatedPerson");
+            addCriterion("updated_person not duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
@@ -666,12 +666,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp not duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
@@ -736,12 +736,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andCreatedPersonBetween(String value1, String value2) {
-            addCriterion("created_person between", value1, value2, "createdPerson");
+            addCriterion("created_person duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
         public Criteria andCreatedPersonNotBetween(String value1, String value2) {
-            addCriterion("created_person not between", value1, value2, "createdPerson");
+            addCriterion("created_person not duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
@@ -796,12 +796,12 @@ public class TcAccountPaymentExample {
         }
 
         public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp not duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
     }

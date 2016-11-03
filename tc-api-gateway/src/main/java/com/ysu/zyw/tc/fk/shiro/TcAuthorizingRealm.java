@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.svc.components.security.shiro;
+package com.ysu.zyw.tc.fk.shiro;
 
 import com.ysu.zyw.tc.components.httpx.TcHttpxService;
 import com.ysu.zyw.tc.model.api.accounts.TmAccount;

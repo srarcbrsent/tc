@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
     <websocket:handlers>
-        <websocket:mapping path="/myHandler" handler="myHandler"/>
+        <websocket:mapping path="/demo.ws" handler="myHandler"/>
         <websocket:handshake-interceptors>
             <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
         </websocket:handshake-interceptors>

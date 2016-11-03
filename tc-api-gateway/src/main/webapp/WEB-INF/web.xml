@@ -12,6 +12,12 @@
         <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
 
+    <!-- spring active profile -->
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>dev</param-value>
+    </context-param>
+
     <!-- shiro filter -->
     <filter>
         <filter-name>shiroFilter</filter-name>
@@ -28,24 +34,14 @@
         <url-pattern>*.json</url-pattern>
     </filter-mapping>
 
-    <!-- character encoding filter -->
-    <filter>
-        <filter-name>characterEncodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <async-supported>true</async-supported>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-        <init-param>
-            <param-name>forceEncoding</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
 
     <filter-mapping>
-        <filter-name>characterEncodingFilter</filter-name>
-        <url-pattern>*.json</url-pattern>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>*.ws</url-pattern>
     </filter-mapping>
 
     <!-- etag filter -->

@@ -33,7 +33,7 @@ public class TcDateUtils {
         return DateFormatUtils.format(date, format);
     }
 
-    public static long between(Date d1, Date d2) {
+    public static long duration(Date d1, Date d2) {
         checkNotNull(d1);
         checkNotNull(d2);
         return d2.getTime() - d1.getTime();

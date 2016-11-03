@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.security.shiro;
+package com.ysu.zyw.tc.fk.shiro;
 
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.lang.RandomStringUtils;

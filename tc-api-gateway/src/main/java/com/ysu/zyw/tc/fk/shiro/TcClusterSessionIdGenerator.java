@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.security.shiro;
+package com.ysu.zyw.tc.fk.shiro;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
@@ -17,7 +17,7 @@ public class TcClusterSessionIdGenerator implements SessionIdGenerator {
         String id = UUID.randomUUID().toString() +
                 DigestUtils.md5DigestAsHex(session.getHost().getBytes()) +
                 DigestUtils.md5DigestAsHex(String.valueOf(session.getStartTimestamp().getTime()).getBytes()) +
-                RandomStringUtils.random(16);
+                RandomStringUtils.randomAscii(16);
         if (log.isDebugEnabled()) {
             log.debug("tc cluster session id generator generate session id [{}]", id);
         }

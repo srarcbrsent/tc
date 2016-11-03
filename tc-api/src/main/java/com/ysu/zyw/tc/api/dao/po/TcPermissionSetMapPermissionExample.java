@@ -186,12 +186,12 @@ public class TcPermissionSetMapPermissionExample {
         }
 
         public Criteria andIdBetween(String value1, String value2) {
-            addCriterion("id between", value1, value2, "id");
+            addCriterion("id duration", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(String value1, String value2) {
-            addCriterion("id not between", value1, value2, "id");
+            addCriterion("id not duration", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -256,12 +256,12 @@ public class TcPermissionSetMapPermissionExample {
         }
 
         public Criteria andPermissionSetIdBetween(String value1, String value2) {
-            addCriterion("permission_set_id between", value1, value2, "permissionSetId");
+            addCriterion("permission_set_id duration", value1, value2, "permissionSetId");
             return (Criteria) this;
         }
 
         public Criteria andPermissionSetIdNotBetween(String value1, String value2) {
-            addCriterion("permission_set_id not between", value1, value2, "permissionSetId");
+            addCriterion("permission_set_id not duration", value1, value2, "permissionSetId");
             return (Criteria) this;
         }
 
@@ -326,12 +326,12 @@ public class TcPermissionSetMapPermissionExample {
         }
 
         public Criteria andPermissionIdBetween(String value1, String value2) {
-            addCriterion("permission_id between", value1, value2, "permissionId");
+            addCriterion("permission_id duration", value1, value2, "permissionId");
             return (Criteria) this;
         }
 
         public Criteria andPermissionIdNotBetween(String value1, String value2) {
-            addCriterion("permission_id not between", value1, value2, "permissionId");
+            addCriterion("permission_id not duration", value1, value2, "permissionId");
             return (Criteria) this;
         }
 
@@ -386,12 +386,12 @@ public class TcPermissionSetMapPermissionExample {
         }
 
         public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp not duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
@@ -456,12 +456,12 @@ public class TcPermissionSetMapPermissionExample {
         }
 
         public Criteria andCreatedPersonBetween(String value1, String value2) {
-            addCriterion("created_person between", value1, value2, "createdPerson");
+            addCriterion("created_person duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
         public Criteria andCreatedPersonNotBetween(String value1, String value2) {
-            addCriterion("created_person not between", value1, value2, "createdPerson");
+            addCriterion("created_person not duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
@@ -526,12 +526,12 @@ public class TcPermissionSetMapPermissionExample {
         }
 
         public Criteria andUpdatedTimestampBetween(String value1, String value2) {
-            addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedTimestampNotBetween(String value1, String value2) {
-            addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp not duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
@@ -596,12 +596,12 @@ public class TcPermissionSetMapPermissionExample {
         }
 
         public Criteria andUpdatedPersonBetween(String value1, String value2) {
-            addCriterion("updated_person between", value1, value2, "updatedPerson");
+            addCriterion("updated_person duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedPersonNotBetween(String value1, String value2) {
-            addCriterion("updated_person not between", value1, value2, "updatedPerson");
+            addCriterion("updated_person not duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
     }

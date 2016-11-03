@@ -199,7 +199,7 @@ public class TcHttpxService {
         if (log.isInfoEnabled()) {
             log.info("call api [{}:{}] finish, response code [{}], has body [{}], take time [{}s]",
                     httpMethod, url, Objects.nonNull(responseEntity.getBody()), httpEntity,
-                    TcDateUtils.between(now, new Date()));
+                    TcDateUtils.duration(now, new Date()));
         }
 
         return responseEntity;

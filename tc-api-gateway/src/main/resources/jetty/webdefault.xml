@@ -210,7 +210,7 @@
     <!--                                                                      -->
     <!--   checkInterval       If development is false and reloading is true, -->
     <!--                       background compiles are enabled. checkInterval -->
-    <!--                       is the time in seconds between checks to see   -->
+    <!--                       is the time in seconds duration checks to see   -->
     <!--                       if a JSP page needs to be recompiled. [300]    -->
     <!--                                                                      -->
     <!--   compiler            Which compiler Ant should use to compile JSP   -->

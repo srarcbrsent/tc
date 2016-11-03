@@ -186,12 +186,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andIdBetween(String value1, String value2) {
-            addCriterion("id between", value1, value2, "id");
+            addCriterion("id duration", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(String value1, String value2) {
-            addCriterion("id not between", value1, value2, "id");
+            addCriterion("id not duration", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -256,12 +256,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("name between", value1, value2, "name");
+            addCriterion("name duration", value1, value2, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("name not between", value1, value2, "name");
+            addCriterion("name not duration", value1, value2, "name");
             return (Criteria) this;
         }
 
@@ -326,12 +326,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andParentIdBetween(String value1, String value2) {
-            addCriterion("parent_id between", value1, value2, "parentId");
+            addCriterion("parent_id duration", value1, value2, "parentId");
             return (Criteria) this;
         }
 
         public Criteria andParentIdNotBetween(String value1, String value2) {
-            addCriterion("parent_id not between", value1, value2, "parentId");
+            addCriterion("parent_id not duration", value1, value2, "parentId");
             return (Criteria) this;
         }
 
@@ -396,12 +396,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andHierarchyBetween(String value1, String value2) {
-            addCriterion("hierarchy between", value1, value2, "hierarchy");
+            addCriterion("hierarchy duration", value1, value2, "hierarchy");
             return (Criteria) this;
         }
 
         public Criteria andHierarchyNotBetween(String value1, String value2) {
-            addCriterion("hierarchy not between", value1, value2, "hierarchy");
+            addCriterion("hierarchy not duration", value1, value2, "hierarchy");
             return (Criteria) this;
         }
 
@@ -456,12 +456,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andLevelBetween(Integer value1, Integer value2) {
-            addCriterion("level between", value1, value2, "level");
+            addCriterion("level duration", value1, value2, "level");
             return (Criteria) this;
         }
 
         public Criteria andLevelNotBetween(Integer value1, Integer value2) {
-            addCriterion("level not between", value1, value2, "level");
+            addCriterion("level not duration", value1, value2, "level");
             return (Criteria) this;
         }
 
@@ -526,12 +526,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andUpdatedPersonBetween(String value1, String value2) {
-            addCriterion("updated_person between", value1, value2, "updatedPerson");
+            addCriterion("updated_person duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedPersonNotBetween(String value1, String value2) {
-            addCriterion("updated_person not between", value1, value2, "updatedPerson");
+            addCriterion("updated_person not duration", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
@@ -586,12 +586,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
+            addCriterion("updated_timestamp not duration", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
@@ -656,12 +656,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andCreatedPersonBetween(String value1, String value2) {
-            addCriterion("created_person between", value1, value2, "createdPerson");
+            addCriterion("created_person duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
         public Criteria andCreatedPersonNotBetween(String value1, String value2) {
-            addCriterion("created_person not between", value1, value2, "createdPerson");
+            addCriterion("created_person not duration", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
@@ -716,12 +716,12 @@ public class TcItemClassifyExample {
         }
 
         public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp not duration", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
     }
