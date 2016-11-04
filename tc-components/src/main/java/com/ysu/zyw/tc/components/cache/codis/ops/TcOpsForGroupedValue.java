@@ -18,11 +18,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * @author yaowu.zhang
- * @warn this group api is highly depends on the time in distribution system jvm.
+ * @warn this group apiimpl is highly depends on the time in distribution system jvm.
  * because the ops for value use the relative time as timeout, but the zset use the
  * absolute time to count the relation of values, so if the time in the cluster is
- * scattered, then the zset score will not match the real timeout, and the api
- * keys will be not perfect match, but the other api is use the relative time so
+ * scattered, then the zset score will not match the real timeout, and the apiimpl
+ * keys will be not perfect match, but the other apiimpl is use the relative time so
  * do not influenced.
  */
 @Slf4j
@@ -69,8 +69,8 @@ public class TcOpsForGroupedValue extends TcAbstractOpsForGroup {
                                           @Nonnull String key,
                                           @Nonnull Callable<T> valueLoader,
                                           long timeout) {
-        // special, other api if the cache service itself is offline, they may throw an exception(such
-        // as JodisPool is empty), but this api is different, because this api means load by cache, if
+        // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
+        // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
         // also the cache service itself is offline. so it will catch the other exception.
         checkNotNull(group, "empty group is not allowed");

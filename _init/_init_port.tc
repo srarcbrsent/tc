@@ -1,0 +1,12 @@
+- tc
+    - zookeeper: 2181
+    - mysql: 3306
+    - metaq: 8120
+    - mongodb: 27017
+    - codis
+        - codis-server: 7963
+        - codis-proxy: 11080 19000
+        - codis-dashboard: 18080
+        - codis-fe: 18090
+    - dubbo-admin: 12005 12080 12009
+    - dubbo-monitor: 7070 13080

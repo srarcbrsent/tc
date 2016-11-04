@@ -42,7 +42,7 @@ public class MetaqTest {
 
     public static final String TOPIC_LOG = "topic-log";
 
-    public static final String TOPIC_API_CALL = "topic-api-call";
+    public static final String TOPIC_API_CALL = "topic-apiimpl-call";
 
     public static final String GROUP_REAL_TIME_COMPUTATION = "group-real-time-computation";
 
@@ -76,7 +76,7 @@ public class MetaqTest {
             });
         });
 
-        // publish api call message
+        // publish apiimpl call message
         IntStream.range(0, lo).forEach(i -> {
             executorService.execute(() -> {
                 IntStream.range(0, loop).forEach(j -> {
@@ -84,7 +84,7 @@ public class MetaqTest {
                         metaqTemplate.send(MessageBuilder
                                 .withTopic(TOPIC_API_CALL)
                                 .withAttribute(TcIdWorker.upperCaseUuid())
-                                .withBody(new TcApiCallMessage("api")));
+                                .withBody(new TcApiCallMessage("apiimpl")));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <contextName>tc-api</contextName>
+
+    <property name="properties.logback.appender.log.store.base" value="${ppom.path.log.absolute.path}"/>
+
+    <property name="properties.logback.appender.log.project.base" value="/tc-api"/>
+
+    <property name="logback.appender.layout.pattern"
+              value="[%level] [%date] [%cn] [%t] [%file:%line] %logger{0} - %msg%n"/>
+
+    <property name="properties.logback.log.level" value="INFO"/>
+
+    <!-- console appender -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${logback.appender.layout.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- file appender -->
+    <appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${properties.logback.appender.log.store.base}${properties.logback.appender.log.project.base}/debug.log
+        </file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${properties.logback.appender.log.store.base}/file${properties.logback.appender.log.project.base}/debug-%d.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logback.appender.layout.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${properties.logback.appender.log.store.base}${properties.logback.appender.log.project.base}/info.log
+        </file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${properties.logback.appender.log.store.base}/file${properties.logback.appender.log.project.base}/info-%d.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logback.appender.layout.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="warnAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${properties.logback.appender.log.store.base}${properties.logback.appender.log.project.base}/warn.log
+        </file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${properties.logback.appender.log.store.base}/file${properties.logback.appender.log.project.base}/warn-%d.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logback.appender.layout.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${properties.logback.appender.log.store.base}${properties.logback.appender.log.project.base}/error.log
+        </file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${properties.logback.appender.log.store.base}/file${properties.logback.appender.log.project.base}/error-%d.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${logback.appender.layout.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <root level="${properties.logback.log.level}">
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="debugAppender"/>
+        <appender-ref ref="infoAppender"/>
+        <appender-ref ref="warnAppender"/>
+        <appender-ref ref="errorAppender"/>
+    </root>
+
+</configuration>

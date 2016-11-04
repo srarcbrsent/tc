@@ -184,7 +184,7 @@ public class TcHttpxService {
                                             ParameterizedTypeReference<T> typeReference,
                                             Map<String, String> uriVariables) {
         if (log.isInfoEnabled()) {
-            log.info("start call api [{}:{}], url vars [{}], request body [{}]",
+            log.info("start call apiimpl [{}:{}], url vars [{}], request body [{}]",
                     httpMethod, url, uriVariables, httpEntity);
         }
 
@@ -197,7 +197,7 @@ public class TcHttpxService {
                 restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
 
         if (log.isInfoEnabled()) {
-            log.info("call api [{}:{}] finish, response code [{}], has body [{}], take time [{}s]",
+            log.info("call apiimpl [{}:{}] finish, response code [{}], has body [{}], take time [{}s]",
                     httpMethod, url, Objects.nonNull(responseEntity.getBody()), httpEntity,
                     TcDateUtils.duration(now, new Date()));
         }

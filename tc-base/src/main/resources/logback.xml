@@ -3,7 +3,7 @@
 
     <contextName>tc-base</contextName>
 
-    <property name="properties.logback.appender.log.store.base" value="/home/zhangyaowu/local/logs"/>
+    <property name="properties.logback.appender.log.store.base" value="${ppom.path.log.absolute.path}"/>
 
     <property name="properties.logback.appender.log.project.base" value="/tc-base"/>
 

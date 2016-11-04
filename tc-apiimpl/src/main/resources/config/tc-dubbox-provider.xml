@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="tc-apiimpl" owner="yaowu.zhang"/>
+
+    <dubbo:registry address="${properties.rpc.dubbox.registry.host}"
+                    port="${properties.rpc.dubbox.registry.port}"/>
+
+    <dubbo:protocol name="dubbo"
+                    port="${properties.rpc.dubbox.protocol.dubbo.port}"/>
+
+    <dubbo:protocol name="rest"
+                    server="servlet"
+                    port="${properties.rpc.dubbox.protocol.rest.port}"/>
+
+    <dubbo:provider version="${properties.rpc.dubbox.provider.version}"
+                    timeout="${properties.rpc.dubbox.provider.timeout}"
+                    retries="${properties.rpc.dubbox.provider.retries}"
+                    protocol="rest"/>
+
+    <dubbo:monitor protocol="registry"/>
+
+    <dubbo:service interface="com.ysu.zyw.tc.api.TcAccountsApi" ref="tcAccountsApi"/>
+
+    <bean id="tcAccountsApi" class="com.ysu.zyw.tc.api.impl.accounts.TcAccountsApiImpl"/>
+
+</beans>

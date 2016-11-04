@@ -55,8 +55,8 @@ public class TcCodisService {
 
     @SuppressWarnings("unchecked")
     public <T> T get(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout) {
-        // special, other api if the cache service itself is offline, they may throw an exception(such
-        // as JodisPool is empty), but this api is different, because this api means load by cache, if
+        // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
+        // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
         // also the cache service itself is offline. so it will catch the other exception.
         checkNotNull(key, "null key is not allowed");

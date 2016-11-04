@@ -31,13 +31,13 @@ public class TcHessianSerializationMessageBodyConverter<T> implements MessageBod
         }
     }
 
+    @SuppressWarnings("unchecked")
     @SneakyThrows
     @Override
     public T fromByteArray(byte[] bytes) throws MetaClientException {
         checkNotNull(bytes);
         try (ByteArrayInputStream is = new ByteArrayInputStream(bytes)) {
             Hessian2Input hi = new Hessian2Input(is);
-            //noinspection unchecked
             return (T) hi.readObject();
         }
     }
