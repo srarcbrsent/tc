@@ -32,6 +32,7 @@ public class TcCodisCache implements Cache {
     @Setter
     private long expiration = -1;
 
+    // serializable key serializable value.
     @Getter
     @Setter
     private RedisTemplate<Serializable, Serializable> codisTemplate;

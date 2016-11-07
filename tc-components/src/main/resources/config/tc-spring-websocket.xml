@@ -7,13 +7,13 @@
        http://www.springframework.org/schema/websocket
        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
-    <websocket:handlers>
+    <websocket:handlers allowed-origins="http://www.tc.com">
         <websocket:mapping path="/demo.ws" handler="myHandler"/>
         <websocket:handshake-interceptors>
             <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
         </websocket:handshake-interceptors>
     </websocket:handlers>
 
-    <bean id="myHandler" class="com.ysu.zyw.tc.components.websocket.TcAbstractWebsocketHandler"/>
+    <bean id="myHandler" class="com.ysu.zyw.tc.components.websocket.TcAbstractWebSocketHandler"/>
 
 </beans>

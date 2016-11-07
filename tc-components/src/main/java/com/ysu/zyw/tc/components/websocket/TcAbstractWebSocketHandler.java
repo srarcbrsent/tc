@@ -10,28 +10,16 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 import java.util.Objects;
 
 @Slf4j
-public class TcAbstractWebsocketHandler extends TextWebSocketHandler {
+public class TcAbstractWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String httpSessionId =
-                (String) session.getAttributes().get(HttpSessionHandshakeInterceptor.HTTP_SESSION_ID_ATTR_NAME);
-        if (Objects.isNull(httpSessionId)) {
-            log.info("after connection established, websocket session with id [{}] do not bind to http session",
-                    session.getId());
-            session.close();
-            return;
-        }
+        session.getPrincipal();
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
-    }
-
-    @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        super.handleTransportError(session, exception);
     }
 
     @Override

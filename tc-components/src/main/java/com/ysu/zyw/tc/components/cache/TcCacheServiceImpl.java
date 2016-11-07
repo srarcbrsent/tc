@@ -1,6 +1,5 @@
-package com.ysu.zyw.tc.components.cache.codis;
+package com.ysu.zyw.tc.components.cache;
 
-import com.ysu.zyw.tc.components.cache.codis.ops.TcOpsForGroupedValue;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -19,40 +17,44 @@ import java.util.concurrent.TimeUnit;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * TcCodisService provide codis upper-level operations
+ * TcCacheServiceImpl provide codis upper-level operations
  *
  * @author yaowu.zhang
  */
 @Slf4j
-public class TcCodisService {
+public class TcCacheServiceImpl implements TcCacheService {
 
     @Getter
     @Setter
-    private RedisTemplate<String, Serializable> codisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
-    @Resource
+    @Getter
+    @Setter
     private TcOpsForGroupedValue tcOpsForGroupedValue;
 
+    @Override
     public void set(@Nonnull String key, @Nonnull Serializable value, long timeout) {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(value, "null value is not allowed");
-        codisTemplate.opsForValue().set(key, value, timeout, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.MILLISECONDS);
         if (log.isDebugEnabled()) {
             log.debug("cache set key [{}], value [{}], timeout [{}]", key, value, timeout);
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T get(@Nonnull String key, @Nonnull Class<T> clazz) {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(clazz, "null clazz is not allowed");
-        Serializable sValue = codisTemplate.opsForValue().get(key);
+        Object sValue = redisTemplate.opsForValue().get(key);
         if (log.isDebugEnabled()) {
             log.debug("cache get key [{}], value [{}], clazz [{}]", key, sValue, clazz);
         }
         return (T) sValue;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T get(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
@@ -63,7 +65,7 @@ public class TcCodisService {
         checkNotNull(valueLoader, "null value loader is not allowed");
         T value;
         try {
-            value = (T) codisTemplate.opsForValue().get(key);
+            value = (T) redisTemplate.opsForValue().get(key);
         } catch (Exception e) {
             log.error("", e);
             return loadValue(key, valueLoader, timeout);
@@ -80,7 +82,7 @@ public class TcCodisService {
                 // lock and get
                 T sValue = null;
                 try {
-                    sValue = (T) codisTemplate.opsForValue().get(key);
+                    sValue = (T) redisTemplate.opsForValue().get(key);
                 } catch (Exception e) {
                     log.error("", e);
                 }
@@ -105,7 +107,7 @@ public class TcCodisService {
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
         try {
-            codisTemplate.opsForValue().set(key, (Serializable) loadedValue, timeout, TimeUnit.MILLISECONDS);
+            redisTemplate.opsForValue().set(key, (Serializable) loadedValue, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             // if cache failed, let the load value succ.
             log.error("", e);
@@ -116,30 +118,35 @@ public class TcCodisService {
         return loadedValue;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public boolean exists(@Nonnull String key) {
         checkNotNull(key, "empty key is not allowed");
-        return codisTemplate.execute((RedisCallback<Boolean>) connection -> connection
-                .exists(((RedisSerializer<String>) codisTemplate.getKeySerializer()).serialize(key)));
+        return redisTemplate.execute((RedisCallback<Boolean>) connection -> connection
+                .exists(((RedisSerializer<String>) redisTemplate.getKeySerializer()).serialize(key)));
     }
 
+    @Override
     public void expire(@Nonnull String key, long timeout) {
         checkNotNull(key, "empty key is not allowed");
-        codisTemplate.expire(key, timeout, TimeUnit.MILLISECONDS);
+        redisTemplate.expire(key, timeout, TimeUnit.MILLISECONDS);
     }
 
+    @Override
     public void delete(@Nonnull String key) {
         checkNotNull(key, "empty key is not allowed");
-        codisTemplate.delete(key);
+        redisTemplate.delete(key);
         if (log.isDebugEnabled()) {
             log.debug("cache delete key [{}]", key);
         }
     }
 
-    public String buildHashtagedKey(@Nonnull String hashtag, @Nonnull String key) {
+    @Override
+    public String buildHashtag(@Nonnull String hashtag, @Nonnull String key) {
         return "{" + hashtag + "}" + key;
     }
 
+    @Override
     public TcOpsForGroupedValue opsForGroupedValue() {
         return tcOpsForGroupedValue;
     }

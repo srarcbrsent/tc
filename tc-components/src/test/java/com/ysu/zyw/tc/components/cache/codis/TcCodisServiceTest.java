@@ -2,6 +2,7 @@ package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.components.cache.TcCacheService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.math.RandomUtils;
@@ -32,8 +33,8 @@ import java.util.stream.IntStream;
 @Slf4j
 public class TcCodisServiceTest {
 
-    @Resource
-    private TcCodisService tcCodisService;
+    @Resource(name = "ssCodisService")
+    private TcCacheService tcCacheService;
 
     private long invoke(Supplier<?> supplier) {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -62,8 +63,8 @@ public class TcCodisServiceTest {
             IntStream.range(0, 30 * loop).parallel().forEach(i -> {
                 String uuid = TcIdWorker.upperCaseUuid();
                 String value = TcIdWorker.upperCaseUuid();
-                tcCodisService.set(uuid, value, duration);
-                String sValue = tcCodisService.get(uuid, String.class);
+                tcCacheService.set(uuid, value, duration);
+                String sValue = tcCacheService.get(uuid, String.class);
                 Assert.assertEquals(value, sValue);
             });
             return null;
@@ -75,8 +76,8 @@ public class TcCodisServiceTest {
                 String uuid = TcIdWorker.upperCaseUuid();
                 Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
                         Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
-                tcCodisService.set(uuid, value, duration);
-                Mongo sValue = tcCodisService.get(uuid, Mongo.class);
+                tcCacheService.set(uuid, value, duration);
+                Mongo sValue = tcCacheService.get(uuid, Mongo.class);
                 Assert.assertEquals(value, sValue);
             });
             return null;
@@ -92,9 +93,9 @@ public class TcCodisServiceTest {
                             Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
                     mongoList.add(value);
                 }
-                tcCodisService.set(uuid, mongoList, duration);
+                tcCacheService.set(uuid, mongoList, duration);
                 @SuppressWarnings("unchecked")
-                List<Mongo> sValue = tcCodisService.get(uuid, List.class);
+                List<Mongo> sValue = tcCacheService.get(uuid, List.class);
                 Assert.assertEquals(mongoList, sValue);
             });
             return null;
@@ -120,13 +121,13 @@ public class TcCodisServiceTest {
                 String uuid = TcIdWorker.upperCaseUuid();
                 String value = TcIdWorker.upperCaseUuid();
                 long duration = durationBase + RandomUtils.nextInt(1000);
-                tcCodisService.set(uuid, value, duration);
-                Assert.assertTrue(tcCodisService.exists(uuid));
+                tcCacheService.set(uuid, value, duration);
+                Assert.assertTrue(tcCacheService.exists(uuid));
 
                 // consider network delay
                 sleep(duration + durationOffset);
 
-                Assert.assertTrue(!tcCodisService.exists(uuid));
+                Assert.assertTrue(!tcCacheService.exists(uuid));
             });
             return null;
         });
@@ -146,26 +147,26 @@ public class TcCodisServiceTest {
                 String uuid = TcIdWorker.upperCaseUuid();
                 String value = TcIdWorker.upperCaseUuid();
                 long duration = durationBase + RandomUtils.nextInt(1000);
-                tcCodisService.set(uuid, value, duration);
-                Assert.assertTrue(tcCodisService.exists(uuid));
+                tcCacheService.set(uuid, value, duration);
+                Assert.assertTrue(tcCacheService.exists(uuid));
 
                 // consider network delay
                 sleep(duration - durationOffset);
 
-                Assert.assertTrue(tcCodisService.exists(uuid));
+                Assert.assertTrue(tcCacheService.exists(uuid));
 
-                tcCodisService.expire(uuid, duration);
+                tcCacheService.expire(uuid, duration);
 
                 // consider network delay
                 sleep(duration + durationOffset);
 
-                Assert.assertTrue(!tcCodisService.exists(uuid));
+                Assert.assertTrue(!tcCacheService.exists(uuid));
             });
             return null;
         });
         log.info("process [{}] simple string take time [{}s] ...", 30 * loop, simpleStrDuration);
 
-        tcCodisService.expire(TcIdWorker.upperCaseUuid(), 1000);
+        tcCacheService.expire(TcIdWorker.upperCaseUuid(), 1000);
     }
 
     @Test
@@ -180,14 +181,14 @@ public class TcCodisServiceTest {
                 String uuid = TcIdWorker.upperCaseUuid();
                 String value = TcIdWorker.upperCaseUuid();
                 long duration = durationBase + RandomUtils.nextInt(500);
-                tcCodisService.set(uuid, value, duration);
-                Assert.assertTrue(tcCodisService.exists(uuid));
+                tcCacheService.set(uuid, value, duration);
+                Assert.assertTrue(tcCacheService.exists(uuid));
 
                 sleep(RandomUtils.nextInt(1500));
 
-                tcCodisService.delete(uuid);
+                tcCacheService.delete(uuid);
 
-                Assert.assertTrue(!tcCodisService.exists(uuid));
+                Assert.assertTrue(!tcCacheService.exists(uuid));
             });
             return null;
         });
@@ -196,7 +197,7 @@ public class TcCodisServiceTest {
 
     @Test
     public void buildHashtagedKey() throws Exception {
-        String hashtagedKey = tcCodisService.buildHashtagedKey("key", "value");
+        String hashtagedKey = tcCacheService.buildHashtag("key", "value");
         Assert.assertEquals("{key}value", hashtagedKey);
     }
 
@@ -215,12 +216,12 @@ public class TcCodisServiceTest {
                 Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
                         Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
-                tcCodisService.opsForGroupedValue().set(group1, uuid, value, durationBase);
-                Mongo sValue1 = tcCodisService.opsForGroupedValue().get(group1, uuid, Mongo.class);
+                tcCacheService.opsForGroupedValue().set(group1, uuid, value, durationBase);
+                Mongo sValue1 = tcCacheService.opsForGroupedValue().get(group1, uuid, Mongo.class);
                 Assert.assertEquals(value, sValue1);
 
-                tcCodisService.opsForGroupedValue().set(group2, uuid, value, durationBase);
-                Mongo sValue2 = tcCodisService.opsForGroupedValue().get(group2, uuid, Mongo.class);
+                tcCacheService.opsForGroupedValue().set(group2, uuid, value, durationBase);
+                Mongo sValue2 = tcCacheService.opsForGroupedValue().get(group2, uuid, Mongo.class);
                 Assert.assertEquals(value, sValue2);
             });
             return null;
@@ -247,26 +248,26 @@ public class TcCodisServiceTest {
             Mongo value3 = new Mongo(TcIdWorker.upperCaseUuid(),
                     Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
-            tcCodisService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
-            tcCodisService.opsForGroupedValue().set(group1, uuid2, value2, 3 * durationBase);
-            tcCodisService.opsForGroupedValue().set(group1, uuid3, value3, 4 * durationBase);
+            tcCacheService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
+            tcCacheService.opsForGroupedValue().set(group1, uuid2, value2, 3 * durationBase);
+            tcCacheService.opsForGroupedValue().set(group1, uuid3, value3, 4 * durationBase);
 
-            Assert.assertTrue(tcCodisService.opsForGroupedValue().exists(group1, uuid1));
-            Assert.assertTrue(tcCodisService.opsForGroupedValue().exists(group1, uuid2));
-            Assert.assertTrue(tcCodisService.opsForGroupedValue().exists(group1, uuid3));
+            Assert.assertTrue(tcCacheService.opsForGroupedValue().exists(group1, uuid1));
+            Assert.assertTrue(tcCacheService.opsForGroupedValue().exists(group1, uuid2));
+            Assert.assertTrue(tcCacheService.opsForGroupedValue().exists(group1, uuid3));
 
-            Mongo sValue1 = tcCodisService.opsForGroupedValue().get(group1, uuid1, Mongo.class);
+            Mongo sValue1 = tcCacheService.opsForGroupedValue().get(group1, uuid1, Mongo.class);
             Assert.assertEquals(value1, sValue1);
 
-            Mongo sValue2 = tcCodisService.opsForGroupedValue().get(group1, uuid2, Mongo.class);
+            Mongo sValue2 = tcCacheService.opsForGroupedValue().get(group1, uuid2, Mongo.class);
             Assert.assertEquals(value2, sValue2);
 
-            Mongo sValue3 = tcCodisService.opsForGroupedValue().get(group1, uuid3, Mongo.class);
+            Mongo sValue3 = tcCacheService.opsForGroupedValue().get(group1, uuid3, Mongo.class);
             Assert.assertEquals(value3, sValue3);
 
-            Set<String> keys1 = tcCodisService.opsForGroupedValue().keys(group1);
+            Set<String> keys1 = tcCacheService.opsForGroupedValue().keys(group1);
             Assert.assertEquals(3, keys1.size());
-            Set<String> keys2 = tcCodisService.opsForGroupedValue().keys(group2);
+            Set<String> keys2 = tcCacheService.opsForGroupedValue().keys(group2);
             Assert.assertEquals(0, keys2.size());
             return null;
         });
@@ -282,21 +283,21 @@ public class TcCodisServiceTest {
 
         getOpsForGroupedValue2();
 
-        Assert.assertEquals(3, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(3, tcCacheService.opsForGroupedValue().keys(group1).size());
 
         sleep(2 * durationBase - offset);
-        Assert.assertEquals(3, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(3, tcCacheService.opsForGroupedValue().keys(group1).size());
 
         sleep(durationBase);
-        Assert.assertEquals(2, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(2, tcCacheService.opsForGroupedValue().keys(group1).size());
 
         sleep(durationBase);
-        Assert.assertEquals(1, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(1, tcCacheService.opsForGroupedValue().keys(group1).size());
 
         sleep(offset);
-        Assert.assertEquals(0, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(0, tcCacheService.opsForGroupedValue().keys(group1).size());
 
-        Assert.assertEquals(0, tcCodisService.opsForGroupedValue().keys(group2).size());
+        Assert.assertEquals(0, tcCacheService.opsForGroupedValue().keys(group2).size());
     }
 
     @Test
@@ -306,23 +307,23 @@ public class TcCodisServiceTest {
 
         getOpsForGroupedValue2();
 
-        Assert.assertEquals(3, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(3, tcCacheService.opsForGroupedValue().keys(group1).size());
 
         String uuid1 = TcIdWorker.upperCaseUuid();
         Mongo value1 = new Mongo(TcIdWorker.upperCaseUuid(),
                 Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
-        tcCodisService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
+        tcCacheService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
 
-        Assert.assertEquals(4, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(4, tcCacheService.opsForGroupedValue().keys(group1).size());
 
-        tcCodisService.opsForGroupedValue().delete(group1, uuid1);
+        tcCacheService.opsForGroupedValue().delete(group1, uuid1);
 
-        Assert.assertEquals(3, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(3, tcCacheService.opsForGroupedValue().keys(group1).size());
 
-        tcCodisService.opsForGroupedValue().delete(group1);
+        tcCacheService.opsForGroupedValue().delete(group1);
 
-        Assert.assertEquals(0, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(0, tcCacheService.opsForGroupedValue().keys(group1).size());
     }
 
     @Test
@@ -334,17 +335,17 @@ public class TcCodisServiceTest {
         Mongo value1 = new Mongo(TcIdWorker.upperCaseUuid(),
                 Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
-        tcCodisService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
+        tcCacheService.opsForGroupedValue().set(group1, uuid1, value1, 2 * durationBase);
 
-        Assert.assertEquals(4, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(4, tcCacheService.opsForGroupedValue().keys(group1).size());
 
-        tcCodisService.opsForGroupedValue().delete(group1, uuid1);
+        tcCacheService.opsForGroupedValue().delete(group1, uuid1);
 
-        Assert.assertEquals(3, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(3, tcCacheService.opsForGroupedValue().keys(group1).size());
 
-        tcCodisService.opsForGroupedValue().delete(group1);
+        tcCacheService.opsForGroupedValue().delete(group1);
 
-        Assert.assertEquals(0, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertEquals(0, tcCacheService.opsForGroupedValue().keys(group1).size());
     }
 
     @Test
@@ -356,17 +357,17 @@ public class TcCodisServiceTest {
         Mongo value1 = new Mongo(TcIdWorker.upperCaseUuid(),
                 Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
-        tcCodisService.opsForGroupedValue().set(group1, uuid1, value1, durationBase);
+        tcCacheService.opsForGroupedValue().set(group1, uuid1, value1, durationBase);
 
-        Assert.assertTrue(tcCodisService.opsForGroupedValue().exists(group1, uuid1));
-
-        sleep(durationBase - 50);
-
-        tcCodisService.opsForGroupedValue().expire(group1, uuid1, durationBase);
+        Assert.assertTrue(tcCacheService.opsForGroupedValue().exists(group1, uuid1));
 
         sleep(durationBase - 50);
 
-        Assert.assertTrue(tcCodisService.opsForGroupedValue().exists(group1, uuid1));
+        tcCacheService.opsForGroupedValue().expire(group1, uuid1, durationBase);
+
+        sleep(durationBase - 50);
+
+        Assert.assertTrue(tcCacheService.opsForGroupedValue().exists(group1, uuid1));
     }
 
     @Test
@@ -380,13 +381,13 @@ public class TcCodisServiceTest {
             Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
                     Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
-            tcCodisService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
+            tcCacheService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
         });
 
-        Assert.assertTrue(tcCodisService.opsForGroupedValue().keys(group1).size() > 0);
+        Assert.assertTrue(tcCacheService.opsForGroupedValue().keys(group1).size() > 0);
 
-        tcCodisService.opsForGroupedValue().delete(group1);
-        Assert.assertEquals(0, tcCodisService.opsForGroupedValue().keys(group1).size());
+        tcCacheService.opsForGroupedValue().delete(group1);
+        Assert.assertEquals(0, tcCacheService.opsForGroupedValue().keys(group1).size());
     }
 
     @Test
@@ -401,7 +402,7 @@ public class TcCodisServiceTest {
             Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
                     Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
-            tcCodisService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
+            tcCacheService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
         });
 
         IntStream.range(0, 30 * loop).parallel().forEach(i -> {
@@ -409,25 +410,25 @@ public class TcCodisServiceTest {
             Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
                     Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
 
-            tcCodisService.opsForGroupedValue().set(group2, uuid, value, durationBase + RandomUtils.nextInt(2000));
+            tcCacheService.opsForGroupedValue().set(group2, uuid, value, durationBase + RandomUtils.nextInt(2000));
         });
 
         String uuid = TcIdWorker.upperCaseUuid();
         Mongo value = new Mongo(TcIdWorker.upperCaseUuid(),
                 Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
-        tcCodisService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
+        tcCacheService.opsForGroupedValue().set(group1, uuid, value, durationBase + RandomUtils.nextInt(2000));
 
-        Assert.assertTrue(tcCodisService.opsForGroupedValue().exists(group1, uuid));
+        Assert.assertTrue(tcCacheService.opsForGroupedValue().exists(group1, uuid));
 
-        Assert.assertTrue(tcCodisService.opsForGroupedValue().keys(group1).size() > 0);
-        Assert.assertTrue(tcCodisService.opsForGroupedValue().keys(group2).size() > 0);
+        Assert.assertTrue(tcCacheService.opsForGroupedValue().keys(group1).size() > 0);
+        Assert.assertTrue(tcCacheService.opsForGroupedValue().keys(group2).size() > 0);
 
-        tcCodisService.opsForGroupedValue().delete(group1);
+        tcCacheService.opsForGroupedValue().delete(group1);
 
-        Assert.assertFalse(tcCodisService.opsForGroupedValue().exists(group1, uuid));
-        Assert.assertEquals(0, tcCodisService.opsForGroupedValue().keys(group1).size());
+        Assert.assertFalse(tcCacheService.opsForGroupedValue().exists(group1, uuid));
+        Assert.assertEquals(0, tcCacheService.opsForGroupedValue().keys(group1).size());
 
-        Assert.assertTrue(tcCodisService.opsForGroupedValue().keys(group2).size() > 0);
+        Assert.assertTrue(tcCacheService.opsForGroupedValue().keys(group2).size() > 0);
     }
 
     @Test

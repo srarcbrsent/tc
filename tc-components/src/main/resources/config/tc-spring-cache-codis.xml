@@ -14,7 +14,6 @@
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
-                <ref bean="guavaCache"/>
                 <ref bean="codisCache"/>
             </set>
         </property>
@@ -34,48 +33,59 @@
         </property>
     </bean>
 
+    <!-- serializer -->
     <bean id="stringKeySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
 
     <bean id="objectKeySerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
-    <bean id="valueSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+    <bean id="stringValueSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
 
-    <bean id="stringKeyCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+    <bean id="objectValueSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+
+    <!-- template -->
+    <bean id="ssCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="codisConnectionFactory"/>
         <property name="keySerializer" ref="stringKeySerializer"/>
-        <property name="valueSerializer" ref="valueSerializer"/>
+        <property name="valueSerializer" ref="stringValueSerializer"/>
     </bean>
 
-    <bean id="objectKeyCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+    <bean id="ooCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="codisConnectionFactory"/>
         <property name="keySerializer" ref="objectKeySerializer"/>
-        <property name="valueSerializer" ref="valueSerializer"/>
+        <property name="valueSerializer" ref="objectValueSerializer"/>
     </bean>
 
-    <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcOpsForGroupedValue">
-        <property name="codisTemplate" ref="stringKeyCodisTemplate"/>
+    <bean id="soCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="codisConnectionFactory"/>
+        <property name="keySerializer" ref="stringKeySerializer"/>
+        <property name="valueSerializer" ref="objectValueSerializer"/>
     </bean>
 
-    <bean id="codisService" class="com.ysu.zyw.tc.components.cache.codis.TcCodisService">
-        <property name="codisTemplate" ref="stringKeyCodisTemplate"/>
+    <!-- string key (string serialization), object value (jdk serialization) -->
+    <bean id="soCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
+        <property name="redisTemplate" ref="soCodisTemplate"/>
+        <property name="tcOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+                <property name="redisTemplate" ref="soCodisTemplate"/>
+            </bean>
+        </property>
     </bean>
 
-    <bean id="cacheBuilder" class="com.google.common.cache.CacheBuilder" factory-method="newBuilder"/>
-
-    <bean id="guavaCache" class="org.springframework.cache.guava.GuavaCache">
-        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).DEFAULT_CACHE}"/>
-        <constructor-arg index="1">
-            <bean class="com.google.common.cache.LoadingCache"
-                  factory-bean="cacheBuilder"
-                  factory-method="build"/>
-        </constructor-arg>
-        <constructor-arg index="2" value="false"/>
+    <!-- string key (string serialization), string value (string serialization) -->
+    <bean id="ssCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
+        <property name="redisTemplate" ref="ssCodisTemplate"/>
+        <property name="tcOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+                <property name="redisTemplate" ref="ssCodisTemplate"/>
+            </bean>
+        </property>
     </bean>
 
+    <!-- codis cache : object key (jdk serialization), object value (jdk serialization) -->
     <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
         <property name="name" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).CODIS_CACHE}"/>
-        <property name="codisTemplate" ref="objectKeyCodisTemplate"/>
-        <property name="expiration" value="${properties.cache.codis.expiration.millis}"/>
+        <property name="codisTemplate" ref="ooCodisTemplate"/>
+        <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
     </bean>
 
 </beans>

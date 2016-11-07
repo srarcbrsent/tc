@@ -61,7 +61,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath*:/config/tc-spring-deploy.xml,
-            classpath*:/config/tc-spring-cache-codis.xml,
+            classpath*:/config/tc-spring-cache-redis.xml,
             classpath*:/config/tc-spring-mq-metaq.xml,
             classpath*:/config/tc-spring-rpc-httpx.xml,
             classpath*:/config/tc-spring-websocket.xml

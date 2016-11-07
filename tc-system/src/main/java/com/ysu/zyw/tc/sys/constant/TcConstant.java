@@ -15,6 +15,8 @@ public class TcConstant {
 
         public static final String CODIS_CACHE = "codisCache";
 
+        public static final String REDIS_CACHE = "redisCache";
+
         public static final String SHIRO_AUTHENTICATION_CACHE = "authenticationCache";
 
         public static final String SHIRO_AUTHORIZATION_CACHE = "authorizationCache";

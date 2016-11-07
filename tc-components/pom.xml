@@ -257,6 +257,7 @@
                 <configuration>
                     <excludes>
                         <exclude>logback.xml</exclude>
+                        <exclude>log4j.properties</exclude>
                     </excludes>
                 </configuration>
             </plugin>

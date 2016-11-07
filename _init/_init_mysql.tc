@@ -12,7 +12,7 @@ CREATE USER 'tc_develop'@'%' IDENTIFIED BY '123456';
 GRANT ALL ON *.* TO 'tc_develop'@'%';
 
 # mac
-# root@localhost: TpHfc#bre4rM
+# root@localhost: root
 
 CREATE USER 'tc_product'@'%' IDENTIFIED BY 'Rjr7)71qnbldjcvvjw4=';
 
