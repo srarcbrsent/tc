@@ -4,6 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class FreeTest {
 
     @Before
@@ -33,6 +36,11 @@ public class FreeTest {
     @Test
     public void test02() {
         System.err.println("123123");
+    }
+
+    @Test
+    public void test03() throws UnknownHostException {
+        System.out.println(InetAddress.getLocalHost().getCanonicalHostName());
     }
 
 }
