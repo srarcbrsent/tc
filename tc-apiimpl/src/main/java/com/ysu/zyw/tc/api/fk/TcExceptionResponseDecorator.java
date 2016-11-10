@@ -1,9 +1,8 @@
 package com.ysu.zyw.tc.api.fk;
 
-import com.ysu.zyw.tc.api.fk.ex.TcResourceConflictException;
-import com.ysu.zyw.tc.api.fk.ex.TcResourceNotFoundException;
 import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
 import com.ysu.zyw.tc.mw.TcR;
+import com.ysu.zyw.tc.sys.ex.TcResourceConflictException;
 import com.ysu.zyw.tc.validator.TcValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,7 +25,7 @@ public class TcExceptionResponseDecorator {
         try {
             log.info("call open apiimpl [{}]", proceedingJoinPoint.getSignature().getName());
             return proceedingJoinPoint.proceed();
-        } catch (TcResourceNotFoundException e) {
+        } catch (com.ysu.zyw.tc.sys.ex.TcResourceNotFoundException e) {
             // 如果内部抛出了资源不存在异常 则对页面返回 404 资源不存在
             log.error("[{}][{}][{}]", "OpenApi切面-资源不存在", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
             return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION));

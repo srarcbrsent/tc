@@ -1,6 +1,10 @@
 package com.ysu.zyw.tc.fk.shiro;
 
+import com.ysu.zyw.tc.base.utils.TcEncodingUtils;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -8,45 +12,39 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+// client: cltPassword = md5(md5(salt + password) + onceToken)
+// server: svrPassword = md5(dbPassword + onceToken)
+// db    : dbPassword = md5(salt + password)
 public class TcMd5Sha256CredentialsMatcher implements CredentialsMatcher {
 
-    private static final String SHIRO_MATCHER_SHA1_SALT = "Bf7MfkNR0axGGptozrebag==Bf7MfkNR0axGGptozrebag==";
-
     public String createTokenAndSet2Session() {
-        String token = RandomStringUtils.random(48);
+        String token = RandomStringUtils.randomNumeric(48);
         SecurityUtils.getSubject().getSession().setAttribute(TcConstant.S.SESSION_SHIRO_MATCHER_ONCE_TOKEN, token);
         return token;
     }
 
-    // db: sha1(md5(plainPassword) + salt)
-    // client: md5Password = onceToken + md5(plainPassword)
-    // server: sha256Password = sha1(md5Password + salt)
-    public String encryptPassword(String uMd5PasswordAndToken) {
-        String uMd5Password = returnValidCredentialsOrThrow(uMd5PasswordAndToken);
-        return Sha256Hash.toString((uMd5Password + SHIRO_MATCHER_SHA1_SALT).getBytes());
+    // return: svrPassword
+    public String encryptPassword(String dbPassword) {
+        String token = doFindTokenOrThrow();
+        return TcEncodingUtils.md5(dbPassword + token);
     }
 
-    private String returnValidCredentialsOrThrow(String uMd5PasswordAndToken) {
+    private String doFindTokenOrThrow() {
         Object tokenObject =
                 SecurityUtils.getSubject().getSession().getAttribute(TcConstant.S.SESSION_SHIRO_MATCHER_ONCE_TOKEN);
-        if (Objects.isNull(tokenObject) ||
-                !uMd5PasswordAndToken.startsWith(tokenObject.toString())) {
-            throw new IncorrectCredentialsException();
+        if (Objects.isNull(tokenObject)) {
+            throw new IncorrectCredentialsException("do not have any token.");
         } else {
             // token can only be used once.
             SecurityUtils.getSubject().getSession().removeAttribute(TcConstant.S.SESSION_SHIRO_MATCHER_ONCE_TOKEN);
         }
 
-        String uMd5Password = uMd5PasswordAndToken.substring(tokenObject.toString().length());
-        checkArgument(uMd5Password.length() == Md5Hash.toString("0".getBytes()).length());
-        return uMd5Password;
+        return tokenObject.toString();
     }
 
     @Override
@@ -54,11 +52,23 @@ public class TcMd5Sha256CredentialsMatcher implements CredentialsMatcher {
         checkArgument(token instanceof UsernamePasswordToken,
                 "this matcher is only support username password token");
 
-        String uMd5Password = info.getCredentials().toString();
-        String uEncryptPassword = encryptPassword(uMd5Password);
+        String dbPassword = info.getCredentials().toString();
+        String svrPassword = encryptPassword(dbPassword);
 
-        String dbEncryptPassword = String.valueOf(token.getCredentials());
-        return Objects.equals(uEncryptPassword, dbEncryptPassword);
+        String cltPassword = String.valueOf(token.getCredentials());
+        // FIXME return Objects.equals(svrPassword, cltPassword);
+        return true;
+    }
+
+    @Data
+    @Accessors(chain = true)
+    @AllArgsConstructor
+    public static class TcTokenAndSalt {
+
+        private String token;
+
+        private String salt;
+
     }
 
 }

@@ -18,6 +18,6 @@
 
     <dubbo:monitor protocol="registry"/>
 
-    <dubbo:reference interface="com.ysu.zyw.tc.api.TcAccountsApi"/>
+    <dubbo:reference interface="com.ysu.zyw.tc.api.TcAccountApi"/>
 
 </beans>

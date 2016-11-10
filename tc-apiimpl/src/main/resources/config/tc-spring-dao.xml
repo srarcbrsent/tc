@@ -8,9 +8,7 @@
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- !!!! Database !!!! -->
-    <bean id="slf4jLogFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
-        <property name="statementExecutableSqlLogEnable" value="true"/>
-    </bean>
+
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
@@ -33,9 +31,11 @@
                     <property name="slowSqlMillis" value="1000"/>
                     <property name="logSlowSql" value="true"/>
                 </bean>
+                <bean class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+                    <property name="statementExecutableSqlLogEnable" value="true"/>
+                </bean>
             </list>
         </property>
-        <property name="filters" value="slf4jLogFilter"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

@@ -21,7 +21,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             classpath*:/config/tc-spring-deploy.xml,
-            classpath*:/config/tc-spring-cache-codis.xml,
+            classpath*:/config/tc-spring-cache-redis.xml,
             classpath*:/config/tc-spring-module-region.xml
         </param-value>
     </context-param>

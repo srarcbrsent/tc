@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.fk.shiro;
 
+import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.components.httpx.TcHttpxService;
 import com.ysu.zyw.tc.model.accounts.TmAccount;
 import com.ysu.zyw.tc.model.accounts.auth.TmPermission;
@@ -72,23 +73,25 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
 
     protected TmAccount fetchAccount(String username) {
         // TODO
-        return null;
+        TmAccount tmAccount = new TmAccount();
+        tmAccount.setAccount(username);
+        tmAccount.setPassword("123456");
+        return tmAccount;
     }
 
     protected List<TmPermissionSet> fetchPermissionSetList(String accountId) {
         // TODO
-        return null;
+        return Lists.newArrayList();
     }
-
 
     protected List<TmPermission> fetchApiPermissionList(String accountId) {
         // TODO
-        return null;
+        return Lists.newArrayList();
     }
 
     protected String fetchRealmName() {
         // TODO
-        return null;
+        return "defaultRealm";
     }
 
 }

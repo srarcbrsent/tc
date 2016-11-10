@@ -16,8 +16,10 @@ public class TcClusterSessionIdGenerator implements SessionIdGenerator {
     public Serializable generateId(Session session) {
         String id = UUID.randomUUID().toString() +
                 DigestUtils.md5DigestAsHex(session.getHost().getBytes()) +
+                "-" +
                 DigestUtils.md5DigestAsHex(String.valueOf(session.getStartTimestamp().getTime()).getBytes()) +
-                RandomStringUtils.randomAscii(16);
+                "-" +
+                RandomStringUtils.randomNumeric(16);
         if (log.isDebugEnabled()) {
             log.debug("tc cluster session id generator generate session id [{}]", id);
         }

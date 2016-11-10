@@ -87,6 +87,7 @@
                 <property name="authenticationStrategy">
                     <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"/>
                 </property>
+                <property name="realms" ref="shiroRealms"/>
             </bean>
         </property>
         <property name="sessionManager" ref="shiroSessionManager"/>
@@ -97,6 +98,7 @@
                           value="#{T(org.apache.shiro.codec.Base64).decode('Bf7MfkNR0axGGptozrebag==')}"/>
                 <property name="cookie">
                     <bean class="org.apache.shiro.web.servlet.SimpleCookie">
+                        <constructor-arg index="0" value="tc_rid"/>
                         <property name="httpOnly" value="true"/>
                         <property name="maxAge"
                                   value="${properties.security.shiro.session.rememberme.cookie.timeout.sec}"/>

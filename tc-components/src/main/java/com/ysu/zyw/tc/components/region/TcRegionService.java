@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.base.utils.TcSerializationUtils;
 import com.ysu.zyw.tc.model.components.region.TcProvince;
+import com.ysu.zyw.tc.sys.ex.TcResourceNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +14,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -51,14 +49,18 @@ public class TcRegionService implements InitializingBean {
     public List<TcProvince.TcCity> findCityList(String provinceCode) {
         checkNotNull(tcCityListGroup);
         List<TcProvince.TcCity> tcCityList = tcCityListGroup.get(provinceCode);
-        checkNotNull(tcCityList);
+        if (Objects.isNull(tcCityList)) {
+            throw new TcResourceNotFoundException("city with province code [" + provinceCode + "] not exists");
+        }
         return tcCityList;
     }
 
     public List<TcProvince.TcCity.TcDistrict> findDistrictList(String cityCode) {
         checkNotNull(tcDistrictListGroup);
         List<TcProvince.TcCity.TcDistrict> tcDistrictList = tcDistrictListGroup.get(cityCode);
-        checkNotNull(tcDistrictList);
+        if (Objects.isNull(tcDistrictList)) {
+            throw new TcResourceNotFoundException("district with city code [" + cityCode + "] not exists");
+        }
         return tcDistrictList;
     }
 
@@ -69,7 +71,7 @@ public class TcRegionService implements InitializingBean {
                 .flatMap(Collection::parallelStream)
                 .filter(tcDistrict -> tcDistrict.getCode().equals(code)).findFirst();
         TcProvince.TcCity.TcDistrict tcDistrict = tcDistrictOptional.orElseThrow(
-                () -> new NullPointerException("code [" + code + "] area not exists"));
+                () -> new TcResourceNotFoundException("district with code [" + code + "] not exists"));
         TcProvince.TcCity.TcDistrict copyDistrict = tcDistrict.copy();
         TcProvince.TcCity copyCity = tcDistrict.getTcCity().copy();
         TcProvince copyProvince = tcDistrict.getTcCity().getTcProvince().copy();
