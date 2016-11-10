@@ -4,6 +4,7 @@ import com.ysu.zyw.tc.api.TcAccountApi;
 import com.ysu.zyw.tc.model.accounts.TmAccount;
 import com.ysu.zyw.tc.mw.TcR;
 
+import java.util.Date;
 import java.util.List;
 
 public class TcAccountApiImpl implements TcAccountApi {
@@ -25,7 +26,7 @@ public class TcAccountApiImpl implements TcAccountApi {
 
     @Override
     public TcR<TmAccount, Void> findAccount(String accountId) {
-        return null;
+        return TcR.ok(new TmAccount().setLockReleaseTime(new Date()));
     }
 
     @Override

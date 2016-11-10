@@ -64,7 +64,7 @@
         <table tableName="mb_account_assist"
                domainObjectName="TcAccountAssist"
                mapperName="TcAccountAssistMapper">
-            <columnOverride column="signup_platform"
+            <columnOverride column="signin_platform"
                             javaType="com.ysu.zyw.tc.api.dao.penum.TcSignupPlatform"
                             typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
             <columnOverride column="mobile_activated"

@@ -287,6 +287,18 @@
                 <version>${pom.version.jackson.databind}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${pom.version.jackson.databind}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${pom.version.jackson.databind}</version>
+            </dependency>
+
             <!-- jackson provider -->
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
@@ -470,7 +482,7 @@
 
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-jackson-provider</artifactId>
+                <artifactId>resteasy-jackson2-provider</artifactId>
                 <version>${pom.version.resteasy}</version>
             </dependency>
 

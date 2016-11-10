@@ -13,7 +13,8 @@
     <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                <property name="objectMapper" ref="objectMapper"/>
+                <property name="objectMapper"
+                          ref="#{T(com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder).objectMapper}"/>
             </bean>
         </mvc:message-converters>
         <mvc:async-support default-timeout="30000" task-executor="threadPoolTaskScheduler"/>

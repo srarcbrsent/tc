@@ -69,7 +69,7 @@ public class TcR<T, E> implements Serializable {
 
         public static final int NOT_FOUND = 404;
 
-        public static final String NOT_FOUND_DESCRIPTION = "您请求的资源不存在！";
+        public static final String NOT_FOUND_DESCRIPTION = "资源不存在！";
 
         public static final int CONFLICT = 409;
 

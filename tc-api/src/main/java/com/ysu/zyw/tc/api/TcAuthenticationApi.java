@@ -1,16 +1,20 @@
 package com.ysu.zyw.tc.api;
 
+import com.ysu.zyw.tc.model.accounts.TmAccount;
 import com.ysu.zyw.tc.model.accounts.auth.TmPermission;
 import com.ysu.zyw.tc.mw.TcP;
 import com.ysu.zyw.tc.mw.TcR;
+import com.ysu.zyw.tc.validator.TcValidator;
 
 import javax.ws.rs.*;
 import java.util.List;
 
+@Path(value = "/auth")
 public interface TcAuthenticationApi {
+
     @POST
-    @Path(value = "/can_signup")
-    TcR<String, Void> canSignup(
+    @Path(value = "/signup")
+    TcR<TmAccount, TcValidator.TcVerifyFailure> signup(
             @FormParam(value = "username") String username,
             @FormParam(value = "password") String password,
             @FormParam(value = "canAccountLogin") @DefaultValue(value = "true") Boolean canAccountLogin,
@@ -29,4 +33,5 @@ public interface TcAuthenticationApi {
     TcP<List<TmPermission>, Void> findPms(
             @PathParam(value = "id")String accountId
     );
+
 }

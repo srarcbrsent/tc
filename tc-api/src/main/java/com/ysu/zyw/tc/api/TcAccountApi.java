@@ -28,7 +28,7 @@ public interface TcAccountApi {
 
     @POST
     @Path(value = "/update_account")
-    @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
+    @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<Void, Void> updateAccount(
             TmAccount tmAccount

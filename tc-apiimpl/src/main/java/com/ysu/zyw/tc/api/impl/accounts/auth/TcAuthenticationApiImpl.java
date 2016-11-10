@@ -1,15 +1,17 @@
 package com.ysu.zyw.tc.api.impl.accounts.auth;
 
+import com.google.common.base.Preconditions;
 import com.ysu.zyw.tc.api.TcAuthenticationApi;
+import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
+import com.ysu.zyw.tc.model.accounts.TmAccount;
 import com.ysu.zyw.tc.model.accounts.auth.TmPermission;
 import com.ysu.zyw.tc.mw.TcP;
 import com.ysu.zyw.tc.mw.TcR;
+import com.ysu.zyw.tc.validator.TcValidator;
 
 import javax.annotation.Resource;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.FormParam;
 import java.util.List;
 
 public class TcAuthenticationApiImpl implements TcAuthenticationApi {
@@ -21,19 +23,29 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
     private TcAccountService tcAccountService;
 
     @Override
-    public TcR<String, Void> canSignup(
-            @FormParam(value = "username") String username,
-            @FormParam(value = "password") String password,
-            @FormParam(value = "canAccountLogin") @DefaultValue(value = "true") Boolean canAccountLogin,
-            @FormParam(value = "canEmailLogin") @DefaultValue(value = "true") Boolean canEmailLogin,
-            @FormParam(value = "canMobileLogin") @DefaultValue(value = "true") Boolean canMobileLogin) {
+    public TcR<TmAccount, TcValidator.TcVerifyFailure> signup(
+            String username,
+            String password,
+            Boolean canAccountLogin,
+            Boolean canEmailLogin,
+            Boolean canMobileLogin) {
 
-        String succLoginAccountId = tcAccountService.canSignin(
-                username, password, canAccountLogin, canEmailLogin, canMobileLogin);
+        String succLoginAccountId;
+        try {
+            succLoginAccountId = tcAccountService.canSignup(
+                    username, password, canAccountLogin, canEmailLogin, canMobileLogin);
+        } catch (TcVerifyFailureException e) {
+            // signup failed
+            TcValidator.TcVerifyFailure tcVerifyFailure = e.getTcVerifyFailure();
+            return new TcR<>(TcR.R.UNPROCESSABLE_ENTITY, TcR.R.UNPROCESSABLE_ENTITY_DESCRIPTION, null, tcVerifyFailure);
+        }
+
+        Preconditions.checkNotNull(succLoginAccountId);
+        TmAccount tmAccount = tcAccountService.findAccount(succLoginAccountId, false, false);
 
         // TODO mq
 
-        return TcR.ok(succLoginAccountId);
+        return TcR.ok(tmAccount);
     }
 
     @Override

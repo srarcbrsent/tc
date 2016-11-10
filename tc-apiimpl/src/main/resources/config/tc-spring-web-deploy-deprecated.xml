@@ -27,6 +27,6 @@
                                   location="${properties.pom.activation.spring.web.profile}"/>
 
     <!-- !!!! Import !!!! -->
-    <import resource="classpath*:/config/tc-spring-web-front-end.xml"/>
+    <import resource="classpath*:/config/tc-spring-web-front-end-deprecated.xml"/>
 
 </beans>

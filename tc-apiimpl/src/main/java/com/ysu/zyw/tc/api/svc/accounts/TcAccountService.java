@@ -12,10 +12,10 @@ import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
 import com.ysu.zyw.tc.model.accounts.TmAccount;
+import com.ysu.zyw.tc.sys.constant.TcConstant;
 import com.ysu.zyw.tc.validator.TcValidator;
 import com.ysu.zyw.tc.validator.mode.TcCreateMode;
 import com.ysu.zyw.tc.validator.mode.TcUpdateMode;
-import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -49,7 +49,7 @@ public class TcAccountService {
     private TcAccountPaymentMapper tcAccountPaymentMapper;
 
     @Transactional(readOnly = true)
-    public @NotEmpty String canSignin(@NotEmpty String username,
+    public @NotEmpty String canSignup(@NotEmpty String username,
                                       @NotEmpty String password,
                                       @NotNull Boolean canAccountLogin,
                                       @NotNull Boolean canEmailLogin,

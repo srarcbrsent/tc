@@ -11,17 +11,9 @@
     <!-- !!!! Infrastructure !!!! -->
 
     <!-- aop -->
+    <!-- response-decorator: -500 / transaction: 0 -->
     <aop:aspectj-autoproxy proxy-target-class="true"
                            expose-proxy="true"/>
-
-    <!-- jackson -->
-    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
-        <property name="dateFormat">
-            <bean class="java.text.SimpleDateFormat">
-                <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.utils.TcDateUtils).FULL_DATE_FORMAT_VALUE}"/>
-            </bean>
-        </property>
-    </bean>
 
     <!-- !!!! Import !!!! -->
     <context:property-placeholder file-encoding="UTF-8"

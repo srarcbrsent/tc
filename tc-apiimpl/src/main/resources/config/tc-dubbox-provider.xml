@@ -18,7 +18,7 @@
     <dubbo:protocol name="rest"
                     server="servlet"
                     port="${properties.rpc.dubbox.protocol.rest.port}"
-                    serialization="jackson"/>
+                    extension="com.ysu.zyw.tc.api.fk.TcDubboxJacksonObjectMapperProvider"/>
 
     <dubbo:provider version="${properties.rpc.dubbox.provider.version}"
                     timeout="${properties.rpc.dubbox.provider.timeout}"
@@ -29,10 +29,6 @@
 
     <dubbo:service interface="com.ysu.zyw.tc.api.TcAccountApi" ref="tcAccountsApi"/>
 
-    <dubbo:service interface="com.ysu.zyw.tc.api.TcRegionApi" ref="tcRegionApi"/>
-
     <bean id="tcAccountsApi" class="com.ysu.zyw.tc.api.impl.accounts.TcAccountApiImpl"/>
-
-    <bean id="tcRegionApi" class="com.ysu.zyw.tc.web.common.TcRegionApiImpl"/>
 
 </beans>
