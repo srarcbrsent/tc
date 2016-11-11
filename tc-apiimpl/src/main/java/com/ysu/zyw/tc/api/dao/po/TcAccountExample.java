@@ -186,12 +186,12 @@ public class TcAccountExample {
         }
 
         public Criteria andIdBetween(String value1, String value2) {
-            addCriterion("id duration", value1, value2, "id");
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(String value1, String value2) {
-            addCriterion("id not duration", value1, value2, "id");
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -256,82 +256,82 @@ public class TcAccountExample {
         }
 
         public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("name duration", value1, value2, "name");
+            addCriterion("name between", value1, value2, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("name not duration", value1, value2, "name");
+            addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
 
         public Criteria andAccountIsNull() {
-            addCriterion("accounts is null");
+            addCriterion("account is null");
             return (Criteria) this;
         }
 
         public Criteria andAccountIsNotNull() {
-            addCriterion("accounts is not null");
+            addCriterion("account is not null");
             return (Criteria) this;
         }
 
         public Criteria andAccountEqualTo(String value) {
-            addCriterion("accounts =", value, "accounts");
+            addCriterion("account =", value, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountNotEqualTo(String value) {
-            addCriterion("accounts <>", value, "accounts");
+            addCriterion("account <>", value, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountGreaterThan(String value) {
-            addCriterion("accounts >", value, "accounts");
+            addCriterion("account >", value, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountGreaterThanOrEqualTo(String value) {
-            addCriterion("accounts >=", value, "accounts");
+            addCriterion("account >=", value, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountLessThan(String value) {
-            addCriterion("accounts <", value, "accounts");
+            addCriterion("account <", value, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountLessThanOrEqualTo(String value) {
-            addCriterion("accounts <=", value, "accounts");
+            addCriterion("account <=", value, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountLike(String value) {
-            addCriterion("accounts like", value, "accounts");
+            addCriterion("account like", value, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountNotLike(String value) {
-            addCriterion("accounts not like", value, "accounts");
+            addCriterion("account not like", value, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountIn(List<String> values) {
-            addCriterion("accounts in", values, "accounts");
+            addCriterion("account in", values, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountNotIn(List<String> values) {
-            addCriterion("accounts not in", values, "accounts");
+            addCriterion("account not in", values, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountBetween(String value1, String value2) {
-            addCriterion("accounts duration", value1, value2, "accounts");
+            addCriterion("account between", value1, value2, "account");
             return (Criteria) this;
         }
 
         public Criteria andAccountNotBetween(String value1, String value2) {
-            addCriterion("accounts not duration", value1, value2, "accounts");
+            addCriterion("account not between", value1, value2, "account");
             return (Criteria) this;
         }
 
@@ -396,12 +396,72 @@ public class TcAccountExample {
         }
 
         public Criteria andEmailBetween(String value1, String value2) {
-            addCriterion("email duration", value1, value2, "email");
+            addCriterion("email between", value1, value2, "email");
             return (Criteria) this;
         }
 
         public Criteria andEmailNotBetween(String value1, String value2) {
-            addCriterion("email not duration", value1, value2, "email");
+            addCriterion("email not between", value1, value2, "email");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedIsNull() {
+            addCriterion("email_activated is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedIsNotNull() {
+            addCriterion("email_activated is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedEqualTo(Boolean value) {
+            addCriterion("email_activated =", value, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedNotEqualTo(Boolean value) {
+            addCriterion("email_activated <>", value, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedGreaterThan(Boolean value) {
+            addCriterion("email_activated >", value, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("email_activated >=", value, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedLessThan(Boolean value) {
+            addCriterion("email_activated <", value, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedLessThanOrEqualTo(Boolean value) {
+            addCriterion("email_activated <=", value, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedIn(List<Boolean> values) {
+            addCriterion("email_activated in", values, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedNotIn(List<Boolean> values) {
+            addCriterion("email_activated not in", values, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedBetween(Boolean value1, Boolean value2) {
+            addCriterion("email_activated between", value1, value2, "emailActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andEmailActivatedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("email_activated not between", value1, value2, "emailActivated");
             return (Criteria) this;
         }
 
@@ -466,12 +526,142 @@ public class TcAccountExample {
         }
 
         public Criteria andMobileBetween(String value1, String value2) {
-            addCriterion("mobile duration", value1, value2, "mobile");
+            addCriterion("mobile between", value1, value2, "mobile");
             return (Criteria) this;
         }
 
         public Criteria andMobileNotBetween(String value1, String value2) {
-            addCriterion("mobile not duration", value1, value2, "mobile");
+            addCriterion("mobile not between", value1, value2, "mobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedIsNull() {
+            addCriterion("mobile_activated is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedIsNotNull() {
+            addCriterion("mobile_activated is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedEqualTo(Boolean value) {
+            addCriterion("mobile_activated =", value, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedNotEqualTo(Boolean value) {
+            addCriterion("mobile_activated <>", value, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedGreaterThan(Boolean value) {
+            addCriterion("mobile_activated >", value, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("mobile_activated >=", value, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedLessThan(Boolean value) {
+            addCriterion("mobile_activated <", value, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedLessThanOrEqualTo(Boolean value) {
+            addCriterion("mobile_activated <=", value, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedIn(List<Boolean> values) {
+            addCriterion("mobile_activated in", values, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedNotIn(List<Boolean> values) {
+            addCriterion("mobile_activated not in", values, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedBetween(Boolean value1, Boolean value2) {
+            addCriterion("mobile_activated between", value1, value2, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andMobileActivatedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("mobile_activated not between", value1, value2, "mobileActivated");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarIsNull() {
+            addCriterion("avatar is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarIsNotNull() {
+            addCriterion("avatar is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarEqualTo(String value) {
+            addCriterion("avatar =", value, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarNotEqualTo(String value) {
+            addCriterion("avatar <>", value, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarGreaterThan(String value) {
+            addCriterion("avatar >", value, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarGreaterThanOrEqualTo(String value) {
+            addCriterion("avatar >=", value, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarLessThan(String value) {
+            addCriterion("avatar <", value, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarLessThanOrEqualTo(String value) {
+            addCriterion("avatar <=", value, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarLike(String value) {
+            addCriterion("avatar like", value, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarNotLike(String value) {
+            addCriterion("avatar not like", value, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarIn(List<String> values) {
+            addCriterion("avatar in", values, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarNotIn(List<String> values) {
+            addCriterion("avatar not in", values, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarBetween(String value1, String value2) {
+            addCriterion("avatar between", value1, value2, "avatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarNotBetween(String value1, String value2) {
+            addCriterion("avatar not between", value1, value2, "avatar");
             return (Criteria) this;
         }
 
@@ -536,82 +726,12 @@ public class TcAccountExample {
         }
 
         public Criteria andPasswordBetween(String value1, String value2) {
-            addCriterion("password duration", value1, value2, "password");
+            addCriterion("password between", value1, value2, "password");
             return (Criteria) this;
         }
 
         public Criteria andPasswordNotBetween(String value1, String value2) {
-            addCriterion("password not duration", value1, value2, "password");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingIsNull() {
-            addCriterion("self_describing is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingIsNotNull() {
-            addCriterion("self_describing is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingEqualTo(String value) {
-            addCriterion("self_describing =", value, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingNotEqualTo(String value) {
-            addCriterion("self_describing <>", value, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingGreaterThan(String value) {
-            addCriterion("self_describing >", value, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingGreaterThanOrEqualTo(String value) {
-            addCriterion("self_describing >=", value, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingLessThan(String value) {
-            addCriterion("self_describing <", value, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingLessThanOrEqualTo(String value) {
-            addCriterion("self_describing <=", value, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingLike(String value) {
-            addCriterion("self_describing like", value, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingNotLike(String value) {
-            addCriterion("self_describing not like", value, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingIn(List<String> values) {
-            addCriterion("self_describing in", values, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingNotIn(List<String> values) {
-            addCriterion("self_describing not in", values, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingBetween(String value1, String value2) {
-            addCriterion("self_describing duration", value1, value2, "selfDescribing");
-            return (Criteria) this;
-        }
-
-        public Criteria andSelfDescribingNotBetween(String value1, String value2) {
-            addCriterion("self_describing not duration", value1, value2, "selfDescribing");
+            addCriterion("password not between", value1, value2, "password");
             return (Criteria) this;
         }
 
@@ -666,12 +786,12 @@ public class TcAccountExample {
         }
 
         public Criteria andLockReleaseTimeBetween(Date value1, Date value2) {
-            addCriterion("lock_release_time duration", value1, value2, "lockReleaseTime");
+            addCriterion("lock_release_time between", value1, value2, "lockReleaseTime");
             return (Criteria) this;
         }
 
         public Criteria andLockReleaseTimeNotBetween(Date value1, Date value2) {
-            addCriterion("lock_release_time not duration", value1, value2, "lockReleaseTime");
+            addCriterion("lock_release_time not between", value1, value2, "lockReleaseTime");
             return (Criteria) this;
         }
 
@@ -726,72 +846,12 @@ public class TcAccountExample {
         }
 
         public Criteria andDelectedBetween(Boolean value1, Boolean value2) {
-            addCriterion("delected duration", value1, value2, "delected");
+            addCriterion("delected between", value1, value2, "delected");
             return (Criteria) this;
         }
 
         public Criteria andDelectedNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("delected not duration", value1, value2, "delected");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampIsNull() {
-            addCriterion("updated_timestamp is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampIsNotNull() {
-            addCriterion("updated_timestamp is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampEqualTo(Date value) {
-            addCriterion("updated_timestamp =", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampNotEqualTo(Date value) {
-            addCriterion("updated_timestamp <>", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampGreaterThan(Date value) {
-            addCriterion("updated_timestamp >", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(Date value) {
-            addCriterion("updated_timestamp >=", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampLessThan(Date value) {
-            addCriterion("updated_timestamp <", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampLessThanOrEqualTo(Date value) {
-            addCriterion("updated_timestamp <=", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampIn(List<Date> values) {
-            addCriterion("updated_timestamp in", values, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampNotIn(List<Date> values) {
-            addCriterion("updated_timestamp not in", values, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp duration", value1, value2, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp not duration", value1, value2, "updatedTimestamp");
+            addCriterion("delected not between", value1, value2, "delected");
             return (Criteria) this;
         }
 
@@ -856,12 +916,72 @@ public class TcAccountExample {
         }
 
         public Criteria andUpdatedPersonBetween(String value1, String value2) {
-            addCriterion("updated_person duration", value1, value2, "updatedPerson");
+            addCriterion("updated_person between", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedPersonNotBetween(String value1, String value2) {
-            addCriterion("updated_person not duration", value1, value2, "updatedPerson");
+            addCriterion("updated_person not between", value1, value2, "updatedPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampIsNull() {
+            addCriterion("updated_timestamp is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampIsNotNull() {
+            addCriterion("updated_timestamp is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampEqualTo(Date value) {
+            addCriterion("updated_timestamp =", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampNotEqualTo(Date value) {
+            addCriterion("updated_timestamp <>", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampGreaterThan(Date value) {
+            addCriterion("updated_timestamp >", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated_timestamp >=", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampLessThan(Date value) {
+            addCriterion("updated_timestamp <", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampLessThanOrEqualTo(Date value) {
+            addCriterion("updated_timestamp <=", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampIn(List<Date> values) {
+            addCriterion("updated_timestamp in", values, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampNotIn(List<Date> values) {
+            addCriterion("updated_timestamp not in", values, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
+            addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
+            addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
             return (Criteria) this;
         }
 
@@ -926,12 +1046,12 @@ public class TcAccountExample {
         }
 
         public Criteria andCreatedPersonBetween(String value1, String value2) {
-            addCriterion("created_person duration", value1, value2, "createdPerson");
+            addCriterion("created_person between", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
         public Criteria andCreatedPersonNotBetween(String value1, String value2) {
-            addCriterion("created_person not duration", value1, value2, "createdPerson");
+            addCriterion("created_person not between", value1, value2, "createdPerson");
             return (Criteria) this;
         }
 
@@ -986,12 +1106,12 @@ public class TcAccountExample {
         }
 
         public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp duration", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
 
         public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp not duration", value1, value2, "createdTimestamp");
+            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
     }

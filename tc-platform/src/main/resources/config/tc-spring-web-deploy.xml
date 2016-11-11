@@ -6,13 +6,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- !!!! Infrastructure !!!! -->
 
     <!-- thread pool -->
     <bean id="threadPoolTaskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
-        <property name="poolSize" value="5"/>
+        <property name="poolSize" value="${properties.web.thread.pool.task.scheduler.pool.size}"/>
         <property name="errorHandler">
             <bean class="com.ysu.zyw.tc.components.utils.pool.TcThreadPoolErrorLogHandler"/>
         </property>
@@ -23,8 +25,8 @@
                            expose-proxy="true"/>
 
     <!--- !!!! Swagger !!!! -->
-    <bean class="com.ysu.zyw.tc.fk.conf.TcSwaggerConfig">
-        <property name="basePackage" value="com.ysu.zyw.tc.web"/>
+    <bean class="com.ysu.zyw.tc.platform.fk.conf.TcSwaggerConfig">
+        <property name="basePackage" value="${properties.web.swagger.scanner.base.package}"/>
     </bean>
 
     <!-- !!!! Import !!!! -->

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 public class FreeTest {
 
@@ -41,6 +42,11 @@ public class FreeTest {
     @Test
     public void test03() throws UnknownHostException {
         System.out.println(InetAddress.getLocalHost().getCanonicalHostName());
+    }
+
+    @Test
+    public void test04() {
+        System.out.println(new Date());
     }
 
 }

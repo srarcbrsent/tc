@@ -57,6 +57,10 @@
         <table tableName="mb_account"
                domainObjectName="TcAccount"
                mapperName="TcAccountMapper">
+            <columnOverride column="email_activated"
+                            javaType="java.lang.Boolean"/>
+            <columnOverride column="mobile_activated"
+                            javaType="java.lang.Boolean"/>
             <columnOverride column="delected"
                             javaType="java.lang.Boolean"/>
         </table>
@@ -65,86 +69,45 @@
                domainObjectName="TcAccountAssist"
                mapperName="TcAccountAssistMapper">
             <columnOverride column="signin_platform"
-                            javaType="com.ysu.zyw.tc.api.dao.penum.TcSignupPlatform"
+                            javaType="com.ysu.zyw.tc.api.dao.penum.TcPlatform"
                             typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-            <columnOverride column="mobile_activated"
-                            javaType="java.lang.Boolean"/>
-            <columnOverride column="email_activated"
-                            javaType="java.lang.Boolean"/>
+            <columnOverride column="last_signup_platform"
+                            javaType="com.ysu.zyw.tc.api.dao.penum.TcPlatform"
+                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         </table>
 
-        <table tableName="mb_account_payment"
-               domainObjectName="TcAccountPayment"
-               mapperName="TcAccountPaymentMapper">
-            <columnOverride column="sup_weixin"
-                            javaType="java.lang.Boolean"/>
-            <columnOverride column="sup_zhifubao"
-                            javaType="java.lang.Boolean"/>
-            <columnOverride column="sup_cod"
-                            javaType="java.lang.Boolean"/>
-        </table>
+        <table tableName="mb_behavior_trace"
+               domainObjectName="TcBehaviorTrace"
+               mapperName="TcBehaviorTraceMapper"/>
 
         <!-- permission -->
         <table tableName="pv_account_map_permission"
                domainObjectName="TcAccountMapPermission"
                mapperName="TcAccountMapPermissionMapper"/>
 
-        <table tableName="pv_account_map_permission_set"
-               domainObjectName="TcAccountMapPermissionSet"
-               mapperName="TcAccountMapPermissionSetMapper">
-        </table>
+        <table tableName="pv_account_map_role"
+               domainObjectName="TcAccountMapRole"
+               mapperName="TcAccountMapRoleMapper"/>
+
+        <table tableName="pv_role_map_menu"
+               domainObjectName="TcRoleMapMenu"
+               mapperName="TcRoleMapMenuMapper"/>
+
+        <table tableName="pv_role_map_permission"
+               domainObjectName="TcRoleMapPermission"
+               mapperName="TcRoleMapPermissionMapper"/>
 
         <table tableName="pv_permission"
                domainObjectName="TcPermission"
-               mapperName="TcPermissionMapper">
-            <columnOverride column="type"
-                            javaType="com.ysu.zyw.tc.api.dao.penum.TcPermissionType"
-                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-        </table>
+               mapperName="TcPermissionMapper"/>
 
-        <table tableName="pv_permission_set"
-               domainObjectName="TcPermissionSet"
-               mapperName="TcPermissionSetMapper"/>
+        <table tableName="pv_role"
+               domainObjectName="TcRole"
+               mapperName="TcRoleMapper"/>
 
-        <table tableName="pv_permission_set_map_permission"
-               domainObjectName="TcPermissionSetMapPermission"
-               mapperName="TcPermissionSetMapPermissionMapper"/>
-
-        <!-- items -->
-        <table tableName="tm_item"
-               domainObjectName="TcItem"
-               mapperName="TcItemMapper">
-            <columnOverride column="state"
-                            javaType="com.ysu.zyw.tc.api.dao.penum.TcItemState"
-                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-        </table>
-
-        <table tableName="tm_item_detail"
-               domainObjectName="TcItemDetail"
-               mapperName="TcItemDetailMapper"/>
-
-        <table tableName="tm_item_classify"
-               domainObjectName="TcItemClassify"
-               mapperName="TcItemClassifyMapper"/>
-
-        <table tableName="tm_item_pic"
-               domainObjectName="TcItemPic"
-               mapperName="TcItemPicMapper">
-            <columnOverride column="covers"
-                            javaType="java.lang.Boolean"/>
-        </table>
-
-        <table tableName="tm_item_icon"
-               domainObjectName="TcItemIcon"
-               mapperName="TcItemIconMapper"/>
-
-        <table tableName="tm_item_icon_mapping"
-               domainObjectName="TcItemIconMapping"
-               mapperName="TcItemIconMappingMapper"/>
-
-        <table tableName="tm_item_property"
-               domainObjectName="TcItemProperty"
-               mapperName="TcItemPropertyMapper"/>
+        <table tableName="pv_menu"
+               domainObjectName="TcMenu"
+               mapperName="TcMenuMapper"/>
 
     </context>
 

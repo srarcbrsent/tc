@@ -19,13 +19,13 @@ public class TcAccountMapPermission implements Serializable {
 
     private String permissionId;
 
-    private Date createdTimestamp;
-
-    private String createdPerson;
+    private String updatedPerson;
 
     private Date updatedTimestamp;
 
-    private String updatedPerson;
+    private String createdPerson;
+
+    private Date createdTimestamp;
 
     private static final long serialVersionUID = 1L;
 }

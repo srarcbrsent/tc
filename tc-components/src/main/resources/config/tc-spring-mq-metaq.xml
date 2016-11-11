@@ -24,7 +24,7 @@
     <bean id="listenerContainer" class="com.ysu.zyw.tc.components.mq.metaq.TcMetaMessageQueueListenerRegistry">
         <property name="messageSessionFactory" ref="sessionFactory"/>
         <property name="messageBodyConverter" ref="messageBodyConverter"/>
-        <property name="subscribers" ref="metaQueueMessageSubcribers"/>
+        <property name="subscribers" ref="metaQueueMessageSubscribers"/>
     </bean>
 
     <bean id="defaultAbstractTopic"

@@ -6,13 +6,15 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="email_activated" jdbcType="INTEGER" property="emailActivated" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="mobile_activated" jdbcType="INTEGER" property="mobileActivated" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="self_describing" jdbcType="VARCHAR" property="selfDescribing" />
     <result column="lock_release_time" jdbcType="TIMESTAMP" property="lockReleaseTime" />
     <result column="delected" jdbcType="INTEGER" property="delected" />
-    <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
+    <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
     <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
     <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
   </resultMap>
@@ -75,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, account, email, mobile, password, self_describing, lock_release_time, delected, 
-    updated_timestamp, updated_person, created_person, created_timestamp
+    id, name, account, email, email_activated, mobile, mobile_activated, avatar, password, 
+    lock_release_time, delected, updated_person, updated_timestamp, created_person, created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountExample" resultMap="BaseResultMap">
     select
@@ -113,15 +115,17 @@
   </delete>
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
     insert into mb_account (id, name, account, 
-      email, mobile, password, 
-      self_describing, lock_release_time, delected, 
-      updated_timestamp, updated_person, created_person, 
-      created_timestamp)
+      email, email_activated, mobile, 
+      mobile_activated, avatar, password, 
+      lock_release_time, delected, updated_person, 
+      updated_timestamp, created_person, created_timestamp
+      )
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{selfDescribing,jdbcType=VARCHAR}, #{lockReleaseTime,jdbcType=TIMESTAMP}, #{delected,jdbcType=INTEGER}, 
-      #{updatedTimestamp,jdbcType=TIMESTAMP}, #{updatedPerson,jdbcType=VARCHAR}, #{createdPerson,jdbcType=VARCHAR}, 
-      #{createdTimestamp,jdbcType=TIMESTAMP})
+      #{email,jdbcType=VARCHAR}, #{emailActivated,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
+      #{mobileActivated,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{lockReleaseTime,jdbcType=TIMESTAMP}, #{delected,jdbcType=INTEGER}, #{updatedPerson,jdbcType=VARCHAR}, 
+      #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
     insert into mb_account
@@ -138,14 +142,20 @@
       <if test="email != null">
         email,
       </if>
+      <if test="emailActivated != null">
+        email_activated,
+      </if>
       <if test="mobile != null">
         mobile,
       </if>
+      <if test="mobileActivated != null">
+        mobile_activated,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
       <if test="password != null">
         password,
-      </if>
-      <if test="selfDescribing != null">
-        self_describing,
       </if>
       <if test="lockReleaseTime != null">
         lock_release_time,
@@ -153,11 +163,11 @@
       <if test="delected != null">
         delected,
       </if>
-      <if test="updatedTimestamp != null">
-        updated_timestamp,
-      </if>
       <if test="updatedPerson != null">
         updated_person,
+      </if>
+      <if test="updatedTimestamp != null">
+        updated_timestamp,
       </if>
       <if test="createdPerson != null">
         created_person,
@@ -179,14 +189,20 @@
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
+      <if test="emailActivated != null">
+        #{emailActivated,jdbcType=INTEGER},
+      </if>
       <if test="mobile != null">
         #{mobile,jdbcType=VARCHAR},
       </if>
+      <if test="mobileActivated != null">
+        #{mobileActivated,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="selfDescribing != null">
-        #{selfDescribing,jdbcType=VARCHAR},
       </if>
       <if test="lockReleaseTime != null">
         #{lockReleaseTime,jdbcType=TIMESTAMP},
@@ -194,11 +210,11 @@
       <if test="delected != null">
         #{delected,jdbcType=INTEGER},
       </if>
-      <if test="updatedTimestamp != null">
-        #{updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
       <if test="updatedPerson != null">
         #{updatedPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTimestamp != null">
+        #{updatedTimestamp,jdbcType=TIMESTAMP},
       </if>
       <if test="createdPerson != null">
         #{createdPerson,jdbcType=VARCHAR},
@@ -229,14 +245,20 @@
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
       </if>
+      <if test="record.emailActivated != null">
+        email_activated = #{record.emailActivated,jdbcType=INTEGER},
+      </if>
       <if test="record.mobile != null">
         mobile = #{record.mobile,jdbcType=VARCHAR},
       </if>
+      <if test="record.mobileActivated != null">
+        mobile_activated = #{record.mobileActivated,jdbcType=INTEGER},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
-      </if>
-      <if test="record.selfDescribing != null">
-        self_describing = #{record.selfDescribing,jdbcType=VARCHAR},
       </if>
       <if test="record.lockReleaseTime != null">
         lock_release_time = #{record.lockReleaseTime,jdbcType=TIMESTAMP},
@@ -244,11 +266,11 @@
       <if test="record.delected != null">
         delected = #{record.delected,jdbcType=INTEGER},
       </if>
-      <if test="record.updatedTimestamp != null">
-        updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.updatedPerson != null">
         updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedTimestamp != null">
+        updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
       </if>
       <if test="record.createdPerson != null">
         created_person = #{record.createdPerson,jdbcType=VARCHAR},
@@ -267,13 +289,15 @@
       name = #{record.name,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
+      email_activated = #{record.emailActivated,jdbcType=INTEGER},
       mobile = #{record.mobile,jdbcType=VARCHAR},
+      mobile_activated = #{record.mobileActivated,jdbcType=INTEGER},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      self_describing = #{record.selfDescribing,jdbcType=VARCHAR},
       lock_release_time = #{record.lockReleaseTime,jdbcType=TIMESTAMP},
       delected = #{record.delected,jdbcType=INTEGER},
-      updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
+      updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{record.createdPerson,jdbcType=VARCHAR},
       created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -292,14 +316,20 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="emailActivated != null">
+        email_activated = #{emailActivated,jdbcType=INTEGER},
+      </if>
       <if test="mobile != null">
         mobile = #{mobile,jdbcType=VARCHAR},
       </if>
+      <if test="mobileActivated != null">
+        mobile_activated = #{mobileActivated,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="selfDescribing != null">
-        self_describing = #{selfDescribing,jdbcType=VARCHAR},
       </if>
       <if test="lockReleaseTime != null">
         lock_release_time = #{lockReleaseTime,jdbcType=TIMESTAMP},
@@ -307,11 +337,11 @@
       <if test="delected != null">
         delected = #{delected,jdbcType=INTEGER},
       </if>
-      <if test="updatedTimestamp != null">
-        updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
       <if test="updatedPerson != null">
         updated_person = #{updatedPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTimestamp != null">
+        updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
       </if>
       <if test="createdPerson != null">
         created_person = #{createdPerson,jdbcType=VARCHAR},
@@ -327,13 +357,15 @@
     set name = #{name,jdbcType=VARCHAR},
       account = #{account,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
+      email_activated = #{emailActivated,jdbcType=INTEGER},
       mobile = #{mobile,jdbcType=VARCHAR},
+      mobile_activated = #{mobileActivated,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      self_describing = #{selfDescribing,jdbcType=VARCHAR},
       lock_release_time = #{lockReleaseTime,jdbcType=TIMESTAMP},
       delected = #{delected,jdbcType=INTEGER},
-      updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
+      updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{createdPerson,jdbcType=VARCHAR},
       created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
@@ -361,30 +393,34 @@
       name, 
       account, 
       email, 
+      email_activated, 
       mobile, 
+      mobile_activated, 
+      avatar, 
       password, 
-      self_describing, 
       lock_release_time, 
       delected, 
-      updated_timestamp, 
       updated_person, 
+      updated_timestamp, 
       created_person, 
       created_timestamp
     ) values 
-    <foreach collection="list" item="item" separator=", ">
-      (#{item.id,jdbcType=VARCHAR}, 
-      #{item.name,jdbcType=VARCHAR}, 
-      #{item.account,jdbcType=VARCHAR}, 
-      #{item.email,jdbcType=VARCHAR}, 
-      #{item.mobile,jdbcType=VARCHAR}, 
-      #{item.password,jdbcType=VARCHAR}, 
-      #{item.selfDescribing,jdbcType=VARCHAR}, 
-      #{item.lockReleaseTime,jdbcType=TIMESTAMP}, 
-      #{item.delected,jdbcType=INTEGER}, 
-      #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 
-      #{item.updatedPerson,jdbcType=VARCHAR}, 
-      #{item.createdPerson,jdbcType=VARCHAR}, 
-      #{item.createdTimestamp,jdbcType=TIMESTAMP})
+    <foreach collection="list" items="items" separator=", ">
+      (#{items.id,jdbcType=VARCHAR}, 
+      #{items.name,jdbcType=VARCHAR}, 
+      #{items.account,jdbcType=VARCHAR}, 
+      #{items.email,jdbcType=VARCHAR}, 
+      #{items.emailActivated,jdbcType=INTEGER}, 
+      #{items.mobile,jdbcType=VARCHAR}, 
+      #{items.mobileActivated,jdbcType=INTEGER}, 
+      #{items.avatar,jdbcType=VARCHAR}, 
+      #{items.password,jdbcType=VARCHAR}, 
+      #{items.lockReleaseTime,jdbcType=TIMESTAMP}, 
+      #{items.delected,jdbcType=INTEGER}, 
+      #{items.updatedPerson,jdbcType=VARCHAR}, 
+      #{items.updatedTimestamp,jdbcType=TIMESTAMP}, 
+      #{items.createdPerson,jdbcType=VARCHAR}, 
+      #{items.createdTimestamp,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
 </mapper>

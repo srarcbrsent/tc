@@ -2,9 +2,6 @@ package com.ysu.zyw.tc.api.impl.mbg.test;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.api.dao.mappers.TcMbgMapper;
-import com.ysu.zyw.tc.api.dao.po.TcMbg;
-import com.ysu.zyw.tc.api.dao.po.TcMbgExample;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;

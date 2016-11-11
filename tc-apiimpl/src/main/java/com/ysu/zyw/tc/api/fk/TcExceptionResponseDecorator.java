@@ -2,11 +2,11 @@ package com.ysu.zyw.tc.api.fk;
 
 import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
-import com.ysu.zyw.tc.mw.TcP;
-import com.ysu.zyw.tc.mw.TcR;
+import com.ysu.zyw.tc.model.mw.TcP;
+import com.ysu.zyw.tc.model.mw.TcR;
+import com.ysu.zyw.tc.model.validator.TcValidator;
 import com.ysu.zyw.tc.sys.ex.TcResourceConflictException;
 import com.ysu.zyw.tc.sys.ex.TcResourceNotFoundException;
-import com.ysu.zyw.tc.validator.TcValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ClassUtils;
 import org.aspectj.lang.ProceedingJoinPoint;

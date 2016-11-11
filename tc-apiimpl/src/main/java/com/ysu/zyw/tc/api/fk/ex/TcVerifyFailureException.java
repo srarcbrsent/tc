@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.fk.ex;
 
-import com.ysu.zyw.tc.validator.TcValidator;
+import com.ysu.zyw.tc.model.validator.TcValidator;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 

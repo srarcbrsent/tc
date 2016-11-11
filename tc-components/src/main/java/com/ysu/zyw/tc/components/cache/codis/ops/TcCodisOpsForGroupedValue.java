@@ -1,12 +1,12 @@
 package com.ysu.zyw.tc.components.cache.codis.ops;
 
-import com.ysu.zyw.tc.components.cache.TcOpsForGroupedValue;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -67,12 +67,22 @@ public class TcCodisOpsForGroupedValue extends TcAbstractCodisOpsForGroup {
         return sValue;
     }
 
+    // this method requires a parameter named 'lock', it means if it is not null, we will lock it and
+    // try to load value, otherwise we will directly load value by value loader.
+    // we suppose that there may have multiple thread share one cache key and this key will be get
+    // concurrently, then if this key expired, there may have multi thread pass through cache layer
+    // and going to call value loader, so if this logic is just like this, you should provide a lock
+    // and we will use this lock to lock the value loader call.
+    // and on another hand, if there is no more thread shared one cache key or there is no more thread
+    // call this get method concurrently, you should not give a lock and all request will go through
+    // concurrently.
     @Override
-    @SuppressWarnings(value = {"unchecked", "Duplicates"})
+    @SuppressWarnings(value = {"unchecked", "Duplicates", "SynchronizationOnLocalVariableOrMethodParameter"})
     public <T> T get(@Nonnull String group,
                      @Nonnull String key,
                      @Nonnull Callable<T> valueLoader,
-                     long timeout) {
+                     long timeout,
+                     @Nullable final Object lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -86,7 +96,7 @@ public class TcCodisOpsForGroupedValue extends TcAbstractCodisOpsForGroup {
             value = (T) redisTemplate.opsForValue().get(groupedKey);
         } catch (Exception e) {
             log.error("", e);
-            return loadValue(group, key, groupedKey, valueLoader, timeout);
+            return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
         }
         if (Objects.nonNull(value)) {
             if (log.isDebugEnabled()) {
@@ -94,33 +104,44 @@ public class TcCodisOpsForGroupedValue extends TcAbstractCodisOpsForGroup {
             }
             return value;
         } else {
-            // FIXME if the key is a dynamic key(the key has so many enumerated values), this place may lead
-            // to constant pool memory leak, this place we suppose the key is not inconstancy
-            synchronized (groupedKey.intern()) {
-                // lock and get
-                T sValue = null;
-                try {
-                    sValue = (T) redisTemplate.opsForValue().get(groupedKey);
-                } catch (Exception e) {
-                    log.error("", e);
+            if (Objects.isNull(lock)) {
+                return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
+            } else {
+                synchronized (lock) {
+                    return loadValue(group, key, groupedKey, valueLoader, timeout);
                 }
-                if (Objects.nonNull(sValue)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("get object [{}] from cache by key [{}]", sValue, key);
-                    }
-                    return sValue;
-                }
-                // not found, try load value.
-                return loadValue(group, key, groupedKey, valueLoader, timeout);
             }
         }
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T loadValue(@Nonnull String group,
                             @Nonnull String key,
-                            @Nonnull String groupedKey,
+                            String groupedKey,
                             @Nonnull Callable<T> valueLoader,
                             long timeout) {
+        // lock and get
+        T sValue = null;
+        try {
+            sValue = (T) redisTemplate.opsForValue().get(groupedKey);
+        } catch (Exception e) {
+            log.error("", e);
+        }
+        if (Objects.nonNull(sValue)) {
+            if (log.isDebugEnabled()) {
+                log.debug("get object [{}] from cache by key [{}]", sValue, key);
+            }
+            return sValue;
+        }
+        // not found, try load value.
+        return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
+    }
+
+    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String group,
+                                                   @Nonnull String key,
+                                                   @Nonnull String groupedKey,
+                                                   @Nonnull Callable<T> valueLoader,
+                                                   long timeout) {
         T loadedValue;
         try {
             loadedValue = valueLoader.call();

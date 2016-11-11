@@ -17,7 +17,8 @@
                           ref="#{T(com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder).objectMapper}"/>
             </bean>
         </mvc:message-converters>
-        <mvc:async-support default-timeout="30000" task-executor="threadPoolTaskScheduler"/>
+        <mvc:async-support default-timeout="${properties.web.async.default.timeout}"
+                           task-executor="threadPoolTaskScheduler"/>
     </mvc:annotation-driven>
 
     <bean id="conversionService"
@@ -34,7 +35,7 @@
 
     <mvc:default-servlet-handler/>
 
-    <context:component-scan base-package="com.ysu.zyw.tc.web"/>
+    <context:component-scan base-package="com.ysu.zyw.tc.platform.web"/>
 
     <bean class="com.ysu.zyw.tc.components.utils.handler.TcHandleExceptionHandler">
         <property name="view5xx" value="/server_error.html"/>

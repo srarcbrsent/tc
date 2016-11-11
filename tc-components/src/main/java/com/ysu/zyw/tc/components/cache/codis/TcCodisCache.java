@@ -32,7 +32,6 @@ public class TcCodisCache implements Cache {
     @Setter
     private long expiration = -1;
 
-    // serializable key serializable value.
     @Getter
     @Setter
     private RedisTemplate<Serializable, Serializable> codisTemplate;
@@ -82,7 +81,7 @@ public class TcCodisCache implements Cache {
     public <T> T get(Object key, Callable<T> valueLoader) {
         checkNotNull(key, "null key is not allowed");
         checkNotNull(valueLoader, "null value loader is not allowed");
-        T value = null;
+        T value;
         try {
             value = (T) codisTemplate.opsForValue().get(key);
         } catch (Exception e) {

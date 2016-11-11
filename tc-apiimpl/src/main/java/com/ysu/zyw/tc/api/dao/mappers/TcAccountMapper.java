@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.api.dao.mappers;
 
-import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import com.ysu.zyw.tc.api.dao.po.TcAccount;
+import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

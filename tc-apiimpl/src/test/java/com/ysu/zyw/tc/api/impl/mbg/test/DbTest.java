@@ -5,12 +5,14 @@ import com.alibaba.druid.pool.DruidPooledConnection;
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.base.tools.TcTuple;
+import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
+import org.apache.ibatis.type.SqlTimestampTypeHandler;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,6 +22,7 @@ import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,7 +33,7 @@ public class DbTest {
     @Before
     public void setUp() throws Exception {
         dataSource = new DruidDataSource();
-        dataSource.setUrl("jdbc:mysql://rdb.tc.com:3306/tc_platform");
+        dataSource.setUrl("jdbc:mysql://rdb.tc.com:3306/tc");
         Properties properties = new Properties();
         properties.put("useUnicode", Boolean.TRUE.toString());
         properties.put("characterEncoding", "UTF-8");
@@ -471,6 +474,29 @@ public class DbTest {
                 sequence += 10;
             }
         }
+    }
+
+    @Test
+    public void test9() throws SQLException {
+        DruidPooledConnection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT * FROM demo");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        SqlTimestampTypeHandler sqlTimestampTypeHandler = new SqlTimestampTypeHandler();
+        while (resultSet.next()) {
+            Timestamp timestamp = sqlTimestampTypeHandler.getNullableResult(resultSet, 2);
+            Date date = new Date(timestamp.getTime());
+            System.out.println(TcDateUtils.format(date));
+        }
+    }
+
+    @Test
+    public void test10() throws SQLException {
+        DruidPooledConnection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "INSERT INTO demo VALUES ('123', ?)");
+        preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
+        preparedStatement.execute();
     }
 
     private List<String> findTag() throws SQLException {

@@ -1,24 +1,17 @@
 package com.ysu.zyw.tc.components.cache.redis.ops;
 
 import com.ysu.zyw.tc.sys.ex.TcException;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -26,7 +19,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class TcRedisOpsForGroupedValue extends TcAbstractRedisOpsForGroup {
 
     @Override
-    public void set(@Nonnull String group, @Nonnull String key, @Nonnull Serializable value, long timeout) {
+    public void set(@Nonnull String group,
+                    @Nonnull String key,
+                    @Nonnull Serializable value,
+                    long timeout) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(value, "null value is not allowed");
@@ -39,7 +35,9 @@ public class TcRedisOpsForGroupedValue extends TcAbstractRedisOpsForGroup {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(@Nonnull String group, @Nonnull String key, @Nonnull Class<T> clazz) {
+    public <T> T get(@Nonnull String group,
+                     @Nonnull String key,
+                     @Nonnull Class<T> clazz) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(clazz, "null clazz is not allowed");
@@ -51,9 +49,22 @@ public class TcRedisOpsForGroupedValue extends TcAbstractRedisOpsForGroup {
         return sValue;
     }
 
+    // this method requires a parameter named 'lock', it means if it is not null, we will lock it and
+    // try to load value, otherwise we will directly load value by value loader.
+    // we suppose that there may have multiple thread share one cache key and this key will be get
+    // concurrently, then if this key expired, there may have multi thread pass through cache layer
+    // and going to call value loader, so if this logic is just like this, you should provide a lock
+    // and we will use this lock to lock the value loader call.
+    // and on another hand, if there is no more thread shared one cache key or there is no more thread
+    // call this get method concurrently, you should not give a lock and all request will go through
+    // concurrently.
     @SuppressWarnings({"Duplicates", "unchecked"})
     @Override
-    public <T> T get(@Nonnull String group, @Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout) {
+    public <T> T get(@Nonnull String group,
+                     @Nonnull String key,
+                     @Nonnull Callable<T> valueLoader,
+                     long timeout,
+                     @Nullable final Object lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -67,7 +78,7 @@ public class TcRedisOpsForGroupedValue extends TcAbstractRedisOpsForGroup {
             value = (T) redisTemplate.opsForValue().get(groupedKey);
         } catch (Exception e) {
             log.error("", e);
-            return loadValue(group, key, groupedKey, valueLoader, timeout);
+            return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
         }
         if (Objects.nonNull(value)) {
             if (log.isDebugEnabled()) {
@@ -75,38 +86,49 @@ public class TcRedisOpsForGroupedValue extends TcAbstractRedisOpsForGroup {
             }
             return value;
         } else {
-            // FIXME if the key is a dynamic key(the key has so many enumerated values), this place may lead
-            // to constant pool memory leak, this place we suppose the key is not inconstancy
-            synchronized (groupedKey.intern()) {
-                // lock and get
-                T sValue = null;
-                try {
-                    sValue = (T) redisTemplate.opsForValue().get(groupedKey);
-                } catch (Exception e) {
-                    log.error("", e);
+            if (Objects.isNull(lock)) {
+                return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
+            } else {
+                synchronized (groupedKey.intern()) {
+                    return loadValue(group, key, valueLoader, timeout, groupedKey);
                 }
-                if (Objects.nonNull(sValue)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("get object [{}] from cache by key [{}]", sValue, key);
-                    }
-                    return sValue;
-                }
-                // not found, try load value.
-                return loadValue(group, key, groupedKey, valueLoader, timeout);
             }
         }
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T loadValue(@Nonnull String group,
                             @Nonnull String key,
-                            @Nonnull String groupedKey,
                             @Nonnull Callable<T> valueLoader,
-                            long timeout) {
+                            long timeout, String groupedKey) {
+        // lock and get
+        T sValue = null;
+        try {
+            sValue = (T) redisTemplate.opsForValue().get(groupedKey);
+        } catch (Exception e) {
+            log.error("", e);
+        }
+        if (Objects.nonNull(sValue)) {
+            if (log.isDebugEnabled()) {
+                log.debug("get object [{}] from cache by key [{}]", sValue, key);
+            }
+            return sValue;
+        }
+        // not found, try load value.
+        return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
+    }
+
+    @SuppressWarnings({"Duplicates", "UnusedParameters"})
+    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String group,
+                                                   @Nonnull String key,
+                                                   @Nonnull String groupedKey,
+                                                   @Nonnull Callable<T> valueLoader,
+                                                   long timeout) {
         T loadedValue;
         try {
             loadedValue = valueLoader.call();
         } catch (Exception e) {
-            throw new TcException(e, key, valueLoader);
+            throw new TcException(e, groupedKey, valueLoader);
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
         try {
@@ -116,14 +138,15 @@ public class TcRedisOpsForGroupedValue extends TcAbstractRedisOpsForGroup {
             log.error("", e);
         }
         if (log.isDebugEnabled()) {
-            log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, key, timeout);
+            log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, groupedKey, timeout);
         }
         return loadedValue;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean exists(@Nonnull String group, @Nonnull String key) {
+    public boolean exists(@Nonnull String group,
+                          @Nonnull String key) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         return redisTemplate.execute((RedisCallback<Boolean>) connection -> connection
@@ -132,7 +155,9 @@ public class TcRedisOpsForGroupedValue extends TcAbstractRedisOpsForGroup {
     }
 
     @Override
-    public void expire(@Nonnull String group, @Nonnull String key, long timeout) {
+    public void expire(@Nonnull String group,
+                       @Nonnull String key,
+                       long timeout) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         String groupedKey = buildGroupedKey(group, key);
@@ -140,7 +165,8 @@ public class TcRedisOpsForGroupedValue extends TcAbstractRedisOpsForGroup {
     }
 
     @Override
-    public void delete(@Nonnull String group, @Nonnull String key) {
+    public void delete(@Nonnull String group,
+                       @Nonnull String key) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         String groupedKey = buildGroupedKey(group, key);

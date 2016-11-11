@@ -27,6 +27,11 @@ public class TcDateUtils {
         return DateUtils.parseDate(text, DATE_FORMATS);
     }
 
+    public static String format(@Nonnull Date date) {
+        checkNotNull(date);
+        return format(date, FULL_DATE_FORMAT_VALUE);
+    }
+
     public static String format(@Nonnull Date date, @Nonnull String format) {
         checkNotNull(date);
         checkNotNull(format);

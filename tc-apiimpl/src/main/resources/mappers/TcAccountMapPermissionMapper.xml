@@ -5,10 +5,10 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="account_id" jdbcType="VARCHAR" property="accountId" />
     <result column="permission_id" jdbcType="VARCHAR" property="permissionId" />
-    <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
-    <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
-    <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
+    <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
+    <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
+    <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,8 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account_id, permission_id, created_timestamp, created_person, updated_timestamp, 
-    updated_person
+    id, account_id, permission_id, updated_person, updated_timestamp, created_person, 
+    created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountMapPermissionExample" resultMap="BaseResultMap">
     select
@@ -107,11 +107,11 @@
   </delete>
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountMapPermission">
     insert into pv_account_map_permission (id, account_id, permission_id, 
-      created_timestamp, created_person, updated_timestamp, 
-      updated_person)
+      updated_person, updated_timestamp, created_person, 
+      created_timestamp)
     values (#{id,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR}, 
-      #{createdTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, 
-      #{updatedPerson,jdbcType=VARCHAR})
+      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
+      #{createdTimestamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountMapPermission">
     insert into pv_account_map_permission
@@ -125,17 +125,17 @@
       <if test="permissionId != null">
         permission_id,
       </if>
-      <if test="createdTimestamp != null">
-        created_timestamp,
-      </if>
-      <if test="createdPerson != null">
-        created_person,
+      <if test="updatedPerson != null">
+        updated_person,
       </if>
       <if test="updatedTimestamp != null">
         updated_timestamp,
       </if>
-      <if test="updatedPerson != null">
-        updated_person,
+      <if test="createdPerson != null">
+        created_person,
+      </if>
+      <if test="createdTimestamp != null">
+        created_timestamp,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -148,17 +148,17 @@
       <if test="permissionId != null">
         #{permissionId,jdbcType=VARCHAR},
       </if>
-      <if test="createdTimestamp != null">
-        #{createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdPerson != null">
-        #{createdPerson,jdbcType=VARCHAR},
+      <if test="updatedPerson != null">
+        #{updatedPerson,jdbcType=VARCHAR},
       </if>
       <if test="updatedTimestamp != null">
         #{updatedTimestamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedPerson != null">
-        #{updatedPerson,jdbcType=VARCHAR},
+      <if test="createdPerson != null">
+        #{createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimestamp != null">
+        #{createdTimestamp,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -180,17 +180,17 @@
       <if test="record.permissionId != null">
         permission_id = #{record.permissionId,jdbcType=VARCHAR},
       </if>
-      <if test="record.createdTimestamp != null">
-        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.createdPerson != null">
-        created_person = #{record.createdPerson,jdbcType=VARCHAR},
+      <if test="record.updatedPerson != null">
+        updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       </if>
       <if test="record.updatedTimestamp != null">
         updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updatedPerson != null">
-        updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
+      <if test="record.createdPerson != null">
+        created_person = #{record.createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTimestamp != null">
+        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -202,10 +202,10 @@
     set id = #{record.id,jdbcType=VARCHAR},
       account_id = #{record.accountId,jdbcType=VARCHAR},
       permission_id = #{record.permissionId,jdbcType=VARCHAR},
-      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
-      created_person = #{record.createdPerson,jdbcType=VARCHAR},
+      updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
-      updated_person = #{record.updatedPerson,jdbcType=VARCHAR}
+      created_person = #{record.createdPerson,jdbcType=VARCHAR},
+      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -219,17 +219,17 @@
       <if test="permissionId != null">
         permission_id = #{permissionId,jdbcType=VARCHAR},
       </if>
-      <if test="createdTimestamp != null">
-        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdPerson != null">
-        created_person = #{createdPerson,jdbcType=VARCHAR},
+      <if test="updatedPerson != null">
+        updated_person = #{updatedPerson,jdbcType=VARCHAR},
       </if>
       <if test="updatedTimestamp != null">
         updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedPerson != null">
-        updated_person = #{updatedPerson,jdbcType=VARCHAR},
+      <if test="createdPerson != null">
+        created_person = #{createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimestamp != null">
+        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -238,10 +238,10 @@
     update pv_account_map_permission
     set account_id = #{accountId,jdbcType=VARCHAR},
       permission_id = #{permissionId,jdbcType=VARCHAR},
-      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
-      created_person = #{createdPerson,jdbcType=VARCHAR},
+      updated_person = #{updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-      updated_person = #{updatedPerson,jdbcType=VARCHAR}
+      created_person = #{createdPerson,jdbcType=VARCHAR},
+      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountMapPermissionExample" resultType="java.lang.String">
@@ -266,19 +266,19 @@
       id, 
       account_id, 
       permission_id, 
-      created_timestamp, 
-      created_person, 
+      updated_person, 
       updated_timestamp, 
-      updated_person
+      created_person, 
+      created_timestamp
     ) values 
-    <foreach collection="list" item="item" separator=", ">
-      (#{item.id,jdbcType=VARCHAR}, 
-      #{item.accountId,jdbcType=VARCHAR}, 
-      #{item.permissionId,jdbcType=VARCHAR}, 
-      #{item.createdTimestamp,jdbcType=TIMESTAMP}, 
-      #{item.createdPerson,jdbcType=VARCHAR}, 
-      #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 
-      #{item.updatedPerson,jdbcType=VARCHAR})
+    <foreach collection="list" items="items" separator=", ">
+      (#{items.id,jdbcType=VARCHAR}, 
+      #{items.accountId,jdbcType=VARCHAR}, 
+      #{items.permissionId,jdbcType=VARCHAR}, 
+      #{items.updatedPerson,jdbcType=VARCHAR}, 
+      #{items.updatedTimestamp,jdbcType=TIMESTAMP}, 
+      #{items.createdPerson,jdbcType=VARCHAR}, 
+      #{items.createdTimestamp,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
 </mapper>

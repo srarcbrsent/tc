@@ -21,19 +21,23 @@ public class TcAccount implements Serializable {
 
     private String email;
 
+    private Boolean emailActivated;
+
     private String mobile;
 
-    private String password;
+    private Boolean mobileActivated;
 
-    private String selfDescribing;
+    private String avatar;
+
+    private String password;
 
     private Date lockReleaseTime;
 
     private Boolean delected;
 
-    private Date updatedTimestamp;
-
     private String updatedPerson;
+
+    private Date updatedTimestamp;
 
     private String createdPerson;
 

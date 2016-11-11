@@ -6,16 +6,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- !!!! Infrastructure !!!! -->
 
     <!-- aop -->
+    <!-- response-decorator: -500 / cache: -20 / transaction: 0 -->
     <aop:aspectj-autoproxy proxy-target-class="true"
                            expose-proxy="true"/>
 
     <!-- metaq -->
-    <bean id="metaQueueMessageSubcribers" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <bean id="metaQueueMessageSubscribers" class="org.springframework.beans.factory.config.MapFactoryBean">
         <property name="sourceMap">
             <map>
             </map>

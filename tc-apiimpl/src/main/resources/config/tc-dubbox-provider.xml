@@ -10,7 +10,8 @@
     <dubbo:application name="tc-apiimpl" owner="yaowu.zhang"/>
 
     <dubbo:registry address="${properties.rpc.dubbox.registry.host}"
-                    port="${properties.rpc.dubbox.registry.port}"/>
+                    port="${properties.rpc.dubbox.registry.port}"
+                    client="curator"/>
 
     <dubbo:protocol name="dubbo"
                     port="${properties.rpc.dubbox.protocol.dubbo.port}"/>
@@ -27,7 +28,7 @@
 
     <dubbo:monitor protocol="registry"/>
 
-    <dubbo:service interface="com.ysu.zyw.tc.api.TcAccountApi" ref="tcAccountsApi"/>
+    <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAccountApi" ref="tcAccountsApi"/>
 
     <bean id="tcAccountsApi" class="com.ysu.zyw.tc.api.impl.accounts.TcAccountApiImpl"/>
 

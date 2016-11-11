@@ -4,11 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="shiroCache" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager.TcShiroCache">
+    <bean id="shiroCache" class="com.ysu.zyw.tc.platform.fk.shiro.TcShiroCacheManager.TcShiroCache">
         <constructor-arg ref="redisCache"/>
     </bean>
 
-    <bean id="shiroCacheManager" class="com.ysu.zyw.tc.fk.shiro.TcShiroCacheManager">
+    <bean id="shiroCacheManager" class="com.ysu.zyw.tc.platform.fk.shiro.TcShiroCacheManager">
         <property name="shiroCacheContainer">
             <map>
                 <entry key="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).SHIRO_AUTHENTICATION_CACHE}"
@@ -27,9 +27,9 @@
         <!-- no necessary to validate session, because codis not support values operation -->
         <property name="sessionValidationSchedulerEnabled" value="false"/>
         <property name="sessionDAO">
-            <bean class="com.ysu.zyw.tc.fk.shiro.TcSessionDao">
+            <bean class="com.ysu.zyw.tc.platform.fk.shiro.TcSessionDao">
                 <property name="sessionIdGenerator">
-                    <bean class="com.ysu.zyw.tc.fk.shiro.TcClusterSessionIdGenerator"/>
+                    <bean class="com.ysu.zyw.tc.platform.fk.shiro.TcClusterSessionIdGenerator"/>
                 </property>
             </bean>
         </property>
@@ -44,13 +44,13 @@
         </property>
         <property name="sessionListeners">
             <list>
-                <bean id="sessionLogger" class="com.ysu.zyw.tc.fk.shiro.TcLogSessionListener"/>
+                <bean id="sessionLogger" class="com.ysu.zyw.tc.platform.fk.shiro.TcLogSessionListener"/>
             </list>
         </property>
     </bean>
 
     <bean id="md5Sha256CredentialsMatcher"
-          class="com.ysu.zyw.tc.fk.shiro.TcMd5Sha256CredentialsMatcher"/>
+          class="com.ysu.zyw.tc.platform.fk.shiro.TcMd5Sha256CredentialsMatcher"/>
 
     <bean id="abstractAuthorizingRealm" abstract="true" class="org.apache.shiro.realm.AuthorizingRealm">
         <property name="credentialsMatcher" ref="md5Sha256CredentialsMatcher"/>
@@ -66,7 +66,7 @@
 
     <bean id="authorizingRealm"
           parent="abstractAuthorizingRealm"
-          class="com.ysu.zyw.tc.fk.shiro.TcAuthorizingRealm"/>
+          class="com.ysu.zyw.tc.platform.fk.shiro.TcAuthorizingRealm"/>
 
     <bean id="shiroRealms"
           class="org.springframework.beans.factory.config.ListFactoryBean">
@@ -82,7 +82,7 @@
         <property name="authenticator">
             <bean class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
                 <property name="authenticationListeners">
-                    <bean class="com.ysu.zyw.tc.fk.shiro.TcLogAuthenticationListener"/>
+                    <bean class="com.ysu.zyw.tc.platform.fk.shiro.TcLogAuthenticationListener"/>
                 </property>
                 <property name="authenticationStrategy">
                     <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"/>
@@ -95,7 +95,7 @@
         <property name="rememberMeManager">
             <bean class="org.apache.shiro.web.mgt.CookieRememberMeManager">
                 <property name="cipherKey"
-                          value="#{T(org.apache.shiro.codec.Base64).decode('Bf7MfkNR0axGGptozrebag==')}"/>
+                          value="${properties.security.shiro.session.remeberme.cookie.chpher.key.base64}"/>
                 <property name="cookie">
                     <bean class="org.apache.shiro.web.servlet.SimpleCookie">
                         <constructor-arg index="0" value="tc_rid"/>
@@ -110,7 +110,7 @@
         </property>
     </bean>
 
-    <bean id="shiroFilter" class="com.ysu.zyw.tc.fk.shiro.TcShiroFilterFactoryBean">
+    <bean id="shiroFilter" class="com.ysu.zyw.tc.platform.fk.shiro.TcShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="${properties.security.shiro.login.url}"/>
         <property name="unauthorizedUrl" value="${properties.security.shiro.unauthorized.url}"/>

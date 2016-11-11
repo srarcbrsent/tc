@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.dao.po;
 
-import com.ysu.zyw.tc.api.dao.penum.TcSignupPlatform;
+import com.ysu.zyw.tc.api.dao.penum.TcPlatform;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,13 +16,17 @@ import java.util.Date;
 public class TcAccountAssist implements Serializable {
     private String id;
 
-    private TcSignupPlatform signupPlatform;
+    private TcPlatform signinPlatform;
 
-    private Date signupTimestamp;
+    private Date signinTimestamp;
 
-    private Boolean mobileActivated;
+    private String signinIp;
 
-    private Boolean emailActivated;
+    private TcPlatform lastSignupPlatform;
+
+    private Date lastSignupTimestamp;
+
+    private String lastSignupIp;
 
     private String updatedPerson;
 

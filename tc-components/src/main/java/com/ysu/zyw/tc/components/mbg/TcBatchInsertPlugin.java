@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * TcBatchInsertPlugin is a extension of mybatis-generator, plug this plugin will let mybatis-generator
- * generate two function that batchInsert.
+ * generate a function named batchInsert.
  *
  * @author yaowu.zhang
  */

@@ -186,12 +186,12 @@ public class TcAccountMapPermissionExample {
         }
 
         public Criteria andIdBetween(String value1, String value2) {
-            addCriterion("id duration", value1, value2, "id");
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(String value1, String value2) {
-            addCriterion("id not duration", value1, value2, "id");
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -256,12 +256,12 @@ public class TcAccountMapPermissionExample {
         }
 
         public Criteria andAccountIdBetween(String value1, String value2) {
-            addCriterion("account_id duration", value1, value2, "accountId");
+            addCriterion("account_id between", value1, value2, "accountId");
             return (Criteria) this;
         }
 
         public Criteria andAccountIdNotBetween(String value1, String value2) {
-            addCriterion("account_id not duration", value1, value2, "accountId");
+            addCriterion("account_id not between", value1, value2, "accountId");
             return (Criteria) this;
         }
 
@@ -326,202 +326,12 @@ public class TcAccountMapPermissionExample {
         }
 
         public Criteria andPermissionIdBetween(String value1, String value2) {
-            addCriterion("permission_id duration", value1, value2, "permissionId");
+            addCriterion("permission_id between", value1, value2, "permissionId");
             return (Criteria) this;
         }
 
         public Criteria andPermissionIdNotBetween(String value1, String value2) {
-            addCriterion("permission_id not duration", value1, value2, "permissionId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampIsNull() {
-            addCriterion("created_timestamp is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampIsNotNull() {
-            addCriterion("created_timestamp is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampEqualTo(Date value) {
-            addCriterion("created_timestamp =", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampNotEqualTo(Date value) {
-            addCriterion("created_timestamp <>", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampGreaterThan(Date value) {
-            addCriterion("created_timestamp >", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampGreaterThanOrEqualTo(Date value) {
-            addCriterion("created_timestamp >=", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampLessThan(Date value) {
-            addCriterion("created_timestamp <", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampLessThanOrEqualTo(Date value) {
-            addCriterion("created_timestamp <=", value, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampIn(List<Date> values) {
-            addCriterion("created_timestamp in", values, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampNotIn(List<Date> values) {
-            addCriterion("created_timestamp not in", values, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp duration", value1, value2, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("created_timestamp not duration", value1, value2, "createdTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonIsNull() {
-            addCriterion("created_person is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonIsNotNull() {
-            addCriterion("created_person is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonEqualTo(String value) {
-            addCriterion("created_person =", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonNotEqualTo(String value) {
-            addCriterion("created_person <>", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonGreaterThan(String value) {
-            addCriterion("created_person >", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonGreaterThanOrEqualTo(String value) {
-            addCriterion("created_person >=", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonLessThan(String value) {
-            addCriterion("created_person <", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonLessThanOrEqualTo(String value) {
-            addCriterion("created_person <=", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonLike(String value) {
-            addCriterion("created_person like", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonNotLike(String value) {
-            addCriterion("created_person not like", value, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonIn(List<String> values) {
-            addCriterion("created_person in", values, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonNotIn(List<String> values) {
-            addCriterion("created_person not in", values, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonBetween(String value1, String value2) {
-            addCriterion("created_person duration", value1, value2, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedPersonNotBetween(String value1, String value2) {
-            addCriterion("created_person not duration", value1, value2, "createdPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampIsNull() {
-            addCriterion("updated_timestamp is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampIsNotNull() {
-            addCriterion("updated_timestamp is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampEqualTo(Date value) {
-            addCriterion("updated_timestamp =", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampNotEqualTo(Date value) {
-            addCriterion("updated_timestamp <>", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampGreaterThan(Date value) {
-            addCriterion("updated_timestamp >", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(Date value) {
-            addCriterion("updated_timestamp >=", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampLessThan(Date value) {
-            addCriterion("updated_timestamp <", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampLessThanOrEqualTo(Date value) {
-            addCriterion("updated_timestamp <=", value, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampIn(List<Date> values) {
-            addCriterion("updated_timestamp in", values, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampNotIn(List<Date> values) {
-            addCriterion("updated_timestamp not in", values, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp duration", value1, value2, "updatedTimestamp");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
-            addCriterion("updated_timestamp not duration", value1, value2, "updatedTimestamp");
+            addCriterion("permission_id not between", value1, value2, "permissionId");
             return (Criteria) this;
         }
 
@@ -586,12 +396,202 @@ public class TcAccountMapPermissionExample {
         }
 
         public Criteria andUpdatedPersonBetween(String value1, String value2) {
-            addCriterion("updated_person duration", value1, value2, "updatedPerson");
+            addCriterion("updated_person between", value1, value2, "updatedPerson");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedPersonNotBetween(String value1, String value2) {
-            addCriterion("updated_person not duration", value1, value2, "updatedPerson");
+            addCriterion("updated_person not between", value1, value2, "updatedPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampIsNull() {
+            addCriterion("updated_timestamp is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampIsNotNull() {
+            addCriterion("updated_timestamp is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampEqualTo(Date value) {
+            addCriterion("updated_timestamp =", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampNotEqualTo(Date value) {
+            addCriterion("updated_timestamp <>", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampGreaterThan(Date value) {
+            addCriterion("updated_timestamp >", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated_timestamp >=", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampLessThan(Date value) {
+            addCriterion("updated_timestamp <", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampLessThanOrEqualTo(Date value) {
+            addCriterion("updated_timestamp <=", value, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampIn(List<Date> values) {
+            addCriterion("updated_timestamp in", values, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampNotIn(List<Date> values) {
+            addCriterion("updated_timestamp not in", values, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampBetween(Date value1, Date value2) {
+            addCriterion("updated_timestamp between", value1, value2, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedTimestampNotBetween(Date value1, Date value2) {
+            addCriterion("updated_timestamp not between", value1, value2, "updatedTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonIsNull() {
+            addCriterion("created_person is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonIsNotNull() {
+            addCriterion("created_person is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonEqualTo(String value) {
+            addCriterion("created_person =", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonNotEqualTo(String value) {
+            addCriterion("created_person <>", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonGreaterThan(String value) {
+            addCriterion("created_person >", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonGreaterThanOrEqualTo(String value) {
+            addCriterion("created_person >=", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonLessThan(String value) {
+            addCriterion("created_person <", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonLessThanOrEqualTo(String value) {
+            addCriterion("created_person <=", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonLike(String value) {
+            addCriterion("created_person like", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonNotLike(String value) {
+            addCriterion("created_person not like", value, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonIn(List<String> values) {
+            addCriterion("created_person in", values, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonNotIn(List<String> values) {
+            addCriterion("created_person not in", values, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonBetween(String value1, String value2) {
+            addCriterion("created_person between", value1, value2, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedPersonNotBetween(String value1, String value2) {
+            addCriterion("created_person not between", value1, value2, "createdPerson");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampIsNull() {
+            addCriterion("created_timestamp is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampIsNotNull() {
+            addCriterion("created_timestamp is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampEqualTo(Date value) {
+            addCriterion("created_timestamp =", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampNotEqualTo(Date value) {
+            addCriterion("created_timestamp <>", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampGreaterThan(Date value) {
+            addCriterion("created_timestamp >", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampGreaterThanOrEqualTo(Date value) {
+            addCriterion("created_timestamp >=", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampLessThan(Date value) {
+            addCriterion("created_timestamp <", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampLessThanOrEqualTo(Date value) {
+            addCriterion("created_timestamp <=", value, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampIn(List<Date> values) {
+            addCriterion("created_timestamp in", values, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampNotIn(List<Date> values) {
+            addCriterion("created_timestamp not in", values, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampBetween(Date value1, Date value2) {
+            addCriterion("created_timestamp between", value1, value2, "createdTimestamp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedTimestampNotBetween(Date value1, Date value2) {
+            addCriterion("created_timestamp not between", value1, value2, "createdTimestamp");
             return (Criteria) this;
         }
     }
