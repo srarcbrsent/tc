@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -83,7 +82,7 @@ public class TcAccountService {
 
         if (Objects.nonNull(tcAccount.getLockReleaseTime()) &&
                 // 当前时间在解锁之前之前
-                Calendar.getInstance().getTime().before(tcAccount.getLockReleaseTime())) {
+                new Date().before(tcAccount.getLockReleaseTime())) {
             // 被锁定
             throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号被锁定，请联系管理员！"));
         }
@@ -120,7 +119,7 @@ public class TcAccountService {
 
         // id
         String id = TcIdWorker.upperCaseUuid();
-        Date now = Calendar.getInstance().getTime();
+        Date now = new Date();
 
         // account
         TcAccount tcAccount = new TcAccount();
@@ -218,7 +217,7 @@ public class TcAccountService {
             throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("邮箱已存在，请更换重试！"));
         }
 
-        Date now = Calendar.getInstance().getTime();
+        Date now = new Date();
 
         // account
         TcAccount tcAccount = new TcAccount();

@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Resource;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,7 +64,7 @@ public class TcAuthService {
             throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
         }
 
-        Date now = Calendar.getInstance().getTime();
+        Date now = new Date();
         List<TcAccountMapRole> tcAccountMapRoleList = roleIdList
                 .parallelStream()
                 .map(roleId ->
@@ -96,7 +95,7 @@ public class TcAuthService {
             throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
         }
 
-        Date now = Calendar.getInstance().getTime();
+        Date now = new Date();
         List<TcAccountMapPermission> tcAccountMapPermissionList = permissionIdList
                 .parallelStream()
                 .map(permissionId ->

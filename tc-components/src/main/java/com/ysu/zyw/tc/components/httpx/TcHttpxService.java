@@ -192,7 +192,7 @@ public class TcHttpxService {
             uriVariables = Maps.newHashMap();
         }
 
-        Date now = Calendar.getInstance().getTime();
+        Date now = new Date();
         ResponseEntity<T> responseEntity =
                 restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
 

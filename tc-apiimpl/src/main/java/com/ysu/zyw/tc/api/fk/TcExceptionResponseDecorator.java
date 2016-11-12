@@ -17,7 +17,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 
 import java.lang.reflect.Method;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -34,7 +33,7 @@ public class TcExceptionResponseDecorator {
         Method method = ((MethodSignature)proceedingJoinPoint.getSignature()).getMethod();
         try {
             log.info("call open apiimpl [{}]", proceedingJoinPoint.getSignature().getName());
-            Date startTime = Calendar.getInstance().getTime();
+            Date startTime = new Date();
             Object result = proceedingJoinPoint.proceed();
             log.info("call open apiimpl [{}] finish, take time [{}]", proceedingJoinPoint.getSignature().getName(),
                     TcDateUtils.duration(startTime, new Date()));
