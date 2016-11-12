@@ -54,8 +54,8 @@ public class TcExceptionResponseDecorator {
         } catch (TcVerifyFailureException e) {
             // 如果内部抛出了验证错误异常 则对页面返回 422 无法处理的请求
             TcValidator.TcVerifyFailure tcVerifyFailure = e.getTcVerifyFailure();
-            log.error("[{}][{}][{}][{}]", "OpenApi切面-无法处理的请求", "切面异常捕获", proceedingJoinPoint.getArgs(),
-                    tcVerifyFailure, e);
+            log.warn("[{}][{}][{}][{}]", "OpenApi切面-无法处理的请求-业务级异常", "切面异常捕获",
+                    proceedingJoinPoint.getArgs(), tcVerifyFailure);
             return determineResponse(method).setCode(TcR.R.UNPROCESSABLE_ENTITY)
                     .setDescription(TcR.R.UNPROCESSABLE_ENTITY_DESCRIPTION).setExtra(tcVerifyFailure);
         } catch (Exception e) {
@@ -65,6 +65,7 @@ public class TcExceptionResponseDecorator {
         }
     }
 
+    // generic type with jackson serialization, do not cause any problem, if use other serialization, may failed.
     private <T, E> TcR<T, E> determineResponse(Method method) {
         return ClassUtils.isAssignable(method.getReturnType(), TcP.class) ? new TcP() : new TcR();
     }

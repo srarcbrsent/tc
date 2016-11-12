@@ -1,12 +1,14 @@
 package com.ysu.zyw.tc.api.impl.mbg.test;
 
+import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.BeanUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Date;
 
 public class FreeTest {
 
@@ -46,7 +48,10 @@ public class FreeTest {
 
     @Test
     public void test04() {
-        System.out.println(new Date());
+        com.ysu.zyw.tc.model.api.i.accounts.TiAccount tiAccount = new com.ysu.zyw.tc.model.api.i.accounts.TiAccount().setId(TcIdWorker.upperCaseUuid());
+        ToAccount toAccount = new ToAccount();
+        BeanUtils.copyProperties(tiAccount, toAccount);
+        System.out.println(toAccount);
     }
 
 }

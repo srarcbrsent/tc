@@ -30,6 +30,10 @@
 
     <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAccountApi" ref="tcAccountsApi"/>
 
+    <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAuthenticationApi" ref="tcAuthenticationApi"/>
+
     <bean id="tcAccountsApi" class="com.ysu.zyw.tc.api.impl.accounts.TcAccountApiImpl"/>
+
+    <bean id="tcAuthenticationApi" class="com.ysu.zyw.tc.api.impl.accounts.auth.TcAuthenticationApiImpl"/>
 
 </beans>

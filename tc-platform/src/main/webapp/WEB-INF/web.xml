@@ -57,8 +57,7 @@
             classpath*:/config/tc-spring-deploy.xml,
             classpath*:/config/tc-spring-cache-redis.xml,
             classpath*:/config/tc-spring-mq-metaq.xml,
-            classpath*:/config/tc-spring-rpc-httpx.xml,
-            classpath*:/config/tc-spring-websocket.xml
+            classpath*:/config/tc-spring-rpc-httpx.xml
         </param-value>
     </context-param>
 
@@ -73,7 +72,8 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
-                classpath*:/config/tc-spring-web-deploy.xml
+                classpath*:/config/tc-spring-web-deploy.xml,
+                classpath*:/config/tc-spring-websocket.xml
             </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>

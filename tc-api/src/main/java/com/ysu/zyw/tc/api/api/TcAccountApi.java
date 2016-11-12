@@ -1,8 +1,11 @@
 package com.ysu.zyw.tc.api.api;
 
-import com.ysu.zyw.tc.model.api.accounts.TmAccount;
+import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
+import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
+import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
+import org.jboss.resteasy.annotations.Form;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,40 +18,52 @@ public interface TcAccountApi {
     @Path(value = "/create_account")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<Void, Void> createAccount(
-            TmAccount tmAccount
+    TcR<String, Object> createAccount(
+            TiAccount tiAccount
     );
 
     @GET
     @Path(value = "/delete_account/{id}")
-    @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
+    @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<Void, Void> deleteAccount(
-            @PathParam(value = "id") String accountId
+    TcR<Void, Object> deleteAccount(
+            @PathParam(value = "id") String accountId,
+            @QueryParam(value = "delector") String delector
     );
 
     @POST
     @Path(value = "/update_account")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<Void, Void> updateAccount(
-            TmAccount tmAccount
+    TcR<Void, Object> updateAccount(
+            TiAccount tiAccount
     );
 
     @GET
     @Path(value = "/find_account/{id}")
-    @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
+    @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<TmAccount, Void> findAccount(
+    TcR<ToAccount, Object> findAccount(
             @PathParam(value = "id") String accountId
     );
 
-    @GET
-    @Path(value = "/find_accounts")
+    @POST
+    @Path(value = "/count_accounts")
     @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcP<List<TmAccount>, Void> findAccounts(
-            @QueryParam(value = "ids") List<String> accountIds
+    TcR<Long, Object> countAccounts(
+            @Form TiFindAccountsTerms tiFindAccountsTerms
+    );
+
+    @POST
+    @Path(value = "/find_accounts/{currentPage}/{pageSize}/{containsTotalPage}")
+    @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    TcP<List<ToAccount>, Object> findAccounts(
+            @Form TiFindAccountsTerms tiFindAccountsTerms,
+            @PathParam(value = "currentPage") Integer currentPage,
+            @PathParam(value = "pageSize") Integer pageSize,
+            @PathParam(value = "containsTotalPage") Boolean containsTotalPage
     );
 
 }

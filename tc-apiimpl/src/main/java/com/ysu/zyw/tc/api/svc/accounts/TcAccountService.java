@@ -7,17 +7,22 @@ import com.ysu.zyw.tc.api.dao.po.TcAccount;
 import com.ysu.zyw.tc.api.dao.po.TcAccountAssist;
 import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
+import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
-import com.ysu.zyw.tc.model.api.accounts.TmAccount;
+import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
+import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
+import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.validator.TcValidator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.Resource;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,12 +43,18 @@ public class TcAccountService {
     @Resource
     private TcAccountAssistMapper tcAccountAssistMapper;
 
+    @Resource
+    private TcAuthService tcAuthService;
+
+    /**
+     * @return 可登陆：可登陆账号的accountId
+     * @throws TcVerifyFailureException 业务级不可登陆: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional(readOnly = true)
-    public String canSignup(@Nonnull String username,
-                            @Nonnull String password,
-                            @Nonnull Boolean canAccountLogin,
-                            @Nonnull Boolean canEmailLogin,
-                            @Nonnull Boolean canMobileLogin) {
+    public String signup(@Nonnull String username,
+                         @Nonnull Boolean canAccountLogin,
+                         @Nonnull Boolean canEmailLogin,
+                         @Nonnull Boolean canMobileLogin) {
         checkArgument(canAccountLogin || canEmailLogin || canMobileLogin);
 
         TcAccountExample tcAccountExample = new TcAccountExample();
@@ -67,10 +78,8 @@ public class TcAccountService {
         }
 
         TcAccount tcAccount = tcAccounts.get(0);
-        if (!Objects.equals(tcAccount.getPassword(), password)) {
-            // 账号存在 密码不对
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("密码错误，请重试！"));
-        }
+
+        // the password check is pass to caller
 
         if (Objects.nonNull(tcAccount.getLockReleaseTime()) &&
                 // 当前时间在解锁之前之前
@@ -82,27 +91,31 @@ public class TcAccountService {
         return tcAccount.getId();
     }
 
+    /**
+     * @return 创建成功：可登陆账号的accountId
+     * @throws TcVerifyFailureException 业务级创建失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
-    public String createAccount(@Nonnull TmAccount tmAccount, @Nonnull String creator) {
+    public String createAccount(@Nonnull TiAccount tiAccount) {
         // check
-        if (existName(tmAccount.getName())) {
+        if (existName(tiAccount.getName())) {
             throw new TcVerifyFailureException(
-                    new TcValidator.TcVerifyFailure("名称【" + tmAccount.getName() + "】重复！"));
+                    new TcValidator.TcVerifyFailure("名称【" + tiAccount.getName() + "】重复！"));
         }
 
-        if (StringUtils.isNotBlank(tmAccount.getAccount()) && existAccount(tmAccount.getAccount())) {
+        if (StringUtils.isNotBlank(tiAccount.getAccount()) && existAccount(tiAccount.getAccount())) {
             throw new TcVerifyFailureException(
-                    new TcValidator.TcVerifyFailure("账号【" + tmAccount.getAccount() + "】重复！"));
+                    new TcValidator.TcVerifyFailure("账号【" + tiAccount.getAccount() + "】重复！"));
         }
 
-        if (StringUtils.isNotBlank(tmAccount.getEmail()) && existEmail(tmAccount.getEmail())) {
+        if (StringUtils.isNotBlank(tiAccount.getEmail()) && existEmail(tiAccount.getEmail())) {
             throw new TcVerifyFailureException(
-                    new TcValidator.TcVerifyFailure("邮箱【" + tmAccount.getEmail() + "】重复！"));
+                    new TcValidator.TcVerifyFailure("邮箱【" + tiAccount.getEmail() + "】重复！"));
         }
 
-        if (StringUtils.isNotBlank(tmAccount.getMobile()) && existAccount(tmAccount.getMobile())) {
+        if (StringUtils.isNotBlank(tiAccount.getMobile()) && existAccount(tiAccount.getMobile())) {
             throw new TcVerifyFailureException(
-                    new TcValidator.TcVerifyFailure("手机【" + tmAccount.getMobile() + "】重复！"));
+                    new TcValidator.TcVerifyFailure("手机【" + tiAccount.getMobile() + "】重复！"));
         }
 
         // id
@@ -112,14 +125,14 @@ public class TcAccountService {
         // account
         TcAccount tcAccount = new TcAccount();
 
-        BeanUtils.copyProperties(tmAccount, tcAccount);
+        BeanUtils.copyProperties(tiAccount, tcAccount);
         tcAccount
                 .setId(id)
                 .setDelected(false)
-                .setLockReleaseTime(null)
-                .setUpdatedPerson(creator)
+                .setLockReleaseTime(now)
+                .setUpdatedPerson(tiAccount.getOperatorAccountId())
                 .setUpdatedTimestamp(now)
-                .setCreatedPerson(creator)
+                .setCreatedPerson(tiAccount.getOperatorAccountId())
                 .setCreatedTimestamp(now);
         // if no mobile set, mobile activated auto set to false
         if (StringUtils.isBlank(tcAccount.getMobile())) {
@@ -133,16 +146,16 @@ public class TcAccountService {
         // account assist
         TcAccountAssist tcAccountAssist = new TcAccountAssist();
 
-        BeanUtils.copyProperties(tmAccount, tcAccountAssist);
+        BeanUtils.copyProperties(tiAccount, tcAccountAssist);
         tcAccountAssist
                 .setId(id)
-                .setSigninPlatform(TcPlatform.convert(tmAccount.getSignupPlatform()))
+                .setSigninPlatform(TcPlatform.convert(tiAccount.getSigninPlatform()))
                 .setSigninTimestamp(now)
-                .setLastSignupPlatform(TcPlatform.convert(tmAccount.getSignupPlatform()))
+                .setLastSignupPlatform(TcPlatform.convert(tiAccount.getSigninPlatform()))
                 .setLastSignupTimestamp(now)
-                .setUpdatedPerson(creator)
+                .setUpdatedPerson(tiAccount.getOperatorAccountId())
                 .setUpdatedTimestamp(now)
-                .setCreatedPerson(creator)
+                .setCreatedPerson(tiAccount.getOperatorAccountId())
                 .setCreatedTimestamp(now);
 
         // insert
@@ -154,12 +167,16 @@ public class TcAccountService {
         return id;
     }
 
+    /**
+     * @throws TcVerifyFailureException 业务级删除失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
     public void deleteAccount(@Nonnull String accountId, @Nonnull String delector) {
         if (!existId(accountId)) {
             throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
         }
 
+        // account
         TcAccount tcAccount = new TcAccount();
         tcAccount
                 .setId(accountId)
@@ -167,38 +184,62 @@ public class TcAccountService {
                 .setUpdatedPerson(delector)
                 .setUpdatedTimestamp(new Date());
 
+        // role
+        tcAuthService.revokeAllRole(accountId);
+
+        // permission
+        tcAuthService.revokeAllPermission(accountId);
+
         int count = tcAccountMapper.updateByPrimaryKeySelective(tcAccount);
 
         checkArgument(count == 1);
     }
 
+    /**
+     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
-    public void updateAccount(@Nonnull TmAccount tmAccount, @Nonnull String updator) {
-        // check
-        if (!existId(tmAccount.getId())) {
+    public void updateAccount(@Nonnull TiAccount tiAccount) {
+        TcAccount originalTcAccount = this.findOriginalTcAccount(tiAccount.getId(), false);
+
+        if (Objects.isNull(originalTcAccount)) {
             throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
         }
 
-        TcAccount originalTcAccount = this.findOriginalTcAccount(tmAccount.getId());
+        if (StringUtils.isNotEmpty(tiAccount.getName()) && existName(tiAccount.getName())) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("名字已存在，请更换重试！"));
+        }
+
+        if (StringUtils.isNotEmpty(tiAccount.getMobile()) && existName(tiAccount.getMobile())) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("手机已存在，请更换重试！"));
+        }
+
+        if (StringUtils.isNotEmpty(tiAccount.getEmail()) && existName(tiAccount.getEmail())) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("邮箱已存在，请更换重试！"));
+        }
 
         Date now = Calendar.getInstance().getTime();
 
         // account
         TcAccount tcAccount = new TcAccount();
 
-        BeanUtils.copyProperties(tmAccount, tcAccount);
+        BeanUtils.copyProperties(tiAccount, tcAccount);
         tcAccount
-                // can not be updated, use spi instead.
-                .setMobileActivated(null)
-                // can not be updated, use spi instead.
-                .setEmailActivated(null)
+                // mobile activated can not be update to true, use spi instead.
+                .setMobileActivated(
+                        BooleanUtils.isTrue(tiAccount.getMobileActivated()) ? null : tiAccount.getMobileActivated()
+                )
+                // email activated can not be update to true, use spi instead.
+                .setEmailActivated(
+                        BooleanUtils.isTrue(tiAccount.getEmailActivated()) ? null : tiAccount.getEmailActivated()
+                )
                 // can not be updated, use spi instead.
                 .setLockReleaseTime(null)
                 // can not be updated, use spi instead.
                 .setPassword(null)
                 // can not be updated, use spi instead.
                 .setDelected(null)
-                .setUpdatedPerson(updator)
+                .setUpdatedPerson(tiAccount.getOperatorAccountId())
                 .setUpdatedTimestamp(now);
         // if mobile changed, auto set mobile activated to false.
         if (StringUtils.isNotBlank(tcAccount.getMobile()) &&
@@ -206,7 +247,7 @@ public class TcAccountService {
             tcAccount.setMobileActivated(false);
         }
         // if email changed, auto set email activated to false.
-        if (StringUtils.isBlank(tcAccount.getEmail()) &&
+        if (StringUtils.isNotBlank(tcAccount.getEmail()) &&
                 Objects.equals(tcAccount.getEmail(), originalTcAccount.getEmail())) {
             tcAccount.setEmailActivated(false);
         }
@@ -217,6 +258,9 @@ public class TcAccountService {
         checkArgument(cAccount == 1);
     }
 
+    /**
+     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
     public void updatePassword(String accountId, String oPassword, String nPassword, @Nonnull String operator) {
         TcAccountExample tcAccountExample = new TcAccountExample();
@@ -227,12 +271,12 @@ public class TcAccountService {
                 .andDelectedEqualTo(false);
         List<TcAccount> tcAccounts = tcAccountMapper.selectByExample(tcAccountExample);
         if (CollectionUtils.isEmpty(tcAccounts)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
         }
         TcAccount originalTcAccountWithPassword = tcAccounts.get(0);
 
         if (!Objects.equals(originalTcAccountWithPassword.getPassword(), oPassword)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("原密码错误，请更换重试！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("原密码错误！"));
         }
 
         TcAccount tcAccount = new TcAccount();
@@ -248,12 +292,12 @@ public class TcAccountService {
     }
 
     @Transactional(readOnly = true)
-    public TmAccount findAccount(@Nonnull String accountId) {
+    public ToAccount findAccount(@Nonnull String accountId, Boolean containsPassword) {
         checkNotNull(accountId);
-        return convert2TmAccount(this.findOriginalTcAccount(accountId));
+        return convert2ToAccount(this.findOriginalTcAccount(accountId, containsPassword));
     }
 
-    private TcAccount findOriginalTcAccount(@Nonnull String accountId) {
+    private TcAccount findOriginalTcAccount(@Nonnull String accountId, Boolean containsPassword) {
         checkNotNull(accountId);
         TcAccountExample tcAccountExample = new TcAccountExample();
         tcAccountExample.setStartLine(0);
@@ -267,86 +311,94 @@ public class TcAccountService {
         }
 
         TcAccount tcAccount = tcAccounts.get(0);
-        tcAccount.setPassword(null);
+        if (BooleanUtils.isFalse(containsPassword)) {
+            tcAccount.setPassword(null);
+        }
 
         return tcAccount;
     }
 
-    // TODO builder
     @Transactional(readOnly = true)
-    public long countAccounts(List<String> ids,
-                              String name,
-                              String account,
-                              String mobile,
-                              String email,
-                              Boolean mobileActivated,
-                              Boolean emailActivated,
-                              Boolean locked
-
-                              ) {
-        TcAccountExample tcAccountExample = new TcAccountExample();
-        TcAccountExample.Criteria criteria = tcAccountExample.createCriteria();
-        criteria.andDelectedEqualTo(false);
-        if (CollectionUtils.isNotEmpty(ids)) {
-            criteria.andIdIn(ids);
-        }
-        if (StringUtils.isNotBlank(name)) {
-            criteria.andNameEqualTo(name);
-        }
-        if (StringUtils.isNotBlank(account)) {
-            criteria.andAccountEqualTo(account);
-        }
-        if (StringUtils.isNotBlank(email)) {
-            criteria.andEmailEqualTo(email);
-        }
-        if (StringUtils.isNotBlank(mobile)) {
-            criteria.andEmailEqualTo(email);
-        }
+    public long countAccounts(TiFindAccountsTerms tiFindAccountsTerms) {
+        TcAccountExample tcAccountExample =
+                buildFindAccountCondition(
+                        tiFindAccountsTerms.getIds(),
+                        tiFindAccountsTerms.getName(),
+                        tiFindAccountsTerms.getAccount(),
+                        tiFindAccountsTerms.getMobile(),
+                        tiFindAccountsTerms.getEmail(),
+                        tiFindAccountsTerms.getMobileActivated(),
+                        tiFindAccountsTerms.getEmailActivated(),
+                        tiFindAccountsTerms.getLocked());
         return tcAccountMapper.countByExample(tcAccountExample);
     }
 
     @Transactional(readOnly = true)
-    public List<TmAccount> findAccounts(List<String> ids,
-                                        String name,
-                                        String account,
-                                        String email,
-                                        String mobile,
-                                        boolean includeAssistField,
-                                        boolean includePaymentField,
+    public List<ToAccount> findAccounts(TiFindAccountsTerms tiFindAccountsTerms,
                                         int currentPage,
                                         int pageSize) {
-        TcAccountExample tcAccountExample = new TcAccountExample();
+        TcAccountExample tcAccountExample =
+                buildFindAccountCondition(
+                        tiFindAccountsTerms.getIds(),
+                        tiFindAccountsTerms.getName(),
+                        tiFindAccountsTerms.getAccount(),
+                        tiFindAccountsTerms.getMobile(),
+                        tiFindAccountsTerms.getEmail(),
+                        tiFindAccountsTerms.getMobileActivated(),
+                        tiFindAccountsTerms.getEmailActivated(),
+                        tiFindAccountsTerms.getLocked());
         TcPaginationUtils.Pagination pagination = TcPaginationUtils.paging(currentPage, pageSize);
         tcAccountExample.setStartLine(pagination.getStartLine());
         tcAccountExample.setPageSize(pagination.getPageSize());
+
+        List<TcAccount> tcAccountList = tcAccountMapper.selectByExample(tcAccountExample);
+
+        Stream<ToAccount> tmAccountsStream = tcAccountList.stream().map(this::convert2ToAccount);
+
+        return tmAccountsStream.collect(Collectors.toList());
+    }
+
+    private TcAccountExample buildFindAccountCondition(@Nullable List<String> ids,
+                                                       @Nullable String name,
+                                                       @Nullable String account,
+                                                       @Nullable String mobile,
+                                                       @Nullable String email,
+                                                       @Nullable Boolean mobileActivated,
+                                                       @Nullable Boolean emailActivated,
+                                                       @Nullable Boolean locked) {
+        TcAccountExample tcAccountExample = new TcAccountExample();
         TcAccountExample.Criteria criteria = tcAccountExample.createCriteria();
         criteria.andDelectedEqualTo(false);
         if (CollectionUtils.isNotEmpty(ids)) {
             criteria.andIdIn(ids);
         }
-        if (StringUtils.isNotBlank(name)) {
+        if (StringUtils.isNotEmpty(name)) {
             criteria.andNameEqualTo(name);
         }
-        if (StringUtils.isNotBlank(account)) {
+        if (StringUtils.isNotEmpty(account)) {
             criteria.andAccountEqualTo(account);
         }
-        if (StringUtils.isNotBlank(email)) {
+        if (StringUtils.isNotEmpty(email)) {
             criteria.andEmailEqualTo(email);
         }
-        if (StringUtils.isNotBlank(mobile)) {
+        if (StringUtils.isNotEmpty(mobile)) {
             criteria.andEmailEqualTo(email);
         }
-        List<TcAccount> tcAccountList = tcAccountMapper.selectByExample(tcAccountExample);
-
-        Stream<TmAccount> tmAccountsStream = tcAccountList.stream().map(tcAccount -> {
-            TmAccount tmAccount = new TmAccount();
-
-            BeanUtils.copyProperties(tcAccount, tmAccount);
-            tmAccount.setPassword(null);
-            return tmAccount;
-        });
-
-        return tmAccountsStream.collect(Collectors.toList());
+        if (Objects.nonNull(mobileActivated)) {
+            criteria.andMobileActivatedEqualTo(mobileActivated);
+        }
+        if (Objects.nonNull(emailActivated)) {
+            criteria.andEmailActivatedEqualTo(emailActivated);
+        }
+        if (Objects.nonNull(locked)) {
+            Date now = new Date();
+            if (BooleanUtils.isTrue(locked)) {
+                criteria.andLockReleaseTimeGreaterThan(now);
+            } else {
+                criteria.andLockReleaseTimeLessThanOrEqualTo(now);
+            }
+        }
+        return tcAccountExample;
     }
 
     @Transactional(readOnly = true)
@@ -409,6 +461,9 @@ public class TcAccountService {
         return count == 1;
     }
 
+    /**
+     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
     public void activeMobile(@Nonnull String accountId, @Nonnull String mobile, @Nonnull String operator) {
         checkNotNull(accountId);
@@ -433,6 +488,9 @@ public class TcAccountService {
         checkArgument(count == 1);
     }
 
+    /**
+     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
     public void activeEmail(@Nonnull String accountId, @Nonnull String email, @Nonnull String operator) {
         checkNotNull(accountId);
@@ -457,10 +515,13 @@ public class TcAccountService {
         checkArgument(count == 1);
     }
 
+    /**
+     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
     public void lockAccount(@Nonnull String accountId, @Nonnull Date lockReleaseTime, @Nonnull String operator) {
         // check
-        TcAccount originalTcAccount = findOriginalTcAccount(accountId);
+        TcAccount originalTcAccount = findOriginalTcAccount(accountId, false);
         if (Objects.isNull(originalTcAccount)) {
             throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
         }
@@ -480,8 +541,10 @@ public class TcAccountService {
         checkArgument(count == 1);
     }
 
-    private TmAccount convert2TmAccount(TcAccount tcAccount) {
-        return null;
+    private ToAccount convert2ToAccount(TcAccount tcAccount) {
+        ToAccount toAccount = new ToAccount();
+        BeanUtils.copyProperties(tcAccount, toAccount);
+        return toAccount;
     }
 
 }

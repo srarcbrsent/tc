@@ -14,8 +14,6 @@
         <!-- !!!! Plugins !!!! -->
         <plugin type="com.ysu.zyw.tc.components.mbg.TcLombokModelPlugin"/>
 
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
-
         <plugin type="com.ysu.zyw.tc.components.mbg.TcPaginationPlugin"/>
 
         <plugin type="com.ysu.zyw.tc.components.mbg.TcSelectPrimaryKeyPlugin"/>

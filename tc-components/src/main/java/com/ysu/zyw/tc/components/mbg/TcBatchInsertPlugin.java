@@ -65,7 +65,7 @@ public class TcBatchInsertPlugin extends PluginAdapter {
 
         XmlElement foreachXmlElement = new XmlElement("foreach");
         foreachXmlElement.addAttribute(new Attribute("collection", "list"));
-        foreachXmlElement.addAttribute(new Attribute("items", "items"));
+        foreachXmlElement.addAttribute(new Attribute("item", "item"));
         foreachXmlElement.addAttribute(new Attribute("separator", ", "));
 
         String contentB = String.join(", \n      ", introspectedTable.getAllColumns().stream().map

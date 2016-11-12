@@ -1,4 +1,4 @@
 package com.ysu.zyw.tc.model.validator.mode;
 
-public interface TcUpdateMode {
+public interface TcAll {
 }

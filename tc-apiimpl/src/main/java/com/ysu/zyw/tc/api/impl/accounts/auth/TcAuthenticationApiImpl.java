@@ -2,11 +2,11 @@ package com.ysu.zyw.tc.api.impl.accounts.auth;
 
 import com.google.common.base.Preconditions;
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
-import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
-import com.ysu.zyw.tc.model.api.accounts.TmAccount;
-import com.ysu.zyw.tc.model.api.accounts.auth.TmPermission;
+import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.model.validator.TcValidator;
@@ -23,41 +23,32 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
     private TcAccountService tcAccountService;
 
     @Override
-    public TcR<TmAccount, TcValidator.TcVerifyFailure> signup(
+    public TcR<ToAccount, TcValidator.TcVerifyFailure> signup(
             String username,
-            String password,
             Boolean canAccountLogin,
             Boolean canEmailLogin,
             Boolean canMobileLogin) {
 
-        String succLoginAccountId;
-        try {
-            succLoginAccountId = tcAccountService.canSignup(
-                    username, password, canAccountLogin, canEmailLogin, canMobileLogin);
-        } catch (TcVerifyFailureException e) {
-            // signup failed
-            TcValidator.TcVerifyFailure tcVerifyFailure = e.getTcVerifyFailure();
-            return new TcR<>(TcR.R.UNPROCESSABLE_ENTITY, TcR.R.UNPROCESSABLE_ENTITY_DESCRIPTION, null, tcVerifyFailure);
-        }
+        // throw TcVerifyFailureException
+        String  succLoginAccountId =
+                tcAccountService.signup(username, canAccountLogin, canEmailLogin, canMobileLogin);
 
         Preconditions.checkNotNull(succLoginAccountId);
-        TmAccount tmAccount = tcAccountService.findAccount(succLoginAccountId, false, false);
+        ToAccount toAccount = tcAccountService.findAccount(succLoginAccountId, true);
 
-        // TODO mq
-
-        return TcR.ok(tmAccount);
+        return TcR.ok(toAccount);
     }
 
     @Override
-    public TcP<List<TmPermission>, Void> findMenus(String accountId) {
-        List<TmPermission> menuList = tcAuthService.fetchMenus(accountId);
-        return TcP.ok(menuList);
+    public TcP<List<ToMenu>, Void> findMenus(String accountId) {
+        List<ToMenu> toMenus = tcAuthService.fetchMenus(accountId);
+        return TcP.ok(null);
     }
 
     @Override
-    public TcP<List<TmPermission>, Void> findPms(String accountId) {
-        List<TmPermission> pms = tcAuthService.findPms(accountId);
-        return TcP.ok(pms);
+    public TcP<List<ToPermission>, Void> findPermissions(String accountId) {
+        List<ToPermission> toPermissions = tcAuthService.fetchPermissions(accountId);
+        return TcP.ok(null);
     }
 
 }

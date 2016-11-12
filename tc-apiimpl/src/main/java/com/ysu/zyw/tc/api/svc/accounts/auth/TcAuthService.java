@@ -3,7 +3,13 @@ package com.ysu.zyw.tc.api.svc.accounts.auth;
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.dao.mappers.*;
 import com.ysu.zyw.tc.api.dao.po.*;
+import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
+import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
+import com.ysu.zyw.tc.model.validator.TcValidator;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -43,11 +49,22 @@ public class TcAuthService {
     @Resource
     private TcRoleMapMenuMapper tcRoleMapMenuMapper;
 
+    @Resource
+    private TcAccountService tcAccountService;
+
+    /**
+     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
     public int grantRole(@Nonnull String accountId,
                          @Nonnull List<String> roleIdList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(roleIdList));
+
+        if (!tcAccountService.existAccount(accountId)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+        }
+
         Date now = Calendar.getInstance().getTime();
         List<TcAccountMapRole> tcAccountMapRoleList = roleIdList
                 .parallelStream()
@@ -66,11 +83,19 @@ public class TcAuthService {
         return tcAccountMapRoleMapper.batchInsert(tcAccountMapRoleList);
     }
 
+    /**
+     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     */
     @Transactional
     public int grantPermission(@Nonnull String accountId,
                                @Nonnull List<String> permissionIdList) {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionIdList));
+
+        if (!tcAccountService.existAccount(accountId)) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+        }
+
         Date now = Calendar.getInstance().getTime();
         List<TcAccountMapPermission> tcAccountMapPermissionList = permissionIdList
                 .parallelStream()
@@ -102,6 +127,15 @@ public class TcAuthService {
     }
 
     @Transactional
+    public int revokeAllRole(@Nonnull String accountId) {
+        checkNotNull(accountId);
+        TcAccountMapRoleExample tcAccountMapRoleExample = new TcAccountMapRoleExample();
+        tcAccountMapRoleExample.createCriteria()
+                .andAccountIdEqualTo(accountId);
+        return tcAccountMapRoleMapper.deleteByExample(tcAccountMapRoleExample);
+    }
+
+    @Transactional
     public int revokePermission(@Nonnull String accountId,
                                 @Nonnull List<String> permissionIdList) {
         checkNotNull(accountId);
@@ -113,8 +147,17 @@ public class TcAuthService {
         return tcAccountMapPermissionMapper.deleteByExample(tcAccountMapPermissionExample);
     }
 
+    @Transactional
+    public int revokeAllPermission(@Nonnull String accountId) {
+        checkNotNull(accountId);
+        TcAccountMapPermissionExample tcAccountMapPermissionExample = new TcAccountMapPermissionExample();
+        tcAccountMapPermissionExample.createCriteria()
+                .andAccountIdEqualTo(accountId);
+        return tcAccountMapPermissionMapper.deleteByExample(tcAccountMapPermissionExample);
+    }
+
     @Transactional(readOnly = true)
-    public List<TcRole> fetchRoleList(@Nonnull String accountId) {
+    public List<ToRole> fetchRoleList(@Nonnull String accountId) {
         checkNotNull(accountId);
 
         TcAccountMapRoleExample tcAccountMapRoleExample = new TcAccountMapRoleExample();
@@ -130,11 +173,12 @@ public class TcAuthService {
         TcRoleExample tcRoleExample = new TcRoleExample();
         tcRoleExample.createCriteria()
                 .andIdIn(holdingRoleIds);
-        return tcRoleMapper.selectByExample(tcRoleExample);
+        List<TcRole> tcRoles = tcRoleMapper.selectByExample(tcRoleExample);
+        return tcRoles.stream().map(this::convert2ToRole).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<TcPermission> fetchPermissionList(@Nonnull String accountId) {
+    public List<ToPermission> fetchPermissions(@Nonnull String accountId) {
         checkNotNull(accountId);
 
         // find role
@@ -175,13 +219,14 @@ public class TcAuthService {
         TcPermissionExample tcPermissionExample = new TcPermissionExample();
         tcPermissionExample.createCriteria()
                 .andIdIn(holdingAllPermissionIds);
-        return tcPermissionMapper.selectByExample(tcPermissionExample);
+        List<TcPermission> tcPermissions = tcPermissionMapper.selectByExample(tcPermissionExample);
+        return tcPermissions.stream().map(this::convert2ToPermission).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<TcMenu> fetchMenus(@Nonnull String accountId) {
+    public List<ToMenu> fetchMenus(@Nonnull String accountId) {
         List<String> tcRoleIds =
-                this.fetchRoleList(accountId).stream().map(TcRole::getId).collect(Collectors.toList());
+                this.fetchRoleList(accountId).stream().map(ToRole::getId).collect(Collectors.toList());
 
         if (CollectionUtils.isEmpty(tcRoleIds)) {
             return Lists.newArrayList();
@@ -199,7 +244,23 @@ public class TcAuthService {
         TcMenuExample tcMenuExample = new TcMenuExample();
         tcMenuExample.createCriteria()
                 .andIdIn(menuIds);
-        return tcMenuMapper.selectByExample(tcMenuExample);
+        List<TcMenu> tcMenus = tcMenuMapper.selectByExample(tcMenuExample);
+        return tcMenus.stream().map(this::convert2ToMenu).collect(Collectors.toList());
+    }
+
+    private ToRole convert2ToRole(TcRole tcRole) {
+        // TODO: 2016/11/12
+        return null;
+    }
+
+    private ToMenu convert2ToMenu(TcMenu tcMenu) {
+        // TODO: 2016/11/12
+        return null;
+    }
+
+    private ToPermission convert2ToPermission(TcPermission tcPermission) {
+        // TODO: 2016/11/12
+        return null;
     }
 
 }

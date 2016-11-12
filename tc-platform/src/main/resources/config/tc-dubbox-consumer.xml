@@ -10,7 +10,8 @@
     <dubbo:application name="tc-platform" owner="yaowu.zhang"/>
 
     <dubbo:registry address="${properties.rpc.dubbox.registry.host}"
-                    port="${properties.rpc.dubbox.registry.port}"/>
+                    port="${properties.rpc.dubbox.registry.port}"
+                    client="curator"/>
 
     <dubbo:consumer version="${properties.rpc.dubbox.consumer.version}"
                     timeout="${properties.rpc.dubbox.consumer.timeout}"
@@ -19,5 +20,7 @@
     <dubbo:monitor protocol="registry"/>
 
     <dubbo:reference interface="com.ysu.zyw.tc.api.api.TcAccountApi"/>
+
+    <dubbo:reference interface="com.ysu.zyw.tc.api.api.TcAuthenticationApi"/>
 
 </beans>

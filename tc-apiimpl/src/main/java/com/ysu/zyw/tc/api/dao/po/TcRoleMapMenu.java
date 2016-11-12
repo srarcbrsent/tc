@@ -5,14 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcRoleMapMenu implements Serializable {
+public class TcRoleMapMenu {
     private String id;
 
     private String roleId;
@@ -26,6 +25,4 @@ public class TcRoleMapMenu implements Serializable {
     private String createdPerson;
 
     private Date createdTimestamp;
-
-    private static final long serialVersionUID = 1L;
 }

@@ -44,7 +44,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.ysu.zyw.tc.apiimpl.apidao.mappers"/>
+        <property name="basePackage" value="com.ysu.zyw.tc.api.dao.mappers"/>
     </bean>
 
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

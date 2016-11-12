@@ -1,38 +1,84 @@
 package com.ysu.zyw.tc.api.impl.accounts;
 
 import com.ysu.zyw.tc.api.api.TcAccountApi;
-import com.ysu.zyw.tc.model.api.accounts.TmAccount;
+import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
+import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
+import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
+import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
+import org.apache.commons.lang.BooleanUtils;
 
-import java.util.Date;
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 public class TcAccountApiImpl implements TcAccountApi {
 
+    @Resource
+    private TcAccountService tcAccountService;
+
     @Override
-    public TcR<Void, Void> createAccount(TmAccount tmAccount) {
-        return null;
+    public TcR<String, Object> createAccount(TiAccount tiAccount) {
+
+        // throw TcVerifyFailureException
+        String accountId = tcAccountService.createAccount(tiAccount);
+
+        return TcR.ok(accountId);
     }
 
     @Override
-    public TcR<Void, Void> deleteAccount(String accountId) {
-        return null;
+    public TcR<Void, Object> deleteAccount(String accountId, String delector) {
+
+        // throw TcVerifyFailureException
+        tcAccountService.deleteAccount(accountId, delector);
+
+        return TcR.ok();
     }
 
     @Override
-    public TcR<Void, Void> updateAccount(TmAccount tmAccount) {
-        return null;
+    public TcR<Void, Object> updateAccount(TiAccount tiAccount) {
+
+        // throw TcVerifyFailureException
+        tcAccountService.updateAccount(tiAccount);
+
+        return TcR.ok();
     }
 
     @Override
-    public TcR<TmAccount, Void> findAccount(String accountId) {
-        return TcR.ok(new TmAccount().setLockReleaseTime(new Date()));
+    public TcR<ToAccount, Object> findAccount(String accountId) {
+
+        ToAccount toAccount = tcAccountService.findAccount(accountId, false);
+
+        if (Objects.nonNull(toAccount)) {
+            return TcR.ok(toAccount);
+        } else {
+            return new TcR<>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION);
+        }
     }
 
     @Override
-    public TcP<List<TmAccount>, Void> findAccounts(List<String> accountIds) {
-        return null;
+    public TcR<Long, Object> countAccounts(TiFindAccountsTerms tiFindAccountsTerms) {
+
+        long count = tcAccountService.countAccounts(tiFindAccountsTerms);
+
+        return TcR.ok(count);
+    }
+
+    @Override
+    public TcP<List<ToAccount>, Object> findAccounts(TiFindAccountsTerms tiFindAccountsTerms,
+                                                     Integer currentPage,
+                                                     Integer pageSize,
+                                                     Boolean containsTotalPage) {
+
+        List<ToAccount> toAccounts = tcAccountService.findAccounts(tiFindAccountsTerms, currentPage, pageSize);
+
+        int totalPage = -1;
+        if (BooleanUtils.isTrue(containsTotalPage)) {
+            totalPage = (int) tcAccountService.countAccounts(tiFindAccountsTerms);
+        }
+
+        return TcP.ok(toAccounts, currentPage, pageSize, totalPage);
     }
 
 }

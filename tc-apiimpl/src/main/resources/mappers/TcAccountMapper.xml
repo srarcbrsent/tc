@@ -405,7 +405,7 @@
       created_person, 
       created_timestamp
     ) values 
-    <foreach collection="list" items="items" separator=", ">
+    <foreach collection="list" item="item" separator=", ">
       (#{items.id,jdbcType=VARCHAR}, 
       #{items.name,jdbcType=VARCHAR}, 
       #{items.account,jdbcType=VARCHAR}, 

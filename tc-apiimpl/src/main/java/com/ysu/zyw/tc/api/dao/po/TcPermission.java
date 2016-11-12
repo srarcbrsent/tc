@@ -5,14 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcPermission implements Serializable {
+public class TcPermission {
     private String id;
 
     private String description;
@@ -26,6 +25,4 @@ public class TcPermission implements Serializable {
     private String createdPerson;
 
     private Date createdTimestamp;
-
-    private static final long serialVersionUID = 1L;
 }

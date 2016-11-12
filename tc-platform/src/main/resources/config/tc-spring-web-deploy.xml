@@ -36,4 +36,6 @@
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:/config/tc-spring-web-front-end.xml"/>
 
+    <bean id="tcApplicationExaminer" class="com.ysu.zyw.tc.components.utils.TcApplicationExaminer"/>
+
 </beans>
