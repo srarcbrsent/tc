@@ -26,8 +26,6 @@
 
     <import resource="classpath*:/config/tc-spring-svc.xml"/>
 
-    <import resource="classpath*:/config/tc-dubbox-provider.xml"/>
-
     <bean id="tcApplicationExaminer" class="com.ysu.zyw.tc.components.utils.TcApplicationExaminer"/>
 
 </beans>

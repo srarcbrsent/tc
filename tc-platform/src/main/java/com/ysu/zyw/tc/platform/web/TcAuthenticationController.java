@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.platform.web;
 
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.platform.fk.shiro.TcMd5Sha256CredentialsMatcher;
+import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;
 import com.ysu.zyw.tc.platform.svc.TcVerificationCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +32,7 @@ import java.util.Objects;
 public class TcAuthenticationController {
 
     @Resource
-    private TcMd5Sha256CredentialsMatcher tcMd5Sha256CredentialsMatcher;
+    private TcCredentialsMatcher tcCredentialsMatcher;
 
     @Resource
     private TcVerificationCodeService tcVerificationCodeService;
@@ -43,10 +43,9 @@ public class TcAuthenticationController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public ResponseEntity<TcR<TcMd5Sha256CredentialsMatcher.TcTokenAndSalt, Void>> token() {
-        String token = tcMd5Sha256CredentialsMatcher.createTokenAndSet2Session();
-        String salt = "123456";
-        return ResponseEntity.ok(TcR.ok(new TcMd5Sha256CredentialsMatcher.TcTokenAndSalt(token, salt)));
+    public ResponseEntity<TcR<String, Void>> token() {
+        String token = tcCredentialsMatcher.createTokenAndSet2Session();
+        return ResponseEntity.ok(TcR.ok(token));
     }
 
     @ApiOperation(

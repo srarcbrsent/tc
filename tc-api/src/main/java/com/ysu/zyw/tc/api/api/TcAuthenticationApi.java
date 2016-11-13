@@ -11,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path(value = "/auth")
+@Path(value = "/auths")
 public interface TcAuthenticationApi {
 
     @POST

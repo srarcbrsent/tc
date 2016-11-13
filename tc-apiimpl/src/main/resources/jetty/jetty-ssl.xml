@@ -36,7 +36,7 @@
                     <Property name="jetty.ssl.host" deprecated="jetty.host"/>
                 </Set>
                 <Set name="port">
-                    <Property name="jetty.ssl.port" deprecated="ssl.port" default="8443"/>
+                    <Property name="jetty.ssl.port" deprecated="ssl.port" default="9443"/>
                 </Set>
                 <Set name="idleTimeout">
                     <Property name="jetty.ssl.idleTimeout" deprecated="ssl.timeout" default="30000"/>

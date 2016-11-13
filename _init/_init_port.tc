@@ -10,5 +10,5 @@
         - codis-fe: 18090
     - redis: 6379
     - dubbo-admin: 12005 12080 12009
-    - dubbo-monitor: 7070 13080
+    - dubbo-monitor: 17070 17080
     - nginx: 80

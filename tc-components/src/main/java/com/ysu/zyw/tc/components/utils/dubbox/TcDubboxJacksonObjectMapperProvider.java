@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.api.fk;
+package com.ysu.zyw.tc.components.utils.dubbox;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder;

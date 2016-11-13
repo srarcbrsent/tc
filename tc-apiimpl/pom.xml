@@ -233,8 +233,8 @@
                         ${project.build.outputDirectory}/jetty/jetty-ssl.xml,
                         ${project.build.outputDirectory}/jetty/jetty-https.xml
                     </jettyXml>
-                    <stopKey>stop-tc-platform</stopKey>
-                    <stopPort>8081</stopPort>
+                    <stopKey>stop-tc-apiimpl</stopKey>
+                    <stopPort>9091</stopPort>
                     <systemProperties>
                         <systemProperty>
                             <name>logback.configurationFile</name>

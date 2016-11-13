@@ -19,18 +19,21 @@
     <dubbo:protocol name="rest"
                     server="servlet"
                     port="${properties.rpc.dubbox.protocol.rest.port}"
-                    extension="com.ysu.zyw.tc.api.fk.TcDubboxJacksonObjectMapperProvider"/>
+                    extension="com.ysu.zyw.tc.components.utils.dubbox.TcDubboxJacksonObjectMapperProvider,com.ysu.zyw.tc.components.utils.dubbox.TcValidationExceptionMapper"/>
 
-    <dubbo:provider version="${properties.rpc.dubbox.provider.version}"
-                    timeout="${properties.rpc.dubbox.provider.timeout}"
+    <dubbo:provider timeout="${properties.rpc.dubbox.provider.timeout}"
                     retries="${properties.rpc.dubbox.provider.retries}"
                     protocol="rest"/>
 
     <dubbo:monitor protocol="registry"/>
 
-    <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAccountApi" ref="tcAccountsApi"/>
+    <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAccountApi"
+                   ref="tcAccountsApi"
+                   version="1.0"/>
 
-    <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAuthenticationApi" ref="tcAuthenticationApi"/>
+    <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAuthenticationApi"
+                   ref="tcAuthenticationApi"
+                   version="1.0"/>
 
     <bean id="tcAccountsApi" class="com.ysu.zyw.tc.api.impl.accounts.TcAccountApiImpl"/>
 

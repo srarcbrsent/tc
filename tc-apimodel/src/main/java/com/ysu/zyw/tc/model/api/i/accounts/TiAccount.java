@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -26,7 +27,7 @@ import java.io.Serializable;
 public class TiAccount implements Serializable {
 
     @Null(groups = TcC.class)
-    @NotEmpty(groups = TcU.class)
+    @NotEmpty(groups = TcU.class) @Length(min = 32, max = 32, groups = TcU.class)
     private String id;
 
     @NotEmpty(groups = TcC.class)
@@ -49,6 +50,7 @@ public class TiAccount implements Serializable {
     @NotEmpty(groups = TcC.class)
     private String avatar;
 
+    @NotEmpty(groups = TcC.class) @Length(min = 32, max = 32, groups = TcC.class)
     @Null(groups = TcU.class)
     private String password;
 
@@ -58,7 +60,7 @@ public class TiAccount implements Serializable {
     @NotEmpty(groups = TcC.class)
     private String signinIp;
 
-    @NotEmpty(groups = TcAll.class)
+    @NotEmpty(groups = TcAll.class) @Length(min = 32, max = 32, groups = TcAll.class)
     private String operatorAccountId;
 
 }

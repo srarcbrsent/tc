@@ -2,9 +2,6 @@ package com.ysu.zyw.tc.platform.fk.shiro;
 
 import com.ysu.zyw.tc.base.utils.TcEncodingUtils;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.experimental.Accessors;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -17,10 +14,10 @@ import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-// client: cltPassword = md5(md5(salt + password) + onceToken)
+// client: cltPassword = md5(md5(password) + onceToken)
 // server: svrPassword = md5(dbPassword + onceToken)
-// db    : dbPassword = md5(salt + password)
-public class TcMd5Sha256CredentialsMatcher implements CredentialsMatcher {
+// db    : dbPassword = md5(password)
+public class TcCredentialsMatcher implements CredentialsMatcher {
 
     public String createTokenAndSet2Session() {
         String token = RandomStringUtils.randomNumeric(48);
@@ -56,19 +53,7 @@ public class TcMd5Sha256CredentialsMatcher implements CredentialsMatcher {
         String svrPassword = encryptPassword(dbPassword);
 
         String cltPassword = String.valueOf(token.getCredentials());
-        // FIXME return Objects.equals(svrPassword, cltPassword);
-        return true;
-    }
-
-    @Data
-    @Accessors(chain = true)
-    @AllArgsConstructor
-    public static class TcTokenAndSalt {
-
-        private String token;
-
-        private String salt;
-
+        return Objects.equals(svrPassword, cltPassword);
     }
 
 }

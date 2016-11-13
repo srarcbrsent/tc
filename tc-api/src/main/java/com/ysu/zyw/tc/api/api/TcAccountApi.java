@@ -5,13 +5,17 @@ import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.jboss.resteasy.annotations.Form;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path(value = "/account")
+@Path(value = "/accounts")
 public interface TcAccountApi {
 
     @POST
@@ -19,7 +23,7 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<String, Object> createAccount(
-            TiAccount tiAccount
+            @Valid TiAccount tiAccount
     );
 
     @GET
@@ -27,8 +31,8 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<Void, Object> deleteAccount(
-            @PathParam(value = "id") String accountId,
-            @QueryParam(value = "delector") String delector
+            @NotEmpty @Length(min = 32, max = 32) @PathParam(value = "id") String accountId,
+            @NotEmpty @Length(min = 32, max = 32) @QueryParam(value = "delector") String delector
     );
 
     @POST
@@ -36,7 +40,7 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<Void, Object> updateAccount(
-            TiAccount tiAccount
+            @Valid TiAccount tiAccount
     );
 
     @GET
@@ -44,7 +48,7 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<ToAccount, Object> findAccount(
-            @PathParam(value = "id") String accountId
+            @NotEmpty @Length(min = 32, max = 32) @PathParam(value = "id") String accountId
     );
 
     @POST
@@ -56,14 +60,13 @@ public interface TcAccountApi {
     );
 
     @POST
-    @Path(value = "/find_accounts/{currentPage}/{pageSize}/{containsTotalPage}")
+    @Path(value = "/find_accounts/{currentPage}/{pageSize}")
     @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcP<List<ToAccount>, Object> findAccounts(
             @Form TiFindAccountsTerms tiFindAccountsTerms,
-            @PathParam(value = "currentPage") Integer currentPage,
-            @PathParam(value = "pageSize") Integer pageSize,
-            @PathParam(value = "containsTotalPage") Boolean containsTotalPage
+            @NotEmpty @Range(min = 0, max = Long.MAX_VALUE) @PathParam(value = "currentPage") Integer currentPage,
+            @NotEmpty @Range(min = 1, max = 30) @PathParam(value = "pageSize") Integer pageSize
     );
 
 }

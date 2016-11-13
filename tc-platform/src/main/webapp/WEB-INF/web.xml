@@ -54,10 +54,12 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
+            classpath*:/config/tc-dubbox-consumer.xml,
             classpath*:/config/tc-spring-deploy.xml,
             classpath*:/config/tc-spring-cache-redis.xml,
             classpath*:/config/tc-spring-mq-metaq.xml,
-            classpath*:/config/tc-spring-rpc-httpx.xml
+            classpath*:/config/tc-spring-rpc-httpx.xml,
+            classpath*:/config/tc-spring-module-region.xml
         </param-value>
     </context-param>
 

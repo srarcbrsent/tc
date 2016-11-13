@@ -7,7 +7,6 @@ import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
-import org.apache.commons.lang.BooleanUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -68,15 +67,11 @@ public class TcAccountApiImpl implements TcAccountApi {
     @Override
     public TcP<List<ToAccount>, Object> findAccounts(TiFindAccountsTerms tiFindAccountsTerms,
                                                      Integer currentPage,
-                                                     Integer pageSize,
-                                                     Boolean containsTotalPage) {
+                                                     Integer pageSize) {
 
         List<ToAccount> toAccounts = tcAccountService.findAccounts(tiFindAccountsTerms, currentPage, pageSize);
 
-        int totalPage = -1;
-        if (BooleanUtils.isTrue(containsTotalPage)) {
-            totalPage = (int) tcAccountService.countAccounts(tiFindAccountsTerms);
-        }
+        int totalPage = (int) tcAccountService.countAccounts(tiFindAccountsTerms);
 
         return TcP.ok(toAccounts, currentPage, pageSize, totalPage);
     }

@@ -14,10 +14,10 @@
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper"
-                          ref="#{T(com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder).objectMapper}"/>
+                          value="#{T(com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder).objectMapper}"/>
             </bean>
         </mvc:message-converters>
-        <mvc:async-support default-timeout="${properties.web.async.default.timeout}"
+        <mvc:async-support default-timeout="30000"
                            task-executor="threadPoolTaskScheduler"/>
     </mvc:annotation-driven>
 

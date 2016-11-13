@@ -50,7 +50,7 @@
     </bean>
 
     <bean id="md5Sha256CredentialsMatcher"
-          class="com.ysu.zyw.tc.platform.fk.shiro.TcMd5Sha256CredentialsMatcher"/>
+          class="com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher"/>
 
     <bean id="abstractAuthorizingRealm" abstract="true" class="org.apache.shiro.realm.AuthorizingRealm">
         <property name="credentialsMatcher" ref="md5Sha256CredentialsMatcher"/>

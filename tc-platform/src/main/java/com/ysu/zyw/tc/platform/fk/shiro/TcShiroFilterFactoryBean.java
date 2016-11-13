@@ -19,7 +19,7 @@ public class TcShiroFilterFactoryBean extends ShiroFilterFactoryBean {
     @Override
     public void setFilterChainDefinitions(String definitionFile) {
         checkArgument(definitionFile.startsWith(ResourceUtils.CLASSPATH_URL_PREFIX),
-                "definition file must be a classpath file, and it must start wil 'classpath:'");
+                "definition file must be a classpath file, and it must start with 'classpath:'");
         String realPath = definitionFile.split(ResourceUtils.CLASSPATH_URL_PREFIX)[1];
         checkNotNull(realPath, "empty real path is not allowed");
         Resource filterChainDefinitionResource = new ClassPathResource(realPath);

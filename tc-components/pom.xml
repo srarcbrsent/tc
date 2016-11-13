@@ -182,6 +182,12 @@
             <artifactId>spring-data-elasticsearch</artifactId>
         </dependency>
 
+        <!-- dubbox -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>

@@ -19,8 +19,12 @@
 
     <dubbo:monitor protocol="registry"/>
 
-    <dubbo:reference interface="com.ysu.zyw.tc.api.api.TcAccountApi"/>
+    <dubbo:reference id="tcAccountApi"
+                     interface="com.ysu.zyw.tc.api.api.TcAccountApi"
+                     version="1.0"/>
 
-    <dubbo:reference interface="com.ysu.zyw.tc.api.api.TcAuthenticationApi"/>
+    <dubbo:reference id="tcAuthenticationApi"
+                     interface="com.ysu.zyw.tc.api.api.TcAuthenticationApi"
+                     version="1.0"/>
 
 </beans>

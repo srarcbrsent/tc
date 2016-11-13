@@ -3,8 +3,8 @@ package com.ysu.zyw.tc.platform.fk.shiro;
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
-import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.model.validator.TcValidator;
 import org.apache.commons.collections.CollectionUtils;
@@ -14,7 +14,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -24,7 +23,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TcAuthorizingRealm extends AuthorizingRealm {
 
-    @Resource
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    // @Resource
     private TcAuthenticationApi tcAuthenticationApi;
 
     @Override
@@ -34,17 +34,17 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
 
         ToAccount toAccount = (ToAccount) principals.getPrimaryPrincipal();
 
-        List<ToMenu> tcPermissionSetList = this.fetchRoles(toAccount.getId());
-        List<ToPermission> tcPermissionList = this.fetchPermissions(toAccount.getId());
+        List<ToRole> toRoles = this.fetchRoles(toAccount.getId());
+        List<ToPermission> toPermissions = this.fetchPermissions(toAccount.getId());
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.addRoles(
-                tcPermissionSetList.stream()
-                        .map(ToMenu::getId)
+                toRoles.stream()
+                        .map(ToRole::getId)
                         .collect(Collectors.toList())
         );
         authorizationInfo.addStringPermissions(
-                tcPermissionList.parallelStream()
+                toPermissions.parallelStream()
                         .map(ToPermission::getId)
                         .collect(Collectors.toList())
         );
@@ -85,7 +85,7 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
         return tcR.get();
     }
 
-    protected List<ToMenu> fetchRoles(String accountId) {
+    protected List<ToRole> fetchRoles(String accountId) {
         // TODO: 2016/11/12  
         return Lists.newArrayList();
     }

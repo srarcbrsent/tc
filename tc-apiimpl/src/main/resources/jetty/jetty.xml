@@ -87,7 +87,7 @@
             <Property name="jetty.httpConfig.secureScheme" default="https"/>
         </Set>
         <Set name="securePort">
-            <Property name="jetty.httpConfig.securePort" deprecated="jetty.secure.port" default="8443"/>
+            <Property name="jetty.httpConfig.securePort" deprecated="jetty.secure.port" default="9443"/>
         </Set>
         <Set name="outputBufferSize">
             <Property name="jetty.httpConfig.outputBufferSize" deprecated="jetty.output.buffer.size" default="32768"/>
