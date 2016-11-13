@@ -7,13 +7,14 @@ import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.model.validator.TcValidator;
-import org.apache.commons.collections.CollectionUtils;
+import com.ysu.zyw.tc.sys.ex.TcException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class TcAuthorizingRealm extends AuthorizingRealm {
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
-    // @Resource
+    @Resource
     private TcAuthenticationApi tcAuthenticationApi;
 
     @Override
@@ -76,13 +77,27 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
 
     protected ToAccount fetchAccount(String username) {
         TcR<ToAccount, TcValidator.TcVerifyFailure> tcR = tcAuthenticationApi.signup(username, true, true, true);
-        if (!tcR.isPresent()) {
-            String msg = Objects.nonNull(tcR.getExtra()) && CollectionUtils.isNotEmpty(tcR.getExtra()) ? 
-                    tcR.getExtra().get(0) : "系统异常！";
-            throw new AuthenticationException(msg);
+
+        if (tcR.isPresent()) {
+            return tcR.get();
         }
-        
-        return tcR.get();
+
+        if (Objects.equals(tcR.getCode(), TcR.R.UNPROCESSABLE_ENTITY)) {
+            if (Objects.isNull(tcR.getExtra()) || Objects.isNull(tcR.getExtra().getCode())) {
+                throw new AuthenticationException("系统异常，请稍后再试！");
+            }
+
+            // code == 1 => 账号不存在;
+            if (Objects.equals(tcR.getExtra().getCode(), 1)) {
+                throw new UnknownAccountException("账号不存在，请重试！");
+            }
+            // code == 2 => 账号被锁定;
+            if (Objects.equals(tcR.getExtra().getCode(), 2)) {
+                throw new LockedAccountException("账号被锁定，请稍后再试！");
+            }
+        }
+
+        throw new TcException("系统异常，请稍后再试！");
     }
 
     protected List<ToRole> fetchRoles(String accountId) {

@@ -47,7 +47,7 @@ public class TcAccountService {
 
     /**
      * @return 可登陆：可登陆账号的accountId
-     * @throws TcVerifyFailureException 业务级不可登陆: 内嵌TcVerifyFailure异常信息
+     * @throws TcVerifyFailureException 业务级不可登陆: code == 1 => 账号不存在; code == 2 => 账号被锁定
      */
     @Transactional(readOnly = true)
     public String signup(@Nonnull String username,
@@ -73,7 +73,7 @@ public class TcAccountService {
 
         if (CollectionUtils.isEmpty(tcAccounts)) {
             // 账号不存在
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请重试！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure(1));
         }
 
         TcAccount tcAccount = tcAccounts.get(0);
@@ -84,7 +84,7 @@ public class TcAccountService {
                 // 当前时间在解锁之前之前
                 new Date().before(tcAccount.getLockReleaseTime())) {
             // 被锁定
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号被锁定，请联系管理员！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure(2));
         }
 
         return tcAccount.getId();
@@ -99,22 +99,22 @@ public class TcAccountService {
         // check
         if (existName(tiAccount.getName())) {
             throw new TcVerifyFailureException(
-                    new TcValidator.TcVerifyFailure("名称【" + tiAccount.getName() + "】重复！"));
+                    new TcValidator.TcVerifyFailure("名称【" + tiAccount.getName() + "】重复，请重试！"));
         }
 
         if (StringUtils.isNotBlank(tiAccount.getAccount()) && existAccount(tiAccount.getAccount())) {
             throw new TcVerifyFailureException(
-                    new TcValidator.TcVerifyFailure("账号【" + tiAccount.getAccount() + "】重复！"));
+                    new TcValidator.TcVerifyFailure("账号【" + tiAccount.getAccount() + "】重复，请重试！"));
         }
 
         if (StringUtils.isNotBlank(tiAccount.getEmail()) && existEmail(tiAccount.getEmail())) {
             throw new TcVerifyFailureException(
-                    new TcValidator.TcVerifyFailure("邮箱【" + tiAccount.getEmail() + "】重复！"));
+                    new TcValidator.TcVerifyFailure("邮箱【" + tiAccount.getEmail() + "】重复，请重试！"));
         }
 
         if (StringUtils.isNotBlank(tiAccount.getMobile()) && existAccount(tiAccount.getMobile())) {
             throw new TcVerifyFailureException(
-                    new TcValidator.TcVerifyFailure("手机【" + tiAccount.getMobile() + "】重复！"));
+                    new TcValidator.TcVerifyFailure("手机【" + tiAccount.getMobile() + "】重复，请重试！"));
         }
 
         // id
@@ -172,7 +172,7 @@ public class TcAccountService {
     @Transactional
     public void deleteAccount(@Nonnull String accountId, @Nonnull String delector) {
         if (!existId(accountId)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请重试！"));
         }
 
         // account
@@ -202,19 +202,23 @@ public class TcAccountService {
         TcAccount originalTcAccount = this.findOriginalTcAccount(tiAccount.getId(), false);
 
         if (Objects.isNull(originalTcAccount)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请更换重试！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请重试！"));
         }
 
         if (StringUtils.isNotEmpty(tiAccount.getName()) && existName(tiAccount.getName())) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("名字已存在，请更换重试！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("名字已存在，请重试！"));
+        }
+
+        if (StringUtils.isNotEmpty(tiAccount.getAccount()) && existName(tiAccount.getAccount())) {
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号已存在，请重试！"));
         }
 
         if (StringUtils.isNotEmpty(tiAccount.getMobile()) && existName(tiAccount.getMobile())) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("手机已存在，请更换重试！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("手机已存在，请重试！"));
         }
 
         if (StringUtils.isNotEmpty(tiAccount.getEmail()) && existName(tiAccount.getEmail())) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("邮箱已存在，请更换重试！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("邮箱已存在，请重试！"));
         }
 
         Date now = new Date();
@@ -270,12 +274,12 @@ public class TcAccountService {
                 .andDelectedEqualTo(false);
         List<TcAccount> tcAccounts = tcAccountMapper.selectByExample(tcAccountExample);
         if (CollectionUtils.isEmpty(tcAccounts)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请重试！"));
         }
         TcAccount originalTcAccountWithPassword = tcAccounts.get(0);
 
         if (!Objects.equals(originalTcAccountWithPassword.getPassword(), oPassword)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("原密码错误！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("原密码错误，请重试！"));
         }
 
         TcAccount tcAccount = new TcAccount();
@@ -468,7 +472,7 @@ public class TcAccountService {
         checkNotNull(accountId);
         checkNotNull(mobile);
         if (!existId(accountId)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请重试！"));
         }
 
         TcAccountExample tcAccountExample = new TcAccountExample();
@@ -495,7 +499,7 @@ public class TcAccountService {
         checkNotNull(accountId);
         checkNotNull(email);
         if (!existId(accountId)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请重试！"));
         }
 
         TcAccountExample tcAccountExample = new TcAccountExample();
@@ -522,12 +526,12 @@ public class TcAccountService {
         // check
         TcAccount originalTcAccount = findOriginalTcAccount(accountId, false);
         if (Objects.isNull(originalTcAccount)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在，请重试！"));
         }
 
         if (Objects.nonNull(originalTcAccount.getLockReleaseTime()) &&
                 originalTcAccount.getLockReleaseTime().after(lockReleaseTime)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号已经被锁定更长时间！"));
+            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号已经被锁定更长时间，请重试！"));
         }
 
         TcAccount tcAccount = new TcAccount()

@@ -3,12 +3,13 @@ package com.ysu.zyw.tc.platform.web;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;
 import com.ysu.zyw.tc.platform.svc.TcVerificationCodeService;
+import com.ysu.zyw.tc.sys.ex.TcException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.http.MediaType;
@@ -114,11 +115,16 @@ public class TcAuthenticationController {
             TcR<Boolean, String> tcR = TcR.ok(false);
             tcR.setExtra("账号不存在，请重试！");
             return tcR;
-        } catch (IncorrectCredentialsException e) {
+        } catch (LockedAccountException e) {
             TcR<Boolean, String> tcR = TcR.ok(false);
-            tcR.setExtra("账号密码不匹配，请重试！");
+            tcR.setExtra("账号被锁定，请稍后再试！");
             return tcR;
-        } catch (Exception e) {
+        }catch (TcException e) {
+            log.error("[{}] [{}] [{}]", e, username, cltPassword.substring(12), rememberMe);
+            TcR<Boolean, String> tcR = TcR.ok(false);
+            tcR.setExtra("系统异常，请稍后再试！");
+            return tcR;
+        }catch (Exception e) {
             log.error("[{}] [{}] [{}]", e, username, cltPassword.substring(12), rememberMe);
             TcR<Boolean, String> tcR = TcR.ok(false);
             tcR.setExtra("系统异常，请稍后再试！");

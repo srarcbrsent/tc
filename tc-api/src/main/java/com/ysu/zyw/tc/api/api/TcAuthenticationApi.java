@@ -14,6 +14,12 @@ import java.util.List;
 @Path(value = "/auths")
 public interface TcAuthenticationApi {
 
+    /**
+     * 200 ==> 成功 返回可登陆的账号;
+     * 400 ==> 参数错误;
+     * 422 ==> 业务级不可登陆: code == 1 => 账号不存在; code == 2 => 账号被锁定;
+     * 500 ==> 系统异常;
+     */
     @POST
     @Path(value = "/signup")
     @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
@@ -38,7 +44,7 @@ public interface TcAuthenticationApi {
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcP<List<ToPermission>, Void> findPermissions(
-            @PathParam(value = "id")String accountId
+            @PathParam(value = "id") String accountId
     );
 
 }

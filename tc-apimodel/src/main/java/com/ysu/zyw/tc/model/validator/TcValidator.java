@@ -1,5 +1,8 @@
 package com.ysu.zyw.tc.model.validator;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.Errors;
@@ -21,7 +24,20 @@ public class TcValidator extends GenericValidator {
 
     private static final Pattern englishPattern = Pattern.compile("[A-Za-z0-9_-]+]");
 
+    @Accessors(chain = true)
     public static class TcVerifyFailure extends ArrayList<String> {
+
+        @Getter
+        @Setter
+        private Integer code;
+
+        public TcVerifyFailure() {
+            // serialization use.
+        }
+
+        public TcVerifyFailure(Integer code) {
+            this.code = code;
+        }
 
         public TcVerifyFailure(Errors errors) {
             checkNotNull(errors);
