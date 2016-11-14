@@ -24,8 +24,93 @@
             <div class="layui-field-box">
                 <!-- create account start -->
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend>创建账号 - 创建账号之后就可以尽情的玩耍了</legend>
-                    <div class="layui-field-box"></div>
+                    <legend>创建账号 - 创建账号之后就可以尽情的玩耍了 - 只有拥有创建账号权限的用户可见表单</legend>
+                    <div class="layui-field-box">
+                        <form id="signin_form" class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">名字</label>
+                                <div class="layui-input-block">
+                                    <input type="text"
+                                           name="title"
+                                           required
+                                           lay-verify="required"
+                                           placeholder="请输入标题"
+                                           autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">账号</label>
+                                <div class="layui-input-block">
+                                    <input type="text"
+                                           name="title"
+                                           required
+                                           lay-verify="required"
+                                           placeholder="请输入标题"
+                                           autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">邮箱</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title"
+                                           required
+                                           lay-verify="required"
+                                           placeholder="请输入标题"
+                                           autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">电话</label>
+                                <div class="layui-input-block">
+                                    <input type="text"
+                                           name="title"
+                                           required
+                                           lay-verify="required"
+                                           placeholder="请输入标题"
+                                           autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">密码</label>
+                                <div class="layui-input-block">
+                                    <input type="password"
+                                           name="title"
+                                           required
+                                           lay-verify="required"
+                                           placeholder="请输入标题"
+                                           autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">头像</label>
+                            <div class="layui-input-block">
+                                <input type="file"
+                                       name="file（可随便定义）"
+                                       class="layui-upload-file">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn"
+                                        lay-submit
+                                        lay-filter="formDemo"
+                                        form="signin_form">
+                                    立即提交
+                                </button>
+                                <button type="reset"
+                                        class="layui-btn layui-btn-primary"
+                                        form="signin_form">
+                                    重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </fieldset>
                 <!-- create account end -->
 

@@ -1,10 +1,10 @@
 package com.ysu.zyw.tc.api.fk;
 
-import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
+import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
+import com.ysu.zyw.tc.model.mw.TcExtra;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.model.validator.TcValidator;
 import com.ysu.zyw.tc.sys.ex.TcResourceConflictException;
 import com.ysu.zyw.tc.sys.ex.TcResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -39,33 +39,32 @@ public class TcExceptionResponseDecorator {
                     TcDateUtils.duration(startTime, new Date()));
             if (Objects.isNull(result)) {
                 log.warn("[{}][{}][{}]", "OpenApi切面-请求无任何返回值", "切面异常捕获", proceedingJoinPoint.getArgs());
-                return determineResponse(method).setCode(TcR.R.NOT_FOUND).setDescription(TcR.R.NOT_FOUND_DESCRIPTION);
+                return determineResponse(method).setCode(TcR.R.NOT_FOUND);
             }
             return result;
         } catch (TcResourceNotFoundException e) {
             // 如果内部抛出了资源不存在异常 则对页面返回 404 资源不存在
             log.error("[{}][{}][{}]", "OpenApi切面-资源不存在", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
-            return determineResponse(method).setCode(TcR.R.NOT_FOUND).setDescription(TcR.R.NOT_FOUND_DESCRIPTION);
+            return determineResponse(method).setCode(TcR.R.NOT_FOUND);
         } catch (TcResourceConflictException e) {
             // 如果内部抛出了资源冲突异常 则对页面返回 409 冲突异常
             log.error("[{}][{}][{}]", "OpenApi切面-资源冲突", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
-            return determineResponse(method).setCode(TcR.R.CONFLICT).setDescription(TcR.R.CONFLICT_DESCRIPTION);
-        } catch (TcVerifyFailureException e) {
+            return determineResponse(method).setCode(TcR.R.CONFLICT);
+        } catch (TcUnProcessableEntityException e) {
             // 如果内部抛出了验证错误异常 则对页面返回 422 无法处理的请求
-            TcValidator.TcVerifyFailure tcVerifyFailure = e.getTcVerifyFailure();
+            TcExtra tcExtra = e.getTcExtra();
             log.warn("[{}][{}][{}][{}]", "OpenApi切面-无法处理的请求-业务级异常", "切面异常捕获",
-                    proceedingJoinPoint.getArgs(), tcVerifyFailure);
-            return determineResponse(method).setCode(TcR.R.UNPROCESSABLE_ENTITY)
-                    .setDescription(TcR.R.UNPROCESSABLE_ENTITY_DESCRIPTION).setExtra(tcVerifyFailure);
+                    proceedingJoinPoint.getArgs(), tcExtra);
+            return determineResponse(method).setCode(TcR.R.UNPROCESSABLE_ENTITY).setExtra(tcExtra);
         } catch (Exception e) {
             // 如果内部抛出了异常 则对页面返回 500 服务器异常
             log.error("[{}][{}][{}]", "OpenApi切面-服务器异常", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
-            return determineResponse(method).setCode(TcR.R.SERVER_ERROR).setDescription(TcR.R.SERVER_ERROR_DESCRIPTION);
+            return determineResponse(method).setCode(TcR.R.SERVER_ERROR);
         }
     }
 
     // generic type with jackson serialization, do not cause any problem, if use other serialization, may failed.
-    private <T, E> TcR<T, E> determineResponse(Method method) {
+    private <T> TcR<T> determineResponse(Method method) {
         return ClassUtils.isAssignable(method.getReturnType(), TcP.class) ? new TcP() : new TcR();
     }
 

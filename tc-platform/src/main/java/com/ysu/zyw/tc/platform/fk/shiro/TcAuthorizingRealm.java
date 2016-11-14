@@ -6,7 +6,6 @@ import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.model.validator.TcValidator;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -76,16 +75,14 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
     }
 
     protected ToAccount fetchAccount(String username) {
-        TcR<ToAccount, TcValidator.TcVerifyFailure> tcR = tcAuthenticationApi.signup(username, true, true, true);
+        TcR<ToAccount> tcR = tcAuthenticationApi.signup(username, true, true, true);
 
         if (tcR.isPresent()) {
             return tcR.get();
         }
 
-        if (Objects.equals(tcR.getCode(), TcR.R.UNPROCESSABLE_ENTITY)) {
-            if (Objects.isNull(tcR.getExtra()) || Objects.isNull(tcR.getExtra().getCode())) {
-                throw new AuthenticationException("系统异常，请稍后再试！");
-            }
+        if (tcR.isUnProcessableEntity()) {
+            int code = tcR.orElseThrowExtraIfUnProcessable(() -> new AuthenticationException("系统异常，请稍后再试！"));
 
             // code == 1 => 账号不存在;
             if (Objects.equals(tcR.getExtra().getCode(), 1)) {

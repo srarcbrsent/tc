@@ -1,19 +1,9 @@
 package com.ysu.zyw.tc.model.validator;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.apache.commons.validator.GenericValidator;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.validation.Errors;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TcValidator extends GenericValidator {
 
@@ -23,38 +13,6 @@ public class TcValidator extends GenericValidator {
     private static final Pattern englishCharPattern = Pattern.compile("[A-Za-z0-9_-]");
 
     private static final Pattern englishPattern = Pattern.compile("[A-Za-z0-9_-]+]");
-
-    @Accessors(chain = true)
-    public static class TcVerifyFailure extends ArrayList<String> {
-
-        @Getter
-        @Setter
-        private Integer code;
-
-        public TcVerifyFailure() {
-            // serialization use.
-        }
-
-        public TcVerifyFailure(Integer code) {
-            this.code = code;
-        }
-
-        public TcVerifyFailure(Errors errors) {
-            checkNotNull(errors);
-            if (errors.hasErrors()) {
-                this.addAll(
-                        errors.getAllErrors().stream()
-                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                                .collect(Collectors.toList())
-                );
-            }
-        }
-
-        public TcVerifyFailure(String... errors) {
-            super(Arrays.asList(errors));
-        }
-
-    }
 
     public static boolean isNull(Object value) {
         return Objects.isNull(value);

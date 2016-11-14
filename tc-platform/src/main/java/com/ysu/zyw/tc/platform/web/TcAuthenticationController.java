@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -24,7 +25,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Slf4j
 @Api(value = "认证控制器")
@@ -44,7 +44,7 @@ public class TcAuthenticationController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public ResponseEntity<TcR<String, Void>> token() {
+    public ResponseEntity<TcR<String>> token() {
         String token = tcCredentialsMatcher.createTokenAndSet2Session();
         return ResponseEntity.ok(TcR.ok(token));
     }
@@ -62,7 +62,7 @@ public class TcAuthenticationController {
             @RequestParam(value = "verificationCode") String verificationCode,
             @RequestParam(value = "targetUrl", required = false) String targetUrl,
             RedirectAttributes redirectAttributes) {
-        TcR<Boolean, String> tcR =
+        TcR<Boolean> tcR =
                 signup(username, cltPassword, rememberMe, verificationCode, targetUrl);
         if (tcR.orElse(false)) {
             // login succ
@@ -70,7 +70,7 @@ public class TcAuthenticationController {
         } else {
             ModelAndView modelAndView = new ModelAndView(new RedirectView("/index.html"));
             redirectAttributes.addFlashAttribute("signupErrorMsg",
-                    Objects.nonNull(tcR.getExtra()) ? tcR.getExtra() : "系统异常，请稍后再试！");
+                    tcR.orElseGetStringExtraDescription(false, "系统异常，请稍后再试！"));
             return modelAndView;
         }
     }
@@ -81,28 +81,28 @@ public class TcAuthenticationController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/j_signup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TcR<Boolean, String>> signupWithAjax(
+    public ResponseEntity<TcR<Boolean>> signupWithAjax(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,
             @RequestParam(value = "verificationCode") String verificationCode,
             @RequestParam(value = "targetUrl", required = false) String targetUrl) {
-        TcR<Boolean, String> tcR =
+        TcR<Boolean> tcR =
                 signup(username, cltPassword, rememberMe, verificationCode, targetUrl);
         return ResponseEntity.ok(tcR);
     }
 
     @NotNull
-    private TcR<Boolean, String> signup(String username,
-                                        String cltPassword,
-                                        Boolean rememberMe,
-                                        String verificationCode,
-                                        String targetUrl) {
+    private TcR<Boolean> signup(String username,
+                                String cltPassword,
+                                Boolean rememberMe,
+                                String verificationCode,
+                                String targetUrl) {
         // verify verification code
         boolean verificationCodeMatch = tcVerificationCodeService.isVerificationCodeMatch(verificationCode);
         if (!verificationCodeMatch) {
-            TcR<Boolean, String> tcR = TcR.ok(false);
-            tcR.setExtra("验证码输入错误，请重试！");
+            TcR<Boolean> tcR = TcR.ok(false);
+            tcR.extra("验证码输入错误，请重试！");
             return tcR;
         }
 
@@ -112,22 +112,26 @@ public class TcAuthenticationController {
         try {
             SecurityUtils.getSubject().login(token);
         } catch (UnknownAccountException e) {
-            TcR<Boolean, String> tcR = TcR.ok(false);
-            tcR.setExtra("账号不存在，请重试！");
+            TcR<Boolean> tcR = TcR.ok(false);
+            tcR.extra("账号不存在，请重试！");
             return tcR;
         } catch (LockedAccountException e) {
-            TcR<Boolean, String> tcR = TcR.ok(false);
-            tcR.setExtra("账号被锁定，请稍后再试！");
+            TcR<Boolean> tcR = TcR.ok(false);
+            tcR.extra("账号被锁定，请稍后再试！");
             return tcR;
-        }catch (TcException e) {
-            log.error("[{}] [{}] [{}]", e, username, cltPassword.substring(12), rememberMe);
-            TcR<Boolean, String> tcR = TcR.ok(false);
-            tcR.setExtra("系统异常，请稍后再试！");
+        } catch (IncorrectCredentialsException e) {
+            TcR<Boolean> tcR = TcR.ok(false);
+            tcR.extra("账号密码错误，请重试！");
             return tcR;
-        }catch (Exception e) {
+        } catch (TcException e) {
             log.error("[{}] [{}] [{}]", e, username, cltPassword.substring(12), rememberMe);
-            TcR<Boolean, String> tcR = TcR.ok(false);
-            tcR.setExtra("系统异常，请稍后再试！");
+            TcR<Boolean> tcR = TcR.ok(false);
+            tcR.extra("系统异常，请稍后再试！");
+            return tcR;
+        } catch (Exception e) {
+            log.error("[{}] [{}] [{}]", e, username, cltPassword.substring(12), rememberMe);
+            TcR<Boolean> tcR = TcR.ok(false);
+            tcR.extra("系统异常，请稍后再试！");
             return tcR;
         }
 

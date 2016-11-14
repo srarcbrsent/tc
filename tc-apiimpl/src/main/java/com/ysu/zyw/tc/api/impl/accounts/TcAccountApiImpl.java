@@ -18,46 +18,47 @@ public class TcAccountApiImpl implements TcAccountApi {
     private TcAccountService tcAccountService;
 
     @Override
-    public TcR<String, Object> createAccount(TiAccount tiAccount) {
+    public TcR<String> createAccount(TiAccount tiAccount) {
 
-        // throw TcVerifyFailureException
+        // throws TcUnProcessableEntityException
         String accountId = tcAccountService.createAccount(tiAccount);
 
         return TcR.ok(accountId);
     }
 
     @Override
-    public TcR<Void, Object> deleteAccount(String accountId, String delector) {
+    public TcR<Void> deleteAccount(String accountId, String delector) {
 
-        // throw TcVerifyFailureException
+        // throws TcUnProcessableEntityException
         tcAccountService.deleteAccount(accountId, delector);
 
         return TcR.ok();
     }
 
     @Override
-    public TcR<Void, Object> updateAccount(TiAccount tiAccount) {
+    public TcR<Void> updateAccount(TiAccount tiAccount) {
 
-        // throw TcVerifyFailureException
+        // throws TcUnProcessableEntityException
         tcAccountService.updateAccount(tiAccount);
 
         return TcR.ok();
     }
 
     @Override
-    public TcR<ToAccount, Object> findAccount(String accountId) {
+    public TcR<ToAccount> findAccount(String accountId) {
 
+        // throws TcResourceNotFoundException
         ToAccount toAccount = tcAccountService.findAccount(accountId, false);
 
         if (Objects.nonNull(toAccount)) {
             return TcR.ok(toAccount);
         } else {
-            return new TcR<>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION);
+            return new TcR<>(TcR.R.NOT_FOUND);
         }
     }
 
     @Override
-    public TcR<Long, Object> countAccounts(TiFindAccountsTerms tiFindAccountsTerms) {
+    public TcR<Long> countAccounts(TiFindAccountsTerms tiFindAccountsTerms) {
 
         long count = tcAccountService.countAccounts(tiFindAccountsTerms);
 
@@ -65,9 +66,9 @@ public class TcAccountApiImpl implements TcAccountApi {
     }
 
     @Override
-    public TcP<List<ToAccount>, Object> findAccounts(TiFindAccountsTerms tiFindAccountsTerms,
-                                                     Integer currentPage,
-                                                     Integer pageSize) {
+    public TcP<List<ToAccount>> findAccounts(TiFindAccountsTerms tiFindAccountsTerms,
+                                             Integer currentPage,
+                                             Integer pageSize) {
 
         List<ToAccount> toAccounts = tcAccountService.findAccounts(tiFindAccountsTerms, currentPage, pageSize);
 

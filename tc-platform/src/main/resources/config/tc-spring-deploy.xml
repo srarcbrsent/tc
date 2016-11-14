@@ -34,4 +34,8 @@
 
     <import resource="classpath*:/config/tc-spring-svc.xml"/>
 
+    <bean class="com.ysu.zyw.tc.platform.fk.conf.TcConfig">
+        <property name="fixedVerificationCode" value="${propertyes.config.fixed.verification.code}"/>
+    </bean>
+
 </beans>

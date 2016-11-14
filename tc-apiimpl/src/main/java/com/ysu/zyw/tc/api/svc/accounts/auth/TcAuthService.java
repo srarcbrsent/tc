@@ -3,15 +3,16 @@ package com.ysu.zyw.tc.api.svc.accounts.auth;
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.dao.mappers.*;
 import com.ysu.zyw.tc.api.dao.po.*;
-import com.ysu.zyw.tc.api.fk.ex.TcVerifyFailureException;
+import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
-import com.ysu.zyw.tc.model.validator.TcValidator;
+import com.ysu.zyw.tc.model.mw.TcExtra;
 import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +53,8 @@ public class TcAuthService {
     private TcAccountService tcAccountService;
 
     /**
-     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     * @throws TcUnProcessableEntityException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     *                                        code == 1 => 账号不存在;
      */
     @Transactional
     public int grantRole(@Nonnull String accountId,
@@ -61,7 +63,7 @@ public class TcAuthService {
         checkArgument(CollectionUtils.isNotEmpty(roleIdList));
 
         if (!tcAccountService.existAccount(accountId)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+            throw new TcUnProcessableEntityException(new TcExtra(1, "账号不存在！"));
         }
 
         Date now = new Date();
@@ -83,7 +85,8 @@ public class TcAuthService {
     }
 
     /**
-     * @throws TcVerifyFailureException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     * @throws TcUnProcessableEntityException 业务级更新失败: 内嵌TcVerifyFailure异常信息
+     *                                        code == 1 => 账号不存在;
      */
     @Transactional
     public int grantPermission(@Nonnull String accountId,
@@ -92,7 +95,7 @@ public class TcAuthService {
         checkArgument(CollectionUtils.isNotEmpty(permissionIdList));
 
         if (!tcAccountService.existAccount(accountId)) {
-            throw new TcVerifyFailureException(new TcValidator.TcVerifyFailure("账号不存在！"));
+            throw new TcUnProcessableEntityException(new TcExtra(1, "账号不存在！"));
         }
 
         Date now = new Date();
@@ -248,18 +251,24 @@ public class TcAuthService {
     }
 
     private ToRole convert2ToRole(TcRole tcRole) {
-        // TODO: 2016/11/12
-        return null;
+        checkNotNull(tcRole);
+        ToRole toRole = new ToRole();
+        BeanUtils.copyProperties(tcRole, toRole);
+        return toRole;
     }
 
     private ToMenu convert2ToMenu(TcMenu tcMenu) {
-        // TODO: 2016/11/12
-        return null;
+        checkNotNull(tcMenu);
+        ToMenu toMenu = new ToMenu();
+        BeanUtils.copyProperties(tcMenu, toMenu);
+        return toMenu;
     }
 
     private ToPermission convert2ToPermission(TcPermission tcPermission) {
-        // TODO: 2016/11/12
-        return null;
+        checkNotNull(tcPermission);
+        ToPermission toPermission = new ToPermission();
+        BeanUtils.copyProperties(tcPermission, toPermission);
+        return toPermission;
     }
 
 }

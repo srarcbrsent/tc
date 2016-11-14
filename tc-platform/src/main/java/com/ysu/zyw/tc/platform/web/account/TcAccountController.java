@@ -32,7 +32,7 @@ public class TcAccountController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/create_account", method = RequestMethod.POST)
-    public ResponseEntity<TcR<String, Void>> createAccount(TiAccount tiAccount) {
+    public ResponseEntity<TcR<String>> createAccount(TiAccount tiAccount) {
 
         tcAccountApi.createAccount(tiAccount);
 

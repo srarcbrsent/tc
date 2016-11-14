@@ -26,25 +26,25 @@ layui.use(['form'], function () {
     form.on('submit(signup)', function(data){
         var password = data.field.password;
         // find token
-        var tokenAndSalt = fetchTokenAndSalt();
+        var token = fetchToken();
         // encode and set
-        var cltPassword = $.md5($.md5(tokenAndSalt.salt + password) + tokenAndSalt.token);
+        var cltPassword = $.md5($.md5(password) + token);
         $('#signup-form').find('input[type = "password"][name = "password"]').val(cltPassword);
         return true;
     });
 
-    var fetchTokenAndSalt = function () {
-        var tokenAndSalt = null;
+    var fetchToken = function () {
+        var token = null;
         $.ajax({
             url: __base + '/auth/token.json',
             type: 'post',
             async: false,
             success: function(data, textStatus, jqXHR) {
                 __doWithTcR(data, function (body) {
-                    tokenAndSalt = body;
+                    token = body;
                 });
             }
         });
-        return tokenAndSalt;
+        return token;
     }
 });

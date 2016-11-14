@@ -18,35 +18,35 @@ import java.util.function.Supplier;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "响应包裹类型")
-public class TcR<T, E> implements Serializable {
+public class TcR<T> implements Serializable {
 
     @ApiModelProperty(value = "响应码")
     protected int code;
-
-    @ApiModelProperty(value = "响应描述")
-    protected String description;
 
     @ApiModelProperty(value = "响应体")
     protected T body;
 
     @ApiModelProperty(value = "附加信息")
-    protected E extra;
+    protected TcExtra extra;
 
-    public TcR(int code, String description) {
+    public TcR(int code) {
         this.code = code;
-        this.description = description;
     }
 
-    public static <T, E> TcR<T, E> ok(T body) {
-        TcR<T, E> tcR = new TcR<>();
+    public static <T> TcR<T> ok(T body) {
+        TcR<T> tcR = new TcR<>();
         tcR.code = R.SUCCESS;
-        tcR.description = R.SUCCESS_DESCRIPTION;
         tcR.body = body;
         return tcR;
     }
 
-    public static <T, E> TcR<T, E> ok() {
+    public static <T> TcR<T> ok() {
         return ok(null);
+    }
+
+    public TcR<T> extra(String extra) {
+        this.setExtra(new TcExtra().setDescription(extra));
+        return this;
     }
 
     public static abstract class R {
@@ -99,6 +99,11 @@ public class TcR<T, E> implements Serializable {
         return this.isSuccess() && Objects.nonNull(body);
     }
 
+    @JsonIgnore
+    public boolean isUnProcessableEntity() {
+        return this.code == R.UNPROCESSABLE_ENTITY;
+    }
+
     public void ifPresent(Consumer<T> consumer) {
         if (this.isPresent()) {
             consumer.accept(body);
@@ -123,6 +128,44 @@ public class TcR<T, E> implements Serializable {
         } else {
             throw supplier.get();
         }
+    }
+
+    public int orElseGetExtraIfUnProcessable(int code) {
+        if (!isUnProcessableEntity()) {
+            throw new RuntimeException("this is not a un processable entity response, " +
+                            "only un processable entity response may have extra data!");
+        }
+
+        if (Objects.nonNull(this.extra)) {
+            return this.extra.getCode();
+        }
+
+        return code;
+    }
+
+    public int orElseThrowExtraIfUnProcessable(Supplier<? extends RuntimeException> supplier) {
+        if (!isUnProcessableEntity()) {
+            throw new RuntimeException("this is not a un processable entity response, " +
+                    "only un processable entity response may have extra data!");
+        }
+
+        if (Objects.nonNull(this.extra)) {
+            return this.extra.getCode();
+        }
+
+        throw supplier.get();
+    }
+
+    // is forceUnProcessableEntity is set to true, then we think of only the code == 422
+    // then this tcR have a extra field, so if the code != 422, then get the default one.
+    public String orElseGetStringExtraDescription(boolean forceUnProcessableEntity, String description) {
+        if ((!forceUnProcessableEntity || isUnProcessableEntity()) &&
+                Objects.nonNull(this.extra) &&
+                Objects.nonNull(this.extra.getDescription())) {
+            return this.extra.getDescription().toString();
+        }
+
+        return description;
     }
 
 }

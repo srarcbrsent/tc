@@ -1,6 +1,6 @@
 <script src="${.vars.staticBase}/libs/jquery-3.1.0.min.js" type="application/javascript"></script>
 <script src="${.vars.staticBase}/libs/layui/layui.js" type="application/javascript"></script>
-<link href="${.vars.staticBase}/libs/normalize.css" type="text/css" rel="stylesheet"/>
+<link href="${.vars.staticBase}/libs/normalize.min.css" type="text/css" rel="stylesheet"/>
 <link href="${.vars.staticBase}/libs/layui/css/layui.css" type="text/css" rel="stylesheet"/>
 <script type="text/javascript">
     // tc base

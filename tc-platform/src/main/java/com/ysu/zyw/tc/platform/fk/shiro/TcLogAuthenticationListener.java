@@ -19,7 +19,8 @@ public class TcLogAuthenticationListener implements AuthenticationListener {
 
     @Override
     public void onFailure(AuthenticationToken token, AuthenticationException ae) {
-        log.info("accounts [{}] authentication failure.", token.getPrincipal(), ae);
+        // ignore stacktrace.
+        log.info("accounts [{}] authentication failure.", token.getPrincipal());
     }
 
     @Override

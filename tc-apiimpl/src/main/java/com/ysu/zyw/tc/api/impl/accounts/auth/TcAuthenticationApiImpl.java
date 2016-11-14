@@ -9,7 +9,6 @@ import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.model.validator.TcValidator;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,14 +22,13 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
     private TcAccountService tcAccountService;
 
     @Override
-    public TcR<ToAccount, TcValidator.TcVerifyFailure> signup(
-            String username,
-            Boolean canAccountLogin,
-            Boolean canEmailLogin,
-            Boolean canMobileLogin) {
+    public TcR<ToAccount> signup(String username,
+                                 Boolean canAccountLogin,
+                                 Boolean canEmailLogin,
+                                 Boolean canMobileLogin) {
 
-        // throw TcVerifyFailureException
-        String  succLoginAccountId =
+        // throws TcUnProcessableEntityException
+        String succLoginAccountId =
                 tcAccountService.signup(username, canAccountLogin, canEmailLogin, canMobileLogin);
 
         Preconditions.checkNotNull(succLoginAccountId);
@@ -40,14 +38,18 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
     }
 
     @Override
-    public TcP<List<ToMenu>, Void> findMenus(String accountId) {
+    public TcP<List<ToMenu>> findMenus(String accountId) {
+
         List<ToMenu> toMenus = tcAuthService.fetchMenus(accountId);
+
         return TcP.ok(null);
     }
 
     @Override
-    public TcP<List<ToPermission>, Void> findPermissions(String accountId) {
+    public TcP<List<ToPermission>> findPermissions(String accountId) {
+
         List<ToPermission> toPermissions = tcAuthService.fetchPermissions(accountId);
+
         return TcP.ok(null);
     }
 

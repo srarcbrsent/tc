@@ -52,7 +52,7 @@ public class TcCredentialsMatcher implements CredentialsMatcher {
         String dbPassword = info.getCredentials().toString();
         String svrPassword = encryptPassword(dbPassword);
 
-        String cltPassword = String.valueOf(token.getCredentials());
+        String cltPassword = new String((char[]) token.getCredentials());
         return Objects.equals(svrPassword, cltPassword);
     }
 

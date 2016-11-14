@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -44,9 +43,9 @@ public class TcRegionController {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_provinces", method = RequestMethod.GET)
-    public Response findProvinces() {
+    public ResponseEntity<TcR<List<TcProvince>>> findProvinces() {
         List<TcProvince> provinceList = tcRegionService.findProvinceList();
-        return Response.ok(TcR.ok(provinceList)).build();
+        return ResponseEntity.ok(TcR.ok(provinceList));
     }
 
     @ApiOperation(
@@ -62,13 +61,13 @@ public class TcRegionController {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_cities/{code}", method = RequestMethod.GET)
-    public ResponseEntity<TcR<List<TcProvince.TcCity>, Void>> findCities(
+    public ResponseEntity<TcR<List<TcProvince.TcCity>>> findCities(
             @PathVariable(value = "code") String provinceCode) {
         List<TcProvince.TcCity> cityList;
         try {
             cityList = tcRegionService.findCityList(provinceCode);
         } catch (TcResourceNotFoundException e) {
-            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION));
+            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND));
         }
         checkNotNull(cityList);
         return ResponseEntity.ok(TcR.ok(cityList));
@@ -87,13 +86,13 @@ public class TcRegionController {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_districts/{code}", method = RequestMethod.GET)
-    public ResponseEntity<TcR<List<TcProvince.TcCity.TcDistrict>, Void>> findDistricts(
+    public ResponseEntity<TcR<List<TcProvince.TcCity.TcDistrict>>> findDistricts(
             @PathVariable(value = "code") String cityCode) {
         List<TcProvince.TcCity.TcDistrict> districtList;
         try {
             districtList = tcRegionService.findDistrictList(cityCode);
         } catch (TcResourceNotFoundException e) {
-            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION));
+            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND));
         }
         checkNotNull(districtList);
         return ResponseEntity.ok(TcR.ok(districtList));
@@ -112,13 +111,13 @@ public class TcRegionController {
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_district/{code}", method = RequestMethod.GET)
-    public ResponseEntity<TcR<TcProvince.TcCity.TcDistrict, Void>> findDistrict(
+    public ResponseEntity<TcR<TcProvince.TcCity.TcDistrict>> findDistrict(
             @PathVariable(value = "code") String code) {
         TcProvince.TcCity.TcDistrict district;
         try {
             district = tcRegionService.findDistrict(code);
         } catch (TcResourceNotFoundException e) {
-            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND, TcR.R.NOT_FOUND_DESCRIPTION));
+            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND));
         }
         checkNotNull(district);
         return ResponseEntity.ok(TcR.ok(district));

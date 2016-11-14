@@ -22,7 +22,7 @@ public interface TcAccountApi {
     @Path(value = "/create_account")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<String, Object> createAccount(
+    TcR<String> createAccount(
             @Valid TiAccount tiAccount
     );
 
@@ -30,7 +30,7 @@ public interface TcAccountApi {
     @Path(value = "/delete_account/{id}")
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<Void, Object> deleteAccount(
+    TcR<Void> deleteAccount(
             @NotEmpty @Length(min = 32, max = 32) @PathParam(value = "id") String accountId,
             @NotEmpty @Length(min = 32, max = 32) @QueryParam(value = "delector") String delector
     );
@@ -39,7 +39,7 @@ public interface TcAccountApi {
     @Path(value = "/update_account")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<Void, Object> updateAccount(
+    TcR<Void> updateAccount(
             @Valid TiAccount tiAccount
     );
 
@@ -47,7 +47,7 @@ public interface TcAccountApi {
     @Path(value = "/find_account/{id}")
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<ToAccount, Object> findAccount(
+    TcR<ToAccount> findAccount(
             @NotEmpty @Length(min = 32, max = 32) @PathParam(value = "id") String accountId
     );
 
@@ -55,7 +55,7 @@ public interface TcAccountApi {
     @Path(value = "/count_accounts")
     @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<Long, Object> countAccounts(
+    TcR<Long> countAccounts(
             @Form TiFindAccountsTerms tiFindAccountsTerms
     );
 
@@ -63,7 +63,7 @@ public interface TcAccountApi {
     @Path(value = "/find_accounts/{currentPage}/{pageSize}")
     @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcP<List<ToAccount>, Object> findAccounts(
+    TcP<List<ToAccount>> findAccounts(
             @Form TiFindAccountsTerms tiFindAccountsTerms,
             @NotEmpty @Range(min = 0, max = Long.MAX_VALUE) @PathParam(value = "currentPage") Integer currentPage,
             @NotEmpty @Range(min = 1, max = 30) @PathParam(value = "pageSize") Integer pageSize
