@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.platform.web;
+package com.ysu.zyw.tc.platform.web.account;
 
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;

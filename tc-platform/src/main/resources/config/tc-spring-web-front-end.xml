@@ -74,4 +74,8 @@
         <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
+    <bean class="com.ysu.zyw.tc.components.utils.freemarker.TcFreemarkerRender">
+        <property name="freeMarkerConfigurer" ref="freeMarkerConfigurer"/>
+    </bean>
+
 </beans>

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -179,8 +180,11 @@ public class TcAuthService {
         return tcRoles.stream().map(this::convert2ToRole).collect(Collectors.toList());
     }
 
+    // TODO: 2016/11/15  
     @Transactional(readOnly = true)
-    public List<ToPermission> fetchPermissions(@Nonnull String accountId) {
+    public List<ToPermission> fetchPermissions(@Nonnull String project,
+                                               @Nonnull String platform,
+                                               @Nonnull String accountId) {
         checkNotNull(accountId);
 
         // find role
@@ -225,8 +229,11 @@ public class TcAuthService {
         return tcPermissions.stream().map(this::convert2ToPermission).collect(Collectors.toList());
     }
 
+    // TODO: 2016/11/15  
     @Transactional(readOnly = true)
-    public List<ToMenu> fetchMenus(@Nonnull String accountId) {
+    public List<ToMenu> fetchMenus(@Nonnull String project,
+                                   @Nonnull String platform,
+                                   @Nonnull String accountId) {
         List<String> tcRoleIds =
                 this.fetchRoleList(accountId).stream().map(ToRole::getId).collect(Collectors.toList());
 
@@ -247,7 +254,19 @@ public class TcAuthService {
         tcMenuExample.createCriteria()
                 .andIdIn(menuIds);
         List<TcMenu> tcMenus = tcMenuMapper.selectByExample(tcMenuExample);
-        return tcMenus.stream().map(this::convert2ToMenu).collect(Collectors.toList());
+        List<ToMenu> flatToMenus = tcMenus.stream().map(this::convert2ToMenu).collect(Collectors.toList());
+
+        // group level
+        // sort by level then structure, reversed
+        List<ToMenu> sortedToMenus = flatToMenus.stream().sorted(
+                Comparator.comparing(ToMenu::getLevel).reversed()
+                        .thenComparing(ToMenu::getStructure).reversed())
+                .collect(Collectors.toList());
+
+
+
+
+        return null;
     }
 
     private ToRole convert2ToRole(TcRole tcRole) {

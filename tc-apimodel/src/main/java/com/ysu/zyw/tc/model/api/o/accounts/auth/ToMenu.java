@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Accessors(chain = true)
@@ -17,10 +18,18 @@ public class ToMenu implements Serializable {
 
     private String description;
 
+    private String project;
+
+    private String platform;
+
     private String name;
+
+    private int level;
 
     private String link;
 
     private String structure;
+
+    private List<ToMenu> subMenus;
 
 }
