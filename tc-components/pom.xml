@@ -119,15 +119,15 @@
             <artifactId>spring-retry</artifactId>
         </dependency>
 
-        <!-- elasticsearch -->
+        <!-- solr -->
         <dependency>
             <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-elasticsearch</artifactId>
+            <artifactId>spring-data-solr</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
         </dependency>
 
         <!-- kafka -->
