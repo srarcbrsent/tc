@@ -23,7 +23,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TcAuthorizingRealm extends AuthorizingRealm {
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Resource
     private TcAuthenticationApi tcAuthenticationApi;
 

@@ -1,3 +1,37 @@
-<ul class="layui-nav">
-    <li class="layui-nav-item layui-this"><a href="">一个实验页面，里面有不少好东西</a></li>
-</ul>
+<div id="header_div">
+    <div class="layui-main">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>
+                这只是一个测试用的工程而已，基友
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;
+                <a href="${base}/auth/signout.html"
+                   class="layui-btn layui-btn-normal layui-btn-small layui-btn-radius layui-inline"
+                   style="display: inline-block">
+                    点击我登出
+                </a>
+            </legend>
+        </fieldset>
+    </div>
+</div>
+<style type="text/css">
+    #header_div {
+        width: 100%;
+        min-width: 1140px;
+        background-color: #393D49;
+        color: #c2c2c2;
+        padding: 10px 0 10px 0;
+    }
+
+    #header_div .layui-field-title {
+        margin: 5px 0 5px 0;
+    }
+</style>
+
+

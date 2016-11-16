@@ -7,6 +7,7 @@ import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.BooleanUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.util.*;
@@ -33,6 +34,10 @@ public class TcHttpxService {
     @Setter
     @Resource
     private RestTemplate restTemplate;
+
+    @Getter
+    @Setter
+    private boolean camouflageException;
 
     public <T> ResponseEntity<T> getText4Entity(@Nonnull String url,
                                                 @Nullable Map<String, String> pathVariables,
@@ -183,26 +188,48 @@ public class TcHttpxService {
                                             HttpEntity<?> httpEntity,
                                             ParameterizedTypeReference<T> typeReference,
                                             Map<String, String> uriVariables) {
+        if (Objects.isNull(uriVariables)) {
+            uriVariables = Maps.newHashMap();
+        }
+
+        if (BooleanUtils.isTrue(camouflageException)) {
+            try {
+                return doExecute(url, httpMethod, httpEntity, typeReference, uriVariables);
+            } catch (Exception e) {
+                // camouflage exception
+                log.error("", e);
+                return doCamouflageException();
+            }
+        } else {
+            return doExecute(url, httpMethod, httpEntity, typeReference, uriVariables);
+        }
+    }
+
+    protected  <T> ResponseEntity<T> doExecute(String url,
+                                            HttpMethod httpMethod,
+                                            HttpEntity<?> httpEntity,
+                                            ParameterizedTypeReference<T> typeReference,
+                                            Map<String, String> uriVariables) {
+        Date now = new Date();
+
         if (log.isInfoEnabled()) {
             log.info("start call http api [{}:{}], url vars [{}], request body [{}]",
                     httpMethod, url, uriVariables, httpEntity);
         }
 
-        if (Objects.isNull(uriVariables)) {
-            uriVariables = Maps.newHashMap();
-        }
-
-        Date now = new Date();
         ResponseEntity<T> responseEntity =
                 restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
 
         if (log.isInfoEnabled()) {
-            log.info("call http api [{}:{}] finish, response code [{}], has body [{}], take time [{}]",
-                    httpMethod, url, Objects.nonNull(responseEntity.getBody()), httpEntity,
-                    TcDateUtils.duration(now, new Date()));
+            log.info("call http api [{}:{}] finish, response code [{}], take time [{}]",
+                    httpMethod, url, httpEntity, TcDateUtils.duration(now, new Date()));
         }
 
         return responseEntity;
+    }
+
+    protected <T> ResponseEntity<T> doCamouflageException() {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public <T> T orElseGet(@NotNull ResponseEntity<T> responseEntity,

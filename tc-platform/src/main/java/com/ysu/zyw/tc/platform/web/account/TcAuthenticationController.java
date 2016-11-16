@@ -13,7 +13,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +39,7 @@ public class TcAuthenticationController {
 
     @ApiOperation(
             value = "获取登陆用一次性token",
-            notes = "获取登陆用一次性token",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "获取登陆用一次性token")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/token", method = RequestMethod.POST)
     public ResponseEntity<TcR<String>> token() {
@@ -51,10 +49,9 @@ public class TcAuthenticationController {
 
     @ApiOperation(
             value = "登陆",
-            notes = "登陆",
-            produces = MediaType.TEXT_HTML_VALUE)
+            notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/h_signup", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
+    @RequestMapping(value = "/h_signup", method = RequestMethod.POST)
     public ModelAndView signupWithForm(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
@@ -77,10 +74,9 @@ public class TcAuthenticationController {
 
     @ApiOperation(
             value = "登陆",
-            notes = "登陆",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/j_signup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/j_signup", method = RequestMethod.POST)
     public ResponseEntity<TcR<Boolean>> signupWithAjax(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
@@ -136,13 +132,16 @@ public class TcAuthenticationController {
         }
 
         // set session
+
+        // set cookie
+
+
         return TcR.ok(true);
     }
 
     @ApiOperation(
             value = "登出",
-            notes = "登出",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "登出")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/signout", method = RequestMethod.GET)
     public ModelAndView signout() {

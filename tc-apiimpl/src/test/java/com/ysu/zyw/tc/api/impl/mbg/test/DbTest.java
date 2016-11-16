@@ -6,9 +6,6 @@ import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.base.tools.TcTuple;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
@@ -45,25 +42,11 @@ public class DbTest {
     }
 
     @Test
-    public void test1() throws IOException, BiffException, SQLException {
+    public void test1() throws IOException, SQLException {
         DruidPooledConnection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO tmp_goods VALUES (?, ?)");
 
         InputStream stream = new FileInputStream("/home/zhangyaowu/桌面/22.xls");
-        Workbook rwb = Workbook.getWorkbook(stream);
-        Sheet sheet = rwb.getSheet(0);
-        int rows = sheet.getRows();
-        List<TcTuple<String, String>> l = new ArrayList<>(2600);
-        for (int i = 0; i < rows; i++) {
-            TcTuple<String, String> tcTuple = new TcTuple<>(sheet.getCell(0, i).getContents(), sheet
-                    .getCell(1, i).getContents().toLowerCase().trim());
-            l.add(tcTuple);
-            System.out.println(tcTuple);
-            preparedStatement.setString(1, tcTuple.getFirstValue());
-            preparedStatement.setString(2, tcTuple.getSecondValue());
-            // preparedStatement.execute();
-        }
-        System.out.println(l.size());
     }
 
     @Test

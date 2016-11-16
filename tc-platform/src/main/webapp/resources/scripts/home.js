@@ -8,5 +8,4 @@ layui.use(['form', 'upload'], function () {
             console.log(res); //上传成功返回值，必须为json格式
         }
     });
-
 });

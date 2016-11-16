@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,9 +31,7 @@ public class TcRegionController {
 
     @ApiOperation(
             value = "查询省地区信息",
-            notes = "查询省地区信息",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "查询省地区信息")
     @ApiImplicitParam(
             value = "Api版本号",
             paramType = "header",
@@ -50,9 +47,7 @@ public class TcRegionController {
 
     @ApiOperation(
             value = "查询市地区信息",
-            notes = "查询市地区信息",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "查询市地区信息")
     @ApiImplicitParam(
             value = "Api版本号",
             paramType = "header",
@@ -75,9 +70,7 @@ public class TcRegionController {
 
     @ApiOperation(
             value = "查询区地区信息",
-            notes = "查询区地区信息",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "查询区地区信息")
     @ApiImplicitParam(
             value = "Api版本号",
             paramType = "header",
@@ -100,9 +93,7 @@ public class TcRegionController {
 
     @ApiOperation(
             value = "查询指定区地区信息",
-            notes = "查询指定区地区信息",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "查询指定区地区信息")
     @ApiImplicitParam(
             value = "Api版本号",
             paramType = "header",

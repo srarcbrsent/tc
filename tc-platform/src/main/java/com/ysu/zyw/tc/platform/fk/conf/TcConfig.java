@@ -7,4 +7,6 @@ public class TcConfig {
 
     private boolean fixedVerificationCode = false;
 
+    private String tempDir;
+
 }

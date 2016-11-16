@@ -146,12 +146,6 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
-
-        <!-- util -->
-        <dependency>
-            <groupId>net.sourceforge.jexcelapi</groupId>
-            <artifactId>jxl</artifactId>
-        </dependency>
     </dependencies>
 
     <profiles>

@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +21,7 @@ public class TcServerController {
 
     @ApiOperation(
             value = "查询服务器状态",
-            notes = "查询服务器状态",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "查询服务器状态")
     @ApiImplicitParam(
             value = "Api版本号",
             paramType = "header",
@@ -32,16 +29,15 @@ public class TcServerController {
             required = true,
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "/find_health_state", method = RequestMethod.GET, headers = "X-ApiVersion=1.0&X-ApiKey=state")
+    @RequestMapping(value = "/find_health_state", method = RequestMethod.GET,
+            headers = "X-ApiVersion=1.0&X-ApiKey=state")
     public ResponseEntity<TcR<Void>> findHealthState() {
         return ResponseEntity.ok(TcR.ok());
     }
 
     @ApiOperation(
             value = "查询服务器当前时间",
-            notes = "查询服务器当前时间",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "查询服务器当前时间")
     @ApiImplicitParam(
             value = "Api版本号",
             paramType = "header",
@@ -49,7 +45,8 @@ public class TcServerController {
             required = true,
             defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
-    @RequestMapping(value = "/find_current_time", method = RequestMethod.GET, headers = "X-ApiVersion=1.0&X-ApiKey=time")
+    @RequestMapping(value = "/find_current_time", method = RequestMethod.GET,
+            headers = "X-ApiVersion=1.0&X-ApiKey=time")
     public ResponseEntity<TcR<Date>> findCurrentTime() {
         return ResponseEntity.ok(TcR.ok(new Date()));
     }

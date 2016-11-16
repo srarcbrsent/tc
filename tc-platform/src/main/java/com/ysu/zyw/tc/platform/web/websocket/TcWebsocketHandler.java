@@ -10,7 +10,7 @@ import java.security.Principal;
 @Controller
 @RequestMapping(value = "/websocket")
 @MessageMapping(value = "tcws")
-public class TcWebsocketController {
+public class TcWebsocketHandler {
 
     @RequestMapping(value = "/demo.html")
     public String demoPage(HttpServletRequest request) {

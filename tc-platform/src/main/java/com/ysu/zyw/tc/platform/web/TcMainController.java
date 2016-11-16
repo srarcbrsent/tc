@@ -23,8 +23,7 @@ public class TcMainController {
 
     @ApiOperation(
             value = "首页",
-            notes = "跳转到首页",
-            produces = MediaType.TEXT_HTML_VALUE)
+            notes = "跳转到首页")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/")
     public ModelAndView idx() {
@@ -34,8 +33,7 @@ public class TcMainController {
 
     @ApiOperation(
             value = "首页",
-            notes = "跳转到首页",
-            produces = MediaType.TEXT_HTML_VALUE)
+            notes = "跳转到首页")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/index")
     public ModelAndView index() {
@@ -49,8 +47,7 @@ public class TcMainController {
 
     @ApiOperation(
             value = "主页",
-            notes = "跳转到主页",
-            produces = MediaType.TEXT_HTML_VALUE)
+            notes = "跳转到主页")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/home")
     public ModelAndView home() {
@@ -70,8 +67,7 @@ public class TcMainController {
 
     @ApiOperation(
             value = "500错误页",
-            notes = "跳转到500错误页",
-            produces = MediaType.TEXT_HTML_VALUE)
+            notes = "跳转到500错误页")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/h_server_error")
     public ModelAndView internalServerErrorPage() {
@@ -81,8 +77,7 @@ public class TcMainController {
 
     @ApiOperation(
             value = "404错误页",
-            notes = "跳转到404错误页",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "跳转到404错误页")
     @RequestMapping(value = "/j_not_found")
     public ResponseEntity<?> resourceNotFoundJson() {
         // TODO
@@ -91,9 +86,7 @@ public class TcMainController {
 
     @ApiOperation(
             value = "500错误页",
-            notes = "跳转到500错误页",
-            response = ModelAndView.class,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            notes = "跳转到500错误页")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/j_server_error")
     public ResponseEntity<?> internalServerErrorJson() {
