@@ -8,8 +8,10 @@
        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
     <websocket:message-broker application-destination-prefix="/app">
-        <websocket:stomp-endpoint path="/tcendpoint.ws" allowed-origins="http://www.tc.com"/>
-        <websocket:simple-broker prefix="/tcsubcribe"/>
+        <websocket:stomp-endpoint path="/endpoint" allowed-origins="http://www.tc.com">
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:simple-broker prefix="/topic"/>
     </websocket:message-broker>
 
 </beans>

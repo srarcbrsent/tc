@@ -1,11 +1,11 @@
 package com.ysu.zyw.tc.platform.web;
 
+import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.platform.svc.TcVerificationCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import org.apache.shiro.SecurityUtils;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,44 +54,23 @@ public class TcMainController {
         return new ModelAndView("/WEB-INF/templates/home.ftl");
     }
 
-    @ApiOperation(
-            value = "404错误页",
-            notes = "跳转到404错误页",
-            produces = MediaType.TEXT_HTML_VALUE)
-    @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/h_not_found")
-    public ModelAndView resourceNotFoundPage() {
-        // TODO
-        return new ModelAndView("1");
-    }
-
-    @ApiOperation(
-            value = "500错误页",
-            notes = "跳转到500错误页")
-    @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/h_server_error")
-    public ModelAndView internalServerErrorPage() {
-        // TODO
-        return new ModelAndView("2");
-    }
+    // the server 404 & 500 page is static page in webapp.
 
     @ApiOperation(
             value = "404错误页",
             notes = "跳转到404错误页")
-    @RequestMapping(value = "/j_not_found")
+    @RequestMapping(value = "/not_found")
     public ResponseEntity<?> resourceNotFoundJson() {
-        // TODO
-        return null;
+        return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND));
     }
 
     @ApiOperation(
             value = "500错误页",
             notes = "跳转到500错误页")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/j_server_error")
+    @RequestMapping(value = "/server_error")
     public ResponseEntity<?> internalServerErrorJson() {
-        // TODO
-        return null;
+        return ResponseEntity.ok(new TcR<>(TcR.R.SERVER_ERROR));
     }
 
 }

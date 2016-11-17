@@ -11,10 +11,18 @@
 
 
     // websocket
-    var client = Stomp.over(new WebSocket('/tcendpoint'));
+    var client = Stomp.over(new SockJS('http://websocket.tc.com/endpoint'));
     client.connect({}, function (frame) {
         console.log('connected ...');
+
+        client.subscribe('/topic/greetings', function(greeting){
+            console.log(greeting);
+        });
     });
+
+    function run() {
+        client.send('/app/handle', {}, 'helo');
+    }
 
 
 </script>

@@ -53,39 +53,39 @@ public class TcR<T> implements Serializable {
 
         public static final int SUCCESS = 200;
 
-        public static final String SUCCESS_DESCRIPTION = "请求成功！";
+        private static final String SUCCESS_DESCRIPTION = "请求成功！";
 
         public static final int BAD_REQUEST = 400;
 
-        public static final String BAD_REQUEST_DESCRIPTION = "错误请求！";
+        private static final String BAD_REQUEST_DESCRIPTION = "错误请求！";
 
         public static final int UNAUTHORIZED = 401;
 
-        public static final String UNAUTHORIZED_DESCRIPTION = "未认证！";
+        private static final String UNAUTHORIZED_DESCRIPTION = "未认证！";
 
         public static final int FORBIDDEN = 403;
 
-        public static final String FORBIDDEN_DESCRIPTION = "未授权！";
+        private static final String FORBIDDEN_DESCRIPTION = "未授权！";
 
         public static final int NOT_FOUND = 404;
 
-        public static final String NOT_FOUND_DESCRIPTION = "资源不存在！";
+        private static final String NOT_FOUND_DESCRIPTION = "资源不存在！";
 
         public static final int CONFLICT = 409;
 
-        public static final String CONFLICT_DESCRIPTION = "冲突！";
+        private static final String CONFLICT_DESCRIPTION = "冲突！";
 
         public static final int DEPRECATED = 415;
 
-        public static final String DEPRECATED_DESCRIPTION = "Api已过期！";
+        private static final String DEPRECATED_DESCRIPTION = "Api已过期！";
 
         public static final int UNPROCESSABLE_ENTITY = 422;
 
-        public static final String UNPROCESSABLE_ENTITY_DESCRIPTION = "无法处理的请求！";
+        private static final String UNPROCESSABLE_ENTITY_DESCRIPTION = "无法处理的请求！";
 
         public static final int SERVER_ERROR = 500;
 
-        public static final String SERVER_ERROR_DESCRIPTION = "服务器异常，请稍后再试！";
+        private static final String SERVER_ERROR_DESCRIPTION = "服务器异常，请稍后再试！";
 
     }
 

@@ -8,7 +8,6 @@
     <link href="${.vars.staticBase}/styles/home.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-<div>
     <!-- header start -->
 <#include "/WEB-INF/templates/common/header.ftl"/>
     <!-- header end -->
@@ -126,7 +125,6 @@
     <!-- footer start -->
 <#include "/WEB-INF/templates/common/footer.ftl"/>
     <!-- footer end -->
-</div>
 
 <#include "/WEB-INF/templates/common/post-lib.ftl"/>
 <script src="${.vars.staticBase}/scripts/home.js" type="application/javascript"></script>

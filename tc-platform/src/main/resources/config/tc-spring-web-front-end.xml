@@ -38,7 +38,7 @@
     <context:component-scan base-package="com.ysu.zyw.tc.platform.web"/>
 
     <bean class="com.ysu.zyw.tc.components.utils.handler.TcHandleExceptionHandler">
-        <property name="view5xx" value="/server_error.html"/>
+        <property name="view5xx" value="/500.html"/>
         <property name="ajax5xx" value="/server_error.json"/>
     </bean>
 
