@@ -7,8 +7,8 @@
        http://www.springframework.org/schema/websocket
        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
-    <websocket:message-broker application-destination-prefix="/tcsend">
-        <websocket:stomp-endpoint path="/tcendpoint"/>
+    <websocket:message-broker application-destination-prefix="/app">
+        <websocket:stomp-endpoint path="/tcendpoint.ws" allowed-origins="http://www.tc.com"/>
         <websocket:simple-broker prefix="/tcsubcribe"/>
     </websocket:message-broker>
 

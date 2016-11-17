@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/websocket")
-@MessageMapping(value = "tcws")
 public class TcWebsocketHandler {
 
     @RequestMapping(value = "/demo.html")
@@ -19,9 +19,10 @@ public class TcWebsocketHandler {
         return "/WEB-INF/templates/common/websocket.ftl";
     }
 
-    @MessageMapping(value = "handle")
-    public void handle(String msg) {
+    @MessageMapping(value = "/tcendpoint.ws")
+    public String handle(String msg) {
         System.out.println(msg);
+        return new Date().toString();
     }
 
 }

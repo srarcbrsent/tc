@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder file-encoding="UTF-8"
-                                  location="classpath*:example/local-data-es-example.properties"/>
+                                  location="classpath*:example/local-data-solr-example.properties"/>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">

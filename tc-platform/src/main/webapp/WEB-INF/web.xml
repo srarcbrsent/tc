@@ -33,11 +33,6 @@
         <url-pattern>*.html</url-pattern>
     </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>shiroFilter</filter-name>
-        <url-pattern>*.ws</url-pattern>
-    </filter-mapping>
-
     <!-- etag filter -->
     <filter>
         <filter-name>etagFilter</filter-name>
@@ -90,6 +85,11 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.json</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.ws</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
