@@ -7,11 +7,14 @@
        http://www.springframework.org/schema/websocket
        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
-    <websocket:message-broker application-destination-prefix="/app">
-        <websocket:stomp-endpoint path="/endpoint" allowed-origins="http://www.tc.com">
+    <websocket:message-broker application-destination-prefix="/dap" user-destination-prefix="/uap">
+        <websocket:transport send-timeout="1500" send-buffer-size="524288"/>
+        <websocket:stomp-endpoint path="/ep" allowed-origins="http://www.tc.com">
             <websocket:sockjs/>
         </websocket:stomp-endpoint>
-        <websocket:simple-broker prefix="/topic"/>
+        <websocket:simple-broker prefix="/dtp"/>
     </websocket:message-broker>
+
+    <bean class="com.ysu.zyw.tc.platform.fk.conf.TcWebSocketListener"/>
 
 </beans>

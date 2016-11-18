@@ -24,7 +24,7 @@ public class ToMenu implements Serializable {
 
     private String name;
 
-    private int level;
+    private Integer level;
 
     private String link;
 

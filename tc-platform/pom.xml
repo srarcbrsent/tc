@@ -133,6 +133,12 @@
             <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
 
+        <!-- utils -->
+        <!--<dependency>-->
+            <!--<groupId>commons-fileupload</groupId>-->
+            <!--<artifactId>commons-fileupload</artifactId>-->
+        <!--</dependency>-->
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
