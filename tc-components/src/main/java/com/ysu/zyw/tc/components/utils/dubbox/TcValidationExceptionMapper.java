@@ -24,7 +24,8 @@ public class TcValidationExceptionMapper extends RpcExceptionMapper {
                 .build();
     }
 
-    // generic type with jackson serialization, do not cause any problem, if use other serialization, may failed.
+    // generic type with jackson serialization, do not cause any problem,
+    // if use other serialization, may cause generic type cast failed.
     private <T> TcR<T> determineResponse() {
         return new TcR<>();
     }

@@ -5,7 +5,7 @@ import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
-import org.hibernate.validator.constraints.Length;
+import com.ysu.zyw.tc.model.validator.constraints.Id;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.jboss.resteasy.annotations.Form;
@@ -31,8 +31,8 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<Void> deleteAccount(
-            @NotEmpty @Length(min = 32, max = 32) @PathParam(value = "id") String accountId,
-            @NotEmpty @Length(min = 32, max = 32) @QueryParam(value = "delector") String delector
+            @NotEmpty @Id @PathParam(value = "id") String accountId,
+            @NotEmpty @Id @QueryParam(value = "delector") String delector
     );
 
     @POST
@@ -48,7 +48,7 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<ToAccount> findAccount(
-            @NotEmpty @Length(min = 32, max = 32) @PathParam(value = "id") String accountId
+            @NotEmpty @Id @PathParam(value = "id") String accountId
     );
 
     @POST
