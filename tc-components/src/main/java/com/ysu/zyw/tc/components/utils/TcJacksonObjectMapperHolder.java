@@ -13,7 +13,7 @@ public class TcJacksonObjectMapperHolder {
         objectMapper = Jackson2ObjectMapperBuilder
                 .json()
                 .simpleDateFormat(TcDateUtils.FULL_DATE_FORMAT_VALUE)
-                .featuresToEnable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .build();
     }
 

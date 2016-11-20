@@ -8,23 +8,26 @@
     <link href="${.vars.staticBase}/styles/home.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <!-- header start -->
+    <!-- + header -->
 <#include "/WEB-INF/templates/common/header.ftl"/>
-    <!-- header end -->
+    <!-- - header -->
 
-    <!-- container start -->
+    <!-- + container -->
     <div id="main-container" class="layui-main">
+        <!-- + menu -->
         <div id="menu_div">
         <#include "/WEB-INF/templates/menu.ftl"/>
         </div>
+        <!-- - menu -->
 
+        <!-- + body -->
         <div id="body_div">
             <fieldset class="layui-elem-field">
                 <legend>
                     主页 - 这是已经登陆状态了 骚年
                 </legend>
                 <div class="layui-field-box">
-                    <!-- create account start -->
+                    <!-- + create account -->
                     <fieldset class="layui-elem-field layui-field-title">
                         <legend>创建账号 - 创建账号之后就可以尽情的玩耍了 - 只有拥有创建账号权限的用户可见表单</legend>
                         <div class="layui-field-box">
@@ -114,17 +117,18 @@
                             </div>
                         </div>
                     </fieldset>
-                    <!-- create account end -->
+                    <!-- - create account -->
                 </div>
             </fieldset>
         </div>
+        <!-- - body -->
         <div class="layui-clear"></div>
     </div>
-    <!-- container end -->
+    <!-- - container -->
 
-    <!-- footer start -->
+    <!-- + footer -->
 <#include "/WEB-INF/templates/common/footer.ftl"/>
-    <!-- footer end -->
+    <!-- - footer -->
 
 <#include "/WEB-INF/templates/common/post-lib.ftl"/>
 <script src="${.vars.staticBase}/scripts/home.js" type="application/javascript"></script>

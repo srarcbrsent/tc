@@ -9,11 +9,11 @@
 </head>
 <body>
 <div>
-    <!-- header start -->
+    <!-- + header -->
 <#include "/WEB-INF/templates/common/header.ftl"/>
-    <!-- header end -->
+    <!-- - header -->
 
-    <!-- container start -->
+    <!-- + container -->
     <div id="main-container" class="layui-main">
         <fieldset class="layui-elem-field">
         <#if signupErrorMsg??>
@@ -62,12 +62,11 @@
             </div>
         </fieldset>
     </div>
+    <!-- - container -->
 
-
-    <!-- container end -->
-    <!-- footer start -->
+    <!-- + footer -->
 <#include "/WEB-INF/templates/common/footer.ftl"/>
-    <!-- footer end -->
+    <!-- - footer -->
 </div>
 
 <#include "/WEB-INF/templates/common/post-lib.ftl"/>
