@@ -2,6 +2,7 @@ package com.ysu.zyw.tc.platform.web.account;
 
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;
@@ -63,7 +64,7 @@ public class TcAuthenticationController {
             value = "登陆",
             notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/h_signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ModelAndView signupWithForm(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
@@ -72,7 +73,7 @@ public class TcAuthenticationController {
             @RequestParam(value = "targetUrl", required = false) String targetUrl,
             RedirectAttributes redirectAttributes) {
         TcR<Boolean> tcR =
-                signup(username, cltPassword, rememberMe, verificationCode, targetUrl);
+                signup(username, cltPassword, rememberMe, verificationCode);
         if (tcR.orElse(false)) {
             // login succ
             if (Objects.nonNull(targetUrl)) {
@@ -91,7 +92,7 @@ public class TcAuthenticationController {
             value = "登陆",
             notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/j_signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/r_signup", method = RequestMethod.POST)
     public ResponseEntity<TcR<Boolean>> signupWithAjax(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
@@ -99,7 +100,7 @@ public class TcAuthenticationController {
             @RequestParam(value = "verificationCode") String verificationCode,
             @RequestParam(value = "targetUrl", required = false) String targetUrl) {
         TcR<Boolean> tcR =
-                signup(username, cltPassword, rememberMe, verificationCode, targetUrl);
+                signup(username, cltPassword, rememberMe, verificationCode);
         return ResponseEntity.ok(tcR);
     }
 
@@ -107,8 +108,7 @@ public class TcAuthenticationController {
     private TcR<Boolean> signup(String username,
                                 String cltPassword,
                                 Boolean rememberMe,
-                                String verificationCode,
-                                String targetUrl) {
+                                String verificationCode) {
         // verify verification code
         boolean verificationCodeMatch = tcVerificationCodeService.isVerificationCodeMatch(verificationCode);
         if (!verificationCodeMatch) {
@@ -172,6 +172,18 @@ public class TcAuthenticationController {
         String accountId = tcSessionService.getAccountId();
 
         return tcAuthenticationApi.findMenus(accountId);
+    }
+
+    @ApiOperation(
+            value = "获取页面元素权限",
+            notes = "获取页面元素权限")
+    @ApiResponse(code = 200, message = "成功")
+    @RequestMapping(value = "/get_permissions", method = RequestMethod.GET)
+    public TcP<List<ToPermission>> getPermissions() {
+
+        String accountId = tcSessionService.getAccountId();
+
+        return tcAuthenticationApi.findPermissions(accountId);
     }
 
 }
