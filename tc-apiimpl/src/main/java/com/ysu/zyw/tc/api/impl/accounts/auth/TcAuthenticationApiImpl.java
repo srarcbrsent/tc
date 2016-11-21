@@ -39,17 +39,17 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
     }
 
     @Override
-    public TcP<List<ToMenu>> findMenus(String project, String platform, String accountId) {
+    public TcP<List<ToMenu>> findMenus(String accountId) {
 
-        List<ToMenu> toMenus = tcAuthService.fetchMenus(project, platform, accountId);
+        List<ToMenu> toMenus = tcAuthService.fetchMenus(accountId);
 
         return TcP.ok(null);
     }
 
     @Override
-    public TcP<List<ToPermission>> findPermissions(String project, String platform, String accountId) {
+    public TcP<List<ToPermission>> findPermissions(String accountId) {
 
-        List<ToPermission> toPermissions = tcAuthService.fetchPermissions(project, platform, accountId);
+        List<ToPermission> toPermissions = tcAuthService.fetchPermissions(accountId);
 
         return TcP.ok(null);
     }

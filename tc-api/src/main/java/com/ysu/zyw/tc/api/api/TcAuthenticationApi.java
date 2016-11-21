@@ -30,31 +30,19 @@ public interface TcAuthenticationApi {
             @FormParam(value = "canMobileLogin") @DefaultValue(value = "true") Boolean canMobileLogin
     );
 
-    /**
-     * @param project platform ==> platform
-     * @param platform web ==> web; wx ==> weixin-app
-     */
     @GET
-    @Path(value = "/find_menus/{project}/{platform}/{id}")
+    @Path(value = "/find_menus/{id}")
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcP<List<ToMenu>> findMenus(
-            @PathParam(value = "project") String project,
-            @PathParam(value = "platform") String platform,
             @PathParam(value = "id") String accountId
     );
 
-    /**
-     * @param project platform ==> platform
-     * @param platform web ==> web; wx ==> weixin-app
-     */
     @GET
-    @Path(value = "/find_pms/{project}/{platform}/{id}")
+    @Path(value = "/find_pms/{id}")
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcP<List<ToPermission>> findPermissions(
-            @PathParam(value = "project") String project,
-            @PathParam(value = "platform") String platform,
             @PathParam(value = "id") String accountId
     );
 

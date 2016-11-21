@@ -665,6 +665,76 @@ public class TcAccountExample {
             return (Criteria) this;
         }
 
+        public Criteria andRegionIsNull() {
+            addCriterion("region is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIsNotNull() {
+            addCriterion("region is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionEqualTo(String value) {
+            addCriterion("region =", value, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNotEqualTo(String value) {
+            addCriterion("region <>", value, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionGreaterThan(String value) {
+            addCriterion("region >", value, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionGreaterThanOrEqualTo(String value) {
+            addCriterion("region >=", value, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLessThan(String value) {
+            addCriterion("region <", value, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLessThanOrEqualTo(String value) {
+            addCriterion("region <=", value, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionLike(String value) {
+            addCriterion("region like", value, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNotLike(String value) {
+            addCriterion("region not like", value, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIn(List<String> values) {
+            addCriterion("region in", values, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNotIn(List<String> values) {
+            addCriterion("region not in", values, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionBetween(String value1, String value2) {
+            addCriterion("region between", value1, value2, "region");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNotBetween(String value1, String value2) {
+            addCriterion("region not between", value1, value2, "region");
+            return (Criteria) this;
+        }
+
         public Criteria andPasswordIsNull() {
             addCriterion("password is null");
             return (Criteria) this;
@@ -732,6 +802,76 @@ public class TcAccountExample {
 
         public Criteria andPasswordNotBetween(String value1, String value2) {
             addCriterion("password not between", value1, value2, "password");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenIsNull() {
+            addCriterion("random_token is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenIsNotNull() {
+            addCriterion("random_token is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenEqualTo(String value) {
+            addCriterion("random_token =", value, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenNotEqualTo(String value) {
+            addCriterion("random_token <>", value, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenGreaterThan(String value) {
+            addCriterion("random_token >", value, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenGreaterThanOrEqualTo(String value) {
+            addCriterion("random_token >=", value, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenLessThan(String value) {
+            addCriterion("random_token <", value, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenLessThanOrEqualTo(String value) {
+            addCriterion("random_token <=", value, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenLike(String value) {
+            addCriterion("random_token like", value, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenNotLike(String value) {
+            addCriterion("random_token not like", value, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenIn(List<String> values) {
+            addCriterion("random_token in", values, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenNotIn(List<String> values) {
+            addCriterion("random_token not in", values, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenBetween(String value1, String value2) {
+            addCriterion("random_token between", value1, value2, "randomToken");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomTokenNotBetween(String value1, String value2) {
+            addCriterion("random_token not between", value1, value2, "randomToken");
             return (Criteria) this;
         }
 

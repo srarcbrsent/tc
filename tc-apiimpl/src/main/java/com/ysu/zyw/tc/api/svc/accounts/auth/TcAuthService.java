@@ -182,9 +182,7 @@ public class TcAuthService {
     }
 
     @Transactional(readOnly = true)
-    public List<ToPermission> fetchPermissions(@Nonnull String project,
-                                               @Nonnull String platform,
-                                               @Nonnull String accountId) {
+    public List<ToPermission> fetchPermissions(@Nonnull String accountId) {
         checkNotNull(accountId);
 
         // find role
@@ -230,9 +228,7 @@ public class TcAuthService {
     }
 
     @Transactional(readOnly = true)
-    public List<ToMenu> fetchMenus(@Nonnull String project,
-                                   @Nonnull String platform,
-                                   @Nonnull String accountId) {
+    public List<ToMenu> fetchMenus(@Nonnull String accountId) {
         List<String> tcRoleIds =
                 this.fetchRoleList(accountId).stream().map(ToRole::getId).collect(Collectors.toList());
 

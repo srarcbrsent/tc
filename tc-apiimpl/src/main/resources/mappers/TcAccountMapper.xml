@@ -10,7 +10,9 @@
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="mobile_activated" jdbcType="INTEGER" property="mobileActivated" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="random_token" jdbcType="VARCHAR" property="randomToken" />
     <result column="lock_release_time" jdbcType="TIMESTAMP" property="lockReleaseTime" />
     <result column="delected" jdbcType="INTEGER" property="delected" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
@@ -77,8 +79,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, account, email, email_activated, mobile, mobile_activated, avatar, password, 
-    lock_release_time, delected, updated_person, updated_timestamp, created_person, created_timestamp
+    id, name, account, email, email_activated, mobile, mobile_activated, avatar, region, 
+    password, random_token, lock_release_time, delected, updated_person, updated_timestamp, 
+    created_person, created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountExample" resultMap="BaseResultMap">
     select
@@ -116,16 +119,16 @@
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
     insert into mb_account (id, name, account, 
       email, email_activated, mobile, 
-      mobile_activated, avatar, password, 
-      lock_release_time, delected, updated_person, 
-      updated_timestamp, created_person, created_timestamp
-      )
+      mobile_activated, avatar, region, 
+      password, random_token, lock_release_time, 
+      delected, updated_person, updated_timestamp, 
+      created_person, created_timestamp)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{emailActivated,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
-      #{mobileActivated,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{lockReleaseTime,jdbcType=TIMESTAMP}, #{delected,jdbcType=INTEGER}, #{updatedPerson,jdbcType=VARCHAR}, 
-      #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP}
-      )
+      #{mobileActivated,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{randomToken,jdbcType=VARCHAR}, #{lockReleaseTime,jdbcType=TIMESTAMP}, 
+      #{delected,jdbcType=INTEGER}, #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, 
+      #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
     insert into mb_account
@@ -154,8 +157,14 @@
       <if test="avatar != null">
         avatar,
       </if>
+      <if test="region != null">
+        region,
+      </if>
       <if test="password != null">
         password,
+      </if>
+      <if test="randomToken != null">
+        random_token,
       </if>
       <if test="lockReleaseTime != null">
         lock_release_time,
@@ -201,8 +210,14 @@
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
       </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="randomToken != null">
+        #{randomToken,jdbcType=VARCHAR},
       </if>
       <if test="lockReleaseTime != null">
         #{lockReleaseTime,jdbcType=TIMESTAMP},
@@ -257,8 +272,14 @@
       <if test="record.avatar != null">
         avatar = #{record.avatar,jdbcType=VARCHAR},
       </if>
+      <if test="record.region != null">
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.randomToken != null">
+        random_token = #{record.randomToken,jdbcType=VARCHAR},
       </if>
       <if test="record.lockReleaseTime != null">
         lock_release_time = #{record.lockReleaseTime,jdbcType=TIMESTAMP},
@@ -293,7 +314,9 @@
       mobile = #{record.mobile,jdbcType=VARCHAR},
       mobile_activated = #{record.mobileActivated,jdbcType=INTEGER},
       avatar = #{record.avatar,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
+      random_token = #{record.randomToken,jdbcType=VARCHAR},
       lock_release_time = #{record.lockReleaseTime,jdbcType=TIMESTAMP},
       delected = #{record.delected,jdbcType=INTEGER},
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
@@ -328,8 +351,14 @@
       <if test="avatar != null">
         avatar = #{avatar,jdbcType=VARCHAR},
       </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="randomToken != null">
+        random_token = #{randomToken,jdbcType=VARCHAR},
       </if>
       <if test="lockReleaseTime != null">
         lock_release_time = #{lockReleaseTime,jdbcType=TIMESTAMP},
@@ -361,7 +390,9 @@
       mobile = #{mobile,jdbcType=VARCHAR},
       mobile_activated = #{mobileActivated,jdbcType=INTEGER},
       avatar = #{avatar,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      random_token = #{randomToken,jdbcType=VARCHAR},
       lock_release_time = #{lockReleaseTime,jdbcType=TIMESTAMP},
       delected = #{delected,jdbcType=INTEGER},
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
@@ -397,7 +428,9 @@
       mobile, 
       mobile_activated, 
       avatar, 
+      region, 
       password, 
+      random_token, 
       lock_release_time, 
       delected, 
       updated_person, 
@@ -414,7 +447,9 @@
       #{items.mobile,jdbcType=VARCHAR}, 
       #{items.mobileActivated,jdbcType=INTEGER}, 
       #{items.avatar,jdbcType=VARCHAR}, 
+      #{items.region,jdbcType=VARCHAR}, 
       #{items.password,jdbcType=VARCHAR}, 
+      #{items.randomToken,jdbcType=VARCHAR}, 
       #{items.lockReleaseTime,jdbcType=TIMESTAMP}, 
       #{items.delected,jdbcType=INTEGER}, 
       #{items.updatedPerson,jdbcType=VARCHAR}, 

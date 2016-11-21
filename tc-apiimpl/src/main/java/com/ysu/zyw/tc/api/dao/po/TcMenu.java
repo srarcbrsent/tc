@@ -20,6 +20,8 @@ public class TcMenu {
 
     private String link;
 
+    private Integer level;
+
     private String structure;
 
     private String updatedPerson;

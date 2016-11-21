@@ -6,6 +6,7 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="link" jdbcType="VARCHAR" property="link" />
+    <result column="level" jdbcType="INTEGER" property="level" />
     <result column="structure" jdbcType="VARCHAR" property="structure" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
     <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
@@ -71,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, description, name, link, structure, updated_person, updated_timestamp, created_person, 
-    created_timestamp
+    id, description, name, link, level, structure, updated_person, updated_timestamp, 
+    created_person, created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample" resultMap="BaseResultMap">
     select
@@ -109,13 +110,13 @@
   </delete>
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
     insert into pv_menu (id, description, name, 
-      link, structure, updated_person, 
-      updated_timestamp, created_person, created_timestamp
-      )
+      link, level, structure, 
+      updated_person, updated_timestamp, created_person, 
+      created_timestamp)
     values (#{id,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{link,jdbcType=VARCHAR}, #{structure,jdbcType=VARCHAR}, #{updatedPerson,jdbcType=VARCHAR}, 
-      #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP}
-      )
+      #{link,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{structure,jdbcType=VARCHAR}, 
+      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
+      #{createdTimestamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
     insert into pv_menu
@@ -131,6 +132,9 @@
       </if>
       <if test="link != null">
         link,
+      </if>
+      <if test="level != null">
+        level,
       </if>
       <if test="structure != null">
         structure,
@@ -160,6 +164,9 @@
       </if>
       <if test="link != null">
         #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
       </if>
       <if test="structure != null">
         #{structure,jdbcType=VARCHAR},
@@ -199,6 +206,9 @@
       <if test="record.link != null">
         link = #{record.link,jdbcType=VARCHAR},
       </if>
+      <if test="record.level != null">
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
       <if test="record.structure != null">
         structure = #{record.structure,jdbcType=VARCHAR},
       </if>
@@ -225,6 +235,7 @@
       description = #{record.description,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       link = #{record.link,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=INTEGER},
       structure = #{record.structure,jdbcType=VARCHAR},
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
@@ -245,6 +256,9 @@
       </if>
       <if test="link != null">
         link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
       </if>
       <if test="structure != null">
         structure = #{structure,jdbcType=VARCHAR},
@@ -269,6 +283,7 @@
     set description = #{description,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       link = #{link,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
       structure = #{structure,jdbcType=VARCHAR},
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
@@ -299,6 +314,7 @@
       description, 
       name, 
       link, 
+      level, 
       structure, 
       updated_person, 
       updated_timestamp, 
@@ -310,6 +326,7 @@
       #{items.description,jdbcType=VARCHAR}, 
       #{items.name,jdbcType=VARCHAR}, 
       #{items.link,jdbcType=VARCHAR}, 
+      #{items.level,jdbcType=INTEGER}, 
       #{items.structure,jdbcType=VARCHAR}, 
       #{items.updatedPerson,jdbcType=VARCHAR}, 
       #{items.updatedTimestamp,jdbcType=TIMESTAMP}, 

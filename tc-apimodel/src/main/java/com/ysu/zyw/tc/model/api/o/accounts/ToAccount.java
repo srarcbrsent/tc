@@ -30,6 +30,10 @@ public class ToAccount implements Serializable {
 
     private String avatar;
 
+    private String region;
+
+    private String randomToken;
+
     private Date lockReleaseTime;
 
     private String password;

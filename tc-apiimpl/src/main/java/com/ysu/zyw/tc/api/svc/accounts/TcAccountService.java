@@ -104,7 +104,7 @@ public class TcAccountService {
                     new TcExtra(11, "名称【" + tiAccount.getName() + "】重复，请重试！"));
         }
 
-        if (StringUtils.isNotBlank(tiAccount.getAccount()) && existAccount(tiAccount.getAccount())) {
+        if (existAccount(tiAccount.getAccount())) {
             throw new TcUnProcessableEntityException(
                     new TcExtra(12, "账号【" + tiAccount.getAccount() + "】重复，请重试！"));
         }
@@ -131,6 +131,8 @@ public class TcAccountService {
                 .setId(id)
                 .setDelected(false)
                 .setLockReleaseTime(now)
+                // FIXME if random token is already exists, account creation failed.
+                .setRandomToken(TcIdWorker.upperCaseUuid().substring(0, 16))
                 .setUpdatedPerson(tiAccount.getOperatorAccountId())
                 .setUpdatedTimestamp(now)
                 .setCreatedPerson(tiAccount.getOperatorAccountId())

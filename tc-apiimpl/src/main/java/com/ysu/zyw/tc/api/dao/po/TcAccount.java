@@ -28,7 +28,11 @@ public class TcAccount {
 
     private String avatar;
 
+    private String region;
+
     private String password;
+
+    private String randomToken;
 
     private Date lockReleaseTime;
 

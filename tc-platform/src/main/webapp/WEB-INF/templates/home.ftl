@@ -33,25 +33,24 @@
                         <div class="layui-field-box">
                             <form id="signin_form" class="layui-form" action="">
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">名字</label>
+                                    <label class="layui-form-label">*&nbsp;名字</label>
                                     <div class="layui-input-block">
                                         <input type="text"
-                                               name="title"
+                                               name="name"
                                                required
                                                lay-verify="required"
-                                               placeholder="请输入标题"
+                                               placeholder="请输入名字"
                                                autocomplete="off"
                                                class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">账号</label>
+                                    <label class="layui-form-label">*&nbsp;账号</label>
                                     <div class="layui-input-block">
                                         <input type="text"
-                                               name="title"
-                                               required
+                                               name="account"
                                                lay-verify="required"
-                                               placeholder="请输入标题"
+                                               placeholder="请输入账号"
                                                autocomplete="off"
                                                class="layui-input">
                                     </div>
@@ -59,10 +58,10 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">邮箱</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="title"
-                                               required
+                                        <input type="email"
+                                               name="email"
                                                lay-verify="required"
-                                               placeholder="请输入标题"
+                                               placeholder="请输入邮箱"
                                                autocomplete="off"
                                                class="layui-input">
                                     </div>
@@ -70,33 +69,60 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">电话</label>
                                     <div class="layui-input-block">
-                                        <input type="text"
-                                               name="title"
-                                               required
+                                        <input type="tel"
+                                               name="mobile"
                                                lay-verify="required"
-                                               placeholder="请输入标题"
+                                               placeholder="请输入手机号码"
                                                autocomplete="off"
                                                class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">密码</label>
+                                    <label class="layui-form-label">*&nbsp;密码</label>
                                     <div class="layui-input-block">
                                         <input type="password"
                                                name="title"
                                                required
                                                lay-verify="required"
-                                               placeholder="请输入标题"
+                                               placeholder="请输入密码"
                                                autocomplete="off"
                                                class="layui-input">
                                     </div>
                                 </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">*&nbsp;地区</label>
+                                    <div class="layui-input-inline">
+                                        <select name="_province" lay-verify="">
+                                            <option value="">请选择一个省</option>
+                                            <option value="010">北京</option>
+                                            <option value="021">上海</option>
+                                            <option value="0571">杭州</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="_city" lay-verify="">
+                                            <option value="">请选择一个市</option>
+                                            <option value="010">北京</option>
+                                            <option value="021">上海</option>
+                                            <option value="0571">杭州</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="region" lay-verify="">
+                                            <option value="">请选择一个区</option>
+                                            <option value="010">北京</option>
+                                            <option value="021">上海</option>
+                                            <option value="0571">杭州</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="avatar"/>
                             </form>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">头像</label>
                                 <div class="layui-input-block">
                                     <input type="file"
-                                           name="file（可随便定义）"
+                                           name="file"
                                            class="layui-upload-file">
                                 </div>
                             </div>

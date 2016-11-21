@@ -1,7 +1,11 @@
 package com.ysu.zyw.tc.platform.web.account;
 
+import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
+import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;
+import com.ysu.zyw.tc.platform.svc.TcSessionService;
 import com.ysu.zyw.tc.platform.svc.TcVerificationCodeService;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import io.swagger.annotations.Api;
@@ -24,6 +28,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Api(value = "认证控制器")
@@ -36,6 +42,12 @@ public class TcAuthenticationController {
 
     @Resource
     private TcVerificationCodeService tcVerificationCodeService;
+
+    @Resource
+    private TcSessionService tcSessionService;
+
+    @Resource
+    private TcAuthenticationApi tcAuthenticationApi;
 
     @ApiOperation(
             value = "获取登陆用一次性token",
@@ -63,6 +75,9 @@ public class TcAuthenticationController {
                 signup(username, cltPassword, rememberMe, verificationCode, targetUrl);
         if (tcR.orElse(false)) {
             // login succ
+            if (Objects.nonNull(targetUrl)) {
+                return new ModelAndView(new RedirectView(targetUrl));
+            }
             return new ModelAndView(new RedirectView("/home.html"));
         } else {
             ModelAndView modelAndView = new ModelAndView(new RedirectView("/index.html"));
@@ -132,9 +147,7 @@ public class TcAuthenticationController {
         }
 
         // set session
-
-        // set cookie
-
+        tcSessionService.initSessionAfterSignup();
 
         return TcR.ok(true);
     }
@@ -147,6 +160,18 @@ public class TcAuthenticationController {
     public ModelAndView signout() {
         SecurityUtils.getSubject().logout();
         return new ModelAndView(new RedirectView("/index.html"));
+    }
+
+    @ApiOperation(
+            value = "获取菜单",
+            notes = "获取菜单")
+    @ApiResponse(code = 200, message = "成功")
+    @RequestMapping(value = "/get_menus", method = RequestMethod.GET)
+    public TcP<List<ToMenu>> getMenus() {
+
+        String accountId = tcSessionService.getAccountId();
+
+        return tcAuthenticationApi.findMenus(accountId);
     }
 
 }

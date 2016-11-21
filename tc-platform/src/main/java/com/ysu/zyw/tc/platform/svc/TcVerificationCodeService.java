@@ -16,10 +16,12 @@ public class TcVerificationCodeService {
     @Resource
     private TcConfig tcConfig;
 
+    private static final String FIXED_VERIFICATION_CODE = "111111";
+
     public String generateVerificationCodeAndSet2Session() {
         String verificationCode = RandomStringUtils.randomNumeric(6);
         if (BooleanUtils.isTrue(tcConfig.isFixedVerificationCode())) {
-            verificationCode = "111111";
+            verificationCode = FIXED_VERIFICATION_CODE;
         }
         SecurityUtils.getSubject().getSession().setAttribute(TcConstant.S.SESSION_VERIFICATION_CODE, verificationCode);
         return verificationCode;
