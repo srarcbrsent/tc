@@ -75,11 +75,11 @@
         <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
-    <!--<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-        <!--<property name="defaultEncoding" value="UTF-8"/>-->
-        <!--&lt;!&ndash; 5m &ndash;&gt;-->
-        <!--<property name="maxUploadSize" value="15242880"/>-->
-    <!--</bean>-->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!-- 5m -->
+        <property name="maxUploadSize" value="15242880"/>
+    </bean>
 
     <bean class="com.ysu.zyw.tc.components.utils.freemarker.TcFreemarkerRender">
         <property name="freeMarkerConfigurer" ref="freeMarkerConfigurer"/>
