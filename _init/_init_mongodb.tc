@@ -1,7 +1,0 @@
-# su
-username = tc_admin
-password = password
-
-# tc
-username = tc_develop
-password = 123456

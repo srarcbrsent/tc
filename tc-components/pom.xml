@@ -238,6 +238,12 @@
             <artifactId>poi-ooxml</artifactId>
         </dependency>
 
+        <!-- rxjava -->
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+        </dependency>
+
         <!-- util -->
         <dependency>
             <groupId>commons-io</groupId>

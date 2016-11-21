@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.api.impl.accounts.auth;
 
-import com.google.common.base.Preconditions;
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
@@ -12,6 +11,8 @@ import com.ysu.zyw.tc.model.mw.TcR;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TcAuthenticationApiImpl implements TcAuthenticationApi {
 
@@ -31,7 +32,7 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
         String succLoginAccountId =
                 tcAccountService.signup(username, canAccountLogin, canEmailLogin, canMobileLogin);
 
-        Preconditions.checkNotNull(succLoginAccountId);
+        checkNotNull(succLoginAccountId);
         ToAccount toAccount = tcAccountService.findAccount(succLoginAccountId, true);
 
         return TcR.ok(toAccount);

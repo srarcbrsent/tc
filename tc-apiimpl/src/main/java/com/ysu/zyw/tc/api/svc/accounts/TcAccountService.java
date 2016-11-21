@@ -312,8 +312,9 @@ public class TcAccountService {
         return convert2ToAccount(originalTcAccount);
     }
 
-    private TcAccount findOriginalTcAccount(@Nonnull String accountId, Boolean containsPassword) {
+    private TcAccount findOriginalTcAccount(@Nonnull String accountId, @Nonnull Boolean containsPassword) {
         checkNotNull(accountId);
+        checkNotNull(containsPassword);
         TcAccountExample tcAccountExample = new TcAccountExample();
         tcAccountExample.setStartLine(0);
         tcAccountExample.setPageSize(1);

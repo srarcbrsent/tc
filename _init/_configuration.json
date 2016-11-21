@@ -1,0 +1,60 @@
+{
+  "mongodb": {
+    "su": {
+      "username": "******",
+      "password": "******",
+      "command": "******"
+    },
+    "tc": {
+      "username": "******",
+      "password": "******",
+      "command": "******"
+    },
+    "host": "mongodb.tc.com",
+    "port": 27017
+  },
+  "mysql": {
+    "su": {
+      "username": "tc_product",
+      "password": "Rjr7)71qnbldjcvvjw4=",
+      "command": "CREATE USER 'tc_product'@'%' IDENTIFIED BY 'Rjr7)71qnbldjcvvjw4='; GRANT ALL ON *.* TO 'tc_product'@'%';"
+    },
+    "tc": {
+      "username": "tc_develop",
+      "password": "123456",
+      "command": "CREATE USER 'tc_develop'@'%' IDENTIFIED BY '123456'; GRANT ALL ON *.* TO 'tc_develop'@'%';"
+    },
+    "host": "rdb.tc.com",
+    "port": 3306
+  },
+  "zookeeper": {
+    "host": "zk.tc.com",
+    "port": 2181
+  },
+  "redis": {
+    "host": "redis.tc.com",
+    "port": 6379
+  },
+  "dubbo-admin": {
+    "shutdown-port": 12005,
+    "http-port": 12080,
+    "ajp-port": 12009
+  },
+  "dubbo-monitor": {
+    "http-port": 17070,
+    "ajp-port": 17080
+  },
+  "nginx": {
+    "port": 80
+  },
+  "codis": {
+    "codis-server-port": 6379,
+    "codis-proxy-admin-port": 11080,
+    "codis-proxy-proxy-port": 19000,
+    "codis-dashboard-port": 18080,
+    "codis-fe-port": 18090
+  },
+  "metaq": {
+    "port": 8120
+  }
+}

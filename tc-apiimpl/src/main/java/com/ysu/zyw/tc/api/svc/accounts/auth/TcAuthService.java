@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -180,7 +181,6 @@ public class TcAuthService {
         return tcRoles.stream().map(this::convert2ToRole).collect(Collectors.toList());
     }
 
-    // TODO: 2016/11/15  
     @Transactional(readOnly = true)
     public List<ToPermission> fetchPermissions(@Nonnull String project,
                                                @Nonnull String platform,
@@ -229,7 +229,6 @@ public class TcAuthService {
         return tcPermissions.stream().map(this::convert2ToPermission).collect(Collectors.toList());
     }
 
-    // TODO: 2016/11/15  
     @Transactional(readOnly = true)
     public List<ToMenu> fetchMenus(@Nonnull String project,
                                    @Nonnull String platform,
@@ -257,16 +256,43 @@ public class TcAuthService {
         List<ToMenu> flatToMenus = tcMenus.stream().map(this::convert2ToMenu).collect(Collectors.toList());
 
         // group level
-        // sort by level then structure, reversed
-        List<ToMenu> sortedToMenus = flatToMenus.stream().sorted(
-                Comparator.comparing(ToMenu::getLevel).reversed()
-                        .thenComparing(ToMenu::getStructure).reversed())
-                .collect(Collectors.toList());
+        return groupingToMenus(flatToMenus);
+    }
 
+    private List<ToMenu> groupingToMenus(List<ToMenu> flatToMenus) {
+        List<ToMenu> rootList = Lists.newArrayList();
 
+        // grouping
+        flatToMenus.forEach(lToMenu -> {
+            flatToMenus.forEach(rToMenu -> {
+                if (Objects.equals(lToMenu.getLevel(), 1)) {
+                    rootList.add(lToMenu);
+                }
 
+                // lToMenu is parent
+                if (lToMenu.getLevel() - rToMenu.getLevel() == -1 &&
+                        rToMenu.getStructure().contains(lToMenu.getStructure())) {
+                    if (Objects.isNull(lToMenu.getSubMenus())) {
+                        lToMenu.setSubMenus(Lists.newArrayList());
+                    }
+                    lToMenu.getSubMenus().add(rToMenu);
+                }
+            });
+        });
 
-        return null;
+        // sort level
+        sortRecursive(rootList);
+
+        return rootList;
+    }
+
+    private void sortRecursive(List<ToMenu> toMenus) {
+        if (Objects.isNull(toMenus)) {
+            return;
+        }
+        toMenus.stream()
+                .sorted(Comparator.comparing(ToMenu::getStructure))
+                .forEach(toMenu -> this.sortRecursive(toMenu.getSubMenus()));
     }
 
     private ToRole convert2ToRole(TcRole tcRole) {
