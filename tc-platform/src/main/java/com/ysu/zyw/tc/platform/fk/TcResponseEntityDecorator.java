@@ -19,8 +19,8 @@ import java.util.Objects;
 @Slf4j
 public class TcResponseEntityDecorator {
 
-    @Pointcut(value = "execution(public org.springframework.http.ResponseEntity com.ysu.zyw.tc.platform.web..*(..)) &&" +
-            " @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    @Pointcut(value = "execution(public org.springframework.http.ResponseEntity com.ysu.zyw.tc.platform.web..*(..)) " +
+            "&& @annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void pointcut() {
     }
 
