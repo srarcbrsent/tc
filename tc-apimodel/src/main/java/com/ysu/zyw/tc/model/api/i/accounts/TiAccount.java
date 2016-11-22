@@ -28,7 +28,8 @@ import java.io.Serializable;
 public class TiAccount implements Serializable {
 
     @Null(groups = TcC.class)
-    @NotEmpty(groups = TcU.class) @Id(groups = TcU.class)
+    @NotEmpty(groups = TcU.class)
+    @Id(groups = TcU.class)
     private String id;
 
     @NotEmpty(groups = TcC.class)
@@ -57,7 +58,8 @@ public class TiAccount implements Serializable {
     @Pattern(regexp = "^P[0-9]{3}-C[0-9]{4}-D[0-9]{5}$", groups = TcAll.class)
     private String region;
 
-    @NotEmpty(groups = TcC.class) @Length(min = 32, max = 32, groups = TcC.class)
+    @NotEmpty(groups = TcC.class)
+    @Length(min = 32, max = 32, groups = TcC.class)
     @Null(groups = TcU.class)
     private String password;
 
@@ -67,7 +69,8 @@ public class TiAccount implements Serializable {
     @NotEmpty(groups = TcC.class)
     private String signinIp;
 
-    @NotEmpty(groups = TcAll.class) @Id(groups = TcAll.class)
+    @NotEmpty(groups = TcAll.class)
+    @Id(groups = TcAll.class)
     private String operatorAccountId;
 
 }

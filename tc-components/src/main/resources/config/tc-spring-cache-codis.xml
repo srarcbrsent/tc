@@ -38,7 +38,8 @@
 
     <bean id="objectKeySerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
-    <bean id="stringValueSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+    <bean id="stringValueSerializer"
+          class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
 
     <bean id="objectValueSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 

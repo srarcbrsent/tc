@@ -8,16 +8,16 @@ import java.util.Date;
 
 @Slf4j
 public class TcApplicationExaminer implements InitializingBean {
-    
+
     @Override
     public void afterPropertiesSet() throws Exception {
         logSystemTime();
     }
-    
+
     private void logSystemTime() {
         log.info("application-timezone: [{}]",
                 TcJacksonObjectMapperHolder.objectMapper.getDateFormat().getTimeZone());
         log.info("application-time: [{}]", TcDateUtils.format(new Date()));
     }
-    
+
 }

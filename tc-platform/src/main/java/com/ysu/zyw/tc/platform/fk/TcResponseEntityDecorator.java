@@ -21,7 +21,8 @@ public class TcResponseEntityDecorator {
 
     @Pointcut(value = "execution(public org.springframework.http.ResponseEntity com.ysu.zyw.tc.platform.web..*(..)) &&" +
             " @annotation(org.springframework.web.bind.annotation.RequestMapping)")
-    public void pointcut() {}
+    public void pointcut() {
+    }
 
     /**
      * 1 => 如果内部抛出了任何异常，封装为TcR返回，extra必须有可直接展现的描述信息
@@ -29,7 +30,7 @@ public class TcResponseEntityDecorator {
      */
     @Around(value = "pointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        Method method = ((MethodSignature)proceedingJoinPoint.getSignature()).getMethod();
+        Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
         try {
             ResponseEntity responseEntity = (ResponseEntity) proceedingJoinPoint.proceed();
             TcR<?> tcR = (TcR<?>) responseEntity.getBody();

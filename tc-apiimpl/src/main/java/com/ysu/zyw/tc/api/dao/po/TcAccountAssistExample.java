@@ -144,8 +144,8 @@ public class TcAccountAssistExample {
 
         public boolean isValid() {
             return criteria.size() > 0
-                || signinPlatformCriteria.size() > 0
-                || lastSignupPlatformCriteria.size() > 0;
+                    || signinPlatformCriteria.size() > 0
+                    || lastSignupPlatformCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {

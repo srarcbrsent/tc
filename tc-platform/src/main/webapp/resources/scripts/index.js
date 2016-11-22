@@ -23,7 +23,7 @@ layui.use(['form'], function () {
     });
 
     // form submit
-    form.on('submit(signup)', function(data){
+    form.on('submit(signup)', function (data) {
         var password = data.field.password;
         // find token
         var token = fetchToken();
@@ -39,7 +39,7 @@ layui.use(['form'], function () {
             url: __base + '/auth/token.json',
             type: 'post',
             async: false,
-            success: function(data, textStatus, jqXHR) {
+            success: function (data, textStatus, jqXHR) {
                 __doWithTcR(data, function (body) {
                     token = body;
                 });

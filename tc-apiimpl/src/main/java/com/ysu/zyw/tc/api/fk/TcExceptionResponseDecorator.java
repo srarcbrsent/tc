@@ -24,7 +24,8 @@ import java.util.Objects;
 public class TcExceptionResponseDecorator {
 
     @Pointcut(value = "execution(public * com.ysu.zyw.tc.api.impl..*(..))")
-    public void pointcut() {}
+    public void pointcut() {
+    }
 
     /**
      * 1 => 如果内部抛出了任何异常，封装为TcR返回
@@ -32,7 +33,7 @@ public class TcExceptionResponseDecorator {
      */
     @Around(value = "pointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        Method method = ((MethodSignature)proceedingJoinPoint.getSignature()).getMethod();
+        Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
         try {
             log.info("call open apiimpl [{}]", proceedingJoinPoint.getSignature().getName());
             Date startTime = new Date();

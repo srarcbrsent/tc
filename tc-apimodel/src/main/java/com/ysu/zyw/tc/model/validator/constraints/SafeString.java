@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
-@Target( value = {ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+@Target(value = {ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(value = RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = SafeStringConstraintValidator.class)
 public @interface SafeString {

@@ -1,283 +1,288 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ysu.zyw.tc.api.dao.mappers.TcRoleMapMenuMapper">
-  <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
-    <result column="menu_id" jdbcType="VARCHAR" property="menuId" />
-    <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
-    <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
-    <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
-    <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="role_id" jdbcType="VARCHAR" property="roleId"/>
+        <result column="menu_id" jdbcType="VARCHAR" property="menuId"/>
+        <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson"/>
+        <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp"/>
+        <result column="created_person" jdbcType="VARCHAR" property="createdPerson"/>
+        <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, role_id, menu_id, updated_person, updated_timestamp, created_person, created_timestamp
+    </sql>
+    <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenuExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, role_id, menu_id, updated_person, updated_timestamp, created_person, created_timestamp
-  </sql>
-  <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenuExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from pv_role_map_menu
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="startLine != null and pageSize != null and pageSize > 0">
-      limit #{startLine} , #{pageSize}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from pv_role_map_menu
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from pv_role_map_menu
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenuExample">
-    delete from pv_role_map_menu
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
-    insert into pv_role_map_menu (id, role_id, menu_id, 
-      updated_person, updated_timestamp, created_person, 
-      created_timestamp)
-    values (#{id,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, 
-      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
-      #{createdTimestamp,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
-    insert into pv_role_map_menu
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="roleId != null">
-        role_id,
-      </if>
-      <if test="menuId != null">
-        menu_id,
-      </if>
-      <if test="updatedPerson != null">
-        updated_person,
-      </if>
-      <if test="updatedTimestamp != null">
-        updated_timestamp,
-      </if>
-      <if test="createdPerson != null">
-        created_person,
-      </if>
-      <if test="createdTimestamp != null">
-        created_timestamp,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=VARCHAR},
-      </if>
-      <if test="menuId != null">
-        #{menuId,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedPerson != null">
-        #{updatedPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedTimestamp != null">
-        #{updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdPerson != null">
-        #{createdPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="createdTimestamp != null">
-        #{createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenuExample" resultType="java.lang.Long">
-    select count(*) from pv_role_map_menu
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update pv_role_map_menu
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.roleId != null">
+        <include refid="Base_Column_List"/>
+        from pv_role_map_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startLine != null and pageSize != null and pageSize > 0">
+            limit #{startLine} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pv_role_map_menu
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from pv_role_map_menu
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenuExample">
+        delete from pv_role_map_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
+        insert into pv_role_map_menu (id, role_id, menu_id,
+        updated_person, updated_timestamp, created_person,
+        created_timestamp)
+        values (#{id,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR},
+        #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR},
+        #{createdTimestamp,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
+        insert into pv_role_map_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="menuId != null">
+                menu_id,
+            </if>
+            <if test="updatedPerson != null">
+                updated_person,
+            </if>
+            <if test="updatedTimestamp != null">
+                updated_timestamp,
+            </if>
+            <if test="createdPerson != null">
+                created_person,
+            </if>
+            <if test="createdTimestamp != null">
+                created_timestamp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="menuId != null">
+                #{menuId,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedPerson != null">
+                #{updatedPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTimestamp != null">
+                #{updatedTimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdPerson != null">
+                #{createdPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTimestamp != null">
+                #{createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenuExample"
+            resultType="java.lang.Long">
+        select count(*) from pv_role_map_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update pv_role_map_menu
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roleId != null">
+                role_id = #{record.roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.menuId != null">
+                menu_id = #{record.menuId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.updatedPerson != null">
+                updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="record.updatedTimestamp != null">
+                updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createdPerson != null">
+                created_person = #{record.createdPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdTimestamp != null">
+                created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update pv_role_map_menu
+        set id = #{record.id,jdbcType=VARCHAR},
         role_id = #{record.roleId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuId != null">
         menu_id = #{record.menuId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.updatedPerson != null">
         updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="record.updatedTimestamp != null">
         updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.createdPerson != null">
         created_person = #{record.createdPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createdTimestamp != null">
-        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update pv_role_map_menu
-    set id = #{record.id,jdbcType=VARCHAR},
-      role_id = #{record.roleId,jdbcType=VARCHAR},
-      menu_id = #{record.menuId,jdbcType=VARCHAR},
-      updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
-      updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
-      created_person = #{record.createdPerson,jdbcType=VARCHAR},
-      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
-    update pv_role_map_menu
-    <set>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=VARCHAR},
-      </if>
-      <if test="menuId != null">
+        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
+        update pv_role_map_menu
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="menuId != null">
+                menu_id = #{menuId,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedPerson != null">
+                updated_person = #{updatedPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTimestamp != null">
+                updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdPerson != null">
+                created_person = #{createdPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTimestamp != null">
+                created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
+        update pv_role_map_menu
+        set role_id = #{roleId,jdbcType=VARCHAR},
         menu_id = #{menuId,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedPerson != null">
         updated_person = #{updatedPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedTimestamp != null">
         updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdPerson != null">
         created_person = #{createdPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="createdTimestamp != null">
-        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
-    update pv_role_map_menu
-    set role_id = #{roleId,jdbcType=VARCHAR},
-      menu_id = #{menuId,jdbcType=VARCHAR},
-      updated_person = #{updatedPerson,jdbcType=VARCHAR},
-      updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-      created_person = #{createdPerson,jdbcType=VARCHAR},
-      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenuExample" resultType="java.lang.String">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    id
-    from pv_role_map_menu
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="startLine != null and pageSize != null and pageSize > 0">
-      limit #{startLine}, #{pageSize}
-    </if>
-  </select>
-  <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
-    insert into pv_role_map_menu (
-      id, 
-      role_id, 
-      menu_id, 
-      updated_person, 
-      updated_timestamp, 
-      created_person, 
-      created_timestamp
-    ) values 
-    <foreach collection="list" item="item" separator=", ">
-      (#{items.id,jdbcType=VARCHAR}, 
-      #{items.roleId,jdbcType=VARCHAR}, 
-      #{items.menuId,jdbcType=VARCHAR}, 
-      #{items.updatedPerson,jdbcType=VARCHAR}, 
-      #{items.updatedTimestamp,jdbcType=TIMESTAMP}, 
-      #{items.createdPerson,jdbcType=VARCHAR}, 
-      #{items.createdTimestamp,jdbcType=TIMESTAMP})
-    </foreach>
-  </insert>
+        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenuExample"
+            resultType="java.lang.String">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        id
+        from pv_role_map_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startLine != null and pageSize != null and pageSize > 0">
+            limit #{startLine}, #{pageSize}
+        </if>
+    </select>
+    <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcRoleMapMenu">
+        insert into pv_role_map_menu (
+        id,
+        role_id,
+        menu_id,
+        updated_person,
+        updated_timestamp,
+        created_person,
+        created_timestamp
+        ) values
+        <foreach collection="list" item="item" separator=", ">
+            (#{items.id,jdbcType=VARCHAR},
+            #{items.roleId,jdbcType=VARCHAR},
+            #{items.menuId,jdbcType=VARCHAR},
+            #{items.updatedPerson,jdbcType=VARCHAR},
+            #{items.updatedTimestamp,jdbcType=TIMESTAMP},
+            #{items.createdPerson,jdbcType=VARCHAR},
+            #{items.createdTimestamp,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
 </mapper>

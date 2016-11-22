@@ -205,11 +205,11 @@ public class TcHttpxService {
         }
     }
 
-    protected  <T> ResponseEntity<T> doExecute(String url,
-                                            HttpMethod httpMethod,
-                                            HttpEntity<?> httpEntity,
-                                            ParameterizedTypeReference<T> typeReference,
-                                            Map<String, String> uriVariables) {
+    protected <T> ResponseEntity<T> doExecute(String url,
+                                              HttpMethod httpMethod,
+                                              HttpEntity<?> httpEntity,
+                                              ParameterizedTypeReference<T> typeReference,
+                                              Map<String, String> uriVariables) {
         Date now = new Date();
 
         if (log.isInfoEnabled()) {

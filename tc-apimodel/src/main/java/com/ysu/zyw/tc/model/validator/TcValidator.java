@@ -44,7 +44,7 @@ public class TcValidator extends GenericValidator {
 
         return chars >= min && chars <= max;
     }
-    
+
     public static boolean isEnglish(String value, int min, int max) {
         if (isNull(value)) {
             return false;
