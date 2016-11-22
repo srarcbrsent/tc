@@ -3,12 +3,10 @@ package com.ysu.zyw.tc.api.fk;
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import com.ysu.zyw.tc.model.mw.TcExtra;
-import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.sys.ex.TcResourceConflictException;
 import com.ysu.zyw.tc.sys.ex.TcResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.ClassUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,6 +26,10 @@ public class TcExceptionResponseDecorator {
     @Pointcut(value = "execution(public * com.ysu.zyw.tc.api.impl..*(..))")
     public void pointcut() {}
 
+    /**
+     * 1 => 如果内部抛出了任何异常，封装为TcR返回
+     * 2 => 如果状态码为422 则必须有extra描述情况，如果没有设置默认值
+     */
     @Around(value = "pointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Method method = ((MethodSignature)proceedingJoinPoint.getSignature()).getMethod();
@@ -65,7 +67,7 @@ public class TcExceptionResponseDecorator {
 
     // generic type with jackson serialization, do not cause any problem, if use other serialization, may failed.
     private <T> TcR<T> determineResponse(Method method) {
-        return ClassUtils.isAssignable(method.getReturnType(), TcP.class) ? new TcP() : new TcR();
+        return new TcR<>();
     }
 
 }

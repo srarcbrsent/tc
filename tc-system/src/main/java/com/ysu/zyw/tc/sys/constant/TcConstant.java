@@ -57,6 +57,8 @@ public class TcConstant {
 
         public static final String SESSION_VERIFICATION_CODE = "session_verification_code";
 
+        public static final String SESSION_ACCOUNT_ID = "session_account_id";
+
     }
 
 }
