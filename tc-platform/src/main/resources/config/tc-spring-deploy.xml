@@ -12,6 +12,14 @@
 
     <!-- !!!! Infrastructure !!!! -->
 
+    <!-- fork join pool -->
+    <bean id="forkJoinPool" class="org.springframework.scheduling.concurrent.ForkJoinPoolFactoryBean">
+        <property name="parallelism" value="${properties.thread.pool.fork.join.pool.size}"/>
+        <property name="uncaughtExceptionHandler">
+            <bean class="com.ysu.zyw.tc.components.utils.pool.TcUncaughtExceptionHandler"/>
+        </property>
+    </bean>
+
     <!-- aop -->
     <!-- response-decorator: -500 / cache: -20 / transaction: 0 -->
     <aop:aspectj-autoproxy proxy-target-class="true"
