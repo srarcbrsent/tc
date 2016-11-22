@@ -15,6 +15,6 @@
         <websocket:simple-broker prefix="/dtp"/>
     </websocket:message-broker>
 
-    <bean class="com.ysu.zyw.tc.platform.fk.conf.TcWebSocketListener"/>
+    <bean class="com.ysu.zyw.tc.platform.fk.websocket.TcWebSocketListener"/>
 
 </beans>

@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.platform.fk.fktags.shiro;
+package com.ysu.zyw.tc.platform.fk.shiro.tags;
 
 /**
  * <p>Equivalent to {@link org.apache.shiro.web.tags.LacksPermissionTag}</p>

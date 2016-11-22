@@ -104,30 +104,33 @@
             <artifactId>spring-messaging</artifactId>
         </dependency>
 
+        <!-- redis -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
         </dependency>
 
+        <!-- mongodb -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
         </dependency>
 
+        <!-- retry -->
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
         </dependency>
 
-        <!-- solr -->
+        <!-- elastic search -->
         <dependency>
             <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-solr</artifactId>
+            <artifactId>spring-data-elasticsearch</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.apache.solr</groupId>
-            <artifactId>solr-solrj</artifactId>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
         </dependency>
 
         <!-- kafka -->

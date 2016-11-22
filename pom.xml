@@ -22,7 +22,7 @@
         <pom.version.spring>4.3.3.RELEASE</pom.version.spring>
         <pom.version.spring.data.redis>1.7.5.RELEASE</pom.version.spring.data.redis>
         <pom.version.spring.data.mongodb>1.9.5.RELEASE</pom.version.spring.data.mongodb>
-        <pom.version.spring.data.solr>2.0.5.RELEASE</pom.version.spring.data.solr>
+        <pom.version.spring.data.elasticsearch>2.0.4.RELEASE</pom.version.spring.data.elasticsearch>
         <pom.version.spring.retry>1.1.4.RELEASE</pom.version.spring.retry>
         <pom.version.spring.kafka>1.1.1.RELEASE</pom.version.spring.kafka>
         <pom.version.jackson.databind>2.8.4</pom.version.jackson.databind>
@@ -32,7 +32,6 @@
         <pom.version.shiro>1.3.2</pom.version.shiro>
         <pom.version.codis.client>0.3.0</pom.version.codis.client>
         <pom.version.metaq.client>1.4.6.3-SNAPSHOT</pom.version.metaq.client>
-        <pom.version.solrj.client>6.2.1</pom.version.solrj.client>
         <pom.version.kafka.client>0.10.1.0</pom.version.kafka.client>
         <pom.version.curator>2.9.1</pom.version.curator>
         <pom.version.mybatis>3.4.1</pom.version.mybatis>
@@ -260,35 +259,38 @@
                 <version>${pom.version.spring}</version>
             </dependency>
 
+            <!-- redis -->
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-redis</artifactId>
                 <version>${pom.version.spring.data.redis}</version>
             </dependency>
 
+            <!-- mongodb -->
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-mongodb</artifactId>
                 <version>${pom.version.spring.data.mongodb}</version>
             </dependency>
 
+            <!-- retry -->
             <dependency>
                 <groupId>org.springframework.retry</groupId>
                 <artifactId>spring-retry</artifactId>
                 <version>${pom.version.spring.retry}</version>
             </dependency>
 
-            <!-- solr -->
+            <!-- elasticsearch -->
             <dependency>
                 <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-solr</artifactId>
-                <version>${pom.version.spring.data.solr}</version>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>${pom.version.spring.data.elasticsearch}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.solr</groupId>
-                <artifactId>solr-solrj</artifactId>
-                <version>${pom.version.solrj.client}</version>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>2.4.1</version>
             </dependency>
 
             <!-- kafka -->

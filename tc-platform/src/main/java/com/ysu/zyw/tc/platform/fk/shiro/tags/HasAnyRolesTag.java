@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.ysu.zyw.tc.platform.fk.fktags.shiro;
+package com.ysu.zyw.tc.platform.fk.shiro.tags;
 
 import org.apache.shiro.subject.Subject;
 

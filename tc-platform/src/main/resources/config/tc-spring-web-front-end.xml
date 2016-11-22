@@ -64,7 +64,7 @@
             <map>
                 <entry key="base" value="${properties.web.freemarker.vars.base}"/>
                 <entry key="staticBase" value="${properties.web.freemarker.vars.static.base}"/>
-                <entry key="shiro" value="#{new com.ysu.zyw.tc.platform.fk.fktags.shiro.ShiroTags}"/>
+                <entry key="shiro" value="#{new com.ysu.zyw.tc.platform.fk.shiro.tags.ShiroTags}"/>
             </map>
         </property>
     </bean>
