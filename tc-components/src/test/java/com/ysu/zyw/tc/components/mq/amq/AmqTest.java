@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.IntStream;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -41,12 +43,26 @@ public class AmqTest {
     @Resource
     private CachingConnectionFactory connectionFactory;
 
+    private AtomicLong produced = new AtomicLong(0);
+
     @Test
     public void test01() throws JMSException {
-        ExecutorService executorService = Executors.newFixedThreadPool(3);
-        jmsTemplate.convertAndSend(topicDestination,
-                new AmqMsg().setField1(1).setField2(2).setField3("3").setField4(4.4).setField5(new Date()));
-        sleep(1900);
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        IntStream.range(0, 5).forEach(i -> {
+            IntStream.range(0, 100).forEach(j -> {
+                jmsTemplate.convertAndSend(topicDestination,
+                        new AmqMsg()
+                                .setField1(i * 1000 + j)
+                                .setField2(2)
+                                .setField3("3")
+                                .setField4(4.4)
+                                .setField5(new Date())
+                );
+                produced.addAndGet(1);
+            });
+        });
+        System.out.println(produced.get());
+        sleep(11900);
     }
 
     private void sleep(long millis) {

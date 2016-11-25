@@ -37,7 +37,7 @@ public abstract class TcMetaMessageListener<T> extends DefaultMessageListener<T>
             }
         } finally {
             if (log.isInfoEnabled()) {
-                log.info("meta message listener [{}] process message [{}] take time [{}ns]",
+                log.info("meta message listener [{}] process message [{}] take time [{}ms]",
                         this.getName(), msg, TcDateUtils.duration(now, new Date()));
             }
         }

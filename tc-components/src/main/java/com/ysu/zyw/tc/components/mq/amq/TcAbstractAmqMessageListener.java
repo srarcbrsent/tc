@@ -46,7 +46,7 @@ public abstract class TcAbstractAmqMessageListener<T> implements SessionAwareMes
             }
         } finally {
             if (log.isInfoEnabled()) {
-                log.info("amq message listener [{}] process message [{}] take time [{}ns]",
+                log.info("amq message listener [{}] process message [{}] take time [{}ms]",
                         this.getName(), message, TcDateUtils.duration(now, new Date()));
             }
         }
