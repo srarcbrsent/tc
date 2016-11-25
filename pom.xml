@@ -24,7 +24,6 @@
         <pom.version.spring.data.mongodb>1.9.5.RELEASE</pom.version.spring.data.mongodb>
         <pom.version.spring.data.elasticsearch>2.0.4.RELEASE</pom.version.spring.data.elasticsearch>
         <pom.version.spring.retry>1.1.4.RELEASE</pom.version.spring.retry>
-        <pom.version.spring.kafka>1.1.1.RELEASE</pom.version.spring.kafka>
         <pom.version.jackson.databind>2.8.4</pom.version.jackson.databind>
         <pom.version.aspectj>1.8.9</pom.version.aspectj>
         <pom.version.jdbc>5.1.40</pom.version.jdbc>
@@ -32,7 +31,8 @@
         <pom.version.shiro>1.3.2</pom.version.shiro>
         <pom.version.codis.client>0.3.0</pom.version.codis.client>
         <pom.version.metaq.client>1.4.6.3-SNAPSHOT</pom.version.metaq.client>
-        <pom.version.kafka.client>0.10.1.0</pom.version.kafka.client>
+        <pom.version.elasticsearch.client>2.4.1</pom.version.elasticsearch.client>
+        <pom.version.activemq.client>5.14.1</pom.version.activemq.client>
         <pom.version.curator>2.9.1</pom.version.curator>
         <pom.version.mybatis>3.4.1</pom.version.mybatis>
         <pom.version.mybatis.spring>1.3.0</pom.version.mybatis.spring>
@@ -249,6 +249,12 @@
 
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-jms</artifactId>
+                <version>${pom.version.spring}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-websocket</artifactId>
                 <version>${pom.version.spring}</version>
             </dependency>
@@ -290,20 +296,20 @@
             <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
-                <version>2.4.1</version>
+                <version>${pom.version.elasticsearch.client}</version>
             </dependency>
 
-            <!-- kafka -->
+            <!-- activemq -->
             <dependency>
-                <groupId>org.springframework.kafka</groupId>
-                <artifactId>spring-kafka</artifactId>
-                <version>${pom.version.spring.kafka}</version>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-client</artifactId>
+                <version>${pom.version.activemq.client}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.kafka</groupId>
-                <artifactId>kafka-clients</artifactId>
-                <version>${pom.version.kafka.client}</version>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-pool</artifactId>
+                <version>${pom.version.activemq.client}</version>
             </dependency>
 
             <!-- spring dependency -->

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="tcAmqClientIdHolder" class="com.ysu.zyw.tc.components.mq.amq.TcAmqClientIdHolder">
+        <property name="application" value="application"/>
+        <property name="number" value="1"/>
+    </bean>
+
+    <bean id="connectionFactory"
+          class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="tcp://172.16.63.248:61616"/>
+                <property name="userName"
+                          value="#{T(org.apache.activemq.ActiveMQConnectionFactory).DEFAULT_USER}"/>
+                <property name="password"
+                          value="#{T(org.apache.activemq.ActiveMQConnectionFactory).DEFAULT_PASSWORD}"/>
+            </bean>
+        </property>
+        <property name="clientId"
+                  value="#{tcAmqClientIdHolder.uniqueClientId()}"/>
+    </bean>
+
+    <bean id="mqMessageConverter" class="org.springframework.jms.support.converter.MappingJackson2MessageConverter">
+        <property name="objectMapper"
+                  value="#{T(com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder).objectMapper}"/>
+        <property name="targetType"
+                  value="#{T(org.springframework.jms.support.converter.MessageType).TEXT}"/>
+        <property name="typeIdPropertyName" value="Hello"/>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="messageConverter" ref="mqMessageConverter"/>
+    </bean>
+
+    <bean id="mqThreadPoolTaskScheduler"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="poolSize" value="2"/>
+        <property name="errorHandler">
+            <bean class="com.ysu.zyw.tc.components.utils.pool.TcThreadPoolErrorLogHandler"/>
+        </property>
+    </bean>
+
+</beans>

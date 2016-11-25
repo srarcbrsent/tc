@@ -22,6 +22,7 @@
           class="com.ysu.zyw.tc.components.mq.metaq.subcribers.TcLogRealTimeComputationListener">
         <property name="name" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).TOPIC_LOG}"/>
         <property name="processThreads" value="10"/>
+        <property name="rethrowException" value="false"/>
     </bean>
 
 
@@ -36,6 +37,7 @@
           class="com.ysu.zyw.tc.components.mq.metaq.subcribers.TcLogDataStorageListener">
         <property name="name" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).TOPIC_LOG}"/>
         <property name="processThreads" value="10"/>
+        <property name="rethrowException" value="false"/>
     </bean>
 
 
@@ -51,6 +53,7 @@
     <bean id="tcApiCallListener" class="com.ysu.zyw.tc.components.mq.metaq.subcribers.TcApiCallListener">
         <property name="name" value="#{T(com.ysu.zyw.tc.components.mq.metaq.MetaqTest).TOPIC_API_CALL}"/>
         <property name="processThreads" value="10"/>
+        <property name="rethrowException" value="false"/>
     </bean>
 
 

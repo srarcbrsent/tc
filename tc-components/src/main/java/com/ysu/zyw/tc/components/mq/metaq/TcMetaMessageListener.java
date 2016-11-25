@@ -18,6 +18,10 @@ public abstract class TcMetaMessageListener<T> extends DefaultMessageListener<T>
     @Setter
     private String name = "default";
 
+    @Getter
+    @Setter
+    private boolean rethrowException;
+
     @Override
     public void onReceiveMessages(final MetaqMessage<T> msg) {
         Date now = new Date();
@@ -28,6 +32,9 @@ public abstract class TcMetaMessageListener<T> extends DefaultMessageListener<T>
             this.doOnReceiveMessages(msg);
         } catch (Exception e) {
             log.error("meta message listener [{}] process message [{}] failed", this.getName(), msg, e);
+            if (rethrowException) {
+                throw new RuntimeException(e);
+            }
         } finally {
             if (log.isInfoEnabled()) {
                 log.info("meta message listener [{}] process message [{}] take time [{}ns]",
