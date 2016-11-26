@@ -14,6 +14,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class ToAccount implements Serializable {
 
+    private static final long serialVersionUID = 4154288216727450793L;
+
     private String id;
 
     private String name;

@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ToMenu implements Serializable {
 
+    private static final long serialVersionUID = 2804888818897797779L;
+
     private String id;
 
     private String description;

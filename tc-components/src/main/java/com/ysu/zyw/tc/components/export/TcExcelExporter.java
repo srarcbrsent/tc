@@ -82,7 +82,7 @@ public class TcExcelExporter {
     }
 
     @SneakyThrows
-    public ByteArrayOutputStream write2StreamAndCloseIt(HSSFWorkbook workbook) {
+    public ByteArrayOutputStream write2StreamAndCloseWorkbook(HSSFWorkbook workbook) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         workbook.write(baos);
         IOUtils.closeQuietly(workbook);

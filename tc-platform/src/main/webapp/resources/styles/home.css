@@ -12,3 +12,20 @@
     width: 930px;
     padding: 0 0 0 10px;
 }
+
+#avatar_uploader > div > div {
+    height: 38px;
+}
+
+#signin_form input.jv_valid {
+    border: 1px solid #5FB878;
+}
+
+#signin_form input.jv_error {
+    border: 1px solid #F7B824;
+}
+
+#signin_form label.jv_error {
+    color: #777;
+    line-height: 36px;
+}

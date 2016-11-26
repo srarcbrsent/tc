@@ -5,6 +5,7 @@ import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
+import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import org.apache.shiro.authc.*;
@@ -81,7 +82,7 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
         }
 
         if (tcR.isUnProcessableEntity()) {
-            int code = tcR.orElseThrowExtraIfUnProcessable(() -> new AuthenticationException("系统异常，请稍后再试！"));
+            int code = tcR.getExtra().getCode();
 
             // code == 1 => 账号不存在;
             if (Objects.equals(tcR.getExtra().getCode(), 1)) {
@@ -97,8 +98,8 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
     }
 
     protected List<ToRole> fetchRoles(String accountId) {
-        // TODO: 2016/11/12  
-        return Lists.newArrayList();
+        TcP<List<ToRole>> tcP = tcAuthenticationApi.findRoles(accountId);
+        return tcP.orElseGet(Lists::newArrayList);
     }
 
     protected List<ToPermission> fetchPermissions(String accountId) {

@@ -5,7 +5,6 @@ import com.ysu.zyw.tc.model.components.region.TcProvince;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.sys.ex.TcResourceNotFoundException;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -32,12 +31,6 @@ public class TcRegionController {
     @ApiOperation(
             value = "查询省地区信息",
             notes = "查询省地区信息")
-    @ApiImplicitParam(
-            value = "Api版本号",
-            paramType = "header",
-            name = "X-ApiVersion",
-            required = true,
-            defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_provinces", method = RequestMethod.GET)
     public ResponseEntity<TcR<List<TcProvince>>> findProvinces() {
@@ -48,12 +41,6 @@ public class TcRegionController {
     @ApiOperation(
             value = "查询市地区信息",
             notes = "查询市地区信息")
-    @ApiImplicitParam(
-            value = "Api版本号",
-            paramType = "header",
-            name = "X-ApiVersion",
-            required = true,
-            defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_cities/{code}", method = RequestMethod.GET)
     public ResponseEntity<TcR<List<TcProvince.TcCity>>> findCities(
@@ -71,12 +58,6 @@ public class TcRegionController {
     @ApiOperation(
             value = "查询区地区信息",
             notes = "查询区地区信息")
-    @ApiImplicitParam(
-            value = "Api版本号",
-            paramType = "header",
-            name = "X-ApiVersion",
-            required = true,
-            defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_districts/{code}", method = RequestMethod.GET)
     public ResponseEntity<TcR<List<TcProvince.TcCity.TcDistrict>>> findDistricts(
@@ -94,12 +75,6 @@ public class TcRegionController {
     @ApiOperation(
             value = "查询指定区地区信息",
             notes = "查询指定区地区信息")
-    @ApiImplicitParam(
-            value = "Api版本号",
-            paramType = "header",
-            name = "X-ApiVersion",
-            required = true,
-            defaultValue = "1.0")
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/find_district/{code}", method = RequestMethod.GET)
     public ResponseEntity<TcR<TcProvince.TcCity.TcDistrict>> findDistrict(

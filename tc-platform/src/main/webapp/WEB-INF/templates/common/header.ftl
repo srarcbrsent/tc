@@ -11,11 +11,16 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;
+            <@shiro.guest>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </@shiro.guest>
+            <@shiro.authenticated>
                 <a href="${base}/auth/signout.html"
                    class="layui-btn layui-btn-normal layui-btn-small layui-btn-radius layui-inline"
                    style="display: inline-block">
                     点击我登出
                 </a>
+            </@shiro.authenticated>
             </legend>
         </fieldset>
     </div>

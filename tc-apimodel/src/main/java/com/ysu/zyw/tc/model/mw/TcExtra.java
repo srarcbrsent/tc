@@ -16,6 +16,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Accessors(chain = true)
 public class TcExtra implements Serializable {
 
+    private static final long serialVersionUID = 7939395867289790802L;
+
     @Getter
     @Setter
     private int code;

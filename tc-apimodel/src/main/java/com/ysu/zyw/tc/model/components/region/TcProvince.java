@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class TcProvince implements Serializable {
 
+    private static final long serialVersionUID = -2095689793706179103L;
+
     private String code;
 
     private String name;
@@ -33,6 +35,8 @@ public class TcProvince implements Serializable {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class TcCity implements Serializable {
+
+        private static final long serialVersionUID = 8825514571603818152L;
 
         private String code;
 
@@ -55,6 +59,8 @@ public class TcProvince implements Serializable {
         @NoArgsConstructor
         @AllArgsConstructor
         public static class TcDistrict implements Serializable {
+
+            private static final long serialVersionUID = 7745630343798270459L;
 
             private String code;
 

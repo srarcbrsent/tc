@@ -12,9 +12,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ToPermission implements Serializable {
+
+    private static final long serialVersionUID = 1198250649405879428L;
+
     private String id;
 
     private String description;
 
     private Integer dataPms;
+
 }

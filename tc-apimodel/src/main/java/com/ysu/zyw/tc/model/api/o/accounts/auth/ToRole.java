@@ -13,6 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ToRole implements Serializable {
 
+    private static final long serialVersionUID = 1144776015692068641L;
+
     private String id;
 
     private String description;

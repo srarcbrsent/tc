@@ -16,6 +16,8 @@ import java.io.Serializable;
 @ApiModel(value = "响应包裹类型", parent = TcR.class)
 public class TcP<T> extends TcR<T> implements Serializable {
 
+    private static final long serialVersionUID = -7088495956025643921L;
+
     @ApiModelProperty(value = "当前页")
     private int currentPage = -1;
 

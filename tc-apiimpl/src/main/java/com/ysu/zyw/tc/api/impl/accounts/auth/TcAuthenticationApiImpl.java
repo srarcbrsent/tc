@@ -6,6 +6,7 @@ import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 
@@ -47,11 +48,19 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
     }
 
     @Override
+    public TcP<List<ToRole>> findRoles(String accountId) {
+
+        List<ToRole> toRoles = tcAuthService.fetchRoleList(accountId);
+
+        return TcP.ok(toRoles);
+    }
+
+    @Override
     public TcP<List<ToPermission>> findPermissions(String accountId) {
 
         List<ToPermission> toPermissions = tcAuthService.fetchPermissions(accountId);
 
-        return TcP.ok(null);
+        return TcP.ok(toPermissions);
     }
 
 }

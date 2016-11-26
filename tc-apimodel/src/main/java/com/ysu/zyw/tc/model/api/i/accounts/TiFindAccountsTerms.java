@@ -17,6 +17,8 @@ import java.util.List;
 @Builder
 public class TiFindAccountsTerms implements Serializable {
 
+    private static final long serialVersionUID = 2485593481321892713L;
+
     @FormParam(value = "ids")
     private List<String> ids;
 

@@ -3,6 +3,7 @@ package com.ysu.zyw.tc.api.api;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 
@@ -35,6 +36,14 @@ public interface TcAuthenticationApi {
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcP<List<ToMenu>> findMenus(
+            @PathParam(value = "id") String accountId
+    );
+
+    @GET
+    @Path(value = "/find_roles/{id}")
+    @Consumes(value = {MediaType.WILDCARD})
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    TcP<List<ToRole>> findRoles(
             @PathParam(value = "id") String accountId
     );
 

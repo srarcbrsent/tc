@@ -34,7 +34,9 @@ public class TcCacheServiceImpl implements TcCacheService {
     private TcOpsForGroupedValue tcOpsForGroupedValue;
 
     @Override
-    public void set(@Nonnull String key, @Nonnull Serializable value, long timeout) {
+    public void set(@Nonnull String key,
+                    @Nonnull Serializable value,
+                    long timeout) {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(value, "null value is not allowed");
         redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.MILLISECONDS);
@@ -45,7 +47,8 @@ public class TcCacheServiceImpl implements TcCacheService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T get(@Nonnull String key, @Nonnull Class<T> clazz) {
+    public <T> T get(@Nonnull String key,
+                     @Nonnull Class<T> clazz) {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(clazz, "null clazz is not allowed");
         Object sValue = redisTemplate.opsForValue().get(key);
@@ -66,7 +69,10 @@ public class TcCacheServiceImpl implements TcCacheService {
     // concurrently.
     @Override
     @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
-    public <T> T get(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout, @Nullable final Object lock) {
+    public <T> T get(@Nonnull String key,
+                     @Nonnull Callable<T> valueLoader,
+                     long timeout,
+                     @Nullable final Object lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -97,7 +103,9 @@ public class TcCacheServiceImpl implements TcCacheService {
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T loadValue(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout) {
+    private <T> T loadValue(@Nonnull String key,
+                            @Nonnull Callable<T> valueLoader,
+                            long timeout) {
         // lock and get
         T sValue = null;
         try {
@@ -116,7 +124,9 @@ public class TcCacheServiceImpl implements TcCacheService {
     }
 
     @SuppressWarnings("Duplicates")
-    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout) {
+    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String key,
+                                                   @Nonnull Callable<T> valueLoader,
+                                                   long timeout) {
         T loadedValue;
         try {
             loadedValue = valueLoader.call();
@@ -160,7 +170,8 @@ public class TcCacheServiceImpl implements TcCacheService {
     }
 
     @Override
-    public String buildHashtag(@Nonnull String hashtag, @Nonnull String key) {
+    public String buildHashtag(@Nonnull String hashtag,
+                               @Nonnull String key) {
         return "{" + hashtag + "}" + key;
     }
 

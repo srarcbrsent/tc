@@ -3,6 +3,7 @@ package com.ysu.zyw.tc.platform.web.account;
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
+import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;
@@ -65,7 +66,7 @@ public class TcAuthenticationController {
             notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ModelAndView signupWithForm(
+    public ModelAndView signup(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,
@@ -82,8 +83,7 @@ public class TcAuthenticationController {
             return new ModelAndView(new RedirectView("/home.html"));
         } else {
             ModelAndView modelAndView = new ModelAndView(new RedirectView("/index.html"));
-            redirectAttributes.addFlashAttribute("signupErrorMsg",
-                    tcR.orElseGetStringExtraDescription(false, "系统异常，请稍后再试！"));
+            redirectAttributes.addFlashAttribute("signupErrorMsg", tcR.orElseGetStringExtra());
             return modelAndView;
         }
     }
@@ -92,8 +92,8 @@ public class TcAuthenticationController {
             value = "登陆",
             notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/r_signup", method = RequestMethod.POST)
-    public ResponseEntity<TcR<Boolean>> signupWithAjax(
+    @RequestMapping(value = "/_signup", method = RequestMethod.POST)
+    public ResponseEntity<TcR<Boolean>> _signup(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,
@@ -139,15 +139,15 @@ public class TcAuthenticationController {
             TcR<Boolean> tcR = TcR.ok(false);
             tcR.extra("系统异常，请稍后再试！");
             return tcR;
-        } catch (Exception e) {
-            log.error("[{}] [{}] [{}]", e, username, cltPassword.substring(12), rememberMe);
-            TcR<Boolean> tcR = TcR.ok(false);
-            tcR.extra("系统异常，请稍后再试！");
-            return tcR;
         }
 
         // set session
         tcSessionService.initSessionAfterSignup();
+
+        // find menus
+        String accountId = tcSessionService.getAccountId();
+        TcP<List<ToMenu>> menus = tcAuthenticationApi.findMenus(accountId);
+        // TODO: 2016/11/26
 
         return TcR.ok(true);
     }
@@ -172,6 +172,18 @@ public class TcAuthenticationController {
         String accountId = tcSessionService.getAccountId();
 
         return tcAuthenticationApi.findMenus(accountId);
+    }
+
+    @ApiOperation(
+            value = "获取角色",
+            notes = "获取角色")
+    @ApiResponse(code = 200, message = "成功")
+    @RequestMapping(value = "/get_roles", method = RequestMethod.GET)
+    public TcP<List<ToRole>> getRoles() {
+
+        String accountId = tcSessionService.getAccountId();
+
+        return tcAuthenticationApi.findRoles(accountId);
     }
 
     @ApiOperation(

@@ -27,13 +27,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class TiAccount implements Serializable {
 
+    private static final long serialVersionUID = 761530286213318282L;
+
     @Null(groups = TcC.class)
     @NotEmpty(groups = TcU.class)
     @Id(groups = TcU.class)
     private String id;
 
     @NotEmpty(groups = TcC.class)
-    @SafeString(min = 6, max = 16, oneChineseAs2Char = true, groups = TcAll.class)
+    @SafeString(min = 6, max = 16, oneChineseAs2Char = false, groups = TcAll.class)
     private String name;
 
     @NotEmpty(groups = TcC.class)
@@ -55,7 +57,7 @@ public class TiAccount implements Serializable {
     private String avatar;
 
     @NotEmpty(groups = TcC.class)
-    @Pattern(regexp = "^P[0-9]{3}-C[0-9]{4}-D[0-9]{5}$", groups = TcAll.class)
+    @Pattern(regexp = "^P[0-9]{2}-C[0-9]{3}-D[0-9]{4}$", groups = TcAll.class)
     private String region;
 
     @NotEmpty(groups = TcC.class)
