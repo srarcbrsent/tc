@@ -6,6 +6,7 @@
          version="3.1">
 
     <display-name>tc-platform</display-name>
+    <description>tc-platform</description>
 
     <!-- welcome files -->
     <welcome-file-list>

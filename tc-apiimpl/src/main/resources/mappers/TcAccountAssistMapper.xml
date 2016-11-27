@@ -197,8 +197,8 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete from mb_account_assist
-        where id = #{id,jdbcType=VARCHAR}
+        DELETE FROM mb_account_assist
+        WHERE id = #{id,jdbcType=VARCHAR}
     </delete>
     <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssistExample">
         delete from mb_account_assist
@@ -207,18 +207,19 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
-        insert into mb_account_assist (id, signin_platform,
-        signin_timestamp, signin_ip, last_signup_platform,
-        last_signup_timestamp, last_signup_ip, updated_person,
-        updated_timestamp, created_person, created_timestamp
+        INSERT INTO mb_account_assist (id, signin_platform,
+                                       signin_timestamp, signin_ip, last_signup_platform,
+                                       last_signup_timestamp, last_signup_ip, updated_person,
+                                       updated_timestamp, created_person, created_timestamp
         )
-        values (#{id,jdbcType=VARCHAR},
-        #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
-        #{signinTimestamp,jdbcType=TIMESTAMP}, #{signinIp,jdbcType=VARCHAR},
-        #{lastSignupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
-        #{lastSignupTimestamp,jdbcType=TIMESTAMP}, #{lastSignupIp,jdbcType=VARCHAR}, #{updatedPerson,jdbcType=VARCHAR},
-        #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR},
-        #{createdTimestamp,jdbcType=TIMESTAMP}
+        VALUES (#{id,jdbcType=VARCHAR},
+            #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+            #{signinTimestamp,jdbcType=TIMESTAMP}, #{signinIp,jdbcType=VARCHAR},
+            #{lastSignupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+            #{lastSignupTimestamp,jdbcType=TIMESTAMP}, #{lastSignupIp,jdbcType=VARCHAR},
+            #{updatedPerson,jdbcType=VARCHAR},
+            #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR},
+            #{createdTimestamp,jdbcType=TIMESTAMP}
         )
     </insert>
     <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
@@ -400,19 +401,18 @@
         where id = #{id,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
-        update mb_account_assist
-        set signin_platform = #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
-        signin_timestamp = #{signinTimestamp,jdbcType=TIMESTAMP},
-        signin_ip = #{signinIp,jdbcType=VARCHAR},
-        last_signup_platform =
-        #{lastSignupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
-        last_signup_timestamp = #{lastSignupTimestamp,jdbcType=TIMESTAMP},
-        last_signup_ip = #{lastSignupIp,jdbcType=VARCHAR},
-        updated_person = #{updatedPerson,jdbcType=VARCHAR},
-        updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-        created_person = #{createdPerson,jdbcType=VARCHAR},
-        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=VARCHAR}
+        UPDATE mb_account_assist
+        SET signin_platform       = #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+            signin_timestamp      = #{signinTimestamp,jdbcType=TIMESTAMP},
+            signin_ip             = #{signinIp,jdbcType=VARCHAR},
+            last_signup_platform  = #{lastSignupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+            last_signup_timestamp = #{lastSignupTimestamp,jdbcType=TIMESTAMP},
+            last_signup_ip        = #{lastSignupIp,jdbcType=VARCHAR},
+            updated_person        = #{updatedPerson,jdbcType=VARCHAR},
+            updated_timestamp     = #{updatedTimestamp,jdbcType=TIMESTAMP},
+            created_person        = #{createdPerson,jdbcType=VARCHAR},
+            created_timestamp     = #{createdTimestamp,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=VARCHAR}
     </update>
     <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssistExample"
             resultType="java.lang.String">

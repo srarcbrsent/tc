@@ -11,32 +11,18 @@ import java.util.Date;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcAccount {
+public class TcMessage {
     private String id;
 
-    private String name;
+    private String receiverAccountId;
 
-    private String account;
+    private String receiverRegionId;
 
-    private String email;
+    private String channel;
 
-    private Boolean emailActivated;
+    private Boolean read;
 
-    private String mobile;
-
-    private Boolean mobileActivated;
-
-    private String region;
-
-    private String avatar;
-
-    private String password;
-
-    private String randomToken;
-
-    private Date lockReleaseTime;
-
-    private Boolean delected;
+    private String bizKey;
 
     private String updatedPerson;
 
