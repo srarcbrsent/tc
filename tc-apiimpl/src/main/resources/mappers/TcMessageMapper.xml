@@ -5,7 +5,9 @@
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="receiver_account_id" jdbcType="VARCHAR" property="receiverAccountId"/>
         <result column="receiver_region_id" jdbcType="VARCHAR" property="receiverRegionId"/>
-        <result column="channel" jdbcType="VARCHAR" property="channel"/>
+        <result column="type" jdbcType="VARCHAR" property="type" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+        <result column="platform" jdbcType="VARCHAR" property="platform"
+                typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         <result column="read" jdbcType="VARCHAR" property="read"/>
         <result column="biz_key" jdbcType="VARCHAR" property="bizKey"/>
         <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson"/>
@@ -42,6 +44,52 @@
                                 </when>
                             </choose>
                         </foreach>
+                        <foreach collection="criteria.typeCriteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler} and
+                                    #{criterion.secondValue,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                        <foreach collection="criteria.platformCriteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler} and
+                                    #{criterion.secondValue,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
                     </trim>
                 </if>
             </foreach>
@@ -72,13 +120,59 @@
                                 </when>
                             </choose>
                         </foreach>
+                        <foreach collection="criteria.typeCriteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler} and
+                                    #{criterion.secondValue,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                        <foreach collection="criteria.platformCriteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.apache.ibatis.type.EnumTypeHandler} and
+                                    #{criterion.secondValue,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem,typeHandler=org.apache.ibatis.type.EnumTypeHandler}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
                     </trim>
                 </if>
             </foreach>
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, receiver_account_id, receiver_region_id, channel, read, biz_key, updated_person,
+        id, receiver_account_id, receiver_region_id, type, platform, read, biz_key, updated_person,
         updated_timestamp, created_person, created_timestamp
     </sql>
     <sql id="Blob_Column_List">
@@ -141,15 +235,17 @@
     </delete>
     <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcMessageWithBLOBs">
         insert into im_message (id, receiver_account_id, receiver_region_id,
-        channel, read, biz_key,
-        updated_person, updated_timestamp, created_person,
-        created_timestamp, content, extra
-        )
+        type, platform,
+        read, biz_key, updated_person,
+        updated_timestamp, created_person, created_timestamp,
+        content, extra)
         values (#{id,jdbcType=VARCHAR}, #{receiverAccountId,jdbcType=VARCHAR}, #{receiverRegionId,jdbcType=VARCHAR},
-        #{channel,jdbcType=VARCHAR}, #{read,jdbcType=VARCHAR}, #{bizKey,jdbcType=VARCHAR},
-        #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR},
-        #{createdTimestamp,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, #{extra,jdbcType=LONGVARCHAR}
-        )
+        #{type,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+        #{platform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+        #{read,jdbcType=VARCHAR}, #{bizKey,jdbcType=VARCHAR}, #{updatedPerson,jdbcType=VARCHAR},
+        #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR},
+        #{createdTimestamp,jdbcType=TIMESTAMP},
+        #{content,jdbcType=LONGVARCHAR}, #{extra,jdbcType=LONGVARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcMessageWithBLOBs">
         insert into im_message
@@ -163,8 +259,11 @@
             <if test="receiverRegionId != null">
                 receiver_region_id,
             </if>
-            <if test="channel != null">
-                channel,
+            <if test="type != null">
+                type,
+            </if>
+            <if test="platform != null">
+                platform,
             </if>
             <if test="read != null">
                 read,
@@ -201,8 +300,11 @@
             <if test="receiverRegionId != null">
                 #{receiverRegionId,jdbcType=VARCHAR},
             </if>
-            <if test="channel != null">
-                #{channel,jdbcType=VARCHAR},
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+            </if>
+            <if test="platform != null">
+                #{platform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
             </if>
             <if test="read != null">
                 #{read,jdbcType=VARCHAR},
@@ -248,8 +350,11 @@
             <if test="record.receiverRegionId != null">
                 receiver_region_id = #{record.receiverRegionId,jdbcType=VARCHAR},
             </if>
-            <if test="record.channel != null">
-                channel = #{record.channel,jdbcType=VARCHAR},
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+            </if>
+            <if test="record.platform != null">
+                platform = #{record.platform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
             </if>
             <if test="record.read != null">
                 read = #{record.read,jdbcType=VARCHAR},
@@ -285,7 +390,8 @@
         set id = #{record.id,jdbcType=VARCHAR},
         receiver_account_id = #{record.receiverAccountId,jdbcType=VARCHAR},
         receiver_region_id = #{record.receiverRegionId,jdbcType=VARCHAR},
-        channel = #{record.channel,jdbcType=VARCHAR},
+        type = #{record.type,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+        platform = #{record.platform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
         read = #{record.read,jdbcType=VARCHAR},
         biz_key = #{record.bizKey,jdbcType=VARCHAR},
         updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
@@ -303,7 +409,8 @@
         set id = #{record.id,jdbcType=VARCHAR},
         receiver_account_id = #{record.receiverAccountId,jdbcType=VARCHAR},
         receiver_region_id = #{record.receiverRegionId,jdbcType=VARCHAR},
-        channel = #{record.channel,jdbcType=VARCHAR},
+        type = #{record.type,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+        platform = #{record.platform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
         read = #{record.read,jdbcType=VARCHAR},
         biz_key = #{record.bizKey,jdbcType=VARCHAR},
         updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
@@ -323,8 +430,11 @@
             <if test="receiverRegionId != null">
                 receiver_region_id = #{receiverRegionId,jdbcType=VARCHAR},
             </if>
-            <if test="channel != null">
-                channel = #{channel,jdbcType=VARCHAR},
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+            </if>
+            <if test="platform != null">
+                platform = #{platform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
             </if>
             <if test="read != null">
                 read = #{read,jdbcType=VARCHAR},
@@ -357,7 +467,8 @@
         update im_message
         set receiver_account_id = #{receiverAccountId,jdbcType=VARCHAR},
         receiver_region_id = #{receiverRegionId,jdbcType=VARCHAR},
-        channel = #{channel,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+        platform = #{platform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
         read = #{read,jdbcType=VARCHAR},
         biz_key = #{bizKey,jdbcType=VARCHAR},
         updated_person = #{updatedPerson,jdbcType=VARCHAR},
@@ -372,7 +483,8 @@
         update im_message
         set receiver_account_id = #{receiverAccountId,jdbcType=VARCHAR},
         receiver_region_id = #{receiverRegionId,jdbcType=VARCHAR},
-        channel = #{channel,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+        platform = #{platform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
         read = #{read,jdbcType=VARCHAR},
         biz_key = #{bizKey,jdbcType=VARCHAR},
         updated_person = #{updatedPerson,jdbcType=VARCHAR},
@@ -404,7 +516,8 @@
         id,
         receiver_account_id,
         receiver_region_id,
-        channel,
+        type,
+        platform,
         read,
         biz_key,
         updated_person,
@@ -418,7 +531,8 @@
             (#{items.id,jdbcType=VARCHAR},
             #{items.receiverAccountId,jdbcType=VARCHAR},
             #{items.receiverRegionId,jdbcType=VARCHAR},
-            #{items.channel,jdbcType=VARCHAR},
+            #{items.type,jdbcType=VARCHAR},
+            #{items.platform,jdbcType=VARCHAR},
             #{items.read,jdbcType=VARCHAR},
             #{items.bizKey,jdbcType=VARCHAR},
             #{items.updatedPerson,jdbcType=VARCHAR},

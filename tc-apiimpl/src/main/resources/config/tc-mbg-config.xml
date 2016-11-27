@@ -67,10 +67,10 @@
                domainObjectName="TcAccountAssist"
                mapperName="TcAccountAssistMapper">
             <columnOverride column="signin_platform"
-                            javaType="com.ysu.zyw.tc.api.dao.penum.TcPlatform"
+                            javaType="com.ysu.zyw.tc.model.menum.TmPlatform"
                             typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
             <columnOverride column="last_signup_platform"
-                            javaType="com.ysu.zyw.tc.api.dao.penum.TcPlatform"
+                            javaType="com.ysu.zyw.tc.model.menum.TmPlatform"
                             typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         </table>
 
@@ -112,6 +112,12 @@
                mapperName="TcMessageMapper">
             <columnOverride column="read"
                             javaType="java.lang.Boolean"/>
+            <columnOverride column="type"
+                            javaType="com.ysu.zyw.tc.model.menum.TmImMessageType"
+                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+            <columnOverride column="platform"
+                            javaType="com.ysu.zyw.tc.model.menum.TmPlatform"
+                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
         </table>
 
     </context>

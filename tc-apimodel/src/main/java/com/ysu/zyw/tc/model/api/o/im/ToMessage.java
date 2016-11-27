@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.api.dao.po;
+package com.ysu.zyw.tc.model.api.o.im;
 
 import com.ysu.zyw.tc.model.menum.TmImMessageType;
 import com.ysu.zyw.tc.model.menum.TmPlatform;
@@ -7,13 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcMessage {
+public class ToMessage implements Serializable {
+
+    private static final long serialVersionUID = -7749323895963440772L;
+
     private String id;
 
     private String receiverAccountId;
@@ -28,11 +32,6 @@ public class TcMessage {
 
     private String bizKey;
 
-    private String updatedPerson;
-
-    private Date updatedTimestamp;
-
-    private String createdPerson;
-
     private Date createdTimestamp;
+
 }

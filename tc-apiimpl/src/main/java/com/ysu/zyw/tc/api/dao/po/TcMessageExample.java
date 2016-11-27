@@ -1,5 +1,8 @@
 package com.ysu.zyw.tc.api.dao.po;
 
+import com.ysu.zyw.tc.model.menum.TmImMessageType;
+import com.ysu.zyw.tc.model.menum.TmPlatform;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -85,19 +88,75 @@ public class TcMessageExample {
     }
 
     protected abstract static class GeneratedCriteria {
+        protected List<Criterion> typeCriteria;
+
+        protected List<Criterion> platformCriteria;
+
+        protected List<Criterion> allCriteria;
+
         protected List<Criterion> criteria;
 
         protected GeneratedCriteria() {
             super();
             criteria = new ArrayList<Criterion>();
+            typeCriteria = new ArrayList<Criterion>();
+            platformCriteria = new ArrayList<Criterion>();
+        }
+
+        public List<Criterion> getTypeCriteria() {
+            return typeCriteria;
+        }
+
+        protected void addTypeCriterion(String condition, Object value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            typeCriteria.add(new Criterion(condition, value, "org.apache.ibatis.type.EnumTypeHandler"));
+            allCriteria = null;
+        }
+
+        protected void addTypeCriterion(String condition, TmImMessageType value1, TmImMessageType value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            typeCriteria.add(new Criterion(condition, value1, value2, "org.apache.ibatis.type.EnumTypeHandler"));
+            allCriteria = null;
+        }
+
+        public List<Criterion> getPlatformCriteria() {
+            return platformCriteria;
+        }
+
+        protected void addPlatformCriterion(String condition, Object value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            platformCriteria.add(new Criterion(condition, value, "org.apache.ibatis.type.EnumTypeHandler"));
+            allCriteria = null;
+        }
+
+        protected void addPlatformCriterion(String condition, TmPlatform value1, TmPlatform value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            platformCriteria.add(new Criterion(condition, value1, value2, "org.apache.ibatis.type.EnumTypeHandler"));
+            allCriteria = null;
         }
 
         public boolean isValid() {
-            return criteria.size() > 0;
+            return criteria.size() > 0
+                    || typeCriteria.size() > 0
+                    || platformCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
-            return criteria;
+            if (allCriteria == null) {
+                allCriteria = new ArrayList<Criterion>();
+                allCriteria.addAll(criteria);
+                allCriteria.addAll(typeCriteria);
+                allCriteria.addAll(platformCriteria);
+            }
+            return allCriteria;
         }
 
         public List<Criterion> getCriteria() {
@@ -109,6 +168,7 @@ public class TcMessageExample {
                 throw new RuntimeException("Value for condition cannot be null");
             }
             criteria.add(new Criterion(condition));
+            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value, String property) {
@@ -116,6 +176,7 @@ public class TcMessageExample {
                 throw new RuntimeException("Value for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value));
+            allCriteria = null;
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
@@ -123,6 +184,7 @@ public class TcMessageExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
+            allCriteria = null;
         }
 
         public Criteria andIdIsNull() {
@@ -335,73 +397,143 @@ public class TcMessageExample {
             return (Criteria) this;
         }
 
-        public Criteria andChannelIsNull() {
-            addCriterion("channel is null");
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
             return (Criteria) this;
         }
 
-        public Criteria andChannelIsNotNull() {
-            addCriterion("channel is not null");
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
             return (Criteria) this;
         }
 
-        public Criteria andChannelEqualTo(String value) {
-            addCriterion("channel =", value, "channel");
+        public Criteria andTypeEqualTo(TmImMessageType value) {
+            addTypeCriterion("type =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelNotEqualTo(String value) {
-            addCriterion("channel <>", value, "channel");
+        public Criteria andTypeNotEqualTo(TmImMessageType value) {
+            addTypeCriterion("type <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelGreaterThan(String value) {
-            addCriterion("channel >", value, "channel");
+        public Criteria andTypeGreaterThan(TmImMessageType value) {
+            addTypeCriterion("type >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelGreaterThanOrEqualTo(String value) {
-            addCriterion("channel >=", value, "channel");
+        public Criteria andTypeGreaterThanOrEqualTo(TmImMessageType value) {
+            addTypeCriterion("type >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelLessThan(String value) {
-            addCriterion("channel <", value, "channel");
+        public Criteria andTypeLessThan(TmImMessageType value) {
+            addTypeCriterion("type <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelLessThanOrEqualTo(String value) {
-            addCriterion("channel <=", value, "channel");
+        public Criteria andTypeLessThanOrEqualTo(TmImMessageType value) {
+            addTypeCriterion("type <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelLike(String value) {
-            addCriterion("channel like", value, "channel");
+        public Criteria andTypeLike(TmImMessageType value) {
+            addTypeCriterion("type like", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelNotLike(String value) {
-            addCriterion("channel not like", value, "channel");
+        public Criteria andTypeNotLike(TmImMessageType value) {
+            addTypeCriterion("type not like", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelIn(List<String> values) {
-            addCriterion("channel in", values, "channel");
+        public Criteria andTypeIn(List<TmImMessageType> values) {
+            addTypeCriterion("type in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelNotIn(List<String> values) {
-            addCriterion("channel not in", values, "channel");
+        public Criteria andTypeNotIn(List<TmImMessageType> values) {
+            addTypeCriterion("type not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelBetween(String value1, String value2) {
-            addCriterion("channel between", value1, value2, "channel");
+        public Criteria andTypeBetween(TmImMessageType value1, TmImMessageType value2) {
+            addTypeCriterion("type between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andChannelNotBetween(String value1, String value2) {
-            addCriterion("channel not between", value1, value2, "channel");
+        public Criteria andTypeNotBetween(TmImMessageType value1, TmImMessageType value2) {
+            addTypeCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformIsNull() {
+            addCriterion("platform is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformIsNotNull() {
+            addCriterion("platform is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformEqualTo(TmPlatform value) {
+            addPlatformCriterion("platform =", value, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformNotEqualTo(TmPlatform value) {
+            addPlatformCriterion("platform <>", value, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformGreaterThan(TmPlatform value) {
+            addPlatformCriterion("platform >", value, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformGreaterThanOrEqualTo(TmPlatform value) {
+            addPlatformCriterion("platform >=", value, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformLessThan(TmPlatform value) {
+            addPlatformCriterion("platform <", value, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformLessThanOrEqualTo(TmPlatform value) {
+            addPlatformCriterion("platform <=", value, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformLike(TmPlatform value) {
+            addPlatformCriterion("platform like", value, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformNotLike(TmPlatform value) {
+            addPlatformCriterion("platform not like", value, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformIn(List<TmPlatform> values) {
+            addPlatformCriterion("platform in", values, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformNotIn(List<TmPlatform> values) {
+            addPlatformCriterion("platform not in", values, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformBetween(TmPlatform value1, TmPlatform value2) {
+            addPlatformCriterion("platform between", value1, value2, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformNotBetween(TmPlatform value1, TmPlatform value2) {
+            addPlatformCriterion("platform not between", value1, value2, "platform");
             return (Criteria) this;
         }
 

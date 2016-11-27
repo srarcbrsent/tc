@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.dao.po;
 
-import com.ysu.zyw.tc.api.dao.penum.TcPlatform;
+import com.ysu.zyw.tc.model.menum.TmPlatform;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,13 +15,13 @@ import java.util.Date;
 public class TcAccountAssist {
     private String id;
 
-    private TcPlatform signinPlatform;
+    private TmPlatform signinPlatform;
 
     private Date signinTimestamp;
 
     private String signinIp;
 
-    private TcPlatform lastSignupPlatform;
+    private TmPlatform lastSignupPlatform;
 
     private Date lastSignupTimestamp;
 

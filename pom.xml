@@ -43,7 +43,7 @@
     </properties>
 
     <dependencies>
-        <!-- com.ysu.zyw.tc.component.mbg.test -->
+        <!-- test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

@@ -2,7 +2,6 @@ package com.ysu.zyw.tc.api.svc.accounts;
 
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountAssistMapper;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountMapper;
-import com.ysu.zyw.tc.api.dao.penum.TcPlatform;
 import com.ysu.zyw.tc.api.dao.po.TcAccount;
 import com.ysu.zyw.tc.api.dao.po.TcAccountAssist;
 import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
@@ -152,9 +151,9 @@ public class TcAccountService {
         BeanUtils.copyProperties(tiAccount, tcAccountAssist);
         tcAccountAssist
                 .setId(id)
-                .setSigninPlatform(TcPlatform.convert(tiAccount.getSigninPlatform()))
+                .setSigninPlatform(tiAccount.getSigninPlatform())
                 .setSigninTimestamp(now)
-                .setLastSignupPlatform(TcPlatform.convert(tiAccount.getSigninPlatform()))
+                .setLastSignupPlatform(tiAccount.getSigninPlatform())
                 .setLastSignupTimestamp(now)
                 .setUpdatedPerson(tiAccount.getOperatorAccountId())
                 .setUpdatedTimestamp(now)
@@ -272,7 +271,10 @@ public class TcAccountService {
      *                                        code == 1 => 账号不存在; code == 2 => 原密码错误;
      */
     @Transactional
-    public void updatePassword(String accountId, String oPassword, String nPassword, @Nonnull String operator) {
+    public void updatePassword(@Nonnull String accountId,
+                               @Nonnull String oPassword,
+                               @Nonnull String nPassword,
+                               @Nonnull String operator) {
         TcAccountExample tcAccountExample = new TcAccountExample();
         tcAccountExample.setStartLine(0);
         tcAccountExample.setPageSize(1);
@@ -305,7 +307,7 @@ public class TcAccountService {
      * @throws TcResourceNotFoundException 账号不存在
      */
     @Transactional(readOnly = true)
-    public ToAccount findAccount(@Nonnull String accountId, Boolean containsPassword) {
+    public ToAccount findAccount(@Nonnull String accountId, @Nonnull Boolean containsPassword) {
         checkNotNull(accountId);
         TcAccount originalTcAccount = this.findOriginalTcAccount(accountId, containsPassword);
         if (Objects.isNull(originalTcAccount)) {
@@ -337,7 +339,7 @@ public class TcAccountService {
     }
 
     @Transactional(readOnly = true)
-    public long countAccounts(TiFindAccountsTerms tiFindAccountsTerms) {
+    public long countAccounts(@Nonnull TiFindAccountsTerms tiFindAccountsTerms) {
         TcAccountExample tcAccountExample =
                 buildFindAccountCondition(
                         tiFindAccountsTerms.getIds(),
@@ -352,7 +354,7 @@ public class TcAccountService {
     }
 
     @Transactional(readOnly = true)
-    public List<ToAccount> findAccounts(TiFindAccountsTerms tiFindAccountsTerms,
+    public List<ToAccount> findAccounts(@Nonnull TiFindAccountsTerms tiFindAccountsTerms,
                                         int currentPage,
                                         int pageSize) {
         TcAccountExample tcAccountExample =

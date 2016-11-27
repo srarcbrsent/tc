@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.dao.po;
 
-import com.ysu.zyw.tc.api.dao.penum.TcPlatform;
+import com.ysu.zyw.tc.model.menum.TmPlatform;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,7 +114,7 @@ public class TcAccountAssistExample {
             allCriteria = null;
         }
 
-        protected void addSigninPlatformCriterion(String condition, TcPlatform value1, TcPlatform value2, String property) {
+        protected void addSigninPlatformCriterion(String condition, TmPlatform value1, TmPlatform value2, String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -134,7 +134,7 @@ public class TcAccountAssistExample {
             allCriteria = null;
         }
 
-        protected void addLastSignupPlatformCriterion(String condition, TcPlatform value1, TcPlatform value2, String property) {
+        protected void addLastSignupPlatformCriterion(String condition, TmPlatform value1, TmPlatform value2, String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -144,8 +144,8 @@ public class TcAccountAssistExample {
 
         public boolean isValid() {
             return criteria.size() > 0
-                || signinPlatformCriteria.size() > 0
-                || lastSignupPlatformCriteria.size() > 0;
+                    || signinPlatformCriteria.size() > 0
+                    || lastSignupPlatformCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
@@ -266,62 +266,62 @@ public class TcAccountAssistExample {
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformEqualTo(TcPlatform value) {
+        public Criteria andSigninPlatformEqualTo(TmPlatform value) {
             addSigninPlatformCriterion("signin_platform =", value, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformNotEqualTo(TcPlatform value) {
+        public Criteria andSigninPlatformNotEqualTo(TmPlatform value) {
             addSigninPlatformCriterion("signin_platform <>", value, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformGreaterThan(TcPlatform value) {
+        public Criteria andSigninPlatformGreaterThan(TmPlatform value) {
             addSigninPlatformCriterion("signin_platform >", value, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformGreaterThanOrEqualTo(TcPlatform value) {
+        public Criteria andSigninPlatformGreaterThanOrEqualTo(TmPlatform value) {
             addSigninPlatformCriterion("signin_platform >=", value, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformLessThan(TcPlatform value) {
+        public Criteria andSigninPlatformLessThan(TmPlatform value) {
             addSigninPlatformCriterion("signin_platform <", value, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformLessThanOrEqualTo(TcPlatform value) {
+        public Criteria andSigninPlatformLessThanOrEqualTo(TmPlatform value) {
             addSigninPlatformCriterion("signin_platform <=", value, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformLike(TcPlatform value) {
+        public Criteria andSigninPlatformLike(TmPlatform value) {
             addSigninPlatformCriterion("signin_platform like", value, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformNotLike(TcPlatform value) {
+        public Criteria andSigninPlatformNotLike(TmPlatform value) {
             addSigninPlatformCriterion("signin_platform not like", value, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformIn(List<TcPlatform> values) {
+        public Criteria andSigninPlatformIn(List<TmPlatform> values) {
             addSigninPlatformCriterion("signin_platform in", values, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformNotIn(List<TcPlatform> values) {
+        public Criteria andSigninPlatformNotIn(List<TmPlatform> values) {
             addSigninPlatformCriterion("signin_platform not in", values, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformBetween(TcPlatform value1, TcPlatform value2) {
+        public Criteria andSigninPlatformBetween(TmPlatform value1, TmPlatform value2) {
             addSigninPlatformCriterion("signin_platform between", value1, value2, "signinPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andSigninPlatformNotBetween(TcPlatform value1, TcPlatform value2) {
+        public Criteria andSigninPlatformNotBetween(TmPlatform value1, TmPlatform value2) {
             addSigninPlatformCriterion("signin_platform not between", value1, value2, "signinPlatform");
             return (Criteria) this;
         }
@@ -466,62 +466,62 @@ public class TcAccountAssistExample {
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformEqualTo(TcPlatform value) {
+        public Criteria andLastSignupPlatformEqualTo(TmPlatform value) {
             addLastSignupPlatformCriterion("last_signup_platform =", value, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformNotEqualTo(TcPlatform value) {
+        public Criteria andLastSignupPlatformNotEqualTo(TmPlatform value) {
             addLastSignupPlatformCriterion("last_signup_platform <>", value, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformGreaterThan(TcPlatform value) {
+        public Criteria andLastSignupPlatformGreaterThan(TmPlatform value) {
             addLastSignupPlatformCriterion("last_signup_platform >", value, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformGreaterThanOrEqualTo(TcPlatform value) {
+        public Criteria andLastSignupPlatformGreaterThanOrEqualTo(TmPlatform value) {
             addLastSignupPlatformCriterion("last_signup_platform >=", value, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformLessThan(TcPlatform value) {
+        public Criteria andLastSignupPlatformLessThan(TmPlatform value) {
             addLastSignupPlatformCriterion("last_signup_platform <", value, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformLessThanOrEqualTo(TcPlatform value) {
+        public Criteria andLastSignupPlatformLessThanOrEqualTo(TmPlatform value) {
             addLastSignupPlatformCriterion("last_signup_platform <=", value, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformLike(TcPlatform value) {
+        public Criteria andLastSignupPlatformLike(TmPlatform value) {
             addLastSignupPlatformCriterion("last_signup_platform like", value, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformNotLike(TcPlatform value) {
+        public Criteria andLastSignupPlatformNotLike(TmPlatform value) {
             addLastSignupPlatformCriterion("last_signup_platform not like", value, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformIn(List<TcPlatform> values) {
+        public Criteria andLastSignupPlatformIn(List<TmPlatform> values) {
             addLastSignupPlatformCriterion("last_signup_platform in", values, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformNotIn(List<TcPlatform> values) {
+        public Criteria andLastSignupPlatformNotIn(List<TmPlatform> values) {
             addLastSignupPlatformCriterion("last_signup_platform not in", values, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformBetween(TcPlatform value1, TcPlatform value2) {
+        public Criteria andLastSignupPlatformBetween(TmPlatform value1, TmPlatform value2) {
             addLastSignupPlatformCriterion("last_signup_platform between", value1, value2, "lastSignupPlatform");
             return (Criteria) this;
         }
 
-        public Criteria andLastSignupPlatformNotBetween(TcPlatform value1, TcPlatform value2) {
+        public Criteria andLastSignupPlatformNotBetween(TmPlatform value1, TmPlatform value2) {
             addLastSignupPlatformCriterion("last_signup_platform not between", value1, value2, "lastSignupPlatform");
             return (Criteria) this;
         }
