@@ -20,7 +20,7 @@
      class="layui-main">
     <!-- + menu -->
     <div id="menu_div">
-    <#include "/WEB-INF/templates/menu.ftl"/>
+    <#include "/WEB-INF/templates/common/menu.ftl"/>
     </div>
     <!-- - menu -->
 
@@ -157,9 +157,9 @@
 <!-- - footer -->
 
 <#include "/WEB-INF/templates/common/post-lib.ftl"/>
-<script src="${.vars.staticBase}/libs/jqplugin/validate/jquery.validate.min.js"
+<script src="${.vars.staticBase}/libs/jqplugin/jquery.validate.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/libs/jqplugin/validate/additional-methods.min.js"
+<script src="${.vars.staticBase}/libs/jqplugin/additional-methods.min.js"
         type="application/javascript"></script>
 <script src="${.vars.staticBase}/scripts/common/region.js"
         type="application/javascript"></script>

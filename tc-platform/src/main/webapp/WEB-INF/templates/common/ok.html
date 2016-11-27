@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ok</title>
+    <script src="http://static.tc.com/libs/jquery-3.1.0.min.js" type="application/javascript"></script>
+    <script src="http://static.tc.com/libs/layui/layui.js" type="application/javascript"></script>
+    <link href="http://static.tc.com/libs/normalize.min.css" type="text/css" rel="stylesheet"/>
+    <link href="http://static.tc.com/libs/layui/css/layui.css" type="text/css" rel="stylesheet"/>
+    <style type="text/css">
+        #header_div {
+            width: 100%;
+            min-width: 1140px;
+            background-color: #393D49;
+            color: #c2c2c2;
+            padding: 10px 0 10px 0;
+        }
+
+        #header_div .layui-field-title {
+            margin: 5px 0 5px 0;
+        }
+
+        #main-container {
+            margin-top: 140px;
+        }
+    </style>
+</head>
+<body>
+<div id="header_div">
+    <div class="layui-main">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>
+                这只是一个测试用的工程而已，基友
+            </legend>
+        </fieldset>
+    </div>
+</div>
+<div id="main-container" class="layui-main">
+    <fieldset class="layui-elem-field">
+        <legend>${chineseDescription!"操作成功！"}</legend>
+        <div class="layui-field-box">
+            <p>${englishDescription!"Operation Success!"}</p>
+            <hr/>
+            <a href="http://www.tc.com">返回首页</a>
+        </div>
+    </fieldset>
+</div>
+</body>
+</html>

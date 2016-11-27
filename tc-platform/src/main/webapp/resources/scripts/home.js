@@ -38,7 +38,8 @@ layui.use(['form', 'upload'],
         };
 
         // jquery binding
-        var validator = $("#signin_form").validate({
+        var $signin_form = $("#signin_form");
+        var validator = $signin_form.validate({
             debug: true,
 
             ignore: '.layui-unselect',
@@ -94,12 +95,12 @@ layui.use(['form', 'upload'],
         });
 
         // form submit event
-        $('#signin_form').submit(function () {
+        $signin_form.submit(function () {
             return validRegion();
         });
         
         // form reset event
-        $('#signin_form button[type = reset]').click(function () {
+        $signin_form.find('button[type = reset]').click(function () {
             validator.resetForm();
         });
 
