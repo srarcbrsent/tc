@@ -1,337 +1,340 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ysu.zyw.tc.api.dao.mappers.TcMenuMapper">
-  <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcMenu">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="link" jdbcType="VARCHAR" property="link" />
-    <result column="level" jdbcType="INTEGER" property="level" />
-    <result column="structure" jdbcType="VARCHAR" property="structure" />
-    <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
-    <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
-    <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
-    <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcMenu">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="link" jdbcType="VARCHAR" property="link"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="structure" jdbcType="VARCHAR" property="structure"/>
+        <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson"/>
+        <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp"/>
+        <result column="created_person" jdbcType="VARCHAR" property="createdPerson"/>
+        <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, description, name, link, level, structure, updated_person, updated_timestamp,
+        created_person, created_timestamp
+    </sql>
+    <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, description, name, link, level, structure, updated_person, updated_timestamp, 
-    created_person, created_timestamp
-  </sql>
-  <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from pv_menu
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="startLine != null and pageSize != null and pageSize > 0">
-      limit #{startLine} , #{pageSize}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from pv_menu
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from pv_menu
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample">
-    delete from pv_menu
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
-    insert into pv_menu (id, description, name, 
-      link, level, structure, 
-      updated_person, updated_timestamp, created_person, 
-      created_timestamp)
-    values (#{id,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{link,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{structure,jdbcType=VARCHAR}, 
-      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
-      #{createdTimestamp,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
-    insert into pv_menu
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="link != null">
-        link,
-      </if>
-      <if test="level != null">
-        level,
-      </if>
-      <if test="structure != null">
-        structure,
-      </if>
-      <if test="updatedPerson != null">
-        updated_person,
-      </if>
-      <if test="updatedTimestamp != null">
-        updated_timestamp,
-      </if>
-      <if test="createdPerson != null">
-        created_person,
-      </if>
-      <if test="createdTimestamp != null">
-        created_timestamp,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="link != null">
-        #{link,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null">
-        #{level,jdbcType=INTEGER},
-      </if>
-      <if test="structure != null">
-        #{structure,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedPerson != null">
-        #{updatedPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedTimestamp != null">
-        #{updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdPerson != null">
-        #{createdPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="createdTimestamp != null">
-        #{createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample" resultType="java.lang.Long">
-    select count(*) from pv_menu
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update pv_menu
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.description != null">
+        <include refid="Base_Column_List"/>
+        from pv_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startLine != null and pageSize != null and pageSize > 0">
+            limit #{startLine} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pv_menu
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from pv_menu
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample">
+        delete from pv_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
+        insert into pv_menu (id, description, name,
+        link, level, structure,
+        updated_person, updated_timestamp, created_person,
+        created_timestamp)
+        values (#{id,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{link,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{structure,jdbcType=VARCHAR},
+        #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR},
+        #{createdTimestamp,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
+        insert into pv_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="link != null">
+                link,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="structure != null">
+                structure,
+            </if>
+            <if test="updatedPerson != null">
+                updated_person,
+            </if>
+            <if test="updatedTimestamp != null">
+                updated_timestamp,
+            </if>
+            <if test="createdPerson != null">
+                created_person,
+            </if>
+            <if test="createdTimestamp != null">
+                created_timestamp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="link != null">
+                #{link,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="structure != null">
+                #{structure,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedPerson != null">
+                #{updatedPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTimestamp != null">
+                #{updatedTimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdPerson != null">
+                #{createdPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTimestamp != null">
+                #{createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample" resultType="java.lang.Long">
+        select count(*) from pv_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update pv_menu
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.description != null">
+                description = #{record.description,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.link != null">
+                link = #{record.link,jdbcType=VARCHAR},
+            </if>
+            <if test="record.level != null">
+                level = #{record.level,jdbcType=INTEGER},
+            </if>
+            <if test="record.structure != null">
+                structure = #{record.structure,jdbcType=VARCHAR},
+            </if>
+            <if test="record.updatedPerson != null">
+                updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="record.updatedTimestamp != null">
+                updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createdPerson != null">
+                created_person = #{record.createdPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdTimestamp != null">
+                created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update pv_menu
+        set id = #{record.id,jdbcType=VARCHAR},
         description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.link != null">
         link = #{record.link,jdbcType=VARCHAR},
-      </if>
-      <if test="record.level != null">
         level = #{record.level,jdbcType=INTEGER},
-      </if>
-      <if test="record.structure != null">
         structure = #{record.structure,jdbcType=VARCHAR},
-      </if>
-      <if test="record.updatedPerson != null">
         updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="record.updatedTimestamp != null">
         updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.createdPerson != null">
         created_person = #{record.createdPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createdTimestamp != null">
-        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update pv_menu
-    set id = #{record.id,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      link = #{record.link,jdbcType=VARCHAR},
-      level = #{record.level,jdbcType=INTEGER},
-      structure = #{record.structure,jdbcType=VARCHAR},
-      updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
-      updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
-      created_person = #{record.createdPerson,jdbcType=VARCHAR},
-      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
-    update pv_menu
-    <set>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
+        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
+        update pv_menu
+        <set>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="link != null">
+                link = #{link,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="structure != null">
+                structure = #{structure,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedPerson != null">
+                updated_person = #{updatedPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTimestamp != null">
+                updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdPerson != null">
+                created_person = #{createdPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTimestamp != null">
+                created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
+        update pv_menu
+        set description = #{description,jdbcType=VARCHAR},
         name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="link != null">
         link = #{link,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null">
         level = #{level,jdbcType=INTEGER},
-      </if>
-      <if test="structure != null">
         structure = #{structure,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedPerson != null">
         updated_person = #{updatedPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedTimestamp != null">
         updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdPerson != null">
         created_person = #{createdPerson,jdbcType=VARCHAR},
-      </if>
-      <if test="createdTimestamp != null">
-        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
-    update pv_menu
-    set description = #{description,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      link = #{link,jdbcType=VARCHAR},
-      level = #{level,jdbcType=INTEGER},
-      structure = #{structure,jdbcType=VARCHAR},
-      updated_person = #{updatedPerson,jdbcType=VARCHAR},
-      updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
-      created_person = #{createdPerson,jdbcType=VARCHAR},
-      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample" resultType="java.lang.String">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    id
-    from pv_menu
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="startLine != null and pageSize != null and pageSize > 0">
-      limit #{startLine}, #{pageSize}
-    </if>
-  </select>
-  <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
-    insert into pv_menu (
-      id, 
-      description, 
-      name, 
-      link, 
-      level, 
-      structure, 
-      updated_person, 
-      updated_timestamp, 
-      created_person, 
-      created_timestamp
-    ) values 
-    <foreach collection="list" item="item" separator=", ">
-      (#{items.id,jdbcType=VARCHAR}, 
-      #{items.description,jdbcType=VARCHAR}, 
-      #{items.name,jdbcType=VARCHAR}, 
-      #{items.link,jdbcType=VARCHAR}, 
-      #{items.level,jdbcType=INTEGER}, 
-      #{items.structure,jdbcType=VARCHAR}, 
-      #{items.updatedPerson,jdbcType=VARCHAR}, 
-      #{items.updatedTimestamp,jdbcType=TIMESTAMP}, 
-      #{items.createdPerson,jdbcType=VARCHAR}, 
-      #{items.createdTimestamp,jdbcType=TIMESTAMP})
-    </foreach>
-  </insert>
+        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenuExample"
+            resultType="java.lang.String">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        id
+        from pv_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startLine != null and pageSize != null and pageSize > 0">
+            limit #{startLine}, #{pageSize}
+        </if>
+    </select>
+    <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcMenu">
+        insert into pv_menu (
+        id,
+        description,
+        name,
+        link,
+        level,
+        structure,
+        updated_person,
+        updated_timestamp,
+        created_person,
+        created_timestamp
+        ) values
+        <foreach collection="list" item="item" separator=", ">
+            (#{item.id,jdbcType=VARCHAR},
+            #{item.description,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.link,jdbcType=VARCHAR},
+            #{item.level,jdbcType=INTEGER},
+            #{item.structure,jdbcType=VARCHAR},
+            #{item.updatedPerson,jdbcType=VARCHAR},
+            #{item.updatedTimestamp,jdbcType=TIMESTAMP},
+            #{item.createdPerson,jdbcType=VARCHAR},
+            #{item.createdTimestamp,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
 </mapper>

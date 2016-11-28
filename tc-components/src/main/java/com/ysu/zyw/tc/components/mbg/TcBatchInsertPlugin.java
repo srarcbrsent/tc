@@ -83,9 +83,9 @@ public class TcBatchInsertPlugin extends PluginAdapter {
     }
 
     protected Function<IntrospectedColumn, String> introspectedColumn2InsertSql() {
-        // transform column like 'id' to insert part like '#{items.id,jdbcType=VARCHAR}'
+        // transform column like 'id' to insert part like '#{item.id,jdbcType=VARCHAR}'
         return introspectedColumn ->
-                "#{items." + introspectedColumn.getJavaProperty() + ",jdbcType=" + introspectedColumn
+                "#{item." + introspectedColumn.getJavaProperty() + ",jdbcType=" + introspectedColumn
                         .getJdbcTypeName() + "}";
     }
 

@@ -145,8 +145,8 @@ public class TcMessageExample {
 
         public boolean isValid() {
             return criteria.size() > 0
-                || typeCriteria.size() > 0
-                || platformCriteria.size() > 0;
+                    || typeCriteria.size() > 0
+                    || platformCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
