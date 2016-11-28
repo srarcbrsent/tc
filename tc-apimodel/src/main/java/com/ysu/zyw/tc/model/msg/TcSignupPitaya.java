@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class TcSignupMessage extends TcBaseMessage {
+public class TcSignupPitaya extends TcPitaya {
 
     // nonnull
     public static final String MSG_KEY_SIGNUP_ACCOUNT_ID = "msg_key_signup_account_id";
@@ -18,7 +18,7 @@ public class TcSignupMessage extends TcBaseMessage {
     // nonnull
     public static final String MSG_KEY_SIGNUP_IP = "msg_key_signup_ip";
 
-    public TcSignupMessage(String generatePerson) {
+    public TcSignupPitaya(String generatePerson) {
         super(generatePerson);
     }
 

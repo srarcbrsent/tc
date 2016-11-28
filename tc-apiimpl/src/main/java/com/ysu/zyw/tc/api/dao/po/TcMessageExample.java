@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.dao.po;
 
-import com.ysu.zyw.tc.model.menum.TmImMessageType;
+import com.ysu.zyw.tc.model.menum.TmMessageType;
 import com.ysu.zyw.tc.model.menum.TmPlatform;
 
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class TcMessageExample {
             allCriteria = null;
         }
 
-        protected void addTypeCriterion(String condition, TmImMessageType value1, TmImMessageType value2, String property) {
+        protected void addTypeCriterion(String condition, TmMessageType value1, TmMessageType value2, String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -145,8 +145,8 @@ public class TcMessageExample {
 
         public boolean isValid() {
             return criteria.size() > 0
-                    || typeCriteria.size() > 0
-                    || platformCriteria.size() > 0;
+                || typeCriteria.size() > 0
+                || platformCriteria.size() > 0;
         }
 
         public List<Criterion> getAllCriteria() {
@@ -407,62 +407,62 @@ public class TcMessageExample {
             return (Criteria) this;
         }
 
-        public Criteria andTypeEqualTo(TmImMessageType value) {
+        public Criteria andTypeEqualTo(TmMessageType value) {
             addTypeCriterion("type =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotEqualTo(TmImMessageType value) {
+        public Criteria andTypeNotEqualTo(TmMessageType value) {
             addTypeCriterion("type <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThan(TmImMessageType value) {
+        public Criteria andTypeGreaterThan(TmMessageType value) {
             addTypeCriterion("type >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThanOrEqualTo(TmImMessageType value) {
+        public Criteria andTypeGreaterThanOrEqualTo(TmMessageType value) {
             addTypeCriterion("type >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThan(TmImMessageType value) {
+        public Criteria andTypeLessThan(TmMessageType value) {
             addTypeCriterion("type <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThanOrEqualTo(TmImMessageType value) {
+        public Criteria andTypeLessThanOrEqualTo(TmMessageType value) {
             addTypeCriterion("type <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLike(TmImMessageType value) {
+        public Criteria andTypeLike(TmMessageType value) {
             addTypeCriterion("type like", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotLike(TmImMessageType value) {
+        public Criteria andTypeNotLike(TmMessageType value) {
             addTypeCriterion("type not like", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIn(List<TmImMessageType> values) {
+        public Criteria andTypeIn(List<TmMessageType> values) {
             addTypeCriterion("type in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotIn(List<TmImMessageType> values) {
+        public Criteria andTypeNotIn(List<TmMessageType> values) {
             addTypeCriterion("type not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeBetween(TmImMessageType value1, TmImMessageType value2) {
+        public Criteria andTypeBetween(TmMessageType value1, TmMessageType value2) {
             addTypeCriterion("type between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotBetween(TmImMessageType value1, TmImMessageType value2) {
+        public Criteria andTypeNotBetween(TmMessageType value1, TmMessageType value2) {
             addTypeCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }

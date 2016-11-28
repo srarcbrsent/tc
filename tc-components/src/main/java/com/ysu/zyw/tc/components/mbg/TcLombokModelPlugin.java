@@ -33,6 +33,22 @@ public class TcLombokModelPlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass,
+                                                      IntrospectedTable introspectedTable) {
+        // generate annotation
+        topLevelClass.addImportedType("lombok.Data");
+        topLevelClass.addImportedType("lombok.experimental.Accessors");
+        topLevelClass.addImportedType("lombok.NoArgsConstructor");
+        topLevelClass.addImportedType("lombok.AllArgsConstructor");
+
+        topLevelClass.addAnnotation("@Data");
+        topLevelClass.addAnnotation("@Accessors(chain = true)");
+        topLevelClass.addAnnotation("@NoArgsConstructor");
+        topLevelClass.addAnnotation("@AllArgsConstructor");
+        return super.modelRecordWithBLOBsClassGenerated(topLevelClass, introspectedTable);
+    }
+
+    @Override
     public boolean modelGetterMethodGenerated(Method method,
                                               TopLevelClass topLevelClass,
                                               IntrospectedColumn introspectedColumn,

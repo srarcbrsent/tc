@@ -113,7 +113,7 @@
             <columnOverride column="read"
                             javaType="java.lang.Boolean"/>
             <columnOverride column="type"
-                            javaType="com.ysu.zyw.tc.model.menum.TmImMessageType"
+                            javaType="com.ysu.zyw.tc.model.menum.TmMessageType"
                             typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
             <columnOverride column="platform"
                             javaType="com.ysu.zyw.tc.model.menum.TmPlatform"

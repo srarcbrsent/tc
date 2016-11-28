@@ -10,7 +10,7 @@ import java.util.HashMap;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public abstract class TcBaseMessage extends HashMap<String, Object> {
+public abstract class TcPitaya extends HashMap<String, Object> {
 
     private String generatePerson;
 
@@ -18,7 +18,7 @@ public abstract class TcBaseMessage extends HashMap<String, Object> {
 
     private String type;
 
-    public TcBaseMessage(String generatePerson) {
+    public TcPitaya(String generatePerson) {
         this.generatePerson = generatePerson;
         this.generateTime = new Date();
         this.type = this.getClass().getName();

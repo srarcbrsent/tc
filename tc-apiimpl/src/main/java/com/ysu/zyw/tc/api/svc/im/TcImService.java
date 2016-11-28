@@ -5,12 +5,12 @@ import com.ysu.zyw.tc.api.dao.mappers.TcMessageMapper;
 import com.ysu.zyw.tc.api.dao.po.TcMessage;
 import com.ysu.zyw.tc.api.dao.po.TcMessageExample;
 import com.ysu.zyw.tc.api.dao.po.TcMessageWithBLOBs;
+import com.ysu.zyw.tc.api.svc.im.processor.TcAbstractMessageProcessor;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
-import com.ysu.zyw.tc.model.api.i.im.ToImIdentifier;
+import com.ysu.zyw.tc.model.api.i.im.TiMessagePrincipal;
 import com.ysu.zyw.tc.model.api.o.im.ToMessage;
-import com.ysu.zyw.tc.model.menum.TmImMessageType;
+import com.ysu.zyw.tc.model.menum.TmMessageType;
 import com.ysu.zyw.tc.model.menum.TmPlatform;
-import com.ysu.zyw.tc.model.msg.TcBaseMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -33,18 +33,25 @@ public class TcImService {
     @Resource
     private TcMessageMapper tcMessageMapper;
 
-    private Map<TmImMessageType, List<TcAbstractImProcessor>> processorMapping;
+    private List<TcAbstractMessageProcessor> processors;
 
-    public void consume(@Nonnull TcBaseMessage tcMessage) {
-        checkNotNull(tcMessage);
+    public void consume(@Nonnull TmMessageType tmMessageType,
+                        @Nonnull Map<String, Object> infos) {
+        checkNotNull(tmMessageType);
 
-        // TODO: 2016/11/27  
-        List<TcAbstractImProcessor> processors = processorMapping.get(tcMessage.getClass());
-        for (TcAbstractImProcessor processor : processors) {
+        List<TcAbstractMessageProcessor> processors =
+                this.processors.stream()
+                        .filter(tcAbstractMessageProcessor ->
+                                Objects.equals(tmMessageType, tcAbstractMessageProcessor.getTmMessageType())
+                        )
+                        .collect(Collectors.toList());
+        checkNotNull(processors);
+
+        for (TcAbstractMessageProcessor processor : processors) {
             try {
-                processor.process(tcMessage);
+                processor.process(infos);
             } catch (Exception e) {
-                log.error("processor [{}] process msg [{}] failed", processor, tcMessage, e);
+                log.error("processor [{}] process msg [{}] failed", processor, infos, e);
             }
         }
     }
@@ -70,14 +77,14 @@ public class TcImService {
         }
     }
 
-    public long count(@Nonnull ToImIdentifier toImIdentifier,
+    public long count(@Nonnull TiMessagePrincipal tiMessagePrincipal,
                       @Nonnull TmPlatform tmPlatform,
-                      @Nullable TmImMessageType type,
+                      @Nullable TmMessageType type,
                       @Nullable String bizKey) {
-        checkNotNull(toImIdentifier);
+        checkNotNull(tiMessagePrincipal);
         checkNotNull(tmPlatform);
 
-        TcMessageExample tcMessageExample = buildFindMessageCondition(toImIdentifier, tmPlatform, type, bizKey);
+        TcMessageExample tcMessageExample = buildFindMessageCondition(tiMessagePrincipal, tmPlatform, type, bizKey);
         return tcMessageMapper.countByExample(tcMessageExample);
     }
 
@@ -93,16 +100,16 @@ public class TcImService {
         return Lists.newArrayList();
     }
 
-    public List<ToMessage> find(@Nonnull ToImIdentifier toImIdentifier,
+    public List<ToMessage> find(@Nonnull TiMessagePrincipal tiMessagePrincipal,
                                 @Nonnull TmPlatform tmPlatform,
-                                @Nullable TmImMessageType type,
+                                @Nullable TmMessageType type,
                                 @Nullable String bizKey,
                                 int currentPage,
                                 int pageSize) {
-        checkNotNull(toImIdentifier);
+        checkNotNull(tiMessagePrincipal);
         checkNotNull(tmPlatform);
 
-        TcMessageExample tcMessageExample = buildFindMessageCondition(toImIdentifier, tmPlatform, type, bizKey);
+        TcMessageExample tcMessageExample = buildFindMessageCondition(tiMessagePrincipal, tmPlatform, type, bizKey);
         TcPaginationUtils.Pagination pagination = TcPaginationUtils.paging(currentPage, pageSize);
         tcMessageExample.setStartLine(pagination.getStartLine());
         tcMessageExample.setPageSize(pagination.getPageSize());
@@ -111,11 +118,11 @@ public class TcImService {
         return tcMessages.stream().map(this::convert2ToMessage).collect(Collectors.toList());
     }
 
-    private TcMessageExample buildFindMessageCondition(@Nonnull ToImIdentifier toImIdentifier,
+    private TcMessageExample buildFindMessageCondition(@Nonnull TiMessagePrincipal tiMessagePrincipal,
                                                        @Nonnull TmPlatform tmPlatform,
-                                                       @Nullable TmImMessageType type,
+                                                       @Nullable TmMessageType type,
                                                        @Nullable String bizKey) {
-        checkNotNull(toImIdentifier);
+        checkNotNull(tiMessagePrincipal);
         checkNotNull(tmPlatform);
 
         TcMessageExample tcMessageExample = new TcMessageExample();
@@ -123,11 +130,11 @@ public class TcImService {
         TcMessageExample.Criteria criteria1 = tcMessageExample.or();
         // c2
         TcMessageExample.Criteria criteria2 = tcMessageExample.or();
-        if (Objects.nonNull(toImIdentifier.getReceiverAccountId())) {
-            criteria1.andReceiverAccountIdEqualTo(toImIdentifier.getReceiverAccountId());
+        if (Objects.nonNull(tiMessagePrincipal.getReceiverAccountId())) {
+            criteria1.andReceiverAccountIdEqualTo(tiMessagePrincipal.getReceiverAccountId());
         }
-        if (Objects.nonNull(toImIdentifier.getReceiverRegionId())) {
-            criteria2.andReceiverRegionIdEqualTo(toImIdentifier.getReceiverRegionId());
+        if (Objects.nonNull(tiMessagePrincipal.getReceiverRegionId())) {
+            criteria2.andReceiverRegionIdEqualTo(tiMessagePrincipal.getReceiverRegionId());
         }
         criteria1.andPlatformEqualTo(tmPlatform);
         criteria2.andPlatformEqualTo(tmPlatform);

@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.dao.po;
 
-import com.ysu.zyw.tc.model.menum.TmImMessageType;
+import com.ysu.zyw.tc.model.menum.TmMessageType;
 import com.ysu.zyw.tc.model.menum.TmPlatform;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class TcMessage {
 
     private String receiverRegionId;
 
-    private TmImMessageType type;
+    private TmMessageType type;
 
     private TmPlatform platform;
 

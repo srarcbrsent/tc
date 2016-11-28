@@ -9,7 +9,7 @@ public class TcConstant {
 
     public static abstract class Sys {
 
-        public static final String TC_ADMIN_ID = "00000000000000000000000000000000";
+        public static final String STR_32x0 = "00000000000000000000000000000000";
 
         public static final String DEFAULT_CACHE = "defaultCache";
 

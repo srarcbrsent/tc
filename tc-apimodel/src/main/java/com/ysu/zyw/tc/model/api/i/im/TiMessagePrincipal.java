@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ToImIdentifier {
+public class TiMessagePrincipal {
 
     private String receiverAccountId;
 

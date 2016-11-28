@@ -38,5 +38,5 @@ public interface TcMessageMapper {
 
     List<String> selectPrimaryKeyByExample(TcMessageExample example);
 
-    int batchInsert(List<TcMessage> records);
+    int batchInsert(List<TcMessageWithBLOBs> records);
 }

@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class TcSignoutMessage extends TcBaseMessage {
+public class TcSignoutPitaya extends TcPitaya {
 
     // nonnull
     public static final String MSG_KEY_SIGNOUT_ACCOUNT_ID = "msg_key_signout_account_id";
@@ -18,7 +18,7 @@ public class TcSignoutMessage extends TcBaseMessage {
     // nonnull
     public static final String MSG_KEY_SIGNOUT_IP = "msg_key_signout_ip";
 
-    public TcSignoutMessage(String generatePerson) {
+    public TcSignoutPitaya(String generatePerson) {
         super(generatePerson);
     }
 

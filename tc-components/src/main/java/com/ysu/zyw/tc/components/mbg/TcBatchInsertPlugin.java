@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.components.mbg;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
@@ -38,7 +39,8 @@ public class TcBatchInsertPlugin extends PluginAdapter {
 
     protected void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
         Method method = new Method(BATCH_INSERT);
-        String modelType = introspectedTable.getBaseRecordType();
+        String modelType = CollectionUtils.isEmpty(introspectedTable.getBLOBColumns()) ?
+                introspectedTable.getBaseRecordType() : introspectedTable.getRecordWithBLOBsType();
         FullyQualifiedJavaType modelListType = new FullyQualifiedJavaType("java.util.List<" + modelType + ">");
         method.addParameter(new Parameter(modelListType, "records"));
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("int");

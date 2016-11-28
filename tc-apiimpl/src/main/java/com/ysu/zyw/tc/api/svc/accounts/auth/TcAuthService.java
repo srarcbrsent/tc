@@ -76,9 +76,9 @@ public class TcAuthService {
                                 TcIdWorker.upperCaseUuid(),
                                 accountId,
                                 roleId,
-                                TcConstant.Sys.TC_ADMIN_ID,
+                                TcConstant.Sys.STR_32x0,
                                 now,
-                                TcConstant.Sys.TC_ADMIN_ID,
+                                TcConstant.Sys.STR_32x0,
                                 now
                         )
                 )
@@ -108,9 +108,9 @@ public class TcAuthService {
                                 TcIdWorker.upperCaseUuid(),
                                 accountId,
                                 permissionId,
-                                TcConstant.Sys.TC_ADMIN_ID,
+                                TcConstant.Sys.STR_32x0,
                                 now,
-                                TcConstant.Sys.TC_ADMIN_ID,
+                                TcConstant.Sys.STR_32x0,
                                 now
                         )
                 )
