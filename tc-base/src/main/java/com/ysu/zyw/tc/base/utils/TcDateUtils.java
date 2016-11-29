@@ -1,6 +1,8 @@
 package com.ysu.zyw.tc.base.utils;
 
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -9,6 +11,8 @@ import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Slf4j
+@UtilityClass
 public class TcDateUtils {
 
     public static final String FULL_DATE_FORMAT_VALUE = "yyyy-MM-dd HH:mm:ss.SSS";

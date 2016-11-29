@@ -1,9 +1,13 @@
 package com.ysu.zyw.tc.base.utils;
 
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.security.MessageDigest;
 
+@Slf4j
+@UtilityClass
 public class TcEncodingUtils {
 
     private static final char[] HEX_DIGITS =

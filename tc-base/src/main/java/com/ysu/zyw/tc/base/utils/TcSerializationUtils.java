@@ -3,6 +3,7 @@ package com.ysu.zyw.tc.base.utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
@@ -11,12 +12,8 @@ import java.text.SimpleDateFormat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * SerializerUtil provide an set of operation for serialization.
- *
- * @author yaowu.zhang
- */
 @Slf4j
+@UtilityClass
 public class TcSerializationUtils {
 
     private static final ObjectMapper objectMapper;

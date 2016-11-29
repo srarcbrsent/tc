@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * absolute time to count the relation of values, so if the time in the cluster is
  * scattered, then the zset score will not match the real timeout, and the apiimpl
  * keys will be not perfect match, but the other apiimpl is use the relative time so
- * do not influenced.
+ * do not influenced. (we already add some offset into it, plz configure overtime)
  */
 @Slf4j
 public class TcCodisOpsForGroupedValue extends TcAbstractCodisOpsForGroup {

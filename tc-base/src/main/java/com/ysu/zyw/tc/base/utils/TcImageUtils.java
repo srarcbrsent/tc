@@ -1,6 +1,8 @@
 package com.ysu.zyw.tc.base.utils;
 
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,6 +17,8 @@ import java.util.Random;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Slf4j
+@UtilityClass
 public class TcImageUtils {
 
     // 图形交换格式

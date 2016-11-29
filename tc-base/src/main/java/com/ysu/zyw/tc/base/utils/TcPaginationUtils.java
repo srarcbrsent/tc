@@ -3,16 +3,13 @@ package com.ysu.zyw.tc.base.utils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-/**
- * TcPaginationUtils. start page start by 1.
- *
- * @author yaowu.zhang
- */
 @Slf4j
+@UtilityClass
 public class TcPaginationUtils {
 
     /**
