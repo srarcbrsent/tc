@@ -1,22 +1,32 @@
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="icon"
+      type="image/x-icon"
+      href="${.vars.staticBase}/images/favicon.ico"/>
+
 <script src="${.vars.staticBase}/libs/jquery-3.1.0.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/libs/layui/layui.js"
+<script src="${.vars.staticBase}/libs/vue.min.js"
         type="application/javascript"></script>
+<script src="${.vars.staticBase}/libs/axios.min.js"
+        type="application/javascript"></script>
+<script src="${.vars.staticBase}/libs/assets/js/amazeui.min.js"
+        type="application/javascript"></script>
+<script src="${.vars.staticBase}/libs/layer/layer.min.js"
+        type="application/javascript"></script>
+
 <link href="${.vars.staticBase}/libs/normalize.min.css"
       type="text/css"
       rel="stylesheet"/>
-<link href="${.vars.staticBase}/libs/layui/css/layui.css"
+<link href="${.vars.staticBase}/libs/assets/css/amazeui.flat.min.css"
       type="text/css"
       rel="stylesheet"/>
+
 <script type="text/javascript">
     // tc base
     var __base = '${base}';
     var __staticBase = '${staticBase}';
-
-    // import layer
-    layui.use(['layer'], function () {
-        var _layer = layui.layer;
-    });
 
     // ajax helper func
     var __doWithTcR = function (tcR, okCallback, exCallback) {

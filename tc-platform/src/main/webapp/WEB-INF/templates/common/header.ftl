@@ -1,42 +1,34 @@
-<div id="header_div">
-    <div class="layui-main">
-        <fieldset class="layui-elem-field layui-field-title">
-            <legend>
-                这只是一个测试用的工程而已，基友
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;
-            <@shiro.guest>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </@shiro.guest>
-            <@shiro.authenticated>
-                <a href="${base}/auth/signout.html"
-                   class="layui-btn layui-btn-normal layui-btn-small layui-btn-radius layui-inline"
-                   style="display: inline-block">
-                    点击我登出
-                </a>
-            </@shiro.authenticated>
-            </legend>
-        </fieldset>
+<header id="header" class="am-topbar">
+    <div class="am-collapse am-topbar-collapse am-container" id="doc-topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li class="am-active"><a href="#">首页</a></li>
+            <li><a href="#">项目</a></li>
+            <li><a href="#">项目</a></li>
+            <li><a href="#">项目</a></li>
+            <li><a href="#">项目</a></li>
+            <li><a href="#">项目</a></li>
+        </ul>
+
+
+
+        <div class="am-topbar-right">
+            <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
+                <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>其他 <span class="am-icon-caret-down"></span></button>
+                <ul class="am-dropdown-content">
+                    <li><a href="#">注册</a></li>
+                    <li><a href="#">随便看看</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="am-topbar-right">
+            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</button>
+        </div>
+
+        <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
+            <div class="am-form-group">
+                <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
+            </div>
+        </form>
     </div>
-</div>
-<style type="text/css">
-    #header_div {
-        width: 100%;
-        min-width: 1140px;
-        background-color: #393D49;
-        color: #c2c2c2;
-        padding: 10px 0 10px 0;
-    }
-
-    #header_div .layui-field-title {
-        margin: 5px 0 5px 0;
-    }
-</style>
-
-
+</header>

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>首页</title>
 <#include "/WEB-INF/templates/common/pre-lib.ftl"/>
     <link href="${.vars.staticBase}/styles/index.css"
@@ -16,81 +13,68 @@
 <#include "/WEB-INF/templates/common/header.ftl"/>
     <!-- - header -->
 
-    <!-- + container -->
-    <div id="main-container"
-         class="layui-main">
-        <fieldset class="layui-elem-field">
-        <#if signupErrorMsg??>
-            <legend>${signupErrorMsg!"系统异常，请稍后再试！"}</legend>
-        <#else>
-            <legend>登陆吧 好基友 登陆后你才知道什么里面有什么</legend>
-        </#if>
-            <div class="layui-field-box">
-                <form id="signup_form"
-                      class="layui-form layui-form-pane"
-                      action="${base}/auth/signup.html"
-                      method="post">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">用户名</label>
-                        <div class="layui-input-block">
+    <!-- + body -->
+    <div id="body"
+         class="am-container">
+        <!-- + signup form -->
+        <div class="am-u-lg-12">
+            <form class="am-form">
+                <fieldset>
+                    <legend>表单标题</legend>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-email-1">邮件</label>
+                        <div class="am-input-group am-input-group-primary">
+                            <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
                             <input type="text"
-                                   name="username"
-                                   required
-                                   lay-verify="sp_username"
-                                   placeholder="请输入用户名"
-                                   autocomplete="off"
-                                   class="layui-input">
+                                   class="am-form-field"
+                                   placeholder="你的大名">
                         </div>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">密码框</label>
-                        <div class="layui-input-block">
-                            <input type="password"
-                                   name="password"
-                                   required
-                                   lay-verify="sp_password"
-                                   placeholder="请输入密码"
-                                   autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">记住我</label>
-                        <div class="layui-input-block">
-                            <input type="checkbox"
-                                   name="rememberMe"
-                                   lay-skin="switch">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">验证码</label>
-                        <div class="layui-input-inline">
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-email-1">邮件</label>
+                        <div class="am-input-group am-input-group-primary">
+                            <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
                             <input type="text"
-                                   name="verificationCode"
-                                   required
-                                   lay-verify="sp_verificationCode"
-                                   placeholder="请输入验证码"
-                                   autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                        <div class="layui-form-mid layui-word-aux">${verificationCode}</div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <button class="layui-btn"
-                                    lay-submit
-                                    lay-filter="signup">立即提交
-                            </button>
-                            <button type="reset"
-                                    class="layui-btn layui-btn-primary">重置
-                            </button>
+                                   class="am-form-field"
+                                   placeholder="你的大名">
                         </div>
                     </div>
-                </form>
-            </div>
-        </fieldset>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-email-1">邮件</label>
+                        <div class="am-input-group am-input-group-primary">
+                            <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                            <input type="text"
+                                   class="am-form-field"
+                                   placeholder="你的大名">
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="doc-ipt-email-1">邮件</label>
+                        <div class="am-input-group am-input-group-primary">
+                            <select multiple data-am-selected>
+                                <option value="a">Apple</option>
+                                <option value="b">Banana</option>
+                                <option value="o">Orange</option>
+                                <option value="m">Mango</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p>
+                        <button type="submit"
+                                class="am-btn am-btn-default am-disabled">提交
+                        </button>
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+        <!-- - signup form -->
     </div>
-    <!-- - container -->
+    <!-- - body -->
 
     <!-- + footer -->
 <#include "/WEB-INF/templates/common/footer.ftl"/>
@@ -98,7 +82,7 @@
 </div>
 
 <#include "/WEB-INF/templates/common/post-lib.ftl"/>
-<script src="${.vars.staticBase}/libs/jqplugin/jquery.md5.min.js"
+<script src="${.vars.staticBase}/libs/jquery.md5.min.js"
         type="application/javascript"></script>
 <script src="${.vars.staticBase}/scripts/index.js"
         type="application/javascript"></script>
