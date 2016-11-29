@@ -19,6 +19,10 @@ public abstract class TcAbstractCodisOpsForGroup implements TcOpsForGroupedValue
 
     @Getter
     @Setter
+    protected long overtime = 5000;
+
+    @Getter
+    @Setter
     protected RedisTemplate<String, Object> redisTemplate;
 
     protected void delete(@Nonnull String group, long min, long max) {
@@ -40,7 +44,7 @@ public abstract class TcAbstractCodisOpsForGroup implements TcOpsForGroupedValue
     }
 
     protected long buildGroupedZSetFieldScore(long timeout) {
-        return new Date(new Date().getTime() + timeout).getTime();
+        return new Date(new Date().getTime() + timeout + overtime).getTime();
     }
 
 }

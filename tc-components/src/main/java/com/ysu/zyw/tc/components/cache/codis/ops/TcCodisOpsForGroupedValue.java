@@ -55,12 +55,6 @@ public class TcCodisOpsForGroupedValue extends TcAbstractCodisOpsForGroup {
         checkNotNull(clazz, "null clazz is not allowed");
         String groupedKey = buildGroupedKey(group, key);
         T sValue = (T) redisTemplate.opsForValue().get(groupedKey);
-        if (Objects.isNull(sValue)) {
-            redisTemplate.opsForZSet().remove(group, groupedKey);
-            if (redisTemplate.opsForZSet().size(group) == 0) {
-                redisTemplate.delete(group);
-            }
-        }
         if (log.isDebugEnabled()) {
             log.debug("cache get key [{}], value [{}], clazz [{}]", groupedKey, sValue, clazz);
         }
@@ -188,9 +182,6 @@ public class TcCodisOpsForGroupedValue extends TcAbstractCodisOpsForGroup {
         String groupedKey = buildGroupedKey(group, key);
         redisTemplate.delete(groupedKey);
         redisTemplate.opsForZSet().remove(group, groupedKey);
-        if (redisTemplate.opsForZSet().size(group) == 0) {
-            redisTemplate.delete(group);
-        }
         if (log.isDebugEnabled()) {
             log.debug("cache delete key [{}]", groupedKey);
         }

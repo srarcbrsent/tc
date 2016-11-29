@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/cache
-       http://www.springframework.org/schema/cache/spring-cache.xsd">
+       http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <cache:annotation-driven cache-manager="cacheManager"
                              proxy-target-class="true"
@@ -63,23 +63,23 @@
     </bean>
 
     <!-- string key (string serialization), object value (jdk serialization) -->
+    <bean id="soCodisOpsForGroupedValue" class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+        <property name="redisTemplate" ref="soCodisTemplate"/>
+    </bean>
+
     <bean id="soCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
         <property name="redisTemplate" ref="soCodisTemplate"/>
-        <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
-                <property name="redisTemplate" ref="soCodisTemplate"/>
-            </bean>
-        </property>
+        <property name="tcOpsForGroupedValue" ref="soCodisOpsForGroupedValue"/>
     </bean>
 
     <!-- string key (string serialization), string value (string serialization) -->
+    <bean id="ssCodisOpsForGroupedValue" class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+        <property name="redisTemplate" ref="ssCodisTemplate"/>
+    </bean>
+
     <bean id="ssCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
         <property name="redisTemplate" ref="ssCodisTemplate"/>
-        <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
-                <property name="redisTemplate" ref="ssCodisTemplate"/>
-            </bean>
-        </property>
+        <property name="tcOpsForGroupedValue" ref="ssCodisOpsForGroupedValue"/>
     </bean>
 
     <!-- codis cache : object key (jdk serialization), object value (jdk serialization) -->
@@ -88,5 +88,25 @@
         <property name="codisTemplate" ref="ooCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
     </bean>
+
+    <!-- codis scanner -->
+    <bean id="tcGroupList" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>GROUP</list>
+        </property>
+    </bean>
+
+    <bean id="soCodisScanner" class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisScanner">
+        <property name="groupList" ref="tcGroupList"/>
+    </bean>
+
+    <bean id="ssCodisScanner" class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisScanner">
+        <property name="groupList" ref="tcGroupList"/>
+    </bean>
+
+    <task:scheduled-tasks>
+        <task:scheduled ref="soCodisScanner" method="scan" cron="0 * * * * ?"/>
+        <task:scheduled ref="ssCodisScanner" method="scan" cron="0 * * * * ?"/>
+    </task:scheduled-tasks>
 
 </beans>
