@@ -11,7 +11,8 @@
 
     <dubbo:registry address="${properties.rpc.dubbox.registry.host}"
                     port="${properties.rpc.dubbox.registry.port}"
-                    client="curator"/>
+                    client="curator"
+                    check="${properties.rpc.dubbox.registry.check}"/>
 
     <dubbo:consumer version="${properties.rpc.dubbox.consumer.version}"
                     timeout="${properties.rpc.dubbox.consumer.timeout}"
