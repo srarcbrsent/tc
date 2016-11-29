@@ -42,10 +42,10 @@ public class TcDateUtils {
         return DateFormatUtils.format(date, format);
     }
 
-    public static long duration(Date d1, Date d2) {
-        checkNotNull(d1);
-        checkNotNull(d2);
-        return d2.getTime() - d1.getTime();
+    public static long duration(Date before, Date after) {
+        checkNotNull(before);
+        checkNotNull(after);
+        return after.getTime() - before.getTime();
     }
 
 }
