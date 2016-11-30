@@ -26,11 +26,11 @@ public abstract class TcAbstractCodisOpsForGroup implements TcOpsForGroupedValue
     protected RedisTemplate<String, Object> redisTemplate;
 
     protected void delete(@Nonnull String group, long min, long max) {
-        Set<Object> expiredKeys = redisTemplate.opsForZSet().rangeByScore(group, min, max);
-        expiredKeys.parallelStream().forEach(sValue -> {
-            String expiredKey = (String) sValue;
-            redisTemplate.delete(expiredKey);
-            redisTemplate.opsForZSet().remove(group, expiredKey);
+        Set<Object> rangedKeys = redisTemplate.opsForZSet().rangeByScore(group, min, max);
+        rangedKeys.parallelStream().forEach(sValue -> {
+            String rangedKey = (String) sValue;
+            redisTemplate.delete(rangedKey);
+            redisTemplate.opsForZSet().remove(group, rangedKey);
         });
         if (redisTemplate.opsForZSet().size(group) == 0) {
             redisTemplate.delete(group);
@@ -44,6 +44,9 @@ public abstract class TcAbstractCodisOpsForGroup implements TcOpsForGroupedValue
     }
 
     protected long buildGroupedZSetFieldScore(long timeout) {
+        // this place, all grouped zset score will add an overtime, so that
+        // can be sure the zset keys will always more than the real exists
+        // grouped keys, but this overtime will influence the keys api.
         return new Date(new Date().getTime() + timeout + overtime).getTime();
     }
 

@@ -192,8 +192,13 @@ public class TcCodisOpsForGroupedValue extends TcAbstractCodisOpsForGroup {
         checkNotNull(group, "empty group is not allowed");
         long now = new Date().getTime();
         delete(group, 0, now);
-        Set<Object> sValidKeys = redisTemplate.opsForZSet().rangeByScore(group, now, Long.MAX_VALUE);
-        return sValidKeys.parallelStream().map(sValidKey -> (String) sValidKey)
+        Set<Object> sValidKeys = redisTemplate.opsForZSet()
+                // this place, because all grouped score are add overtime, so the real
+                // timeout time is now + overtime, and this place is highly depends on
+                // cluster time
+                .rangeByScore(group, now + overtime, Long.MAX_VALUE);
+        return sValidKeys.parallelStream()
+                .map(sValidKey -> (String) sValidKey)
                 .map(validKey -> validKey.split(GROUP_NAME_KEY_SPLIT)[2]).collect(Collectors.toSet());
     }
 

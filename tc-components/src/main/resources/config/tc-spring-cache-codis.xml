@@ -92,7 +92,9 @@
     <!-- codis scanner -->
     <bean id="tcGroupList" class="org.springframework.beans.factory.config.ListFactoryBean">
         <property name="sourceList">
-            <list>GROUP</list>
+            <list>
+                <value>GROUP</value>
+            </list>
         </property>
     </bean>
 
