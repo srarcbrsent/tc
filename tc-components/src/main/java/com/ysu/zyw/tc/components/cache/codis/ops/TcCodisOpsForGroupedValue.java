@@ -63,4 +63,5 @@ public class TcCodisOpsForGroupedValue extends TcAbstractOpsForGroupedValue impl
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
+
 }

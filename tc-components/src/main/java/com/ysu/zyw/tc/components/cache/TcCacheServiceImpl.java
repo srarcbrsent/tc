@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -28,7 +29,7 @@ public class TcCacheServiceImpl implements TcCacheService {
 
     @Getter
     @Setter
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, Serializable> redisTemplate;
 
     @Getter
     @Setter
@@ -37,6 +38,11 @@ public class TcCacheServiceImpl implements TcCacheService {
     @Getter
     @Setter
     private static long tryLockTimeout = 3000;
+
+    @Override
+    public <R> R doInCache(@Nonnull Function<RedisTemplate, R> task) {
+        return task.apply(redisTemplate);
+    }
 
     @Override
     public void set(@Nonnull String key,
@@ -52,8 +58,8 @@ public class TcCacheServiceImpl implements TcCacheService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T get(@Nonnull String key,
-                     @Nonnull Class<T> clazz) {
+    public <T extends Serializable> T get(@Nonnull String key,
+                                          @Nonnull Class<T> clazz) {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(clazz, "null clazz is not allowed");
         Object sValue = redisTemplate.opsForValue().get(key);
@@ -74,10 +80,10 @@ public class TcCacheServiceImpl implements TcCacheService {
     // concurrently.
     @Override
     @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
-    public <T> T get(@Nonnull String key,
-                     @Nonnull Callable<T> valueLoader,
-                     long timeout,
-                     @Nullable final ReentrantLock lock) {
+    public <T extends Serializable> T get(@Nonnull String key,
+                                          @Nonnull Callable<T> valueLoader,
+                                          long timeout,
+                                          @Nullable final ReentrantLock lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -114,9 +120,9 @@ public class TcCacheServiceImpl implements TcCacheService {
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T loadValue(@Nonnull String key,
-                            @Nonnull Callable<T> valueLoader,
-                            long timeout) {
+    private <T extends Serializable> T loadValue(@Nonnull String key,
+                                                 @Nonnull Callable<T> valueLoader,
+                                                 long timeout) {
         // lock and get
         T sValue = null;
         try {
@@ -135,9 +141,9 @@ public class TcCacheServiceImpl implements TcCacheService {
     }
 
     @SuppressWarnings("Duplicates")
-    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String key,
-                                                   @Nonnull Callable<T> valueLoader,
-                                                   long timeout) {
+    private <T extends Serializable> T loadValueByValueLoaderAndCacheIt(@Nonnull String key,
+                                                                        @Nonnull Callable<T> valueLoader,
+                                                                        long timeout) {
         T loadedValue;
         try {
             loadedValue = valueLoader.call();

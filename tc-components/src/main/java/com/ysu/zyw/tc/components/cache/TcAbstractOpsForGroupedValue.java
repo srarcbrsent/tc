@@ -32,7 +32,7 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
 
     @Getter
     @Setter
-    protected RedisTemplate<String, Object> redisTemplate;
+    protected RedisTemplate<String, Serializable> redisTemplate;
 
     protected String buildGroupedKey(@Nonnull String group, @Nonnull String key) {
         checkNotNull(group, "empty group is not allowed");
@@ -57,9 +57,9 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(@Nonnull String group,
-                     @Nonnull String key,
-                     @Nonnull Class<T> clazz) {
+    public <T extends Serializable> T get(@Nonnull String group,
+                                          @Nonnull String key,
+                                          @Nonnull Class<T> clazz) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(clazz, "null clazz is not allowed");
@@ -82,11 +82,11 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
     // concurrently.
     @SuppressWarnings({"Duplicates", "unchecked"})
     @Override
-    public <T> T get(@Nonnull String group,
-                     @Nonnull String key,
-                     @Nonnull Callable<T> valueLoader,
-                     long timeout,
-                     @Nullable final ReentrantLock lock) {
+    public <T extends Serializable> T get(@Nonnull String group,
+                                          @Nonnull String key,
+                                          @Nonnull Callable<T> valueLoader,
+                                          long timeout,
+                                          @Nullable final ReentrantLock lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -124,11 +124,11 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T loadValue(@Nonnull String group,
-                            @Nonnull String key,
-                            @Nonnull Callable<T> valueLoader,
-                            long timeout,
-                            String groupedKey) {
+    private <T extends Serializable> T loadValue(@Nonnull String group,
+                                                 @Nonnull String key,
+                                                 @Nonnull Callable<T> valueLoader,
+                                                 long timeout,
+                                                 String groupedKey) {
         // lock and get
         T sValue = null;
         try {
@@ -147,11 +147,11 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
     }
 
     @SuppressWarnings({"Duplicates", "UnusedParameters"})
-    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String group,
-                                                   @Nonnull String key,
-                                                   @Nonnull String groupedKey,
-                                                   @Nonnull Callable<T> valueLoader,
-                                                   long timeout) {
+    private <T extends Serializable> T loadValueByValueLoaderAndCacheIt(@Nonnull String group,
+                                                                        @Nonnull String key,
+                                                                        @Nonnull String groupedKey,
+                                                                        @Nonnull Callable<T> valueLoader,
+                                                                        long timeout) {
         T loadedValue;
         try {
             loadedValue = valueLoader.call();

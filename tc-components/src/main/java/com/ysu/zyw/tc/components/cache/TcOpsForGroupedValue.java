@@ -14,15 +14,15 @@ public interface TcOpsForGroupedValue {
              @Nonnull Serializable value,
              long timeout);
 
-    <T> T get(@Nonnull String group,
-              @Nonnull String key,
-              @Nonnull Class<T> clazz);
+    <T extends Serializable> T get(@Nonnull String group,
+                                   @Nonnull String key,
+                                   @Nonnull Class<T> clazz);
 
-    <T> T get(@Nonnull String group,
-              @Nonnull String key,
-              @Nonnull Callable<T> valueLoader,
-              long timeout,
-              @Nullable final ReentrantLock lock);
+    <T extends Serializable> T get(@Nonnull String group,
+                                   @Nonnull String key,
+                                   @Nonnull Callable<T> valueLoader,
+                                   long timeout,
+                                   @Nullable final ReentrantLock lock);
 
     boolean exists(@Nonnull String group,
                    @Nonnull String key);
