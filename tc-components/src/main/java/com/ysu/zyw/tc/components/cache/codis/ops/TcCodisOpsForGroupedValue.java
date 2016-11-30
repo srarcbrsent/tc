@@ -1,23 +1,16 @@
 package com.ysu.zyw.tc.components.cache.codis.ops;
 
 import com.ysu.zyw.tc.components.cache.TcAbstractOpsForGroupedValue;
-import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -35,19 +28,35 @@ public class TcCodisOpsForGroupedValue extends TcAbstractOpsForGroupedValue impl
     public Set<String> keys(@Nonnull String group) {
         checkNotNull(group, "empty group is not allowed");
         // try merge all the master codis-server keys.
+        RedisSerializer<String> keySerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
         TcCodisServerDelegate tcCodisServerDelegate = applicationContext.getBean(TcCodisServerDelegate.class);
         Set<String> keys = new HashSet<>();
-        tcCodisServerDelegate.doInEveryCodisServer(template -> {
-            Set set = template.keys(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + "*");
-            keys.addAll(set);
+        tcCodisServerDelegate.doInEveryCodisServer(connectionFactory -> {
+            byte[] sKey = keySerializer.serialize(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + "*");
+            RedisConnection connection = connectionFactory.getConnection();
+            Set<byte[]> sValue = connection.keys(sKey);
+            int beforeSize = keys.size();
+            keys.addAll(sValue.stream().map(keySerializer::deserialize).collect(Collectors.toSet()));
+            log.info("from codis server [{}:{}] all load [{}] keys, current keys [{}]",
+                    keys.size() - beforeSize, keys.size());
         });
-        return null;
+        return keys;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void delete(@Nonnull String group) {
         checkNotNull(group, "empty group is not allowed");
-        // TODO
+        // try delete all the master codis-server keys.
+        RedisSerializer<String> keySerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
+        TcCodisServerDelegate tcCodisServerDelegate = applicationContext.getBean(TcCodisServerDelegate.class);
+        tcCodisServerDelegate.doInEveryCodisServer(connectionFactory -> {
+            byte[] sKey = keySerializer.serialize(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + "*");
+            RedisConnection connection = connectionFactory.getConnection();
+            Set<byte[]> sValue = connection.keys(sKey);
+            Long delC = connection.del(sValue.toArray(new byte[sValue.size()][]));
+            log.info("from codis server [{}:{}] all del [{}] keys.", delC);
+        });
     }
 
     @Override
