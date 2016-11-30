@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -77,7 +77,7 @@ public class TcCacheServiceImpl implements TcCacheService {
     public <T> T get(@Nonnull String key,
                      @Nonnull Callable<T> valueLoader,
                      long timeout,
-                     @Nullable final Lock lock) {
+                     @Nullable final ReentrantLock lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
