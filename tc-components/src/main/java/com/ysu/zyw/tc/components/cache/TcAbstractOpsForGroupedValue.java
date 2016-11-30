@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -24,6 +25,10 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
     protected static final String GROUP_FIELD_PREFIX = "group:";
 
     protected static final String GROUP_NAME_KEY_SPLIT = ":";
+
+    @Getter
+    @Setter
+    private static long tryLockTimeout = 3000;
 
     @Getter
     @Setter
@@ -81,7 +86,7 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
                      @Nonnull String key,
                      @Nonnull Callable<T> valueLoader,
                      long timeout,
-                     @Nullable final Object lock) {
+                     @Nullable final ReentrantLock lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -106,8 +111,13 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
             if (Objects.isNull(lock)) {
                 return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
             } else {
-                synchronized (groupedKey.intern()) {
+                try {
+                    lock.tryLock(tryLockTimeout, TimeUnit.MILLISECONDS);
                     return loadValue(group, key, valueLoader, timeout, groupedKey);
+                } catch (InterruptedException e) {
+                    throw new TcException("load cache blocked, throw exception");
+                } finally {
+                    lock.unlock();
                 }
             }
         }
@@ -117,7 +127,8 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
     private <T> T loadValue(@Nonnull String group,
                             @Nonnull String key,
                             @Nonnull Callable<T> valueLoader,
-                            long timeout, String groupedKey) {
+                            long timeout,
+                            String groupedKey) {
         // lock and get
         T sValue = null;
         try {

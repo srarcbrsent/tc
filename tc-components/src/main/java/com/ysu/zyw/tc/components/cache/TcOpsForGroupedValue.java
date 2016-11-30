@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.locks.ReentrantLock;
 
 public interface TcOpsForGroupedValue {
 
@@ -21,7 +22,7 @@ public interface TcOpsForGroupedValue {
               @Nonnull String key,
               @Nonnull Callable<T> valueLoader,
               long timeout,
-              @Nullable final Object lock);
+              @Nullable final ReentrantLock lock);
 
     boolean exists(@Nonnull String group,
                    @Nonnull String key);

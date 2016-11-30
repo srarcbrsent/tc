@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.concurrent.Callable;
+import java.util.concurrent.locks.Lock;
 
 public interface TcCacheService {
 
@@ -17,7 +18,7 @@ public interface TcCacheService {
     <T> T get(@Nonnull String key,
               @Nonnull Callable<T> valueLoader,
               long timeout,
-              @Nullable final Object lock);
+              @Nullable final Lock lock);
 
     boolean exists(@Nonnull String key);
 

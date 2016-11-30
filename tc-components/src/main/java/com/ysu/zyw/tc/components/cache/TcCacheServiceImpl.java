@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -32,6 +33,10 @@ public class TcCacheServiceImpl implements TcCacheService {
     @Getter
     @Setter
     private TcOpsForGroupedValue tcOpsForGroupedValue;
+
+    @Getter
+    @Setter
+    private static long tryLockTimeout = 3000;
 
     @Override
     public void set(@Nonnull String key,
@@ -72,7 +77,7 @@ public class TcCacheServiceImpl implements TcCacheService {
     public <T> T get(@Nonnull String key,
                      @Nonnull Callable<T> valueLoader,
                      long timeout,
-                     @Nullable final Object lock) {
+                     @Nullable final Lock lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -96,8 +101,13 @@ public class TcCacheServiceImpl implements TcCacheService {
             if (Objects.isNull(lock)) {
                 return loadValueByValueLoaderAndCacheIt(key, valueLoader, timeout);
             } else {
-                synchronized (lock) {
+                try {
+                    lock.tryLock(tryLockTimeout, TimeUnit.MILLISECONDS);
                     return loadValue(key, valueLoader, timeout);
+                } catch (InterruptedException e) {
+                    throw new TcException("load cache blocked, throw exception");
+                } finally {
+                    lock.unlock();
                 }
             }
         }
