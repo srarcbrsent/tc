@@ -35,10 +35,10 @@ public class TcCodisOpsForGroupedValue extends TcAbstractOpsForGroupedValue impl
             byte[] sKey = keySerializer.serialize(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + "*");
             RedisConnection connection = connectionFactory.getConnection();
             Set<byte[]> sValue = connection.keys(sKey);
-            int beforeSize = keys.size();
+            int bSize = keys.size();
             keys.addAll(sValue.stream().map(keySerializer::deserialize).collect(Collectors.toSet()));
             log.info("from codis server [{}:{}] all load [{}] keys, current keys [{}]",
-                    keys.size() - beforeSize, keys.size());
+                    connectionFactory.getHostName(), connectionFactory.getPort(), keys.size() - bSize, keys.size());
         });
         return keys;
     }
@@ -55,7 +55,8 @@ public class TcCodisOpsForGroupedValue extends TcAbstractOpsForGroupedValue impl
             RedisConnection connection = connectionFactory.getConnection();
             Set<byte[]> sValue = connection.keys(sKey);
             Long delC = connection.del(sValue.toArray(new byte[sValue.size()][]));
-            log.info("from codis server [{}:{}] all del [{}] keys.", delC);
+            log.info("from codis server [{}:{}] all del [{}] keys",
+                    connectionFactory.getHostName(), connectionFactory.getPort(), delC);
         });
     }
 
