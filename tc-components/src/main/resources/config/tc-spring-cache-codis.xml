@@ -77,11 +77,12 @@
                                     <property name="hostName" value=""/>
                                     <property name="port" value="6379"/>
                                     <property name="password" value=""/>
-                                    <!-- use pool config (2 connection, idle 1800000 release, hold 0 connection) -->
+                                    <!-- use pool config (2 connection, idle 600000 release, hold 0 connection) -->
                                     <property name="poolConfig">
                                         <bean class="redis.clients.jedis.JedisPoolConfig">
                                             <property name="maxTotal" value="2"/>
                                             <property name="maxIdle" value="0"/>
+                                            <property name="minEvictableIdleTimeMillis" value="600000"/>
                                         </bean>
                                     </property>
                                 </bean>
