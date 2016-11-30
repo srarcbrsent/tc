@@ -33,14 +33,17 @@
     </bean>
 
     <!-- serializer -->
-    <bean id="stringKeySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <bean id="stringKeySerializer"
+          class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
 
-    <bean id="objectKeySerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+    <bean id="objectKeySerializer"
+          class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
     <bean id="stringValueSerializer"
           class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
 
-    <bean id="objectValueSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+    <bean id="objectValueSerializer"
+          class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
     <!-- template -->
     <bean id="ssRedisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
@@ -65,7 +68,7 @@
     <bean id="soRedisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
         <property name="redisTemplate" ref="soRedisTemplate"/>
         <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.redis.ops.TcRedisOpsForGroupedValue">
                 <property name="redisTemplate" ref="soRedisTemplate"/>
             </bean>
         </property>

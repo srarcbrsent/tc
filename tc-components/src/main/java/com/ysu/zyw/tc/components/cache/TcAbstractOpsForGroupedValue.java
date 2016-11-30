@@ -12,50 +12,58 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * TcCacheServiceImpl provide codis upper-level operations
- *
- * @author yaowu.zhang
- */
 @Slf4j
-public class TcCacheServiceImpl implements TcCacheService {
+public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedValue {
+
+    protected static final String GROUP_FIELD_PREFIX = "group:";
+
+    protected static final String GROUP_NAME_KEY_SPLIT = ":";
 
     @Getter
     @Setter
-    private RedisTemplate<String, Object> redisTemplate;
+    protected RedisTemplate<String, Object> redisTemplate;
 
-    @Getter
-    @Setter
-    private TcOpsForGroupedValue tcOpsForGroupedValue;
-
-    @Override
-    public void set(@Nonnull String key,
-                    @Nonnull Serializable value,
-                    long timeout) {
+    protected String buildGroupedKey(@Nonnull String group, @Nonnull String key) {
+        checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
-        checkNotNull(value, "null value is not allowed");
-        redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.MILLISECONDS);
-        if (log.isDebugEnabled()) {
-            log.debug("cache set key [{}], value [{}], timeout [{}]", key, value, timeout);
-        }
+        return GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + key;
     }
 
     @Override
+    public void set(@Nonnull String group,
+                    @Nonnull String key,
+                    @Nonnull Serializable value,
+                    long timeout) {
+        checkNotNull(group, "empty group is not allowed");
+        checkNotNull(key, "empty key is not allowed");
+        checkNotNull(value, "null value is not allowed");
+        String groupedKey = buildGroupedKey(group, key);
+        redisTemplate.opsForValue().set(groupedKey, value, timeout, TimeUnit.MILLISECONDS);
+        if (log.isDebugEnabled()) {
+            log.debug("cache set key [{}], value [{}], timeout [{}]", groupedKey, value, timeout);
+        }
+    }
+
     @SuppressWarnings("unchecked")
-    public <T> T get(@Nonnull String key,
+    @Override
+    public <T> T get(@Nonnull String group,
+                     @Nonnull String key,
                      @Nonnull Class<T> clazz) {
+        checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(clazz, "null clazz is not allowed");
-        Object sValue = redisTemplate.opsForValue().get(key);
+        String groupedKey = buildGroupedKey(group, key);
+        T sValue = (T) redisTemplate.opsForValue().get(groupedKey);
         if (log.isDebugEnabled()) {
-            log.debug("cache get key [{}], value [{}], clazz [{}]", key, sValue, clazz);
+            log.debug("cache get key [{}], value [{}], clazz [{}]", groupedKey, sValue, clazz);
         }
-        return (T) sValue;
+        return sValue;
     }
 
     // this method requires a parameter named 'lock', it means if it is not null, we will lock it and
@@ -67,25 +75,27 @@ public class TcCacheServiceImpl implements TcCacheService {
     // and on another hand, if there is no more thread shared one cache key or there is no more thread
     // call this get method concurrently, you should not give a lock and all request will go through
     // concurrently.
+    @SuppressWarnings({"Duplicates", "unchecked"})
     @Override
-    @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
-    public <T> T get(@Nonnull String key,
+    public <T> T get(@Nonnull String group,
+                     @Nonnull String key,
                      @Nonnull Callable<T> valueLoader,
                      long timeout,
                      @Nullable final Object lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
-        // also the cache service itself is offline. so it will catch the other exception, and let the
-        // value loader success.
+        // also the cache service itself is offline. so it will catch the other exception.
+        checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "null key is not allowed");
         checkNotNull(valueLoader, "null value loader is not allowed");
+        String groupedKey = buildGroupedKey(group, key);
         T value;
         try {
-            value = (T) redisTemplate.opsForValue().get(key);
+            value = (T) redisTemplate.opsForValue().get(groupedKey);
         } catch (Exception e) {
             log.error("", e);
-            return loadValueByValueLoaderAndCacheIt(key, valueLoader, timeout);
+            return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
         }
         if (Objects.nonNull(value)) {
             if (log.isDebugEnabled()) {
@@ -94,23 +104,24 @@ public class TcCacheServiceImpl implements TcCacheService {
             return value;
         } else {
             if (Objects.isNull(lock)) {
-                return loadValueByValueLoaderAndCacheIt(key, valueLoader, timeout);
+                return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
             } else {
-                synchronized (lock) {
-                    return loadValue(key, valueLoader, timeout);
+                synchronized (groupedKey.intern()) {
+                    return loadValue(group, key, valueLoader, timeout, groupedKey);
                 }
             }
         }
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T loadValue(@Nonnull String key,
+    private <T> T loadValue(@Nonnull String group,
+                            @Nonnull String key,
                             @Nonnull Callable<T> valueLoader,
-                            long timeout) {
+                            long timeout, String groupedKey) {
         // lock and get
         T sValue = null;
         try {
-            sValue = (T) redisTemplate.opsForValue().get(key);
+            sValue = (T) redisTemplate.opsForValue().get(groupedKey);
         } catch (Exception e) {
             log.error("", e);
         }
@@ -121,64 +132,71 @@ public class TcCacheServiceImpl implements TcCacheService {
             return sValue;
         }
         // not found, try load value.
-        return loadValueByValueLoaderAndCacheIt(key, valueLoader, timeout);
+        return loadValueByValueLoaderAndCacheIt(group, key, groupedKey, valueLoader, timeout);
     }
 
-    @SuppressWarnings("Duplicates")
-    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String key,
+    @SuppressWarnings({"Duplicates", "UnusedParameters"})
+    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String group,
+                                                   @Nonnull String key,
+                                                   @Nonnull String groupedKey,
                                                    @Nonnull Callable<T> valueLoader,
                                                    long timeout) {
         T loadedValue;
         try {
             loadedValue = valueLoader.call();
         } catch (Exception e) {
-            throw new TcException(e, key, valueLoader);
+            throw new TcException(e, groupedKey, valueLoader);
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
         try {
-            redisTemplate.opsForValue().set(key, loadedValue, timeout, TimeUnit.MILLISECONDS);
+            redisTemplate.opsForValue().set(groupedKey, loadedValue, timeout, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             // if cache failed, let the load value succ.
             log.error("", e);
         }
         if (log.isDebugEnabled()) {
-            log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, key, timeout);
+            log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, groupedKey, timeout);
         }
         return loadedValue;
     }
 
-    @Override
     @SuppressWarnings("unchecked")
-    public boolean exists(@Nonnull String key) {
+    @Override
+    public boolean exists(@Nonnull String group,
+                          @Nonnull String key) {
+        checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         return redisTemplate.execute((RedisCallback<Boolean>) connection -> connection
-                .exists(((RedisSerializer<String>) redisTemplate.getKeySerializer()).serialize(key)));
+                .exists(((RedisSerializer<String>) redisTemplate.getKeySerializer())
+                        .serialize(buildGroupedKey(group, key))));
     }
 
     @Override
-    public void expire(@Nonnull String key, long timeout) {
+    public void expire(@Nonnull String group,
+                       @Nonnull String key,
+                       long timeout) {
+        checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
-        redisTemplate.expire(key, timeout, TimeUnit.MILLISECONDS);
+        String groupedKey = buildGroupedKey(group, key);
+        redisTemplate.expire(groupedKey, timeout, TimeUnit.MILLISECONDS);
     }
 
     @Override
-    public void delete(@Nonnull String key) {
+    public void delete(@Nonnull String group,
+                       @Nonnull String key) {
+        checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
-        redisTemplate.delete(key);
+        String groupedKey = buildGroupedKey(group, key);
+        redisTemplate.delete(groupedKey);
         if (log.isDebugEnabled()) {
-            log.debug("cache delete key [{}]", key);
+            log.debug("cache delete key [{}]", groupedKey);
         }
     }
 
     @Override
-    public String buildHashtag(@Nonnull String hashtag,
-                               @Nonnull String key) {
-        return "{" + hashtag + "}" + key;
-    }
+    public abstract Set<String> keys(@Nonnull String group);
 
     @Override
-    public TcOpsForGroupedValue opsForGroupedValue() {
-        return tcOpsForGroupedValue;
-    }
+    public abstract void delete(@Nonnull String group);
 
 }

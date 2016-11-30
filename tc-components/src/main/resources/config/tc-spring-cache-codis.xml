@@ -34,14 +34,17 @@
     </bean>
 
     <!-- serializer -->
-    <bean id="stringKeySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <bean id="stringKeySerializer"
+          class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
 
-    <bean id="objectKeySerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+    <bean id="objectKeySerializer"
+          class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
     <bean id="stringValueSerializer"
           class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
 
-    <bean id="objectValueSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+    <bean id="objectValueSerializer"
+          class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
     <!-- template -->
     <bean id="ssCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
@@ -62,24 +65,42 @@
         <property name="valueSerializer" ref="objectValueSerializer"/>
     </bean>
 
-    <!-- string key (string serialization), object value (jdk serialization) -->
-    <bean id="soCodisOpsForGroupedValue" class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
-        <property name="redisTemplate" ref="soCodisTemplate"/>
+    <!-- codis server -->
+    <bean class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                <bean class="org.springframework.data.redis.core.RedisTemplate">
+                    <property name="connectionFactory">
+                        <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+                            <property name="hostName" value=""/>
+                            <property name="port" value="6379"/>
+                            <property name="password" value=""/>
+                            <!-- use default pool config (8 connection) -->
+                        </bean>
+                    </property>
+                </bean>
+            </list>
+        </property>
     </bean>
-
+    
+    <!-- string key (string serialization), object value (jdk serialization) -->
     <bean id="soCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
         <property name="redisTemplate" ref="soCodisTemplate"/>
-        <property name="tcOpsForGroupedValue" ref="soCodisOpsForGroupedValue"/>
+        <property name="tcOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+                <property name="redisTemplate" ref="soCodisTemplate"/>
+            </bean>
+        </property>
     </bean>
 
     <!-- string key (string serialization), string value (string serialization) -->
-    <bean id="ssCodisOpsForGroupedValue" class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
-        <property name="redisTemplate" ref="ssCodisTemplate"/>
-    </bean>
-
     <bean id="ssCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
         <property name="redisTemplate" ref="ssCodisTemplate"/>
-        <property name="tcOpsForGroupedValue" ref="ssCodisOpsForGroupedValue"/>
+        <property name="tcOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+                <property name="redisTemplate" ref="ssCodisTemplate"/>
+            </bean>
+        </property>
     </bean>
 
     <!-- codis cache : object key (jdk serialization), object value (jdk serialization) -->
@@ -88,27 +109,5 @@
         <property name="codisTemplate" ref="ooCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
     </bean>
-
-    <!-- codis scanner -->
-    <bean id="tcGroupList" class="org.springframework.beans.factory.config.ListFactoryBean">
-        <property name="sourceList">
-            <list>
-                <value>GROUP</value>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="soCodisScanner" class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisScanner">
-        <property name="groupList" ref="tcGroupList"/>
-    </bean>
-
-    <bean id="ssCodisScanner" class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisScanner">
-        <property name="groupList" ref="tcGroupList"/>
-    </bean>
-
-    <task:scheduled-tasks>
-        <task:scheduled ref="soCodisScanner" method="scan" cron="0 * * * * ?"/>
-        <task:scheduled ref="ssCodisScanner" method="scan" cron="0 * * * * ?"/>
-    </task:scheduled-tasks>
 
 </beans>

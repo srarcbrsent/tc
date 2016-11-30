@@ -4,6 +4,7 @@ import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author yaowu.zhang
  */
 @Slf4j
-public class TcCodisCache implements Cache {
+public class TcCodisCache implements Cache, InitializingBean {
 
     @Setter
     private String name = "default";
@@ -181,4 +182,10 @@ public class TcCodisCache implements Cache {
         throw new TcException("clear is a not supported operation");
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (expiration <= 0) {
+            log.warn("the default expiration is set to [{}], and it's a un expire type", expiration);
+        }
+    }
 }

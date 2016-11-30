@@ -2,6 +2,7 @@ package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import com.ysu.zyw.tc.components.cache.TcCacheService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -37,9 +36,9 @@ public class TcCodisServiceTest {
     private TcCacheService tcCacheService;
 
     private long invoke(Supplier<?> supplier) {
-        LocalDateTime localDateTime = LocalDateTime.now();
+        Date now = new Date();
         supplier.get();
-        return Duration.between(localDateTime, LocalDateTime.now()).get(ChronoUnit.SECONDS);
+        return TcDateUtils.duration(now, new Date());
     }
 
     @Before

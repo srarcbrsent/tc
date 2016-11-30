@@ -73,6 +73,7 @@ public class TcCodisPool extends JedisPool {
     public void close() {
         super.close();
         roundRobinJedisPool.close();
+        log.info("close codis pool (include round robin jedis pool)");
     }
 
 }
