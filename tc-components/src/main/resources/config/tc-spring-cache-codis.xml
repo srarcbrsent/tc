@@ -65,22 +65,19 @@
         <property name="valueSerializer" ref="objectValueSerializer"/>
     </bean>
 
-    <!-- codis server delegate, lazy init -->
-    <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisServerDelegate" lazy-init="true">
-        <property name="connectionFactoryList">
+    <!-- codis server broker -->
+    <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisServerBroker">
+        <property name="tcJedisConfigList">
             <list>
-                <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-                    <property name="hostName" value=""/>
-                    <property name="port" value="6379"/>
-                    <property name="password" value=""/>
-                    <!-- use pool config (2 connection, idle 10min release connection, hold 0 connection) -->
-                    <property name="poolConfig">
-                        <bean class="redis.clients.jedis.JedisPoolConfig">
-                            <property name="maxTotal" value="2"/>
-                            <property name="maxIdle" value="0"/>
-                            <property name="minEvictableIdleTimeMillis" value="600000"/>
-                        </bean>
-                    </property>
+                <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisServerBroker.TcJedisConfig">
+                    <property name="host" value="${properties.cache.codis.server.gone.master.host}"/>
+                    <property name="port" value="${properties.cache.codis.server.gone.master.port}"/>
+                    <property name="password" value="${properties.cache.codis.server.gone.master.password}"/>
+                </bean>
+                <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisServerBroker.TcJedisConfig">
+                    <property name="host" value="${properties.cache.codis.server.gtwo.master.host}"/>
+                    <property name="port" value="${properties.cache.codis.server.gtwo.master.port}"/>
+                    <property name="password" value="${properties.cache.codis.server.gtwo.master.password}"/>
                 </bean>
             </list>
         </property>
