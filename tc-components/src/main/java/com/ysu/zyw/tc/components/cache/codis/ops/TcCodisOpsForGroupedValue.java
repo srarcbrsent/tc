@@ -2,6 +2,7 @@ package com.ysu.zyw.tc.components.cache.codis.ops;
 
 import com.ysu.zyw.tc.components.cache.TcAbstractOpsForGroupedValue;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
@@ -46,7 +48,7 @@ public class TcCodisOpsForGroupedValue extends TcAbstractOpsForGroupedValue impl
     @SuppressWarnings("unchecked")
     @Override
     public void delete(@Nonnull String group) {
-        checkNotNull(group, "empty group is not allowed");
+        checkArgument(StringUtils.isNotBlank(group), "empty group is not allowed");
         // try delete all the master codis-server keys.
         RedisSerializer<String> keySerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
         TcCodisServerDelegate tcCodisServerDelegate = applicationContext.getBean(TcCodisServerDelegate.class);
