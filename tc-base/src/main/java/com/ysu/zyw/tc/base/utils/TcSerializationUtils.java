@@ -1,6 +1,7 @@
 package com.ysu.zyw.tc.base.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -19,8 +20,10 @@ public class TcSerializationUtils {
     private static final ObjectMapper objectMapper;
 
     static {
+        // equal to com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder.objectMapper
         objectMapper = new ObjectMapper();
         objectMapper.setDateFormat(new SimpleDateFormat(TcDateUtils.FULL_DATE_FORMAT_VALUE));
+        objectMapper.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 
     @SneakyThrows
