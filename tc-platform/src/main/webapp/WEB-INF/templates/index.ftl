@@ -84,12 +84,18 @@
                         </div>
                     </div>
 
-                    <p>
+                    <div>
+                        <h6 class="am-text-danger"
+                            v-if="showSignupErrorMsg">
+                            <strong>
+                                登陆失败，原因：()
+                            </strong>
+                        </h6>
                         <button type="submit"
-                                class="am-btn am-btn-default"
+                                class="am-btn am-btn-primary"
                                 v-bind:class="formInValidClass">提交
                         </button>
-                    </p>
+                    </div>
                 </fieldset>
             </form>
         </div>

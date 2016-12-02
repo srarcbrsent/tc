@@ -1,5 +1,5 @@
 // 登陆相关
-var _signup_vue = new Vue({
+var _signupVue = new Vue({
     el: '#doc-signup-form',
     data: {
         model: {
@@ -9,7 +9,8 @@ var _signup_vue = new Vue({
             rememberMe: false
         },
         hiddenModel: {
-            verificationCode: '123456'
+            verificationCode: '123456',
+            signupErrorMsg: ''
         },
         verifyRules: {},
         stateControl: {
@@ -24,11 +25,16 @@ var _signup_vue = new Vue({
             var a = axios.get(__base + '/auth/get_verification_code.json')
                 .then(function (response) {
                     __doWithTcR(response.data, function (body) {
-                        _signup_vue.hiddenModel.verificationCode = body;
+                        _signupVue.hiddenModel.verificationCode = body;
                     });
                 }).catch(function () {
                     layer.alert('抱歉，系统异常，请稍后再试！');
                 });
+        },
+
+        signup: function () {
+
+            window.location.reload();
         }
     },
     computed: {
@@ -54,13 +60,16 @@ var _signup_vue = new Vue({
             }
         },
 
-        // -- computed properties
         formInValidClass: function () {
             return {
                 'am-disabled': !(this.stateControl.usernameValid &&
                 this.stateControl.passwordValid &&
                 this.stateControl.verificationCodeValid)
             }
+        },
+
+        showSignupErrorMsg: function () {
+            return this.hiddenModel.signupErrorMsg.length > 0;
         }
     }
 });
