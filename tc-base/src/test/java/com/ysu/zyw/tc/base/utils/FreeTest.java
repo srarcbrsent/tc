@@ -1,7 +1,6 @@
 package com.ysu.zyw.tc.base.utils;
 
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.base.tools.TcMatchTool;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,7 +37,7 @@ public class FreeTest {
         ArrayList<User> users =
                 Lists.newArrayList(new User().setId("3").setCompanyId("1"), new User().setId("4").setCompanyId("2"));
 
-        TcMatchTool.match(
+        TcUtils.match(
                 companies,
                 Company::getId,
                 users,
