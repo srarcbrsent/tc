@@ -1,15 +1,19 @@
 package com.ysu.zyw.tc.platform.svc;
 
+import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import com.ysu.zyw.tc.platform.fk.conf.TcConfig;
-import com.ysu.zyw.tc.sys.constant.TcConstant;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class TcVerificationCodeService {
 
@@ -23,18 +27,29 @@ public class TcVerificationCodeService {
         if (BooleanUtils.isTrue(tcConfig.isFixedVerificationCode())) {
             verificationCode = FIXED_VERIFICATION_CODE;
         }
-        SecurityUtils.getSubject().getSession().setAttribute(TcConstant.S.SESSION_VERIFICATION_CODE, verificationCode);
+        String encodedVerificationCode = encodeVerificationCodeWithDatetime(verificationCode);
+        SecurityUtils.getSubject().getSession()
+                .setAttribute(TcConstant.S.SESSION_VERIFICATION_CODE, encodedVerificationCode);
+        log.info("verification code -> [{}]", verificationCode);
         return verificationCode;
     }
 
     public boolean isVerificationCodeMatch(String verificationCode) {
-        String verificationCodeInSession =
+        String encodedVerificationCodeInSession =
                 (String) SecurityUtils.getSubject().getSession().getAttribute(TcConstant.S.SESSION_VERIFICATION_CODE);
-        return Objects.nonNull(verificationCode) &&
-                verificationCode.length() == 6 &&
-                Objects.nonNull(verificationCodeInSession) &&
-                verificationCodeInSession.length() == 6 &&
-                Objects.equals(verificationCode, verificationCodeInSession);
+        if (Objects.isNull(encodedVerificationCodeInSession)) {
+            return false;
+        }
+        String verificationCodeInSession = decodeVerificationCode(encodedVerificationCodeInSession);
+        return Objects.equals(verificationCode, verificationCodeInSession);
+    }
+
+    private String encodeVerificationCodeWithDatetime(String verificationCode) {
+        return TcDateUtils.format(new Date()) + "___" + verificationCode;
+    }
+
+    private String decodeVerificationCode(String encodedVerificationCode) {
+        return encodedVerificationCode.split("___")[1];
     }
 
 }

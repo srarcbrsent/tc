@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.collect.Maps;
-import com.ysu.zyw.tc.sys.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.cache.annotation.CacheEvict;

@@ -185,47 +185,11 @@
         <finalName>ROOT</finalName>
 
         <plugins>
-            <!-- yui compressor resource plugin -->
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>yuicompressor-maven-plugin</artifactId>
-                <version>1.5.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compress</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skip>false</skip>
-                    <encoding>UTF-8</encoding>
-                    <jswarn>false</jswarn>
-                    <nosuffix>true</nosuffix>
-                    <force>true</force>
-                    <excludes>
-                        <exclude>**/libs/**/**.*</exclude>
-                        <exclude>**/**.min.js</exclude>
-                        <exclude>**/**.min.css</exclude>
-                    </excludes>
-                    <sourceDirectory>${project.basedir}/src/main/webapp/resources</sourceDirectory>
-                    <!-- must refer war plugin resource directory -->
-                    <webappDirectory>${project.build.directory}/min</webappDirectory>
-                </configuration>
-            </plugin>
             <!-- war plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <!-- must refer to yui compress temp dir -->
-                            <directory>${project.build.directory}/min</directory>
-                        </resource>
-                    </webResources>
-                </configuration>
             </plugin>
             <!-- mybatis generator -->
             <plugin>

@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.utils.handler;
 
-import com.ysu.zyw.tc.sys.ex.TcException;
+import com.ysu.zyw.tc.base.ex.TcException;
 import freemarker.core.Environment;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;

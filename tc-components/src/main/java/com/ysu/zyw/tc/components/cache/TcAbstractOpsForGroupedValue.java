@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.cache;
 
+import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcUtils;
-import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

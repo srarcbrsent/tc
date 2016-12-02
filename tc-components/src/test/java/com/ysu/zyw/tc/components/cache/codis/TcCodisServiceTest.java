@@ -94,7 +94,7 @@ public class TcCodisServiceTest {
                 }
                 tcCacheService.set(uuid, mongoList, duration);
                 @SuppressWarnings("unchecked")
-                List<Mongo> sValue = tcCacheService.get(uuid, List.class);
+                List<Mongo> sValue = tcCacheService.get(uuid, ArrayList.class);
                 Assert.assertEquals(mongoList, sValue);
             });
             return null;

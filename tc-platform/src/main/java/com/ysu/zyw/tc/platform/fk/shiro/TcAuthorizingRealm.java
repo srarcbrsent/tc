@@ -2,12 +2,12 @@ package com.ysu.zyw.tc.platform.fk.shiro;
 
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
+import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.sys.ex.TcException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

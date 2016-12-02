@@ -1,11 +1,11 @@
 package com.ysu.zyw.tc.api.fk;
 
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
+import com.ysu.zyw.tc.base.ex.TcResourceConflictException;
+import com.ysu.zyw.tc.base.ex.TcResourceNotFoundException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import com.ysu.zyw.tc.model.mw.TcExtra;
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.sys.ex.TcResourceConflictException;
-import com.ysu.zyw.tc.sys.ex.TcResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

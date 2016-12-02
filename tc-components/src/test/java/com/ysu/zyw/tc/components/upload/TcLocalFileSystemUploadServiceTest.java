@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.upload;
 
-import com.ysu.zyw.tc.sys.ex.TcException;
+import com.ysu.zyw.tc.base.ex.TcException;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Assert;

@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.platform.fk.shiro;
 
-import com.ysu.zyw.tc.sys.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcConstant;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 

@@ -1,3 +1,70 @@
+// 登陆相关
+var _signup_vue = new Vue({
+    el: '#doc-signup-form',
+    data: {
+        model: {
+            username: '',
+            password: '',
+            verificationCode: '',
+            rememberMe: false
+        },
+        hiddenModel: {
+            verificationCode: '123456'
+        },
+        verifyRules: {},
+        stateControl: {
+            usernameValid: true,
+            passwordValid: true,
+            verificationCodeValid: true,
+            rememberMeValid: true
+        }
+    },
+    methods: {
+        reloadVerificationCode: function () {
+            var a = axios.get(__base + '/auth/get_verification_code.json')
+                .then(function (response) {
+                    __doWithTcR(response.data, function (body) {
+                        _signup_vue.hiddenModel.verificationCode = body;
+                    });
+                }).catch(function () {
+                    layer.alert('抱歉，系统异常，请稍后再试！');
+                });
+        }
+    },
+    computed: {
+        // -- styles
+        usernameValidClass: function () {
+            return {
+                'am-input-group-primary': this.stateControl.usernameValid,
+                'am-input-group-danger': !this.stateControl.usernameValid
+            }
+        },
+
+        passwordValidClass: function () {
+            return {
+                'am-input-group-primary': this.stateControl.passwordValid,
+                'am-input-group-danger': !this.stateControl.passwordValid
+            }
+        },
+
+        verificationCodeValidClass: function () {
+            return {
+                'am-input-group-primary': this.stateControl.verificationCodeValid,
+                'am-input-group-danger': !this.stateControl.verificationCodeValid
+            }
+        },
+
+        // -- computed properties
+        formInValidClass: function () {
+            return {
+                'am-disabled': !(this.stateControl.usernameValid &&
+                this.stateControl.passwordValid &&
+                this.stateControl.verificationCodeValid)
+            }
+        }
+    }
+});
+
 // layui.use(['form'], function () {
 //     var _form = layui.form();
 //

@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.base.tools;
 
-import com.ysu.zyw.tc.sys.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcConstant;
 import lombok.experimental.UtilityClass;
 
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.retry;
 
-import com.ysu.zyw.tc.sys.ex.TcException;
+import com.ysu.zyw.tc.base.ex.TcException;
 import org.springframework.retry.annotation.Retryable;
 
 public class RetryStub {

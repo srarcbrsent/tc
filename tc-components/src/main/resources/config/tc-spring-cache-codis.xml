@@ -105,7 +105,7 @@
 
     <!-- codis cache : object key (jdk serialization), object value (jdk serialization) -->
     <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
-        <property name="name" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).CODIS_CACHE}"/>
+        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).CODIS_CACHE}"/>
         <property name="codisTemplate" ref="ooCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
     </bean>

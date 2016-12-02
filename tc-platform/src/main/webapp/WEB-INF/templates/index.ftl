@@ -18,55 +18,76 @@
          class="am-container">
         <!-- + signup form -->
         <div class="am-u-lg-12">
-            <form class="am-form">
+            <form id="doc-signup-form"
+                  class="am-form">
                 <fieldset>
-                    <legend>表单标题</legend>
+                    <legend>登陆</legend>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-email-1">邮件</label>
-                        <div class="am-input-group am-input-group-primary">
+                        <label>账号</label>
+                        <div class="am-input-group"
+                             v-bind:class="usernameValidClass">
                             <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
-                            <input type="text"
+                            <input id="doc-signup-username"
+                                   type="text"
                                    class="am-form-field"
-                                   placeholder="你的大名">
+                                   name="username"
+                                   placeholder="请输入您的账号">
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-email-1">邮件</label>
-                        <div class="am-input-group am-input-group-primary">
-                            <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
-                            <input type="text"
+                        <label>密码</label>
+                        <div class="am-input-group"
+                             v-bind:class="passwordValidClass">
+                            <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
+                            <input id="doc-signup-password"
+                                   type="password"
                                    class="am-form-field"
-                                   placeholder="你的大名">
+                                   name="password"
+                                   placeholder="请输入您的密码">
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-email-1">邮件</label>
-                        <div class="am-input-group am-input-group-primary">
-                            <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
-                            <input type="text"
+                        <label>验证码</label>
+                        <div class="am-input-group"
+                             v-bind:class="verificationCodeValidClass">
+                            <span class="am-input-group-label"><i class="am-icon-gg am-icon-fw"></i></span>
+                            <input id="doc-signup-verification-code"
+                                   type="text"
                                    class="am-form-field"
-                                   placeholder="你的大名">
+                                   name="verificationCode"
+                                   placeholder="请输入右方的验证码">
+                            <span class="am-input-group-label doc-verification-code-span">
+                                <span>{{ hiddenModel.verificationCode }}</span>
+                                <i v-on:click="reloadVerificationCode"
+                                   class="am-icon-refresh am-icon-fw"></i>
+                            </span>
                         </div>
                     </div>
 
                     <div class="am-form-group">
-                        <label for="doc-ipt-email-1">邮件</label>
+                        <label>是否记住密码?</label>
                         <div class="am-input-group am-input-group-primary">
-                            <select multiple data-am-selected>
-                                <option value="a">Apple</option>
-                                <option value="b">Banana</option>
-                                <option value="o">Orange</option>
-                                <option value="m">Mango</option>
+                            <select id="doc-signup-remeber-me"
+                                    data-am-selected
+                                    name="rememberMe">
+                                <option selected
+                                        value="false">
+                                    不记住密码
+                                </option>
+                                <option value="true">
+                                    记住密码
+                                </option>
                             </select>
                         </div>
                     </div>
 
                     <p>
                         <button type="submit"
-                                class="am-btn am-btn-default am-disabled">提交
+                                class="am-btn am-btn-default"
+                                v-bind:class="formInValidClass">提交
                         </button>
                     </p>
                 </fieldset>

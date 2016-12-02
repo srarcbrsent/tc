@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>tc-base</module>
-        <module>tc-system</module>
         <module>tc-components</module>
         <module>tc-apimodel</module>
         <module>tc-api</module>
@@ -126,12 +125,6 @@
     <dependencyManagement>
         <dependencies>
             <!-- project -->
-            <dependency>
-                <groupId>com.ysu.zyw</groupId>
-                <artifactId>tc-system</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>com.ysu.zyw</groupId>
                 <artifactId>tc-base</artifactId>

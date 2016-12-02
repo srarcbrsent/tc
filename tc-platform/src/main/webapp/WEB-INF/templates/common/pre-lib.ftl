@@ -11,6 +11,8 @@
         type="application/javascript"></script>
 <script src="${.vars.staticBase}/libs/axios.min.js"
         type="application/javascript"></script>
+<script src="${.vars.staticBase}/libs/underscore.min.js"
+        type="application/javascript"></script>
 <script src="${.vars.staticBase}/libs/assets/js/amazeui.min.js"
         type="application/javascript"></script>
 <script src="${.vars.staticBase}/libs/layer/layer.min.js"
@@ -30,10 +32,17 @@
 
     // ajax helper func
     var __doWithTcR = function (tcR, okCallback, exCallback) {
+        if (_.isUndefined(tcR)) {
+            layer.alert('系统繁忙，请稍后再试！');
+        }
         if (tcR.code == 200) {
-            okCallback(tcR.body);
+            if (_.isFunction(okCallback)) {
+                okCallback(tcR.body);
+            } else {
+                // do nothing
+            }
         } else {
-            if (exCallback != undefined && exCallback != null) {
+            if (_.isFunction(exCallback)) {
                 exCallback(tcR.code, tcR.message, tcR.extra);
             } else {
                 layer.msg('系统异常，请稍后刷新页面再试！');

@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.platform.fk.shiro;
 
-import com.ysu.zyw.tc.sys.ex.TcException;
+import com.ysu.zyw.tc.base.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.shiro.cache.Cache;

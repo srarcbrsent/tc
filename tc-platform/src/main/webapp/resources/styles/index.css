@@ -1,0 +1,7 @@
+.doc-verification-code-span {
+    user-select: none;
+}
+
+.doc-verification-code-span > i:hover {
+    cursor: pointer;
+}

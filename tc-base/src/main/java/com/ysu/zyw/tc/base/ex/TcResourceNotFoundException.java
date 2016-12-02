@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.sys.ex;
+package com.ysu.zyw.tc.base.ex;
 
 public class TcResourceNotFoundException extends TcException {
 

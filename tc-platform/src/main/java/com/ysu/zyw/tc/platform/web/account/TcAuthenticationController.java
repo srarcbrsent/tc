@@ -1,6 +1,7 @@
 package com.ysu.zyw.tc.platform.web.account;
 
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
+import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
@@ -9,7 +10,6 @@ import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;
 import com.ysu.zyw.tc.platform.svc.TcSessionService;
 import com.ysu.zyw.tc.platform.svc.TcVerificationCodeService;
-import com.ysu.zyw.tc.sys.ex.TcException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -55,10 +55,20 @@ public class TcAuthenticationController {
             value = "获取登陆用一次性token",
             notes = "获取登陆用一次性token")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/token", method = RequestMethod.POST)
+    @RequestMapping(value = "/get_token", method = RequestMethod.POST)
     public ResponseEntity<TcR<String>> token() {
         String token = tcCredentialsMatcher.createTokenAndSet2Session();
         return ResponseEntity.ok(TcR.ok(token));
+    }
+
+    @ApiOperation(
+            value = "获取登陆验证码",
+            notes = "获取登陆验证码")
+    @ApiResponse(code = 200, message = "OK")
+    @RequestMapping(value = "/get_verification_code", method = RequestMethod.GET)
+    public ResponseEntity<TcR<String>> fetchVerificationCode() {
+        String verificationCode = tcVerificationCodeService.generateVerificationCodeAndSet2Session();
+        return ResponseEntity.ok(TcR.ok(verificationCode));
     }
 
     @ApiOperation(

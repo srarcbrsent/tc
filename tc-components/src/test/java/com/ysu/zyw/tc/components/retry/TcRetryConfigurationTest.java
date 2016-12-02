@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.retry;
 
-import com.ysu.zyw.tc.sys.ex.TcException;
+import com.ysu.zyw.tc.base.ex.TcException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -86,7 +86,7 @@
 
     <!-- redis cache : object key (jdk serialization), object value (jdk serialization) -->
     <bean id="redisCache" class="org.springframework.data.redis.cache.RedisCache">
-        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.sys.constant.TcConstant.Sys).REDIS_CACHE}"/>
+        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).REDIS_CACHE}"/>
         <constructor-arg index="1">
             <null/>
         </constructor-arg>

@@ -1,8 +1,8 @@
 package com.ysu.zyw.tc.platform.svc;
 
+import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
-import com.ysu.zyw.tc.sys.constant.TcConstant;
-import com.ysu.zyw.tc.sys.ex.TcException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Service;

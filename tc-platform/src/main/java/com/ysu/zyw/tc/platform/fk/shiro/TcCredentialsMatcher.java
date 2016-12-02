@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.platform.fk.shiro;
 
+import com.ysu.zyw.tc.base.constant.TcConstant;
 import com.ysu.zyw.tc.base.utils.TcEncodingUtils;
-import com.ysu.zyw.tc.sys.constant.TcConstant;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;

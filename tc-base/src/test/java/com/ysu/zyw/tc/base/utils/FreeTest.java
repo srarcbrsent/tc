@@ -47,4 +47,10 @@ public class FreeTest {
         System.out.println(users);
     }
 
+    @Test
+    public void test02() {
+        System.out.println(TcFormatUtils.format("helo [{}] [{}]", 1,
+                new User().setId("3").setCompanyId("1"), new User().setId("4").setCompanyId("2")));
+    }
+
 }

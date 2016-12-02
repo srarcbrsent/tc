@@ -15,11 +15,6 @@
         <!-- project -->
         <dependency>
             <groupId>com.ysu.zyw</groupId>
-            <artifactId>tc-system</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-base</artifactId>
         </dependency>
 

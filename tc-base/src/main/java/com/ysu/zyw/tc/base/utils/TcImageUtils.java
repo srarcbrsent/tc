@@ -153,7 +153,6 @@ public class TcImageUtils {
      * @param width              图片宽度
      * @param height             图片高度
      * @param interLines         图片中干扰线的条数
-     * @param randomCharLocation 每个字符的高低位置是否随机
      * @param bgColor            图片颜色，若为null，则采用随机颜色
      * @param fontColor          字体颜色，若为null，则采用随机颜色
      * @param interLineColor     干扰线颜色，若为null，则采用随机颜色
@@ -161,9 +160,8 @@ public class TcImageUtils {
     public static BufferedImage generateCaptchaImg(@Nonnull String code,
                                                    int width,
                                                    int height,
-                                                   int interLines,
-                                                   boolean randomCharLocation,
                                                    @Nullable Color bgColor,
+                                                   int fontSize,
                                                    @Nullable Color fontColor,
                                                    @Nullable Color interLineColor) {
         checkNotNull(code);
@@ -172,28 +170,15 @@ public class TcImageUtils {
         // 画背景图
         g.setColor(bgColor == null ? randomColor() : bgColor);
         g.fillRect(0, 0, width, height);
-        // 画干扰线
-        Random r = new Random();
-        if (interLines > 0) {
-            int x = 0, y = 0, x1 = width, y1 = 0;
-            for (int i = 0; i < interLines; i++) {
-                g.setColor(interLineColor == null ? randomColor() : interLineColor);
-                y = r.nextInt(height);
-                y1 = r.nextInt(height);
-                g.drawLine(x, y, x1, y1);
-            }
-        }
-        // 字体大小为图片高度的80%
-        int fontSize = (int) (height * 0.8);
-        int fx = height - fontSize;
-        int fy = fontSize;
+
+        int fx = (width / code.length()) / 2;
+        int fy = (height - fontSize) / 2;
         g.setFont(new Font("Default", Font.PLAIN, fontSize));
         // 写验证码字符
         for (int i = 0; i < code.length(); i++) {
-            fy = randomCharLocation ? (int) ((Math.random() * 0.3 + 0.6) * height) : fy;// 每个字符高低是否随机
             g.setColor(fontColor == null ? randomColor() : fontColor);
             g.drawString(code.charAt(i) + "", fx, fy);
-            fx += fontSize * 0.9;
+            fx += width / code.length();
         }
         g.dispose();
         return bufferedImage;

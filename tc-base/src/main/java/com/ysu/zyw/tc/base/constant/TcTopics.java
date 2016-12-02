@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.sys.constant;
+package com.ysu.zyw.tc.base.constant;
 
 public class TcTopics {
 

@@ -1,19 +1,10 @@
 package com.ysu.zyw.tc.components.cache.redis.ops;
 
 import com.ysu.zyw.tc.components.cache.TcAbstractOpsForGroupedValue;
-import com.ysu.zyw.tc.components.cache.TcOpsForGroupedValue;
-import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

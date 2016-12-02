@@ -1,11 +1,11 @@
 package com.ysu.zyw.tc.api.svc.im.processor;
 
 import com.ysu.zyw.tc.api.dao.po.TcMessageWithBLOBs;
+import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.tools.TcIdWorker;
 import com.ysu.zyw.tc.model.menum.TmPlatform;
 import com.ysu.zyw.tc.model.msg.TcSignupPitaya;
-import com.ysu.zyw.tc.sys.constant.TcConstant;
-import com.ysu.zyw.tc.sys.ex.TcException;
 
 import javax.annotation.Nonnull;
 import java.util.Date;

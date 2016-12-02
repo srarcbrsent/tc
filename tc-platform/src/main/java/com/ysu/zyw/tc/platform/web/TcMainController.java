@@ -27,7 +27,7 @@ public class TcMainController {
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/")
     public ModelAndView idx() {
-        // must redirect, because / is not take cared by shiro, only *.html
+        // must redirect directly, because / is not take cared by shiro, only *.html
         return new ModelAndView(new RedirectView("/index.html"));
     }
 
@@ -40,9 +40,7 @@ public class TcMainController {
         if (SecurityUtils.getSubject().isAuthenticated()) {
             return new ModelAndView(new RedirectView("/home.html"));
         }
-        ModelAndView modelAndView = new ModelAndView("/WEB-INF/templates/index.ftl");
-        modelAndView.addObject("verificationCode", tcVerificationCodeService.generateVerificationCodeAndSet2Session());
-        return modelAndView;
+        return new ModelAndView("/WEB-INF/templates/index.ftl");
     }
 
     @ApiOperation(

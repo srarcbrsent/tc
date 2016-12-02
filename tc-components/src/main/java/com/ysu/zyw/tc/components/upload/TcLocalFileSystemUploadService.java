@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.upload;
 
-import com.ysu.zyw.tc.sys.constant.TcConstant;
-import com.ysu.zyw.tc.sys.ex.TcException;
+import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -43,7 +43,7 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
         String resourceFullPath = localFileSystemUploadBase + metadata.getFolder() + metadata.getName() + metadata
                 .getExtension();
         if (exists(metadata)) {
-            throw new TcException("the file already exists, please delete it then upload.", metadata);
+            throw new TcException("the file already exists, please delete it then upload. metadata [{}]", metadata);
         }
         FileUtils.copyInputStreamToFile(inputStream, new File(resourceFullPath));
         return metadata.getFolder() + metadata.getName() + metadata.getExtension();
