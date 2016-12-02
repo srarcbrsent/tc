@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.components.cache;
 
+import com.ysu.zyw.tc.base.utils.TcUtils;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
@@ -124,12 +125,7 @@ public class TcCacheServiceImpl implements TcCacheService {
                                                  @Nonnull Callable<T> valueLoader,
                                                  long timeout) {
         // lock and get
-        T sValue = null;
-        try {
-            sValue = (T) redisTemplate.opsForValue().get(key);
-        } catch (Exception e) {
-            log.error("", e);
-        }
+        T sValue = TcUtils.doQuietly(() -> (T) redisTemplate.opsForValue().get(key), null);
         if (Objects.nonNull(sValue)) {
             if (log.isDebugEnabled()) {
                 log.debug("get object [{}] from cache by key [{}]", sValue, key);
@@ -151,12 +147,9 @@ public class TcCacheServiceImpl implements TcCacheService {
             throw new TcException(e, key, valueLoader);
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
-        try {
+        TcUtils.doQuietly(() -> {
             redisTemplate.opsForValue().set(key, loadedValue, timeout, TimeUnit.MILLISECONDS);
-        } catch (Exception e) {
-            // if cache failed, let the load value succ.
-            log.error("", e);
-        }
+        });
         if (log.isDebugEnabled()) {
             log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, key, timeout);
         }

@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.components.cache;
 
+import com.ysu.zyw.tc.base.utils.TcUtils;
 import com.ysu.zyw.tc.sys.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
@@ -130,12 +131,7 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
                                                  long timeout,
                                                  String groupedKey) {
         // lock and get
-        T sValue = null;
-        try {
-            sValue = (T) redisTemplate.opsForValue().get(groupedKey);
-        } catch (Exception e) {
-            log.error("", e);
-        }
+        T sValue = TcUtils.doQuietly(() -> (T) redisTemplate.opsForValue().get(groupedKey), null);
         if (Objects.nonNull(sValue)) {
             if (log.isDebugEnabled()) {
                 log.debug("get object [{}] from cache by key [{}]", sValue, key);
@@ -159,12 +155,8 @@ public abstract class TcAbstractOpsForGroupedValue implements TcOpsForGroupedVal
             throw new TcException(e, groupedKey, valueLoader);
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
-        try {
-            redisTemplate.opsForValue().set(groupedKey, loadedValue, timeout, TimeUnit.MILLISECONDS);
-        } catch (Exception e) {
-            // if cache failed, let the load value succ.
-            log.error("", e);
-        }
+        TcUtils.doQuietly(() ->
+                redisTemplate.opsForValue().set(groupedKey, loadedValue, timeout, TimeUnit.MILLISECONDS));
         if (log.isDebugEnabled()) {
             log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, groupedKey, timeout);
         }

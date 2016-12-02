@@ -18,7 +18,8 @@ public class TcCodisServerBroker {
     @Setter
     List<TcJedisConfig> tcJedisConfigList;
 
-    public void doInEveryCodisServer(Consumer<Jedis> worker) {
+    // package visible
+    void doInEveryCodisServer(Consumer<Jedis> worker) {
         checkNotNull(tcJedisConfigList);
         log.info("going to call do in every codis server in [{}] server", tcJedisConfigList.size());
         tcJedisConfigList.forEach(tcJedisConfig -> {
