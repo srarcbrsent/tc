@@ -1,7 +1,6 @@
 package com.ysu.zyw.tc.platform.web.account;
 
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
-import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
@@ -83,9 +82,9 @@ public class TcAuthenticationController {
             @RequestParam(value = "verificationCode") String verificationCode,
             @RequestParam(value = "targetUrl", required = false) String targetUrl,
             RedirectAttributes redirectAttributes) {
-        TcR<Boolean> tcR =
+        TcR<Integer> tcR =
                 signup(username, cltPassword, rememberMe, verificationCode);
-        if (tcR.orElse(false)) {
+        if (tcR.orElse(99) == 0) {
             // login succ
             if (Objects.nonNull(targetUrl)) {
                 return new ModelAndView(new RedirectView(targetUrl));
@@ -93,7 +92,7 @@ public class TcAuthenticationController {
             return new ModelAndView(new RedirectView("/home.html"));
         } else {
             ModelAndView modelAndView = new ModelAndView(new RedirectView("/index.html"));
-            redirectAttributes.addFlashAttribute("signupErrorMsg", tcR.orElseGetStringExtra());
+            redirectAttributes.addFlashAttribute("signupErrorCode", tcR.orElse(99));
             return modelAndView;
         }
     }
@@ -103,26 +102,33 @@ public class TcAuthenticationController {
             notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/_signup", method = RequestMethod.POST)
-    public ResponseEntity<TcR<Boolean>> _signup(
+    public ResponseEntity<TcR<Integer>> _signup(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,
             @RequestParam(value = "verificationCode") String verificationCode,
             @RequestParam(value = "targetUrl", required = false) String targetUrl) {
-        TcR<Boolean> tcR =
+        TcR<Integer> tcR =
                 signup(username, cltPassword, rememberMe, verificationCode);
         return ResponseEntity.ok(tcR);
     }
 
+    /**
+     * 0 => 登陆成功
+     * 1 => 验证码输入错误
+     * 2 => 账号不存在
+     * 3 => 账号被锁定
+     * 4 => 账号密码错误
+     */
     @NotNull
-    private TcR<Boolean> signup(String username,
+    private TcR<Integer> signup(String username,
                                 String cltPassword,
                                 Boolean rememberMe,
                                 String verificationCode) {
         // verify verification code
         boolean verificationCodeMatch = tcVerificationCodeService.isVerificationCodeMatch(verificationCode);
         if (!verificationCodeMatch) {
-            TcR<Boolean> tcR = TcR.ok(false);
+            TcR<Integer> tcR = TcR.ok(1);
             tcR.extra("验证码输入错误，请重试！");
             return tcR;
         }
@@ -133,21 +139,16 @@ public class TcAuthenticationController {
         try {
             SecurityUtils.getSubject().login(token);
         } catch (UnknownAccountException e) {
-            TcR<Boolean> tcR = TcR.ok(false);
+            TcR<Integer> tcR = TcR.ok(2);
             tcR.extra("账号不存在，请重试！");
             return tcR;
         } catch (LockedAccountException e) {
-            TcR<Boolean> tcR = TcR.ok(false);
+            TcR<Integer> tcR = TcR.ok(3);
             tcR.extra("账号被锁定，请稍后再试！");
             return tcR;
         } catch (IncorrectCredentialsException e) {
-            TcR<Boolean> tcR = TcR.ok(false);
+            TcR<Integer> tcR = TcR.ok(4);
             tcR.extra("账号密码错误，请重试！");
-            return tcR;
-        } catch (TcException e) {
-            log.error("[{}] [{}] [{}]", e, username, cltPassword.substring(12), rememberMe);
-            TcR<Boolean> tcR = TcR.ok(false);
-            tcR.extra("系统异常，请稍后再试！");
             return tcR;
         }
 
@@ -159,7 +160,7 @@ public class TcAuthenticationController {
         TcP<List<ToMenu>> menus = tcAuthenticationApi.findMenus(accountId);
         // TODO: 2016/11/26
 
-        return TcR.ok(true);
+        return TcR.ok(0);
     }
 
     @ApiOperation(
