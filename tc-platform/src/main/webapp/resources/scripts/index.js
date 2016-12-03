@@ -12,7 +12,7 @@ var _signupVue = new Vue({
             signupErrorMsg: ''
         },
         hiddenElement: {
-            verificationCode: '123456'
+            verificationCode: ''
         },
         stateElement: {
             usernameValid: true,
@@ -21,7 +21,13 @@ var _signupVue = new Vue({
             rememberMeValid: true
         }
     },
+    mounted: function () {
+        this.reloadVerificationCode();
+    },
     methods: {
+
+        layerLoading: undefined,
+
         reloadVerificationCode: function () {
             axios
                 .get(__base + '/auth/get_verification_code.json')
@@ -37,6 +43,7 @@ var _signupVue = new Vue({
 
         signup: function () {
             // TODO wait vue validation released.
+            _signupVue.layerLoading = layer.load(1, {shade: [0.7, '#fff']});
             axios
                 .post(__base + '/auth/get_token.json')
                 .then(function (tokenR) {
@@ -46,7 +53,8 @@ var _signupVue = new Vue({
                         _signupVue.doSignup();
                     });
                 })
-                .catch(function () {
+                .catch(function (error) {
+                    layer.close(_signupVue.layerLoading);
                     layer.alert('抱歉，系统异常，请稍后再试！');
                 });
         },
@@ -57,6 +65,7 @@ var _signupVue = new Vue({
                 .then(function (response) {
                     __doWithTcR(response.data, function (body) {
                         if (!_.isUndefined(body)) {
+                            layer.close(_signupVue.layerLoading);
                             if (body == 0) {
                                 // signup succ, reload page, will auto redirect to home.
                                 window.location.reload();
@@ -83,6 +92,7 @@ var _signupVue = new Vue({
                     });
                 })
                 .catch(function (error) {
+                    layer.close(_signupVue.layerLoading);
                     layer.alert('抱歉，系统异常，请稍后再试！');
                 });
         },
