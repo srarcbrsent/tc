@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>首页</title>
-<#include "/WEB-INF/templates/common/pre-lib.ftl"/>
+<#include "/WEB-INF/templates/commons/pre-lib.ftl"/>
     <link href="${.vars.staticBase}/styles/index.css"
           type="text/css"
           rel="stylesheet"/>
@@ -10,7 +10,7 @@
 <body>
 <div>
     <!-- + header -->
-<#include "/WEB-INF/templates/common/header.ftl"/>
+<#include "/WEB-INF/templates/commons/header.ftl"/>
     <!-- - header -->
 
     <!-- + body -->
@@ -115,11 +115,11 @@
     <!-- - body -->
 
     <!-- + footer -->
-<#include "/WEB-INF/templates/common/footer.ftl"/>
+<#include "/WEB-INF/templates/commons/footer.ftl"/>
     <!-- - footer -->
 </div>
 
-<#include "/WEB-INF/templates/common/post-lib.ftl"/>
+<#include "/WEB-INF/templates/commons/post-lib.ftl"/>
 <script src="${.vars.staticBase}/libs/jquery.md5.min.js"
         type="application/javascript"></script>
 <script src="${.vars.staticBase}/scripts/index.js"

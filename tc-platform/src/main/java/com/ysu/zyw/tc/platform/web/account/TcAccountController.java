@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
@@ -25,6 +26,15 @@ public class TcAccountController {
 
     @Resource
     private TcAccountApi tcAccountApi;
+
+    @ApiOperation(
+            value = "创建账号页面",
+            notes = "创建账号页面")
+    @ApiResponse(code = 200, message = "成功")
+    @RequestMapping(value = "/signin")
+    public ModelAndView signin() {
+        return new ModelAndView("/WEB-INF/templates/accounts/signin.ftl");
+    }
 
     @ApiOperation(
             value = "创建账号",

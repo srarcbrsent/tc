@@ -32,7 +32,7 @@ import java.util.List;
 @Slf4j
 @Api(value = "认证控制器")
 @Controller
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/auths")
 public class TcAuthenticationController {
 
     @Resource

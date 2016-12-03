@@ -7,7 +7,7 @@
 
         <div class="am-topbar-right">
             <a class="am-btn am-btn-default am-topbar-btn am-btn-sm"
-               href="javascript:void(0)">
+               href="/accounts/signin.html">
                 注册
             </a>
         </div>
