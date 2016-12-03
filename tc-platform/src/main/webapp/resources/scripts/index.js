@@ -45,7 +45,7 @@ var _signupVue = new Vue({
             // TODO wait vue validation released.
             _signupVue.layerLoading = layer.load(1, {shade: [0.7, '#fff']});
             axios
-                .post(__base + '/auth/get_token.json')
+                .get(__base + '/auth/get_token.json')
                 .then(function (tokenR) {
                     __doWithTcR(tokenR.data, function (tkBody) {
                         var password = _signupVue.uiElement.formElement.password;
@@ -61,32 +61,34 @@ var _signupVue = new Vue({
 
         doSignup: function () {
             axios
-                .post(__base + '/auth/_signup.json', $.param(_signupVue.uiElement.formElement))
+                .post(__base + '/auth/signup.json', $.param(_signupVue.uiElement.formElement))
                 .then(function (response) {
+                    layer.close(_signupVue.layerLoading);
                     __doWithTcR(response.data, function (body) {
-                        if (!_.isUndefined(body)) {
-                            layer.close(_signupVue.layerLoading);
-                            if (body == 0) {
-                                // signup succ, reload page, will auto redirect to home.
-                                window.location.reload();
-                                return;
-                            } else if (body == 1) {
-                                _signupVue.uiElement.signupErrorMsg = '验证码输入错误，请重新登陆！';
-                                _signupVue.reset();
-                                return;
-                            } else if (body == 2) {
-                                _signupVue.uiElement.signupErrorMsg = '账号不存在，请重新登陆！';
-                                _signupVue.reset();
-                                return;
-                            } else if (body == 3) {
-                                _signupVue.uiElement.signupErrorMsg = '账号被锁定，请稍后再试！';
-                                _signupVue.reset();
-                                return;
-                            } else if (body == 4) {
-                                _signupVue.uiElement.signupErrorMsg = '账号密码错误，请重新登陆！';
-                                _signupVue.reset();
-                                return;
-                            }
+                        if (body == 0) {
+                            // signup succ, reload page, will auto redirect to home.
+                            window.location.reload();
+                            return;
+                        } else if (body == 1) {
+                            // verification code not match
+                            _signupVue.uiElement.signupErrorMsg = '验证码输入错误，请重新登陆！';
+                            _signupVue.reset();
+                            return;
+                        } else if (body == 2) {
+                            // account not exists
+                            _signupVue.uiElement.signupErrorMsg = '账号不存在，请重新登陆！';
+                            _signupVue.reset();
+                            return;
+                        } else if (body == 3) {
+                            // account be locked
+                            _signupVue.uiElement.signupErrorMsg = '账号被锁定，请稍后再试！';
+                            _signupVue.reset();
+                            return;
+                        } else if (body == 4) {
+                            // account not match password
+                            _signupVue.uiElement.signupErrorMsg = '账号密码错误，请重新登陆！';
+                            _signupVue.reset();
+                            return;
                         }
                         layer.alert('抱歉，系统繁忙，请稍后再试！');
                     });
