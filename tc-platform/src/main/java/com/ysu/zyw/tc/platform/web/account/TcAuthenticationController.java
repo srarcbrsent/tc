@@ -6,6 +6,7 @@ import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
+import com.ysu.zyw.tc.platform.fk.filters.TcXsrfTokenFilter;
 import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;
 import com.ysu.zyw.tc.platform.svc.TcSessionService;
 import com.ysu.zyw.tc.platform.svc.TcVerificationCodeService;
@@ -27,7 +28,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Api(value = "认证控制器")
@@ -84,7 +88,8 @@ public class TcAuthenticationController {
             @RequestParam(value = "password") String cltPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,
             @RequestParam(value = "verificationCode") String verificationCode,
-            @RequestParam(value = "targetUrl", required = false) String targetUrl) {
+            @RequestParam(value = "targetUrl", required = false) String targetUrl,
+            HttpServletResponse response) {
         // verify verification code
         boolean verificationCodeMatch = tcVerificationCodeService.isVerificationCodeMatch(verificationCode);
         if (!verificationCodeMatch) {
@@ -111,6 +116,9 @@ public class TcAuthenticationController {
             tcR.extra("账号密码错误，请重试！");
             return ResponseEntity.ok(tcR);
         }
+
+        // set cookie
+        response.addCookie(new Cookie(TcXsrfTokenFilter.XSRF_TOKEN_COOKIE_NAME, UUID.randomUUID().toString()));
 
         // set session
         tcSessionService.initSessionAfterSignup();

@@ -30,6 +30,16 @@
     var __base = '${base}';
     var __staticBase = '${staticBase}';
 
+    // ajax help config
+    var __axiosConfig = {
+        // 6s
+        timeout: 6000,
+        xsrfCookieName: 'XSRF-TOKEN',
+        xsrfHeaderName: 'X-XSRF-TOKEN',
+        // 50k
+        maxContentLength: 51200
+    };
+
     // ajax helper func
     var __doWithTcR = function (tcR, okCallback, exCallback) {
         if (_.isUndefined(tcR)) {
@@ -45,7 +55,7 @@
             if (_.isFunction(exCallback)) {
                 exCallback(tcR.code, tcR.message, tcR.extra);
             } else {
-                layer.msg('系统异常，请稍后刷新页面再试！');
+                layer.msg('系统异常，请刷新页面再试！');
             }
         }
     };

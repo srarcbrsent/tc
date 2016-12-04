@@ -30,7 +30,7 @@ var _signupVue = new Vue({
 
         reloadVerificationCode: function () {
             axios
-                .get(__base + '/auths/get_verification_code.json')
+                .get(__base + '/auths/get_verification_code.json', __axiosConfig)
                 .then(function (response) {
                     __doWithTcR(response.data, function (body) {
                         _signupVue.hiddenElement.verificationCode = body;
@@ -45,7 +45,7 @@ var _signupVue = new Vue({
             // TODO wait vue validation released.
             _signupVue.layerLoading = layer.load(1, {shade: [0.7, '#fff']});
             axios
-                .get(__base + '/auths/get_token.json')
+                .get(__base + '/auths/get_token.json', __axiosConfig)
                 .then(function (tokenR) {
                     __doWithTcR(tokenR.data, function (token) {
                         var password = _signupVue.uiElement.formElement.password;
@@ -61,7 +61,7 @@ var _signupVue = new Vue({
 
         doSignup: function () {
             axios
-                .post(__base + '/auth/signup.json', $.param(_signupVue.uiElement.formElement))
+                .post(__base + '/auth/signup.json', $.param(_signupVue.uiElement.formElement), __axiosConfig)
                 .then(function (response) {
                     layer.close(_signupVue.layerLoading);
                     __doWithTcR(response.data, function (body) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>首页</title>
+    <title>实验工程</title>
 <#include "/WEB-INF/templates/commons/pre-lib.ftl"/>
     <link href="${.vars.staticBase}/styles/accounts/signin.css"
           type="text/css"
@@ -24,16 +24,14 @@
                 <fieldset>
                     <legend>注册</legend>
 
-                    <div class="am-form-group">
+                    <div class="am-form-group am-form-success am-form-icon am-form-feedback">
                         <label>昵称</label>
-                        <div class="am-input-group am-input-group-secondary">
-                            <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
-                            <input id="doc-signup-username"
-                                   type="text"
-                                   class="am-form-field"
-                                   name="username"
-                                   placeholder="请输入您的账号">
-                        </div>
+                        <input id="doc-signup-username"
+                               type="text"
+                               class="am-form-field"
+                               name="username"
+                               placeholder="请输入您的账号">
+                        <span class="am-icon-check"></span>
                     </div>
 
                     <div class="am-form-group">

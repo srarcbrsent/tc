@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>主页</title>
+    <title>实验工程</title>
 <#include "/WEB-INF/templates/common/pre-lib.ftl"/>
     <link href="${.vars.staticBase}/styles/home.css"
           type="text/css"

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>首页</title>
+    <title>实验工程</title>
 <#include "/WEB-INF/templates/commons/pre-lib.ftl"/>
     <link href="${.vars.staticBase}/styles/index.css"
           type="text/css"
