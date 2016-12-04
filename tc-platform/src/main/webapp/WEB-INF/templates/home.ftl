@@ -5,14 +5,14 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>实验工程</title>
-<#include "/WEB-INF/templates/common/pre-lib.ftl"/>
-    <link href="${.vars.staticBase}/styles/home.css"
+<#include "/WEB-INF/templates/commons/pre-lib.ftl"/>
+    <link href="${staticBase}/styles/home.css"
           type="text/css"
           rel="stylesheet"/>
 </head>
 <body>
 <!-- + header -->
-<#include "/WEB-INF/templates/common/header.ftl"/>
+<#include "/WEB-INF/templates/commons/header.ftl"/>
 <!-- - header -->
 
 <!-- + container -->
@@ -20,7 +20,7 @@
      class="layui-main">
     <!-- + menu -->
     <div id="menu_div">
-    <#include "/WEB-INF/templates/common/menu.ftl"/>
+    <#include "/WEB-INF/templates/commons/menu.ftl"/>
     </div>
     <!-- - menu -->
 
@@ -153,17 +153,17 @@
 <!-- - container -->
 
 <!-- + footer -->
-<#include "/WEB-INF/templates/common/footer.ftl"/>
+<#include "/WEB-INF/templates/commons/footer.ftl"/>
 <!-- - footer -->
 
-<#include "/WEB-INF/templates/common/post-lib.ftl"/>
-<script src="${.vars.staticBase}/libs/jqplugin/jquery.validate.min.js"
+<#include "/WEB-INF/templates/commons/post-lib.ftl"/>
+<script src="${staticBase}/libs/jqplugin/jquery.validate.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/libs/jqplugin/additional-methods.min.js"
+<script src="${staticBase}/libs/jqplugin/additional-methods.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/scripts/common/region.js"
+<script src="${staticBase}/scripts/common/region.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/scripts/home.js"
+<script src="${staticBase}/scripts/home.js"
         type="application/javascript"></script>
 </body>
 </html>

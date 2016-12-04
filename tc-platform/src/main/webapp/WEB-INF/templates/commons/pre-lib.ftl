@@ -3,25 +3,25 @@
       content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="icon"
       type="image/x-icon"
-      href="${.vars.staticBase}/images/favicon.ico"/>
+      href="${staticBase}/images/favicon.ico"/>
 
-<script src="${.vars.staticBase}/libs/jquery-3.1.0.min.js"
+<script src="${staticBase}/libs/jquery-3.1.0.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/libs/vue.min.js"
+<script src="${staticBase}/libs/vue.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/libs/axios.min.js"
+<script src="${staticBase}/libs/axios.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/libs/underscore.min.js"
+<script src="${staticBase}/libs/underscore.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/libs/assets/js/amazeui.min.js"
+<script src="${staticBase}/libs/assets/js/amazeui.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/libs/layer/layer.min.js"
+<script src="${staticBase}/libs/layer/layer.min.js"
         type="application/javascript"></script>
 
-<link href="${.vars.staticBase}/libs/normalize.min.css"
+<link href="${staticBase}/libs/normalize.min.css"
       type="text/css"
       rel="stylesheet"/>
-<link href="${.vars.staticBase}/libs/assets/css/amazeui.flat.min.css"
+<link href="${staticBase}/libs/assets/css/amazeui.flat.min.css"
       type="text/css"
       rel="stylesheet"/>
 

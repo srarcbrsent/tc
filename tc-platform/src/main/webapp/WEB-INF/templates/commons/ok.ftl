@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>ok</title>
-    <script src="http://static.tc.com/libs/jquery-3.1.0.min.js" type="application/javascript"></script>
-    <script src="http://static.tc.com/libs/layui/layui.js" type="application/javascript"></script>
-    <link href="http://static.tc.com/libs/normalize.min.css" type="text/css" rel="stylesheet"/>
-    <link href="http://static.tc.com/libs/layui/css/layui.css" type="text/css" rel="stylesheet"/>
+    <script src="${staticBase}/libs/jquery-3.1.0.min.js"
+            type="application/javascript"></script>
+    <script src="${staticBase}/libs/layui/layui.js"
+            type="application/javascript"></script>
+    <link href="${staticBase}/libs/normalize.min.css"
+          type="text/css"
+          rel="stylesheet"/>
+    <link href="${staticBase}/libs/layui/css/layui.css"
+          type="text/css"
+          rel="stylesheet"/>
     <style type="text/css">
         #header_div {
             width: 100%;
@@ -35,13 +41,14 @@
         </fieldset>
     </div>
 </div>
-<div id="main-container" class="layui-main">
+<div id="main-container"
+     class="layui-main">
     <fieldset class="layui-elem-field">
         <legend>${chineseDescription!"操作成功！"}</legend>
         <div class="layui-field-box">
             <p>${englishDescription!"Operation Success!"}</p>
             <hr/>
-            <a href="http://www.tc.com">返回首页</a>
+            <a href="/">返回首页</a>
         </div>
     </fieldset>
 </div>

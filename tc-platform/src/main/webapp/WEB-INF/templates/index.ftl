@@ -3,7 +3,7 @@
 <head>
     <title>实验工程</title>
 <#include "/WEB-INF/templates/commons/pre-lib.ftl"/>
-    <link href="${.vars.staticBase}/styles/index.css"
+    <link href="${staticBase}/styles/index.css"
           type="text/css"
           rel="stylesheet"/>
 </head>
@@ -17,7 +17,8 @@
     <div id="body"
          class="am-container">
         <!-- + signup form -->
-        <div id="doc-signup-div" class="am-u-lg-12">
+        <div id="doc-signup-div"
+             class="am-u-lg-12">
             <form id="doc-signup-form"
                   class="am-form">
                 <fieldset>
@@ -120,9 +121,9 @@
 </div>
 
 <#include "/WEB-INF/templates/commons/post-lib.ftl"/>
-<script src="${.vars.staticBase}/libs/jquery.md5.min.js"
+<script src="${staticBase}/libs/jquery.md5.min.js"
         type="application/javascript"></script>
-<script src="${.vars.staticBase}/scripts/index.js"
+<script src="${staticBase}/scripts/index.js"
         type="application/javascript"></script>
 </body>
 </html>
