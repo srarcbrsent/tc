@@ -4,20 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon"
+          type="image/x-icon"
+          href="http://static.tc.com/images/favicon.ico"/>
     <title>502</title>
     <script src="http://static.tc.com/libs/jquery-3.1.0.min.js"
-            type="application/javascript"></script>
-    <script src="http://static.tc.com/libs/layui/layui.js"
             type="application/javascript"></script>
     <link href="http://static.tc.com/libs/normalize.min.css"
           type="text/css"
           rel="stylesheet"/>
-    <link href="http://static.tc.com/libs/layui/css/layui.css"
-          type="text/css"
-          rel="stylesheet"/>
-    <link rel="icon"
-          type="image/x-icon"
-          href="http://static.tc.com/images/favicon.ico"/>
     <style type="text/css">
         #header_div {
             width: 100%;
@@ -27,30 +22,40 @@
             padding: 10px 0 10px 0;
         }
 
+        #header_div > div {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
         #header_div .layui-field-title {
             margin: 5px 0 5px 0;
         }
 
         #main-container {
-            margin-top: 140px;
+            width: 1000px;
+            margin: 140px auto 0 auto;
+        }
+
+        #main-container a {
+            background-color: rgba(0, 0, 0, 0);
+            color: rgb(14, 144, 210);
+            font-size: 14px;
+            text-decoration: none;
+            font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", FontAwesome, sans-serif;
         }
     </style>
 </head>
 <body>
 <div id="header_div">
-    <div class="layui-main">
-        <fieldset class="layui-elem-field layui-field-title">
-            <legend>
-                这只是一个测试用的工程而已，基友
-            </legend>
-        </fieldset>
+    <div>
+        <h3>这只是一个测试用的工程而已</h3>
     </div>
 </div>
-<div id="main-container" class="layui-main">
-    <fieldset class="layui-elem-field">
-        <legend>抱歉，服务器正在维护中，请稍后再试。</legend>
-        <div class="layui-field-box">
-            The server is in maintenance. Please try again later.
+<div id="main-container">
+    <fieldset>
+        <legend>&nbsp;&nbsp;抱歉，服务器正在维护中，请稍后再试。&nbsp;&nbsp;</legend>
+        <div>
+            <p>The server is in maintenance. Please try again later.</p>
         </div>
     </fieldset>
 </div>
