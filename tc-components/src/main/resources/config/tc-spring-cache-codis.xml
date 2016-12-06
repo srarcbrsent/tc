@@ -65,24 +65,6 @@
         <property name="valueSerializer" ref="objectValueSerializer"/>
     </bean>
 
-    <!-- codis server broker -->
-    <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisServerBroker">
-        <property name="tcJedisConfigList">
-            <list>
-                <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisServerBroker.TcJedisConfig">
-                    <property name="host" value="${properties.cache.codis.server.gone.master.host}"/>
-                    <property name="port" value="${properties.cache.codis.server.gone.master.port}"/>
-                    <property name="password" value="${properties.cache.codis.server.gone.master.password}"/>
-                </bean>
-                <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisServerBroker.TcJedisConfig">
-                    <property name="host" value="${properties.cache.codis.server.gtwo.master.host}"/>
-                    <property name="port" value="${properties.cache.codis.server.gtwo.master.port}"/>
-                    <property name="password" value="${properties.cache.codis.server.gtwo.master.password}"/>
-                </bean>
-            </list>
-        </property>
-    </bean>
-
     <!-- string key (string serialization), object value (jdk serialization) -->
     <bean id="soCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
         <property name="redisTemplate" ref="soCodisTemplate"/>

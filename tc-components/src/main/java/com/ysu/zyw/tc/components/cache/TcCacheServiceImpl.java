@@ -52,9 +52,6 @@ public class TcCacheServiceImpl implements TcCacheService {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(value, "null value is not allowed");
         redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.MILLISECONDS);
-        if (log.isDebugEnabled()) {
-            log.debug("cache set key [{}], value [{}], timeout [{}]", key, value, timeout);
-        }
     }
 
     @Override
@@ -64,9 +61,6 @@ public class TcCacheServiceImpl implements TcCacheService {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(clazz, "null clazz is not allowed");
         Object sValue = redisTemplate.opsForValue().get(key);
-        if (log.isDebugEnabled()) {
-            log.debug("cache get key [{}], value [{}], clazz [{}]", key, sValue, clazz);
-        }
         return (T) sValue;
     }
 
@@ -100,9 +94,6 @@ public class TcCacheServiceImpl implements TcCacheService {
             return loadValueByValueLoaderAndCacheIt(key, valueLoader, timeout);
         }
         if (Objects.nonNull(value)) {
-            if (log.isDebugEnabled()) {
-                log.debug("get object [{}] from cache by key [{}]", value, key);
-            }
             return value;
         } else {
             if (Objects.isNull(lock)) {
@@ -127,9 +118,6 @@ public class TcCacheServiceImpl implements TcCacheService {
         // lock and get
         T sValue = TcUtils.doQuietly(() -> (T) redisTemplate.opsForValue().get(key), null);
         if (Objects.nonNull(sValue)) {
-            if (log.isDebugEnabled()) {
-                log.debug("get object [{}] from cache by key [{}]", sValue, key);
-            }
             return sValue;
         }
         // not found, try load value.
@@ -150,9 +138,6 @@ public class TcCacheServiceImpl implements TcCacheService {
         TcUtils.doQuietly(() -> {
             redisTemplate.opsForValue().set(key, loadedValue, timeout, TimeUnit.MILLISECONDS);
         });
-        if (log.isDebugEnabled()) {
-            log.debug("put object [{}] into cache by key [{}], timeout [{}]", loadedValue, key, timeout);
-        }
         return loadedValue;
     }
 
@@ -174,9 +159,6 @@ public class TcCacheServiceImpl implements TcCacheService {
     public void delete(@Nonnull String key) {
         checkNotNull(key, "empty key is not allowed");
         redisTemplate.delete(key);
-        if (log.isDebugEnabled()) {
-            log.debug("cache delete key [{}]", key);
-        }
     }
 
     @Override
