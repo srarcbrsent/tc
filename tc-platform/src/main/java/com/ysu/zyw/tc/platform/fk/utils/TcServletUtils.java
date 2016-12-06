@@ -1,8 +1,11 @@
 package com.ysu.zyw.tc.platform.fk.utils;
 
+import lombok.experimental.UtilityClass;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
+@UtilityClass
 public class TcServletUtils {
 
     private static final String X_REAL_IP_HEADER = "X-Read-IP";
