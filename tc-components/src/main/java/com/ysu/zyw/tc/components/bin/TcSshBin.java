@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.ssh;
+package com.ysu.zyw.tc.components.bin;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 @Slf4j
 @UtilityClass
-public class TcSshService {
+public class TcSshBin {
 
     @SneakyThrows
     public static int exec(@Nonnull String host,
