@@ -1,26 +1,21 @@
 package com.ysu.zyw.tc.components.free;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class FreeTest {
 
-    private static FreeTest example = new FreeTest();
-
-    private static Map<Integer, Boolean> test =
-            new HashMap<Integer, Boolean>();
-
-    private FreeTest() {
-        test.put(1, true);
-    }
-
-    public static FreeTest getInstance() {
-        return example;
-    }
-
     public static void main(String[] args) {
-        FreeTest.getInstance();
+        String s = JSON.toJSONString("123123123",
+                SerializerFeature.WriteDateUseDateFormat,
+                SerializerFeature.DisableCircularReferenceDetect);
+        System.out.println("-" + s + "-");
+
+        String s1 = JSON.parseObject(s, new TypeReference<String>() {
+        });
+        System.out.println(s1);
     }
 
 }
