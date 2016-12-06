@@ -24,6 +24,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * Since codis not support keys command, so the group operation must be redesigned, and we decided to
+ * use a hash structure to implement that feature.
+ *
  * According to the redis community, if we want to set a expire time to a hash field, we can use that:
  *
  * If you need expiration for "data is invalid after X seconds" reasons, you can store another field
