@@ -1,6 +1,7 @@
 package com.ysu.zyw.tc.components.utils;
 
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
+import com.ysu.zyw.tc.base.utils.TcSerializationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -16,7 +17,7 @@ public class TcApplicationExaminer implements InitializingBean {
 
     private void logSystemTime() {
         log.info("application-timezone: [{}]",
-                TcJacksonObjectMapperHolder.objectMapper.getDateFormat().getTimeZone());
+                TcSerializationUtils.objectMapper.getDateFormat().getTimeZone());
         log.info("application-time: [{}]", TcDateUtils.format(new Date()));
     }
 

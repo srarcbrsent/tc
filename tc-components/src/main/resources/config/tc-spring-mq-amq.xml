@@ -26,7 +26,7 @@
 
     <bean id="mqMessageConverter" class="org.springframework.jms.support.converter.MappingJackson2MessageConverter">
         <property name="objectMapper"
-                  value="#{T(com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder).objectMapper}"/>
+                  value="#{T(com.ysu.zyw.tc.base.utils.TcSerializationUtils).objectMapper}"/>
         <property name="targetType"
                   value="#{T(org.springframework.jms.support.converter.MessageType).TEXT}"/>
         <property name="typeIdPropertyName" value="Hello"/>

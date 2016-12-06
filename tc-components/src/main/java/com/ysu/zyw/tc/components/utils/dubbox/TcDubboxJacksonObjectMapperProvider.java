@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.utils.dubbox;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder;
+import com.ysu.zyw.tc.base.utils.TcSerializationUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.ws.rs.ext.ContextResolver;
@@ -12,7 +12,7 @@ public class TcDubboxJacksonObjectMapperProvider implements ContextResolver<Obje
     @Override
     public ObjectMapper getContext(Class<?> aClass) {
         log.info("start to use tc object mapper as resteasy jaxrs jackson object mapper provider");
-        return TcJacksonObjectMapperHolder.objectMapper;
+        return TcSerializationUtils.objectMapper;
     }
 
 }

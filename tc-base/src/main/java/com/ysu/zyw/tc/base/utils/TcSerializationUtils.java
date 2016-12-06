@@ -17,10 +17,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @UtilityClass
 public class TcSerializationUtils {
 
-    private static final ObjectMapper objectMapper;
+    public static final ObjectMapper objectMapper;
 
     static {
-        // equal to com.ysu.zyw.tc.components.utils.TcJacksonObjectMapperHolder.objectMapper
         objectMapper = new ObjectMapper();
         objectMapper.setDateFormat(new SimpleDateFormat(TcDateUtils.FULL_DATE_FORMAT_VALUE));
         objectMapper.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
