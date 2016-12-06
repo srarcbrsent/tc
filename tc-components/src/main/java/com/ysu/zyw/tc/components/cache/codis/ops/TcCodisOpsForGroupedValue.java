@@ -30,6 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * in your hash with [fieldname]_expiresAt then always retrieve that with your [fieldname] to check
  * if the data is still valid.
  *
+ * @link https://github.com/antirez/redis/issues/1042
  * @warn this is not accurate, it depends on the cluster time.
  */
 @Slf4j
