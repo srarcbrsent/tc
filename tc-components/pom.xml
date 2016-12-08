@@ -286,11 +286,9 @@
             <version>0.1.54</version>
         </dependency>
 
-        <!-- test scope -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

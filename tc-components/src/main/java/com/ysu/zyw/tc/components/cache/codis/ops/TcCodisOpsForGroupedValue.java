@@ -6,7 +6,6 @@ import com.ysu.zyw.tc.components.cache.TcOpsForGroupedValue;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Nonnull;
@@ -75,7 +74,6 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(value, "null value is not allowed");
-        HashOperations<String, Object, Object> opsForHash = redisTemplate.opsForHash();
         redisTemplate.opsForHash().put(group, expiresAtFiled(key), expiresAt(timeout));
         redisTemplate.opsForHash().put(group, key, value);
     }
@@ -216,6 +214,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
         redisTemplate.opsForHash().delete(group, key, expiresAtFiled(key));
     }
 
+    // @warn may contains some expired keys, no necessary to implement accurate keys command.
     @Override
     public Set<String> keys(@Nonnull String group) {
         checkNotNull(group, "empty group is not allowed");
