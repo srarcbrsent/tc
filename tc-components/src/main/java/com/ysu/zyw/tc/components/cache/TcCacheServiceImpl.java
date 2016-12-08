@@ -12,11 +12,13 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -159,6 +161,11 @@ public class TcCacheServiceImpl implements TcCacheService {
     public void delete(@Nonnull String key) {
         checkNotNull(key, "empty key is not allowed");
         redisTemplate.delete(key);
+    }
+
+    @Override
+    public String buildKey(@Nonnull String group, @Nonnull String... keys) {
+        return group + ":" + Arrays.stream(keys).collect(Collectors.joining(":"));
     }
 
     @Override
