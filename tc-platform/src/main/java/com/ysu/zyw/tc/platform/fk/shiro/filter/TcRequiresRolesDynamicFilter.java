@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class TcRequiresRolesDynamiclyFilter extends AccessControlFilter {
+public class TcRequiresRolesDynamicFilter extends AccessControlFilter {
 
     @Resource
     private TcAuthenticationApi tcAuthenticationApi;

@@ -121,6 +121,9 @@
                         <property name="port" value="8443"/>
                     </bean>
                 </entry>
+                <entry key="requiresRoleDynamic">
+                    <bean class="com.ysu.zyw.tc.platform.fk.shiro.filter.TcRequiresRolesDynamicFilter"/>
+                </entry>
             </map>
         </property>
         <property name="filterChainDefinitions" value="${properties.security.shiro.filter.chain.definitions}"/>
