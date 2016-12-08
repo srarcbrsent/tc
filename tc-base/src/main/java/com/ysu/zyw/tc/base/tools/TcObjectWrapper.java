@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcHook<T> implements Serializable {
+public class TcObjectWrapper<T> implements Serializable {
 
     private T object;
 

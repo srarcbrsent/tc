@@ -11,6 +11,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -30,8 +31,8 @@ public class TcContextInitializer implements ServletContextListener {
                     .filter(method ->
                             AnnotationUtils.findAnnotation(method, TcInvokeContextInitialized.class).autorun())
                     .filter(((TcContextInitializer) AopContext.currentProxy())::isZeroParameter)
-                    .sorted((o1, o2) -> AnnotationUtils.findAnnotation(o1, TcInvokeContextInitialized.class).order() -
-                            AnnotationUtils.findAnnotation(o2, TcInvokeContextInitialized.class).order())
+                    .sorted(Comparator.comparingInt(o ->
+                            AnnotationUtils.findAnnotation(o, TcInvokeContextInitialized.class).order()))
                     .forEach(method ->
                             ((TcContextInitializer) AopContext.currentProxy()).execute(method,
                                     contextLifeCycleHandler));
@@ -50,8 +51,8 @@ public class TcContextInitializer implements ServletContextListener {
                     .filter(method ->
                             AnnotationUtils.findAnnotation(method, TcInvokeContextDestroyed.class).autorun())
                     .filter(((TcContextInitializer) AopContext.currentProxy())::isZeroParameter)
-                    .sorted((o1, o2) -> AnnotationUtils.findAnnotation(o1, TcInvokeContextDestroyed.class).order() -
-                            AnnotationUtils.findAnnotation(o2, TcInvokeContextDestroyed.class).order())
+                    .sorted(Comparator.comparingInt(o ->
+                            AnnotationUtils.findAnnotation(o, TcInvokeContextDestroyed.class).order()))
                     .forEach(method ->
                             ((TcContextInitializer) AopContext.currentProxy()).execute(method,
                                     contextLifeCycleHandler));

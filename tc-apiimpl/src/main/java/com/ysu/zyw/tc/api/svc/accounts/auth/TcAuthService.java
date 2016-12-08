@@ -6,7 +6,7 @@ import com.ysu.zyw.tc.api.dao.po.*;
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.base.constant.TcConstant;
-import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
@@ -73,7 +73,7 @@ public class TcAuthService {
                 .parallelStream()
                 .map(roleId ->
                         new TcAccountMapRole(
-                                TcIdWorker.upperCaseUuid(),
+                                TcIdGen.upperCaseUuid(),
                                 accountId,
                                 roleId,
                                 TcConstant.Sys.STR_32x0,
@@ -105,7 +105,7 @@ public class TcAuthService {
                 .parallelStream()
                 .map(permissionId ->
                         new TcAccountMapPermission(
-                                TcIdWorker.upperCaseUuid(),
+                                TcIdGen.upperCaseUuid(),
                                 accountId,
                                 permissionId,
                                 TcConstant.Sys.STR_32x0,

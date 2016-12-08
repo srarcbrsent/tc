@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
 import java.util.UUID;
 
 @UtilityClass
-public class TcIdWorker {
+public class TcIdGen {
 
     public static String upperCaseUuid() {
         return UUID.randomUUID().toString().replace(TcConstant.Str.HYPHEN, TcConstant.Str.EMPTY).toUpperCase();

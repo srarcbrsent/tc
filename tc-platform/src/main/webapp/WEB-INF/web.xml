@@ -62,6 +62,10 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>com.ysu.zyw.tc.components.utils.servlet.context.TcContextInitializer</listener-class>
+    </listener>
+
     <!-- spring mvc config -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>

@@ -42,6 +42,10 @@
 
     <import resource="classpath*:/config/tc-spring-svc.xml"/>
 
+    <bean class="com.ysu.zyw.tc.platform.fk.servlet.TcContextLifeCycleHandlerImpl">
+        <property name="devMode" value="${properties.environment.mode.dev}"/>
+    </bean>
+
     <bean class="com.ysu.zyw.tc.platform.fk.conf.TcConfig">
         <property name="fixedVerificationCode" value="${properties.config.fixed.verification.code}"/>
         <property name="tempDir" value="${properties.config.io.temp.dir}"/>

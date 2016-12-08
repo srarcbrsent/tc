@@ -8,7 +8,7 @@ import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
 import com.ysu.zyw.tc.base.ex.TcResourceNotFoundException;
-import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
@@ -119,7 +119,7 @@ public class TcAccountService {
         }
 
         // id
-        String id = TcIdWorker.upperCaseUuid();
+        String id = TcIdGen.upperCaseUuid();
         Date now = new Date();
 
         // account
@@ -131,7 +131,7 @@ public class TcAccountService {
                 .setDelected(false)
                 .setLockReleaseTime(now)
                 // FIXME if random token is already exists, account creation failed.
-                .setRandomToken(TcIdWorker.upperCaseUuid().substring(0, 16))
+                .setRandomToken(TcIdGen.upperCaseUuid().substring(0, 16))
                 .setUpdatedPerson(tiAccount.getOperatorAccountId())
                 .setUpdatedTimestamp(now)
                 .setCreatedPerson(tiAccount.getOperatorAccountId())

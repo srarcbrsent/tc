@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,11 +38,11 @@ public class CacheableTest {
 
     @Test
     public void test() {
-        String uuid1 = TcIdWorker.upperCaseUuid();
+        String uuid1 = TcIdGen.upperCaseUuid();
         Mongo mongo1 = new Mongo(uuid1,
-                Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
+                Lists.newArrayList(new Mongo.Orange(TcIdGen.upperCaseUuid())));
         Mongo mongo2 = new Mongo(uuid1,
-                Lists.newArrayList(new Mongo.Orange(TcIdWorker.upperCaseUuid())));
+                Lists.newArrayList(new Mongo.Orange(TcIdGen.upperCaseUuid())));
 
         assertMethodCall(0, 0, 0, 0, 0);
 

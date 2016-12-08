@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.impl.mbg.test;
 
-import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.base.utils.TcEncodingUtils;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
@@ -50,7 +50,7 @@ public class FreeTest {
 
     @Test
     public void test04() {
-        TiAccount tiAccount = new TiAccount().setId(TcIdWorker.upperCaseUuid());
+        TiAccount tiAccount = new TiAccount().setId(TcIdGen.upperCaseUuid());
         ToAccount toAccount = new ToAccount();
         BeanUtils.copyProperties(tiAccount, toAccount);
         System.out.println(toAccount);

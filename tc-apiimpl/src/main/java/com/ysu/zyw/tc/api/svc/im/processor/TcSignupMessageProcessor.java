@@ -3,7 +3,7 @@ package com.ysu.zyw.tc.api.svc.im.processor;
 import com.ysu.zyw.tc.api.dao.po.TcMessageWithBLOBs;
 import com.ysu.zyw.tc.base.constant.TcConstant;
 import com.ysu.zyw.tc.base.ex.TcException;
-import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.model.menum.TmPlatform;
 import com.ysu.zyw.tc.model.msg.TcSignupPitaya;
 
@@ -45,7 +45,7 @@ public class TcSignupMessageProcessor extends TcAbstractMessageProcessor {
         tcMessage
                 .setContent("Hello World!")
                 .setExtra(null)
-                .setId(TcIdWorker.upperCaseUuid())
+                .setId(TcIdGen.upperCaseUuid())
                 .setReceiverAccountId((String) infos.get(C_RECEIVER_ACCOUNT_ID))
                 .setReceiverRegionId((String) infos.get(C_RECEIVER_REGION_ID))
                 .setType(this.getTmMessageType())

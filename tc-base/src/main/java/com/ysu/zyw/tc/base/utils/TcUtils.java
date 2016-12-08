@@ -1,9 +1,12 @@
 package com.ysu.zyw.tc.base.utils;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -16,6 +19,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @UtilityClass
 public class TcUtils {
 
+    @Getter
+    @Setter
+    private static boolean devMode = false;
+
     public static void doQuietly(@Nonnull TcTask tcTask) {
         checkNotNull(tcTask);
         try {
@@ -25,13 +32,20 @@ public class TcUtils {
         }
     }
 
-    public static <R> R doQuietly(@Nonnull TcRTask<R> tcRTask, R defaultValue) {
+    public static <R> R doQuietly(@Nonnull TcRTask<R> tcRTask,
+                                  @Nullable R defaultValue) {
         checkNotNull(tcRTask);
         try {
             return tcRTask.execute();
         } catch (Exception e) {
             log.error("", e);
             return defaultValue;
+        }
+    }
+
+    public static void doInDevMode(@Nonnull TcTask tcTask) {
+        if (devMode) {
+            doQuietly(tcTask);
         }
     }
 

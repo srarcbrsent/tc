@@ -3,7 +3,7 @@ package com.ysu.zyw.tc.api.impl.mbg.test;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidPooledConnection;
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.base.tools.TcTuple;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import org.apache.commons.io.IOUtils;
@@ -442,7 +442,7 @@ public class DbTest {
                 PreparedStatement preparedStatement = connection.prepareStatement(
                         "INSERT INTO tm_item_property VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 Date now = new Date();
-                preparedStatement.setString(1, TcIdWorker.upperCaseUuid());
+                preparedStatement.setString(1, TcIdGen.upperCaseUuid());
                 preparedStatement.setString(2, itemId);
                 preparedStatement.setString(3, key);
                 preparedStatement.setString(4, value);

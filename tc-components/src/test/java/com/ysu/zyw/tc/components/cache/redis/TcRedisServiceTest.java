@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.cache.redis;
 
-import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.components.cache.TcCacheService;
 import com.ysu.zyw.tc.components.cache.codis.Mongo;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class TcRedisServiceTest {
 
     @Test
     public void test01() {
-        tcCacheService.set("2", new Mongo(TcIdWorker.upperCaseUuid(), null), 20000);
+        tcCacheService.set("2", new Mongo(TcIdGen.upperCaseUuid(), null), 20000);
         System.out.println(tcCacheService.get("2", Mongo.class));
     }
 

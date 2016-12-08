@@ -4,7 +4,7 @@ import com.taobao.metamorphosis.client.extension.spring.JavaSerializationMessage
 import com.taobao.metamorphosis.client.extension.spring.MessageBuilder;
 import com.taobao.metamorphosis.client.extension.spring.MetaqTemplate;
 import com.taobao.metamorphosis.exception.MetaClientException;
-import com.ysu.zyw.tc.base.tools.TcIdWorker;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.components.mq.metaq.model.TcApiCallMessage;
 import com.ysu.zyw.tc.components.mq.metaq.model.TcLogMessage;
 import com.ysu.zyw.tc.components.mq.metaq.subcribers.TcApiCallListener;
@@ -67,7 +67,7 @@ public class MetaqTest {
                     try {
                         metaqTemplate.send(MessageBuilder
                                 .withTopic(TOPIC_LOG)
-                                .withAttribute(TcIdWorker.upperCaseUuid())
+                                .withAttribute(TcIdGen.upperCaseUuid())
                                 .withBody(new TcLogMessage("log")));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -83,7 +83,7 @@ public class MetaqTest {
                     try {
                         metaqTemplate.send(MessageBuilder
                                 .withTopic(TOPIC_API_CALL)
-                                .withAttribute(TcIdWorker.upperCaseUuid())
+                                .withAttribute(TcIdGen.upperCaseUuid())
                                 .withBody(new TcApiCallMessage("apiimpl")));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -109,7 +109,7 @@ public class MetaqTest {
         JavaSerializationMessageBodyConverter javaSerializationMessageBodyConverter =
                 new JavaSerializationMessageBodyConverter();
         byte[] bytes = javaSerializationMessageBodyConverter.toByteArray(
-                new MetaBody(1, 2L, TcIdWorker.upperCaseUuid(), 4.5, new Date())
+                new MetaBody(1, 2L, TcIdGen.upperCaseUuid(), 4.5, new Date())
         );
         //noinspection unused
         MetaBody metaBody = (MetaBody) javaSerializationMessageBodyConverter.fromByteArray(bytes);
@@ -121,14 +121,14 @@ public class MetaqTest {
         TcHessianSerializationMessageBodyConverter<Object> tcJsonSerializationMessageBodyConverter =
                 new TcHessianSerializationMessageBodyConverter<>();
         byte[] bytes = tcJsonSerializationMessageBodyConverter.toByteArray(
-                new MetaBody(1, 2L, TcIdWorker.upperCaseUuid(), 4.5, new Date()));
+                new MetaBody(1, 2L, TcIdGen.upperCaseUuid(), 4.5, new Date()));
         MetaBody metaBody = (MetaBody) tcJsonSerializationMessageBodyConverter.fromByteArray(bytes);
         System.out.println(metaBody);
     }
 
     @Test
     public void test4() throws MetaClientException {
-        MetaBody metaBody = new MetaBody(1, 2L, TcIdWorker.upperCaseUuid(), 4.5, new Date());
+        MetaBody metaBody = new MetaBody(1, 2L, TcIdGen.upperCaseUuid(), 4.5, new Date());
         JavaSerializationMessageBodyConverter javaSerializationMessageBodyConverter =
                 new JavaSerializationMessageBodyConverter();
         TcHessianSerializationMessageBodyConverter<Object> tcHessianSerializationMessageBodyConverter =

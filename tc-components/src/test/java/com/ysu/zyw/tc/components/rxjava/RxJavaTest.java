@@ -2,7 +2,7 @@ package com.ysu.zyw.tc.components.rxjava;
 
 
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.base.tools.TcHook;
+import com.ysu.zyw.tc.base.tools.TcObjectWrapper;
 import lombok.SneakyThrows;
 import org.junit.Before;
 import org.junit.Test;
@@ -206,15 +206,15 @@ public class RxJavaTest {
     }
 
     private boolean doWithTest19() {
-        TcHook<Boolean> tcHook = new TcHook<>();
+        TcObjectWrapper<Boolean> tcObjectWrapper = new TcObjectWrapper<>();
         Observable.create(onSubscribe -> {
             sleep(1000);
             onSubscribe.onNext("Hello World");
             onSubscribe.onCompleted();
         }).timeout(1900, TimeUnit.MILLISECONDS)
                 .toBlocking()
-                .subscribe(t -> tcHook.setObject(true));
-        return tcHook.getObject();
+                .subscribe(t -> tcObjectWrapper.setObject(true));
+        return tcObjectWrapper.getObject();
     }
 
     @Test
