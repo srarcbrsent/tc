@@ -231,7 +231,7 @@
                         ${project.build.outputDirectory}/jetty/jetty-ssl.xml,
                         ${project.build.outputDirectory}/jetty/jetty-https.xml
                     </jettyXml>
-                    <stopKey>stop-tc-api-gateway</stopKey>
+                    <stopKey>stop-tc-platform</stopKey>
                     <stopPort>8081</stopPort>
                     <systemProperties>
                         <systemProperty>
