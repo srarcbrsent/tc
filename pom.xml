@@ -810,7 +810,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- maven com.ysu.zyw.tc.component.mbg.test plugin -->
+            <!-- maven test plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
