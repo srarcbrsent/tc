@@ -27,11 +27,11 @@
 
 <script type="text/javascript">
     // tc base
-    var __base = '${base}';
-    var __staticBase = '${staticBase}';
+    const __base = '${base}';
+    const __staticBase = '${staticBase}';
 
     // ajax help config
-    var __axiosConfig = {
+    const __axiosConfig = {
         // 6s
         timeout: 6000,
         xsrfCookieName: 'XSRF-TOKEN',
@@ -41,7 +41,7 @@
     };
 
     // ajax helper func
-    var __doWithTcR = function (tcR, okCallback, exCallback) {
+    const __doWithTcR = function (tcR, okCallback, exCallback) {
         if (_.isUndefined(tcR)) {
             layer.alert('系统繁忙，请稍后再试！');
         }

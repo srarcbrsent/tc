@@ -1,7 +1,5 @@
 package com.ysu.zyw.tc.base.utils;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,10 +16,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Slf4j
 @UtilityClass
 public class TcUtils {
-
-    @Getter
-    @Setter
-    private static boolean devMode = false;
 
     public static void doQuietly(@Nonnull TcTask tcTask) {
         checkNotNull(tcTask);
@@ -43,7 +37,7 @@ public class TcUtils {
         }
     }
 
-    public static void doInDevMode(@Nonnull TcTask tcTask) {
+    public static void doInDevMode(@Nonnull TcTask tcTask, boolean devMode) {
         if (devMode) {
             doQuietly(tcTask);
         }

@@ -1,5 +1,5 @@
 // 登陆相关
-var _signupVue = new Vue({
+const _signupVue = new Vue({
     el: '#doc-signup-div',
     data: {
         uiElement: {

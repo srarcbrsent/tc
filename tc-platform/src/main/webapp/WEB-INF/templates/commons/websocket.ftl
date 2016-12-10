@@ -11,7 +11,7 @@
     // 不需要认证的 ／ 需要认证的
     // 单点 ／ 群发
     // 消息留存
-    var _TcWs = {
+    const _TcWs = {
         wsUrl: 'http://websocket.tc.com/ep',
 
         username: '15862c20cd700ea',
@@ -31,9 +31,9 @@
         },
 
         subscribe: function (handlers) {
-            for (var i = 0; i < handlers.length; i++) {
-                var handler = handlers[i];
-                var subscription = _TcWs.client.subscribe(handler.topic, handler.handler);
+            for (let i = 0; i < handlers.length; i++) {
+                let handler = handlers[i];
+                let subscription = _TcWs.client.subscribe(handler.topic, handler.handler);
                 _TcWs.subscriptions.push({
                     name: handler.name,
                     subscription: subscription
