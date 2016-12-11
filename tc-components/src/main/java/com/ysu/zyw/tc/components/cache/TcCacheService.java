@@ -32,8 +32,8 @@ public interface TcCacheService {
 
     void delete(@Nonnull String key);
 
-    String buildKey(@Nonnull String group,
-                    @Nonnull String...keys);
+    String buildLogicKey(@Nonnull String group,
+                         @Nonnull String...keys);
 
     String buildHashtag(@Nonnull String hashtag,
                         @Nonnull String key);

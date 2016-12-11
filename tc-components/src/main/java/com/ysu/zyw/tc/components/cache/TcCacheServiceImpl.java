@@ -164,7 +164,7 @@ public class TcCacheServiceImpl implements TcCacheService {
     }
 
     @Override
-    public String buildKey(@Nonnull String group, @Nonnull String... keys) {
+    public String buildLogicKey(@Nonnull String group, @Nonnull String... keys) {
         return group + ":" + Arrays.stream(keys).collect(Collectors.joining(":"));
     }
 

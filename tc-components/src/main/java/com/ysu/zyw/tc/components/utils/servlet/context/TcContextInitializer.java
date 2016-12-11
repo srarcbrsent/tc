@@ -1,7 +1,6 @@
 package com.ysu.zyw.tc.components.utils.servlet.context;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.aop.framework.AopContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.ReflectionUtils;
@@ -30,12 +29,10 @@ public class TcContextInitializer implements ServletContextListener {
                             Objects.nonNull(AnnotationUtils.findAnnotation(method, TcInvokeContextInitialized.class)))
                     .filter(method ->
                             AnnotationUtils.findAnnotation(method, TcInvokeContextInitialized.class).autorun())
-                    .filter(((TcContextInitializer) AopContext.currentProxy())::isZeroParameter)
+                    .filter(this::isZeroParameter)
                     .sorted(Comparator.comparingInt(o ->
                             AnnotationUtils.findAnnotation(o, TcInvokeContextInitialized.class).order()))
-                    .forEach(method ->
-                            ((TcContextInitializer) AopContext.currentProxy()).execute(method,
-                                    contextLifeCycleHandler));
+                    .forEach(method -> execute(method, contextLifeCycleHandler));
         }
     }
 
@@ -50,12 +47,10 @@ public class TcContextInitializer implements ServletContextListener {
                             Objects.nonNull(AnnotationUtils.findAnnotation(method, TcInvokeContextDestroyed.class)))
                     .filter(method ->
                             AnnotationUtils.findAnnotation(method, TcInvokeContextDestroyed.class).autorun())
-                    .filter(((TcContextInitializer) AopContext.currentProxy())::isZeroParameter)
+                    .filter(this::isZeroParameter)
                     .sorted(Comparator.comparingInt(o ->
                             AnnotationUtils.findAnnotation(o, TcInvokeContextDestroyed.class).order()))
-                    .forEach(method ->
-                            ((TcContextInitializer) AopContext.currentProxy()).execute(method,
-                                    contextLifeCycleHandler));
+                    .forEach(method -> execute(method, contextLifeCycleHandler));
         }
     }
 

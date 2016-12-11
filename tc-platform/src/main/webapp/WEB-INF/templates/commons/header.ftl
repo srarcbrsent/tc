@@ -22,5 +22,13 @@
         </form>
     </div>
 </header>
+<style type="text/css">
+    #header > div > ul > li > a:hover,
+    #header > div > ul > li > a:focus {
+        background-color: transparent;
+    }
 
-
+    #header > div > ul > li > a:after {
+        display: none;
+    }
+</style>

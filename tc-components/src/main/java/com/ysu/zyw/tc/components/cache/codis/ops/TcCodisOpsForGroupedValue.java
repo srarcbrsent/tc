@@ -163,7 +163,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
         return loadValueByValueLoaderAndCacheIt(group, key, valueLoader, timeout);
     }
 
-    @SuppressWarnings({"Duplicates", "UnusedParameters"})
+    @SuppressWarnings("Duplicates")
     private <T extends Serializable> T loadValueByValueLoaderAndCacheIt(@Nonnull String group,
                                                                         @Nonnull String key,
                                                                         @Nonnull Callable<T> valueLoader,
