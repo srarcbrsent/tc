@@ -182,8 +182,7 @@ public class TcRedisOpsForGroupedValue implements TcOpsForGroupedValue {
     @Override
     public Set<String> keys(@Nonnull String group) {
         checkNotNull(group, "empty group is not allowed");
-        Set<String> keys = redisTemplate.keys(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + "*");
-        return keys;
+        return redisTemplate.keys(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + "*");
     }
 
     @Override
