@@ -10,8 +10,7 @@ public class IdConstraintValidator implements ConstraintValidator<Id, String> {
 
     @Override
     public boolean isValid(String validStr, ConstraintValidatorContext constraintContext) {
-        return TcValidator.isNull(validStr) ||
-                (TcValidator.minLength(validStr, 32) && TcValidator.maxLength(validStr, 32));
+        return TcValidator.isNull(validStr) || TcValidator.isSafeString(validStr, 32, 32);
     }
 
     @Override

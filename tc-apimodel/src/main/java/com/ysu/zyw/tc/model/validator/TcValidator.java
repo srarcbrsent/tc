@@ -26,39 +26,9 @@ public class TcValidator extends GenericValidator {
         return !GenericValidator.isBlankOrNull(value);
     }
 
-    public static boolean isSafeString(String value, int min, int max, boolean oneChineseAs2Char) {
-        if (isNull(value)) {
-            return false;
-        }
+    public static boolean isSafeString(String value, int min, int max) {
+        return !isNull(value) && value.length() >= min && value.length() <= max;
 
-        int chars = 0;
-        for (String token : value.split("")) {
-            if (englishCharPattern.matcher(token).matches()) {
-                chars += 1;
-            } else if (chineseCharPattern.matcher(token).matches()) {
-                chars += oneChineseAs2Char ? 2 : 1;
-            } else {
-                return false;
-            }
-        }
-
-        return chars >= min && chars <= max;
-    }
-
-    public static boolean isEnglish(String value, int min, int max) {
-        if (isNull(value)) {
-            return false;
-        }
-
-        if (value.length() < min || value.length() > max) {
-            return false;
-        }
-
-        if (!englishPattern.matcher(value).matches()) {
-            return false;
-        }
-
-        return true;
     }
 
     public static boolean isMobile(String value) {

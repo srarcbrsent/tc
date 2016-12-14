@@ -17,8 +17,6 @@ public @interface SafeString {
 
     int max() default Integer.MAX_VALUE;
 
-    boolean oneChineseAs2Char() default false;
-
     String message() default "含有非法的字符串！";
 
     Class<?>[] groups() default {};
