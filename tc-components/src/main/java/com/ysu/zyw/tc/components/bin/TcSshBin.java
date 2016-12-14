@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 @Slf4j
@@ -50,7 +51,7 @@ public class TcSshBin {
                 int i = inputStream.read(bytes, 0, 1024);
                 if (i < 0)
                     break;
-                sb.append(new String(bytes, 0, i));
+                sb.append(new String(bytes, 0, i, Charset.forName("UTF-8")));
             }
             if (channel.isClosed()) {
                 if (inputStream.available() > 0)
