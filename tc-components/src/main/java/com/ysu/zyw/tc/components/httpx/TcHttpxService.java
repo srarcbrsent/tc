@@ -6,6 +6,7 @@ import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.BooleanUtils;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -118,7 +120,7 @@ public class TcHttpxService {
         }
         if (ClassUtils.isPrimitiveOrWrapper(obj.getClass()) || obj instanceof String) {
             // is primitive type
-            multiValueMap.set(currentPath, String.valueOf(obj));
+            multiValueMap.set(currentPath, urlEncode(String.valueOf(obj)));
         } else if (obj instanceof Map) {
             // is map
             Map<?, ?> rValue = (Map) obj;
@@ -184,9 +186,14 @@ public class TcHttpxService {
         checkNotNull(form);
         return form.entrySet().stream()
                 .map(pair -> pair.getValue().stream()
-                        .map(value -> pair.getKey() + "=" + value)
+                        .map(value -> pair.getKey() + "=" + urlEncode(value))
                         .collect(Collectors.joining("&")))
                 .collect(Collectors.joining("&"));
+    }
+
+    @SneakyThrows
+    public String urlEncode(String value) {
+        return URLEncoder.encode(value, "UTF-8");
     }
 
     protected HttpHeaders addReqContentType(HttpHeaders httpHeaders, String mediaType) {
