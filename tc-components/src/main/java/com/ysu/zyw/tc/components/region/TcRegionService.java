@@ -28,18 +28,11 @@ public class TcRegionService implements InitializingBean {
     @Setter
     private String regionFilepath;
 
-    private static List<TcProvince> tcCompletedProvinceList;
-
     private static List<TcProvince> tcProvinceList;
 
     private static Map<String, List<TcProvince.TcCity>> tcCityListGroup;
 
     private static Map<String, List<TcProvince.TcCity.TcDistrict>> tcDistrictListGroup;
-
-    public List<TcProvince> findAll() {
-        checkNotNull(tcCompletedProvinceList);
-        return tcCompletedProvinceList;
-    }
 
     public List<TcProvince> findProvinceList() {
         checkNotNull(tcProvinceList);
@@ -82,21 +75,23 @@ public class TcRegionService implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         InputStream regionInputStream = this.getClass().getResourceAsStream(regionFilepath);
         String regionJson = IOUtils.toString(regionInputStream, "UTF-8");
-        tcCompletedProvinceList = TcSerializationUtils.readJson(regionJson, new TypeReference<List<TcProvince>>() {
-        });
-        // build completed province list
-        tcCompletedProvinceList = buildTwoWayLink(tcCompletedProvinceList);
-        checkArgument(CollectionUtils.isNotEmpty(tcCompletedProvinceList), "empty region is not allowed");
-        log.info("load completed province list success, load [{}] provinces", tcCompletedProvinceList.size());
+        IOUtils.closeQuietly(regionInputStream);
+
+        List<TcProvince> tcCompletedProvinceList = TcSerializationUtils.readJson(regionJson,
+                new TypeReference<List<TcProvince>>() {
+                });
+
         // build province list
         tcProvinceList = buildProvinceList(tcCompletedProvinceList);
         checkArgument(CollectionUtils.isNotEmpty(tcProvinceList), "empty region is not allowed");
         log.info("load province list success, load [{}] provinces", tcProvinceList.size());
+
         // build city list
         tcCityListGroup = buildCityListGroup(tcCompletedProvinceList);
         checkArgument(tcCityListGroup.size() > 0, "empty region is not allowed");
         log.info("load city list success, load [{}] cities",
                 tcCityListGroup.entrySet().stream().mapToInt(entry -> entry.getValue().size()).sum());
+
         // build district list
         tcDistrictListGroup = buildDistrictListGroup(tcCompletedProvinceList);
         checkArgument(tcDistrictListGroup.size() > 0, "empty region is not allowed");
@@ -123,11 +118,10 @@ public class TcRegionService implements InitializingBean {
     private Map<String, List<TcProvince.TcCity>> buildCityListGroup(List<TcProvince> tcCompletedProvinceList) {
         Map<String, List<TcProvince.TcCity>> cityListGroup = Maps.newLinkedHashMap();
         tcCompletedProvinceList.parallelStream().forEach(tcProvince -> {
-            TcProvince copyProvince = tcProvince.copy();
             List<TcProvince.TcCity> tcCityListCopy = Lists.newLinkedList();
             tcProvince.getTcCityList().parallelStream().forEach(tcCity -> {
                 TcProvince.TcCity copyCity = tcCity.copy();
-                copyCity.setTcProvince(copyProvince);
+                copyCity.setCode(tcProvince.getCode() + tcCity.getCode());
                 tcCityListCopy.add(copyCity);
             });
             cityListGroup.put(tcProvince.getCode(), tcCityListCopy);
@@ -139,14 +133,11 @@ public class TcRegionService implements InitializingBean {
             List<TcProvince> tcCompletedProvinceList) {
         Map<String, List<TcProvince.TcCity.TcDistrict>> districtListGroup = Maps.newLinkedHashMap();
         tcCompletedProvinceList.parallelStream().forEach(tcProvince -> {
-            TcProvince copyProvince = tcProvince.copy();
             tcProvince.getTcCityList().parallelStream().forEach(tcCity -> {
-                TcProvince.TcCity copyCity = tcCity.copy();
-                copyCity.setTcProvince(copyProvince);
                 List<TcProvince.TcCity.TcDistrict> tcDistrictListCopy = Lists.newLinkedList();
                 tcCity.getTcDistrictList().parallelStream().forEach(tcDistrict -> {
                     TcProvince.TcCity.TcDistrict copyDistrict = tcDistrict.copy();
-                    copyDistrict.setTcCity(copyCity);
+                    copyDistrict.setCode(tcProvince.getCode() + tcCity.getCode() + tcDistrict.getCode());
                     tcDistrictListCopy.add(copyDistrict);
                 });
                 districtListGroup.put(tcCity.getCode(), tcDistrictListCopy);

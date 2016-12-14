@@ -22,10 +22,6 @@ public class TcProvince implements Serializable {
 
     private List<TcCity> tcCityList;
 
-    public String completeName() {
-        return name;
-    }
-
     public TcProvince copy() {
         return new TcProvince(this.getCode(), this.getName(), null);
     }
@@ -46,10 +42,6 @@ public class TcProvince implements Serializable {
 
         private List<TcDistrict> tcDistrictList;
 
-        public String completeName() {
-            return tcProvince.completeName() + "-" + name;
-        }
-
         public TcCity copy() {
             return new TcCity(this.getCode(), this.getName(), null, null);
         }
@@ -67,10 +59,6 @@ public class TcProvince implements Serializable {
             private String name;
 
             private TcCity tcCity;
-
-            public String completeName() {
-                return tcCity.completeName() + "-" + name;
-            }
 
             public TcDistrict copy() {
                 return new TcDistrict(this.getCode(), this.getName(), null);
