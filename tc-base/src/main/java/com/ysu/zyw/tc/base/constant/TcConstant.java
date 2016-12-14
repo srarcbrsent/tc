@@ -23,12 +23,6 @@ public class TcConstant {
 
         public static final String SHIRO_ACTIVE_SESSION_CACHE = "activeSessionCache";
 
-        public static final String SHIRO_USERNAME_PASSWORD_REALM = "jdbcUsernamePasswordRealm";
-
-        public static final String SHIRO_MOBILE_PASSWORD_REALM = "jdbcMobilePasswordRealm";
-
-        public static final String SHIRO_EMAIL_PASSWORD_REALM = "jdbcEmailPasswordRealm";
-
     }
 
     public static abstract class Str {

@@ -43,6 +43,7 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
                         .map(ToRole::getId)
                         .collect(Collectors.toList())
         );
+
         authorizationInfo.addStringPermissions(
                 toPermissions.parallelStream()
                         .map(ToPermission::getId)
@@ -53,7 +54,8 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+            throws AuthenticationException {
         checkArgument(token instanceof UsernamePasswordToken,
                 "this realm is only support username password token");
 
@@ -75,7 +77,8 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
     }
 
     protected ToAccount fetchAccount(String username) {
-        TcR<ToAccount> tcR = tcAuthenticationApi.signup(username, true, true, true);
+        TcR<ToAccount> tcR = tcAuthenticationApi.signup(
+                username, true, true, true);
 
         if (tcR.isPresent()) {
             return tcR.get();

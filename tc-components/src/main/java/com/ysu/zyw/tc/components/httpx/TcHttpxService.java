@@ -27,6 +27,21 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * @warn do not directly return the responseEntity to springmvc's controller,
+ * because this responseEntity means the response of the next layer, and the
+ * springmvc's return value means the response of this layer, and the response
+ * of next layer will carry some special response headers(such as encoding,
+ * transfer-encoding gzip etc.), and those response header has it's own meaning.
+ *
+ * for example, the lower layer server encoding the response to gzip, and add a
+ * header named content-encoding: gzip, and upper layer receive the response
+ * carry a header named content-encoding: gzip, and directly return it to
+ * springmvc controller, springmvc(or container, proxy etc) see this header,
+ * they do not encoding the response to gzip, but the user do not encoding
+ * the response stream to gzip, but set a header content-encoding: gzip, so
+ * this will lead to a mistake.
+ */
 @Slf4j
 public class TcHttpxService {
 
