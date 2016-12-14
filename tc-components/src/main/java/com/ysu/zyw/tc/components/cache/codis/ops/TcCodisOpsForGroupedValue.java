@@ -42,7 +42,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
     @Setter
     private static long tryLockTimeout = 3000;
 
-    private static final String _EXPIRES_AT = "___expiresAt";
+    private static final String HASH_FIELD_EXPIRES_AT_SUFFIX = "___expiresAt";
 
     @Getter
     @Setter
@@ -50,10 +50,11 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
 
     protected String expiresAtFiled(String field) {
         checkNotNull(field);
-        if (field.contains(_EXPIRES_AT)) {
-            throw new TcException(_EXPIRES_AT + " is a inner access field, you can not use it in your code");
+        if (field.contains(HASH_FIELD_EXPIRES_AT_SUFFIX)) {
+            throw new TcException(HASH_FIELD_EXPIRES_AT_SUFFIX +
+                    " is a inner access field part, you can not use it in your code");
         }
-        return field + _EXPIRES_AT;
+        return field + HASH_FIELD_EXPIRES_AT_SUFFIX;
     }
 
     protected long expiresAt(long timeout) {
@@ -221,7 +222,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
         Set<Object> oKeys = redisTemplate.opsForHash().keys(group);
         return oKeys.stream()
                 .map(Object::toString)
-                .filter(key -> !key.contains(_EXPIRES_AT))
+                .filter(key -> !key.contains(HASH_FIELD_EXPIRES_AT_SUFFIX))
                 .collect(Collectors.toSet());
     }
 

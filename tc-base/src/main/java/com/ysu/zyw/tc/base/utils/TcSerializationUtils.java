@@ -28,20 +28,22 @@ public class TcSerializationUtils {
     @SneakyThrows
     public static byte[] serialize(@Nonnull Serializable value) {
         checkNotNull(value, "null writeJson value is not allowed");
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(value);
-        return byteArrayOutputStream.toByteArray();
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
+            objectOutputStream.writeObject(value);
+            return byteArrayOutputStream.toByteArray();
+        }
     }
 
     @SneakyThrows
     public static <T> T deserialize(@Nonnull byte[] bytes, @Nonnull Class<T> clazz) {
         checkNotNull(bytes, "null readJson bytes is not allowed");
         checkNotNull(clazz, "null readJson clazz is not allowed");
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        Object object = objectInputStream.readObject();
-        return clazz.cast(object);
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
+            Object object = objectInputStream.readObject();
+            return clazz.cast(object);
+        }
     }
 
     public static byte[] serializeStr(@Nonnull String text) {
