@@ -43,6 +43,18 @@ public class TcUtils {
         }
     }
 
+    public static void doIfTrue(@Nonnull TcTask tcTask, boolean expression) {
+        if (expression) {
+            tcTask.execute();
+        }
+    }
+
+    public static void doIfFalse(@Nonnull TcTask tcTask, boolean expression) {
+        if (!expression) {
+            tcTask.execute();
+        }
+    }
+
     public static <T1, T2, R1, R2> void match(@Nonnull List<T1> l1,
                                               @Nonnull Function<T1, R1> m1,
                                               @Nonnull List<T2> l2,
