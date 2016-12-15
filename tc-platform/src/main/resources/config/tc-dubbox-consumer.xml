@@ -16,7 +16,8 @@
 
     <dubbo:consumer version="${properties.rpc.dubbox.consumer.version}"
                     timeout="${properties.rpc.dubbox.consumer.timeout}"
-                    retries="${properties.rpc.dubbox.consumer.retries}"/>
+                    retries="${properties.rpc.dubbox.consumer.retries}"
+                    check="${properties.rpc.dubbox.consumer.check}"/>
 
     <dubbo:monitor protocol="registry"/>
 

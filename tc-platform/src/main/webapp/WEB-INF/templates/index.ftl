@@ -8,7 +8,8 @@
           rel="stylesheet"/>
 </head>
 <body>
-<div>
+<!-- + wrapper -->
+<div id="wrapper">
     <!-- + header -->
 <#include "/WEB-INF/templates/commons/header.ftl"/>
     <!-- - header -->
@@ -119,11 +120,9 @@
 <#include "/WEB-INF/templates/commons/footer.ftl"/>
     <!-- - footer -->
 </div>
-
+<!-- - wrapper -->
 <#include "/WEB-INF/templates/commons/post-lib.ftl"/>
-<script src="${staticBase}/libs/jquery.md5.min.js"
-        type="application/javascript"></script>
-<script src="${staticBase}/scripts/index.js"
-        type="application/javascript"></script>
+<@static.script src="/libs/jquery.md5.min.js"/>
+<@static.script src="/scripts/index.js"/>
 </body>
 </html>

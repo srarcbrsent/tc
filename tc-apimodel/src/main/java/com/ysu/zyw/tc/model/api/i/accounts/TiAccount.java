@@ -35,7 +35,7 @@ public class TiAccount implements Serializable {
     private String id;
 
     @NotEmpty(groups = TcC.class)
-    @SafeString(min = 6, max = 16, oneChineseAs2Char = false, groups = TcAll.class)
+    @SafeString(min = 6, max = 16, groups = TcAll.class)
     private String name;
 
     @NotEmpty(groups = TcC.class)
