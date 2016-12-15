@@ -1,10 +1,10 @@
 // regions
 function _regionsVue(el, data) {
-    let _regionsVue = new Vue({
+    var _regionsVue = new Vue({
         el: el,
         data: data,
         mounted: function () {
-            let $regions = $(el);
+            var $regions = $(el);
             // bind province
             $regions.find('> select:nth-child(1)').on('change', function () {
                 _regionsVue.currProvince = $(this).val();

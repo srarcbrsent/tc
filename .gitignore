@@ -28,15 +28,8 @@ target/
 .DS_Store
 Thumbs.db
 
-#grunt
-#node_modules
-#dist
-#.tmp
-#.sass-cache
-#bower_components
-
-#ignore target
-target/*
-
 #ignore logs
 logs/
+
+# gulp node modules
+node_modules/

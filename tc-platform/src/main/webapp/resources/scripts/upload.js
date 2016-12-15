@@ -1,4 +1,4 @@
-let uploader = WebUploader.create({
+var uploader = WebUploader.create({
 
     // swf文件路径
     swf: __base + '/js/Uploader.swf',
