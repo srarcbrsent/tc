@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>实验工程</title>
-<#include "/WEB-INF/templates/commons/pre-lib.ftl"/>
+    @@include('src/html/commons/pre-lib.html')
     <link href="${staticBase}/styles/index.css"
           type="text/css"
           rel="stylesheet"/>
@@ -11,7 +11,7 @@
 <!-- + wrapper -->
 <div id="wrapper">
     <!-- + header -->
-<#include "/WEB-INF/templates/commons/header.ftl"/>
+    @@include('src/html/commons/header.html')
     <!-- - header -->
 
     <!-- + body -->
@@ -117,11 +117,11 @@
     <!-- - body -->
 
     <!-- + footer -->
-<#include "/WEB-INF/templates/commons/footer.ftl"/>
+    @@include('src/html/commons/footer.html')
     <!-- - footer -->
 </div>
 <!-- - wrapper -->
-<#include "/WEB-INF/templates/commons/post-lib.ftl"/>
+@@include('src/html/commons/post-lib.html')
 <@static.script src="/libs/jquery.md5.min.js"/>
 <@static.script src="/scripts/index.js"/>
 </body>

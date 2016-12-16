@@ -31,9 +31,9 @@
         },
 
         subscribe: function (handlers) {
-            for (let i = 0; i < handlers.length; i++) {
-                let handler = handlers[i];
-                let subscription = _TcWs.client.subscribe(handler.topic, handler.handler);
+            for (var i = 0; i < handlers.length; i++) {
+                var handler = handlers[i];
+                var subscription = _TcWs.client.subscribe(handler.topic, handler.handler);
                 _TcWs.subscriptions.push({
                     name: handler.name,
                     subscription: subscription
@@ -76,5 +76,4 @@
             }
         ]);
     });
-
 </script>
