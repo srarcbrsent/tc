@@ -8,11 +8,6 @@
     <display-name>tc-platform</display-name>
     <description>tc-platform</description>
 
-    <!-- welcome files -->
-    <welcome-file-list>
-        <welcome-file>/index.html</welcome-file>
-    </welcome-file-list>
-
     <!-- xsrf filter -->
     <filter>
         <filter-name>xsrfFilter</filter-name>
@@ -38,11 +33,6 @@
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
         <url-pattern>*.json</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>shiroFilter</filter-name>
-        <url-pattern>*.html</url-pattern>
     </filter-mapping>
 
     <!-- spring config -->
@@ -83,17 +73,7 @@
 
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.html</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.json</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <!-- druid monitor -->
@@ -122,17 +102,17 @@
     <!-- error page -->
     <error-page>
         <error-code>500</error-code>
-        <location>/500.html</location>
+        <location>/500.json</location>
     </error-page>
 
     <error-page>
         <error-code>404</error-code>
-        <location>/404.html</location>
+        <location>/404.json</location>
     </error-page>
 
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/500.html</location>
+        <location>/500.json</location>
     </error-page>
 
 </web-app>

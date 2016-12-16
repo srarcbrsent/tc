@@ -15,7 +15,6 @@
         <module>tc-api</module>
         <module>tc-apiimpl</module>
         <module>tc-platform</module>
-        <module>tc-static-resource-maven-plugin</module>
     </modules>
 
     <properties>

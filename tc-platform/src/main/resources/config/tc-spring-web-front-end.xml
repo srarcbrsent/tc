@@ -44,48 +44,10 @@
         <property name="ajax5xx" value="/server_error.json"/>
     </bean>
 
-    <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value=""/>
-        <property name="defaultEncoding" value="UTF-8"/>
-        <property name="freemarkerSettings">
-            <props>
-                <prop key="template_update_delay">10</prop>
-                <prop key="default_encoding">UTF-8</prop>
-                <prop key="locale">zh_CN</prop>
-                <prop key="boolean_format">true,false</prop>
-                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss.SSS</prop>
-                <prop key="date_format">yyyy-MM-dd</prop>
-                <prop key="time_format">HH:mm:ss</prop>
-                <prop key="number_format">0.##</prop>
-                <prop key="template_exception_handler">
-                    com.ysu.zyw.tc.components.utils.handler.TcFreemarkerExceptionHandler
-                </prop>
-            </props>
-        </property>
-        <property name="freemarkerVariables">
-            <map>
-                <entry key="base" value="${properties.web.freemarker.vars.base}"/>
-                <entry key="staticBase" value="${properties.web.freemarker.vars.static.base}"/>
-                <entry key="shiro" value="#{new com.ysu.zyw.tc.platform.fk.shiro.tags.ShiroTags()}"/>
-                <entry key="static" value="#{new com.ysu.zyw.tc.platform.fk.fe.TcStaticTags()}"/>
-            </map>
-        </property>
-    </bean>
-
-    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="order" value="0"/>
-        <property name="suffix" value=""/>
-        <property name="contentType" value="text/html;charset=UTF-8"/>
-    </bean>
-
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"/>
         <!-- 5m -->
         <property name="maxUploadSize" value="15242880"/>
-    </bean>
-
-    <bean class="com.ysu.zyw.tc.components.utils.freemarker.TcFreemarkerRender">
-        <property name="freeMarkerConfigurer" ref="freeMarkerConfigurer"/>
     </bean>
 
 </beans>
