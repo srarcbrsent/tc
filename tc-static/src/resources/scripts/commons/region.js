@@ -51,7 +51,7 @@ function _regionsVue(el, data) {
 
             currCity: function (city) {
                 _regionsVue.districts = [];
-                if (_.isUndefined(city) || city == '') {
+                if (_.isUndefined(city) || city === '') {
                     return;
                 }
                 axios

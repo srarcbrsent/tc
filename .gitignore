@@ -33,3 +33,6 @@ logs/
 
 # gulp node modules
 node_modules/
+
+# static dist
+dist/

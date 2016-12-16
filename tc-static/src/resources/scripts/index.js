@@ -1,5 +1,5 @@
 // 登陆相关
-const _signupVue = new Vue({
+var _signupVue = new Vue({
     el: '#doc-signup-div',
     data: {
         uiElement: {
@@ -65,7 +65,7 @@ const _signupVue = new Vue({
                 .then(function (response) {
                     layer.close(_signupVue.layerLoading);
                     __doWithTcR(response.data, function (body) {
-                        if (body == 0) {
+                        if (body === 0) {
                             // signup succ, reload page, will auto redirect to home.
                             window.location.reload();
                             return;
@@ -113,21 +113,21 @@ const _signupVue = new Vue({
             return {
                 'am-input-group-primary': this.stateElement.usernameValid,
                 'am-input-group-danger': !this.stateElement.usernameValid
-            }
+            };
         },
 
         passwordClass: function () {
             return {
                 'am-input-group-primary': this.stateElement.passwordValid,
                 'am-input-group-danger': !this.stateElement.passwordValid
-            }
+            };
         },
 
         verificationCodeClass: function () {
             return {
                 'am-input-group-primary': this.stateElement.verificationCodeValid,
                 'am-input-group-danger': !this.stateElement.verificationCodeValid
-            }
+            };
         },
 
         formClass: function () {
@@ -135,7 +135,7 @@ const _signupVue = new Vue({
                 'am-disabled': !(this.stateElement.usernameValid &&
                 this.stateElement.passwordValid &&
                 this.stateElement.verificationCodeValid)
-            }
+            };
         },
 
         showSignupErrorMsg: function () {

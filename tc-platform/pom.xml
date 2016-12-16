@@ -190,13 +190,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
-                <configuration>
-                    <warSourceExcludes>
-                        WEB-INF/static/gulpfile.js,
-                        WEB-INF/static/node_modules/**,
-                        WEB-INF/static/src/resources/**
-                    </warSourceExcludes>
-                </configuration>
             </plugin>
             <!-- mybatis generator -->
             <plugin>
