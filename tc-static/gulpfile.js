@@ -15,6 +15,7 @@
 // [npm install --save-dev gulp-clean-css] -> 压缩CSS
 // [npm install --save-dev gulp-rev] -> 给静态资源加MD5
 // [npm install --save-dev gulp-rev-collector] -> 替换静态资源引用
+// [npm install --save-dev gulp-connect] -> 静态资源服务器
 
 var gulp = require('gulp');
 var del = require('del');
@@ -31,16 +32,26 @@ var concatCss = require('gulp-concat-css');
 var cleanCSS = require('gulp-clean-css');
 var rev = require('gulp-rev');
 var revCollector = require('gulp-rev-collector');
+var connect = require('gulp-connect');
 
 var _environment = {
     dev: false,
     staticBase: 'http://static.tc.com',
-    openApiBase: 'http://openapi.tc.com'
+    openApiBase: 'http://openapi.tc.com',
+    localhostHost: 'localhost',
+    localhostPort: 10010
 };
 
-// 开发模式下编译
+// 默认开发模式下编译
 gulp.task('default', function (cb) {
     _environment.dev = true;
+    task(cb);
+});
+
+// 本地模式下编译
+gulp.task('local', function (cb) {
+    _environment.dev = true;
+    _environment.staticBase = 'http://' + _environment.localhostHost + ':' + _environment.localhostPort;
     task(cb);
 });
 
@@ -49,7 +60,7 @@ gulp.task('pdu', function (cb) {
     task(cb);
 });
 
-var task = function(cb) {
+var task = function (cb) {
     runSequence(
         'clean',
         'javascript',
@@ -208,7 +219,17 @@ gulp.task('html', function () {
 // 编译特殊文件
 gulp.task('special', function () {
     return gulp
-        // 因为静态资源合并 相对路径发生改变 手动加载此文件
+    // 因为静态资源合并 相对路径发生改变 手动加载此文件
         .src('src/resources/libs/layer/skin/default/layer.css')
         .pipe(gulp.dest('dist/resources/libs/skin/default'));
+});
+
+// ----- 服务器开始
+gulp.task('start', ['local'], function () {
+    connect.server({
+        name: 'tc-static',
+        root: ['dist/html', 'dist/resources'],
+        port: _environment.localhostPort,
+        livereload: true
+    });
 });
