@@ -212,5 +212,3 @@ gulp.task('special', function () {
         .src('src/resources/libs/layer/skin/default/layer.css')
         .pipe(gulp.dest('dist/resources/libs/skin/default'));
 });
-
-// gulp-connect 启动server
