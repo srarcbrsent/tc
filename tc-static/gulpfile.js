@@ -24,7 +24,7 @@ var del = require('del');
 var gulpif = require('gulp-if');
 var filter = require('gulp-filter');
 var jshint = require('gulp-jshint');
-var fileinclude = require('gulp-file-include');
+var fileInclude = require('gulp-file-include');
 var replace = require('gulp-replace');
 var htmlmin = require('gulp-htmlmin');
 var concat = require('gulp-concat');
@@ -189,7 +189,7 @@ gulp.task('html', function () {
     return gulp
         .src(['manifest/**/*.json', 'src/html/**/*.html'])
         // 包含文件
-        .pipe(fileinclude({
+        .pipe(fileInclude({
             prefix: '@@',
             basepath: '@root'
         }))
@@ -225,7 +225,7 @@ gulp.task('special', function () {
         .pipe(gulp.dest('dist/resources/libs/skin/default'));
 });
 
-// ----- 服务器开始
+// ----- 服务器
 gulp.task('start', ['local'], function () {
     connect.server({
         name: 'tc-static',
