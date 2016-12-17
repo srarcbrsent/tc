@@ -36,3 +36,6 @@ node_modules/
 
 # static dist
 dist/
+manifests/
+_*.min.js
+_*.min.css

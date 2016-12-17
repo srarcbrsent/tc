@@ -3,7 +3,7 @@
 <head>
     <title>实验工程</title>
     @@include('src/html/commons/pre-lib.html')
-    <link href="${staticBase}/styles/index.css"
+    <link href="/tc-static/src/resources/styles/index.css"
           type="text/css"
           rel="stylesheet"/>
 </head>
@@ -122,7 +122,9 @@
 </div>
 <!-- - wrapper -->
 @@include('src/html/commons/post-lib.html')
-<@static.script src="/libs/jquery.md5.min.js"/>
-<@static.script src="/scripts/index.js"/>
+<script src="/tc-static/src/resources/libs/jquery.md5.min.js"
+        type="application/javascript"></script>
+<script src="/tc-static/src/resources/scripts/index.js"
+        type="application/javascript"></script>
 </body>
 </html>
