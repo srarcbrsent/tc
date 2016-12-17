@@ -18,10 +18,11 @@
 // [npm install --save-dev gulp-connect] -> 静态资源服务器
 
 var gulp = require('gulp');
+var runSequence = require('run-sequence');
+var connect = require('gulp-connect');
 var del = require('del');
 var gulpif = require('gulp-if');
 var filter = require('gulp-filter');
-var runSequence = require('run-sequence');
 var jshint = require('gulp-jshint');
 var fileinclude = require('gulp-file-include');
 var replace = require('gulp-replace');
@@ -32,7 +33,7 @@ var concatCss = require('gulp-concat-css');
 var cleanCSS = require('gulp-clean-css');
 var rev = require('gulp-rev');
 var revCollector = require('gulp-rev-collector');
-var connect = require('gulp-connect');
+
 
 var _environment = {
     dev: false,
