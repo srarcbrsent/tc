@@ -28,14 +28,14 @@ target/
 .DS_Store
 Thumbs.db
 
-#ignore logs
+# logs ignore
 logs/
 
-# gulp node modules
+# gulp ignore
 node_modules/
 
-# static dist
-dist/
-manifests/
-_*.min.js
-_*.min.css
+# static ignore
+tc-static/**/dist/
+tc-static/**/manifest/
+tc-static/**/_*.min.js
+tc-static/**/_*.min.css
