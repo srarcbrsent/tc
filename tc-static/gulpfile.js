@@ -39,25 +39,32 @@ var _environment = {
     dev: false,
     staticBase: 'http://static.tc.com',
     openApiBase: 'http://openapi.tc.com',
-    localhostHost: 'localhost',
-    localhostPort: 10010
+    localhostProtocolAndHost: 'http://www.tc.com',
+    localhostPort: 80
 };
 
 // 默认开发模式下编译
-gulp.task('default', function (cb) {
+gulp.task('default', ['local-dev'], function () {
+});
+
+gulp.task('local-dev', function (cb) {
     _environment.dev = true;
+    _environment.staticBase = _environment.localhostProtocolAndHost +
+        (_environment.localhostPort === 80 ? '' : ':' + _environment.localhostPort);
     task(cb);
 });
 
-// 本地模式下编译
-gulp.task('local', function (cb) {
+gulp.task('local-pdu', function (cb) {
     _environment.dev = true;
-    _environment.staticBase = 'http://' + _environment.localhostHost + ':' + _environment.localhostPort;
+    _environment.staticBase = _environment.localhostProtocolAndHost +
+        (_environment.localhostPort === 80 ? '' : ':' + _environment.localhostPort);
     task(cb);
 });
 
-// 生产模式下编译
-gulp.task('pdu', function (cb) {
+gulp.task('remote-pdu', function (cb) {
+    _environment.dev = false;
+    _environment.openApiBase = 'http://openapi.tc.com';
+    _environment.staticBase = 'http://static.tc.com';
     task(cb);
 });
 
