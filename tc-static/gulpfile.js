@@ -39,7 +39,7 @@ var _environment = {
     dev: false,
     staticBase: 'http://static.tc.com',
     openApiBase: 'http://openapi.tc.com',
-    localhostProtocolAndHost: 'http://www.tc.com',
+    localhostProtocolAndHost: 'http://tc.com',
     localhostPort: 80
 };
 
