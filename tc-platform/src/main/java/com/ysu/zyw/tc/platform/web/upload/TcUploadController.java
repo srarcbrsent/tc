@@ -25,4 +25,13 @@ public class TcUploadController {
         return ResponseEntity.ok(TcR.ok());
     }
 
+    @ApiOperation(
+            value = "Nginx上传后处理",
+            notes = "Nginx上传后处理")
+    @ApiResponse(code = 200, message = "OK")
+    @RequestMapping(value = "/postprocess", method = RequestMethod.POST)
+    public ResponseEntity<TcR<Void>> postprocess() {
+        return ResponseEntity.ok(TcR.ok());
+    }
+
 }

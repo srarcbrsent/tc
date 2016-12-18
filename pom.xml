@@ -14,6 +14,7 @@
         <module>tc-apimodel</module>
         <module>tc-api</module>
         <module>tc-apiimpl</module>
+        <module>tc-sso</module>
         <module>tc-platform</module>
     </modules>
 
@@ -152,6 +153,12 @@
             <dependency>
                 <groupId>com.ysu.zyw</groupId>
                 <artifactId>tc-apiimpl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-sso</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tc-platform</artifactId>
+    <artifactId>tc-sso</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
@@ -31,11 +31,6 @@
         <dependency>
             <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ysu.zyw</groupId>
-            <artifactId>tc-sso</artifactId>
         </dependency>
 
         <!-- spring dependency -->
@@ -109,12 +104,6 @@
             <artifactId>spring-messaging</artifactId>
         </dependency>
 
-        <!-- freemarker -->
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-        </dependency>
-
         <!-- dubbox -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -138,53 +127,11 @@
             <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
 
-        <!-- utils -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>tc_dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <properties.pom.activation.spring.profile>
-                    classpath*:/properties/dev/spring.properties
-                </properties.pom.activation.spring.profile>
-                <properties.pom.activation.spring.web.profile>
-                    classpath*:/properties/dev/spring-web.properties
-                </properties.pom.activation.spring.web.profile>
-            </properties>
-            <dependencies>
-                <!-- swagger ui only dev mode -->
-                <dependency>
-                    <groupId>io.springfox</groupId>
-                    <artifactId>springfox-swagger-ui</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>tc_pdu</id>
-            <properties>
-                <properties.pom.activation.spring.profile>
-                    classpath*:/properties/pdu/spring.properties
-                </properties.pom.activation.spring.profile>
-                <properties.pom.activation.spring.web.profile>
-                    classpath*:/properties/pdu/spring-web.properties
-                </properties.pom.activation.spring.web.profile>
-            </properties>
-        </profile>
-    </profiles>
 
     <build>
         <finalName>ROOT</finalName>
@@ -195,26 +142,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
-            </plugin>
-            <!-- mybatis generator -->
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.5</version>
-                <!-- because we want to use some plugin class so we import it -->
-                <dependencies>
-                    <dependency>
-                        <groupId>com.ysu.zyw</groupId>
-                        <artifactId>tc-components</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <overwrite>true</overwrite>
-                    <configurationFile>
-                        src/main/resources/config/tc-mbg-config.xml
-                    </configurationFile>
-                </configuration>
             </plugin>
             <!-- jetty plugin -->
             <plugin>
@@ -237,7 +164,7 @@
                         ${project.build.outputDirectory}/jetty/jetty-https.xml
                     </jettyXml>
                     <stopKey>stop-tc-platform</stopKey>
-                    <stopPort>8081</stopPort>
+                    <stopPort>7071</stopPort>
                     <systemProperties>
                         <systemProperty>
                             <name>logback.configurationFile</name>
