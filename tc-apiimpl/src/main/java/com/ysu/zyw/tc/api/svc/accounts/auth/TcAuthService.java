@@ -230,7 +230,7 @@ public class TcAuthService {
     @Transactional(readOnly = true)
     public List<ToMenu> fetchMenus(@Nonnull String accountId) {
         List<String> tcRoleIds =
-                this.fetchRoleList(accountId).stream().map(ToRole::getId).collect(Collectors.toList());
+                fetchRoleList(accountId).stream().map(ToRole::getId).collect(Collectors.toList());
 
         if (CollectionUtils.isEmpty(tcRoleIds)) {
             return Lists.newArrayList();
@@ -288,7 +288,7 @@ public class TcAuthService {
         }
         toMenus.stream()
                 .sorted(Comparator.comparing(ToMenu::getStructure))
-                .forEach(toMenu -> this.sortRecursive(toMenu.getSubMenus()));
+                .forEach(toMenu -> sortRecursive(toMenu.getSubMenus()));
     }
 
     private ToRole convert2ToRole(TcRole tcRole) {

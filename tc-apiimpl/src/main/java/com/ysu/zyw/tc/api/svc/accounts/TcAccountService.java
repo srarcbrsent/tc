@@ -204,7 +204,7 @@ public class TcAccountService {
      */
     @Transactional
     public void updateAccount(@Nonnull TiAccount tiAccount) {
-        TcAccount originalTcAccount = this.findOriginalTcAccount(tiAccount.getId(), false);
+        TcAccount originalTcAccount = findOriginalTcAccount(tiAccount.getId(), false);
 
         if (Objects.isNull(originalTcAccount)) {
             throw new TcUnProcessableEntityException(new TcExtra(1, "账号不存在，请重试！"));
@@ -309,7 +309,7 @@ public class TcAccountService {
     @Transactional(readOnly = true)
     public ToAccount findAccount(@Nonnull String accountId, @Nonnull Boolean containsPassword) {
         checkNotNull(accountId);
-        TcAccount originalTcAccount = this.findOriginalTcAccount(accountId, containsPassword);
+        TcAccount originalTcAccount = findOriginalTcAccount(accountId, containsPassword);
         if (Objects.isNull(originalTcAccount)) {
             throw new TcResourceNotFoundException("账号不存在");
         }

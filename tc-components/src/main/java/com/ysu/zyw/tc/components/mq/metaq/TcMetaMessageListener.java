@@ -26,19 +26,19 @@ public abstract class TcMetaMessageListener<T> extends DefaultMessageListener<T>
     public void onReceiveMessages(final MetaqMessage<T> msg) {
         Date now = new Date();
         if (log.isInfoEnabled()) {
-            log.info("meta message listener [{}] receive message [{}]", this.getName(), msg);
+            log.info("meta message listener [{}] receive message [{}]", getName(), msg);
         }
         try {
-            this.doOnReceiveMessages(msg);
+            doOnReceiveMessages(msg);
         } catch (Exception e) {
-            log.error("meta message listener [{}] process message [{}] failed", this.getName(), msg, e);
+            log.error("meta message listener [{}] process message [{}] failed", getName(), msg, e);
             if (rethrowException) {
                 throw new RuntimeException(e);
             }
         } finally {
             if (log.isInfoEnabled()) {
                 log.info("meta message listener [{}] process message [{}] take time [{}ms]",
-                        this.getName(), msg, TcDateUtils.duration(now, new Date()));
+                        getName(), msg, TcDateUtils.duration(now, new Date()));
             }
         }
     }

@@ -64,10 +64,10 @@ public class TcHttpxService {
         checkNotNull(url);
         checkNotNull(typeReference);
         HttpEntity<Void> httpEntity = new HttpEntity<>(null,
-                this.addReqContentType(httpHeaders, MediaType.APPLICATION_FORM_URLENCODED_VALUE));
-        String expandVars = this.expandVars(requestBody);
+                addReqContentType(httpHeaders, MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+        String expandVars = expandVars(requestBody);
         String expandUrl = StringUtils.hasText(expandVars) ? (url + "?" + expandVars) : url;
-        return this.execute(expandUrl, HttpMethod.GET, httpEntity, typeReference, pathVariables);
+        return execute(expandUrl, HttpMethod.GET, httpEntity, typeReference, pathVariables);
     }
 
     public <T> ResponseEntity<T> postText4Entity(@Nonnull String url,
@@ -79,8 +79,8 @@ public class TcHttpxService {
         checkNotNull(requestBody);
         checkNotNull(typeReference);
         HttpEntity<?> httpEntity = new HttpEntity<>(requestBody,
-                this.addReqContentType(httpHeaders, MediaType.APPLICATION_FORM_URLENCODED_VALUE));
-        return this.execute(url, HttpMethod.POST, httpEntity, typeReference, pathVariables);
+                addReqContentType(httpHeaders, MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+        return execute(url, HttpMethod.POST, httpEntity, typeReference, pathVariables);
     }
 
     public <T> ResponseEntity<T> postJson4Entity(@Nonnull String url,
@@ -92,8 +92,8 @@ public class TcHttpxService {
         checkNotNull(requestBody);
         checkNotNull(typeReference);
         HttpEntity<?> httpEntity = new HttpEntity<>(requestBody,
-                this.addReqContentType(httpHeaders, MediaType.APPLICATION_JSON_UTF8_VALUE));
-        return this.execute(url, HttpMethod.POST, httpEntity, typeReference, pathVariables);
+                addReqContentType(httpHeaders, MediaType.APPLICATION_JSON_UTF8_VALUE));
+        return execute(url, HttpMethod.POST, httpEntity, typeReference, pathVariables);
     }
 
     public MultiValueMap<String, String> copy2MultiValueMap(@Nullable Object obj) {

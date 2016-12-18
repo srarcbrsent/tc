@@ -34,8 +34,8 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
 
         ToAccount toAccount = (ToAccount) principals.getPrimaryPrincipal();
 
-        List<ToRole> toRoles = this.fetchRoles(toAccount.getId());
-        List<ToPermission> toPermissions = this.fetchPermissions(toAccount.getId());
+        List<ToRole> toRoles = fetchRoles(toAccount.getId());
+        List<ToPermission> toPermissions = fetchPermissions(toAccount.getId());
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.addRoles(

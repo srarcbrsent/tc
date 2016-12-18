@@ -129,7 +129,7 @@ public class TcR<T> implements Serializable {
     }
 
     public void ifPresent(Consumer<T> consumer) {
-        if (this.isPresent()) {
+        if (isPresent()) {
             consumer.accept(body);
         }
     }

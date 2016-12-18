@@ -50,9 +50,9 @@ public class TcCodisConnectionFactory extends JedisConnectionFactory {
                 zkAddr,
                 zkSessionTimeoutMs,
                 zkProxyDir,
-                this.getPoolConfig(),
-                this.getTimeout(),
-                this.getPassword());
+                getPoolConfig(),
+                getTimeout(),
+                getPassword());
         checkNotNull(tcCodisPool, "codis pool creation failed");
         log.info("success create codis pool ...");
         return tcCodisPool;
