@@ -130,7 +130,7 @@ gulp.task('stylesheet', function () {
 
 // 合并javascript-lib
 gulp.task('mg-script-libs', function (cb) {
-    del('src/resources/libs/_post-lib.min.js', cb);
+    del('src/resources/libs/_flib.min.js', cb);
     return gulp
         .src([
             'src/resources/libs/jquery-3.1.0.min.js',
@@ -140,19 +140,19 @@ gulp.task('mg-script-libs', function (cb) {
             'src/resources/libs/assets/js/amazeui.min.js',
             'src/resources/libs/layer/layer.min.js'
         ])
-        .pipe(concat('_post-lib.min.js'))
+        .pipe(concat('_flib.min.js'))
         .pipe(gulp.dest('src/resources/libs'));
 });
 
 // 合并stylesheet-lib
 gulp.task('mg-style-libs', function (cb) {
-    del('src/resources/libs/_pre-lib.min.css', cb);
+    del('src/resources/libs/_tlib.min.css', cb);
     return gulp
         .src([
             'src/resources/libs/normalize.min.css',
             'src/resources/libs/assets/css/amazeui.flat.min.css'
         ])
-        .pipe(concatCss("_pre-lib.min.css"))
+        .pipe(concatCss("_tlib.min.css"))
         .pipe(gulp.dest('src/resources/libs'));
 });
 
