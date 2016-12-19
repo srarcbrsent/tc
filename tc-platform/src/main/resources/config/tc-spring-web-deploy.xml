@@ -25,7 +25,7 @@
                            expose-proxy="true"/>
 
     <!--- !!!! Swagger !!!! -->
-    <bean class="com.ysu.zyw.tc.platform.fk.conf.TcSwaggerConfig">
+    <bean class="com.ysu.zyw.tc.platform.fk.config.TcSwaggerConfig">
         <property name="basePackage" value="${properties.web.swagger.scanner.base.package}"/>
     </bean>
 

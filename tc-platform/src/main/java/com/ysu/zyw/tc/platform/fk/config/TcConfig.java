@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.platform.fk.conf;
+package com.ysu.zyw.tc.platform.fk.config;
 
 import lombok.Data;
 

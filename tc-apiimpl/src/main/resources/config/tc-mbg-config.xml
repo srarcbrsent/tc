@@ -12,13 +12,13 @@
     <context id="DB2Tables" targetRuntime="MyBatis3">
 
         <!-- !!!! Plugins !!!! -->
-        <plugin type="com.ysu.zyw.tc.components.mbg.TcLombokModelPlugin"/>
+        <plugin type="com.ysu.zyw.tc.components.mbg.plugins.TcLombokModelPlugin"/>
 
-        <plugin type="com.ysu.zyw.tc.components.mbg.TcPaginationPlugin"/>
+        <plugin type="com.ysu.zyw.tc.components.mbg.plugins.TcPaginationPlugin"/>
 
-        <plugin type="com.ysu.zyw.tc.components.mbg.TcSelectPrimaryKeyPlugin"/>
+        <plugin type="com.ysu.zyw.tc.components.mbg.plugins.TcSelectPrimaryKeyPlugin"/>
 
-        <plugin type="com.ysu.zyw.tc.components.mbg.TcBatchInsertPlugin"/>
+        <plugin type="com.ysu.zyw.tc.components.mbg.plugins.TcBatchInsertPlugin"/>
 
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
@@ -106,19 +106,6 @@
         <table tableName="pv_menu"
                domainObjectName="TcMenu"
                mapperName="TcMenuMapper"/>
-
-        <table tableName="im_message"
-               domainObjectName="TcMessage"
-               mapperName="TcMessageMapper">
-            <columnOverride column="read"
-                            javaType="java.lang.Boolean"/>
-            <columnOverride column="type"
-                            javaType="com.ysu.zyw.tc.model.menum.TmMessageType"
-                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-            <columnOverride column="platform"
-                            javaType="com.ysu.zyw.tc.model.menum.TmPlatform"
-                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-        </table>
 
     </context>
 

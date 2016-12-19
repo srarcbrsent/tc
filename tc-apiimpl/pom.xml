@@ -223,7 +223,7 @@
                 <dependencies>
                     <dependency>
                         <groupId>com.ysu.zyw</groupId>
-                        <artifactId>tc-components</artifactId>
+                        <artifactId>tc-mbg-plugins</artifactId>
                         <version>${project.version}</version>
                     </dependency>
                 </dependencies>

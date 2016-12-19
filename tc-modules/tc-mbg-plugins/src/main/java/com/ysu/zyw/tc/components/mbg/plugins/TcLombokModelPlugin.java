@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.mbg.plguins;
+package com.ysu.zyw.tc.components.mbg.plugins;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;

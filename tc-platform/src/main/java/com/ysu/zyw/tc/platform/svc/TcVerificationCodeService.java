@@ -2,7 +2,7 @@ package com.ysu.zyw.tc.platform.svc;
 
 import com.ysu.zyw.tc.base.constant.TcConstant;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
-import com.ysu.zyw.tc.platform.fk.conf.TcConfig;
+import com.ysu.zyw.tc.platform.fk.config.TcConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.RandomStringUtils;

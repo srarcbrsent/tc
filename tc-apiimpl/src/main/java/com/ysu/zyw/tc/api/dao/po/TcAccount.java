@@ -14,9 +14,9 @@ import java.util.Date;
 public class TcAccount {
     private String id;
 
-    private String name;
+    private String region;
 
-    private String account;
+    private String nickname;
 
     private String email;
 
@@ -25,8 +25,6 @@ public class TcAccount {
     private String mobile;
 
     private Boolean mobileActivated;
-
-    private String region;
 
     private String avatar;
 

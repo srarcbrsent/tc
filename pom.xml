@@ -26,8 +26,8 @@
         <module>tc-modules/tc-commons-upload</module>
         <module>tc-apimodel</module>
         <module>tc-api</module>
-        <module>tc-apiimpl</module>
         <module>tc-sso</module>
+        <module>tc-apiimpl</module>
         <module>tc-platform</module>
     </modules>
 

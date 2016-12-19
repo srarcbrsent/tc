@@ -44,7 +44,7 @@
 
     <bean class="com.ysu.zyw.tc.platform.fk.servlet.TcContextLifeCycleHandlerImpl"/>
 
-    <bean class="com.ysu.zyw.tc.platform.fk.conf.TcConfig">
+    <bean class="com.ysu.zyw.tc.platform.fk.config.TcConfig">
         <property name="devMode" value="${properties.config.mode.dev}"/>
         <property name="fixedVerificationCode" value="${properties.config.fixed.verification.code}"/>
         <property name="tempDir" value="${properties.config.io.temp.dir}"/>
