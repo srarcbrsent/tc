@@ -25,13 +25,12 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
 
     @Override
     public TcR<ToAccount> signup(String username,
-                                 Boolean canAccountLogin,
                                  Boolean canEmailLogin,
                                  Boolean canMobileLogin) {
 
         // throws TcUnProcessableEntityException
         String succLoginAccountId =
-                tcAccountService.signup(username, canAccountLogin, canEmailLogin, canMobileLogin);
+                tcAccountService.signup(username, canEmailLogin, canMobileLogin);
 
         checkNotNull(succLoginAccountId);
         ToAccount toAccount = tcAccountService.findAccount(succLoginAccountId, true);

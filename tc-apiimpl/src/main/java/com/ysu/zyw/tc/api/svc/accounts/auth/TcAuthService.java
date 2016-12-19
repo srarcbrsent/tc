@@ -64,7 +64,7 @@ public class TcAuthService {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(roleIdList));
 
-        if (!tcAccountService.existAccount(accountId)) {
+        if (!tcAccountService.existId(accountId)) {
             throw new TcUnProcessableEntityException(new TcExtra(1, "账号不存在！"));
         }
 
@@ -96,7 +96,7 @@ public class TcAuthService {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionIdList));
 
-        if (!tcAccountService.existAccount(accountId)) {
+        if (!tcAccountService.existId(accountId)) {
             throw new TcUnProcessableEntityException(new TcExtra(1, "账号不存在！"));
         }
 

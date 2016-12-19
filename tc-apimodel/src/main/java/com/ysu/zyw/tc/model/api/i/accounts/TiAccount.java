@@ -35,8 +35,12 @@ public class TiAccount implements Serializable {
     private String id;
 
     @NotEmpty(groups = TcC.class)
+    @Pattern(regexp = "^P[0-9]{2}-C[0-9]{3}-D[0-9]{4}$", groups = TcAll.class)
+    private String region;
+
+    @NotEmpty(groups = TcC.class)
     @SafeString(min = 6, max = 16, groups = TcAll.class)
-    private String name;
+    private String nickname;
 
     @NotEmpty(groups = TcC.class)
     @Pattern(regexp = "^[a-zA-Z0-9_]{6,16}$", groups = TcAll.class)
@@ -45,20 +49,18 @@ public class TiAccount implements Serializable {
     @Email(groups = TcAll.class)
     private String email;
 
+    @NotNull(groups = TcC.class)
     private Boolean emailActivated;
 
     @Mobile(groups = TcAll.class)
     private String mobile;
 
+    @NotNull(groups = TcC.class)
     private Boolean mobileActivated;
 
     @NotEmpty(groups = TcC.class)
     @Pattern(regexp = "^[a-zA-Z0-9_:/]{6,120}$", groups = TcAll.class)
     private String avatar;
-
-    @NotEmpty(groups = TcC.class)
-    @Pattern(regexp = "^P[0-9]{2}-C[0-9]{3}-D[0-9]{4}$", groups = TcAll.class)
-    private String region;
 
     @NotEmpty(groups = TcC.class)
     @Length(min = 32, max = 32, groups = TcC.class)

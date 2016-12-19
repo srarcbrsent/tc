@@ -51,18 +51,14 @@ public class TcAccountService {
      */
     @Transactional(readOnly = true)
     public String signup(@Nonnull String username,
-                         @Nonnull Boolean canAccountLogin,
                          @Nonnull Boolean canEmailLogin,
                          @Nonnull Boolean canMobileLogin) {
-        checkArgument(canAccountLogin || canEmailLogin || canMobileLogin);
+        checkArgument(canEmailLogin || canMobileLogin);
 
         TcAccountExample tcAccountExample = new TcAccountExample();
         tcAccountExample.setStartLine(0);
         tcAccountExample.setPageSize(1);
         TcAccountExample.Criteria criteria = tcAccountExample.createCriteria();
-        if (canAccountLogin) {
-            criteria.andAccountEqualTo(username);
-        }
         if (canEmailLogin) {
             tcAccountExample.or().andEmailEqualTo(username);
         }
@@ -98,14 +94,9 @@ public class TcAccountService {
     @Transactional
     public String createAccount(@Nonnull TiAccount tiAccount) {
         // check
-        if (existName(tiAccount.getName())) {
+        if (existNickname(tiAccount.getNickname())) {
             throw new TcUnProcessableEntityException(
-                    new TcExtra(11, "名称【" + tiAccount.getName() + "】重复，请重试！"));
-        }
-
-        if (existAccount(tiAccount.getAccount())) {
-            throw new TcUnProcessableEntityException(
-                    new TcExtra(12, "账号【" + tiAccount.getAccount() + "】重复，请重试！"));
+                    new TcExtra(11, "昵称【" + tiAccount.getNickname() + "】重复，请重试！"));
         }
 
         if (StringUtils.isNotBlank(tiAccount.getEmail()) && existEmail(tiAccount.getEmail())) {
@@ -113,7 +104,7 @@ public class TcAccountService {
                     new TcExtra(13, "邮箱【" + tiAccount.getEmail() + "】重复，请重试！"));
         }
 
-        if (StringUtils.isNotBlank(tiAccount.getMobile()) && existAccount(tiAccount.getMobile())) {
+        if (StringUtils.isNotBlank(tiAccount.getMobile()) && existMobile(tiAccount.getMobile())) {
             throw new TcUnProcessableEntityException(
                     new TcExtra(14, "手机【" + tiAccount.getMobile() + "】重复，请重试！"));
         }
@@ -210,19 +201,19 @@ public class TcAccountService {
             throw new TcUnProcessableEntityException(new TcExtra(1, "账号不存在，请重试！"));
         }
 
-        if (StringUtils.isNotEmpty(tiAccount.getName()) && existName(tiAccount.getName())) {
+        if (StringUtils.isNotEmpty(tiAccount.getNickname()) && existNickname(tiAccount.getNickname())) {
             throw new TcUnProcessableEntityException(new TcExtra(11, "名字已存在，请重试！"));
         }
 
-        if (StringUtils.isNotEmpty(tiAccount.getAccount()) && existName(tiAccount.getAccount())) {
+        if (StringUtils.isNotEmpty(tiAccount.getAccount()) && existNickname(tiAccount.getAccount())) {
             throw new TcUnProcessableEntityException(new TcExtra(12, "账号已存在，请重试！"));
         }
 
-        if (StringUtils.isNotEmpty(tiAccount.getMobile()) && existName(tiAccount.getMobile())) {
+        if (StringUtils.isNotEmpty(tiAccount.getMobile()) && existNickname(tiAccount.getMobile())) {
             throw new TcUnProcessableEntityException(new TcExtra(13, "手机已存在，请重试！"));
         }
 
-        if (StringUtils.isNotEmpty(tiAccount.getEmail()) && existName(tiAccount.getEmail())) {
+        if (StringUtils.isNotEmpty(tiAccount.getEmail()) && existNickname(tiAccount.getEmail())) {
             throw new TcUnProcessableEntityException(new TcExtra(14, "邮箱已存在，请重试！"));
         }
 
@@ -343,8 +334,7 @@ public class TcAccountService {
         TcAccountExample tcAccountExample =
                 buildFindAccountCondition(
                         tiFindAccountsTerms.getIds(),
-                        tiFindAccountsTerms.getName(),
-                        tiFindAccountsTerms.getAccount(),
+                        tiFindAccountsTerms.getNickname(),
                         tiFindAccountsTerms.getMobile(),
                         tiFindAccountsTerms.getEmail(),
                         tiFindAccountsTerms.getMobileActivated(),
@@ -360,8 +350,7 @@ public class TcAccountService {
         TcAccountExample tcAccountExample =
                 buildFindAccountCondition(
                         tiFindAccountsTerms.getIds(),
-                        tiFindAccountsTerms.getName(),
-                        tiFindAccountsTerms.getAccount(),
+                        tiFindAccountsTerms.getNickname(),
                         tiFindAccountsTerms.getMobile(),
                         tiFindAccountsTerms.getEmail(),
                         tiFindAccountsTerms.getMobileActivated(),
@@ -380,8 +369,7 @@ public class TcAccountService {
 
     private TcAccountExample buildFindAccountCondition(
             @Nullable List<String> ids,
-            @Nullable String name,
-            @Nullable String account,
+            @Nullable String nickname,
             @Nullable String mobile,
             @Nullable String email,
             @Nullable Boolean mobileActivated,
@@ -393,11 +381,8 @@ public class TcAccountService {
         if (CollectionUtils.isNotEmpty(ids)) {
             criteria.andIdIn(ids);
         }
-        if (StringUtils.isNotEmpty(name)) {
-            criteria.andNameEqualTo(name);
-        }
-        if (StringUtils.isNotEmpty(account)) {
-            criteria.andAccountEqualTo(account);
+        if (StringUtils.isNotEmpty(nickname)) {
+            criteria.andNicknameEqualTo(nickname);
         }
         if (StringUtils.isNotEmpty(email)) {
             criteria.andEmailEqualTo(email);
@@ -435,23 +420,11 @@ public class TcAccountService {
     }
 
     @Transactional(readOnly = true)
-    public boolean existName(@Nonnull String name) {
-        checkNotNull(name);
+    public boolean existNickname(@Nonnull String nickname) {
+        checkNotNull(nickname);
         TcAccountExample tcAccountExample = new TcAccountExample();
         tcAccountExample.createCriteria()
-                .andNameEqualTo(name)
-                .andDelectedEqualTo(false);
-        long count = tcAccountMapper.countByExample(tcAccountExample);
-        checkArgument(count < 2);
-        return count == 1;
-    }
-
-    @Transactional(readOnly = true)
-    public boolean existAccount(@Nonnull String account) {
-        checkNotNull(account);
-        TcAccountExample tcAccountExample = new TcAccountExample();
-        tcAccountExample.createCriteria()
-                .andAccountEqualTo(account)
+                .andNicknameEqualTo(nickname)
                 .andDelectedEqualTo(false);
         long count = tcAccountMapper.countByExample(tcAccountExample);
         checkArgument(count < 2);

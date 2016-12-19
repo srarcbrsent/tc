@@ -18,6 +18,8 @@ public class ToAccount implements Serializable {
 
     private String id;
 
+    private String region;
+
     private String name;
 
     private String account;
@@ -31,8 +33,6 @@ public class ToAccount implements Serializable {
     private Boolean mobileActivated;
 
     private String avatar;
-
-    private String region;
 
     private String randomToken;
 

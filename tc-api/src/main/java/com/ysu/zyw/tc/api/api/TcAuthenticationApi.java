@@ -26,7 +26,6 @@ public interface TcAuthenticationApi {
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<ToAccount> signup(
             @FormParam(value = "username") String username,
-            @FormParam(value = "canAccountLogin") @DefaultValue(value = "true") Boolean canAccountLogin,
             @FormParam(value = "canEmailLogin") @DefaultValue(value = "true") Boolean canEmailLogin,
             @FormParam(value = "canMobileLogin") @DefaultValue(value = "true") Boolean canMobileLogin
     );

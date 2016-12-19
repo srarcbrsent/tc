@@ -78,7 +78,7 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
 
     protected ToAccount fetchAccount(String username) {
         TcR<ToAccount> tcR = tcAuthenticationApi.signup(
-                username, true, true, true);
+                username, true, true);
 
         if (tcR.isPresent()) {
             return tcR.get();
@@ -88,11 +88,11 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
             int code = tcR.getExtra().getCode();
 
             // code == 1 => 账号不存在;
-            if (Objects.equals(tcR.getExtra().getCode(), 1)) {
+            if (Objects.equals(code, 1)) {
                 throw new UnknownAccountException("账号不存在，请重试！");
             }
             // code == 2 => 账号被锁定;
-            if (Objects.equals(tcR.getExtra().getCode(), 2)) {
+            if (Objects.equals(code, 2)) {
                 throw new LockedAccountException("账号被锁定，请稍后再试！");
             }
         }

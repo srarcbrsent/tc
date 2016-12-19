@@ -22,8 +22,11 @@ public class TiFindAccountsTerms implements Serializable {
     @FormParam(value = "ids")
     private List<String> ids;
 
-    @FormParam(value = "name")
-    private String name;
+    @FormParam(value = "region")
+    private String region;
+
+    @FormParam(value = "nickname")
+    private String nickname;
 
     @FormParam(value = "account")
     private String account;
