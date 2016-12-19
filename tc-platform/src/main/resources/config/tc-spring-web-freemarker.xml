@@ -18,7 +18,7 @@
                 <prop key="time_format">HH:mm:ss</prop>
                 <prop key="number_format">0.##</prop>
                 <prop key="template_exception_handler">
-                    com.ysu.zyw.tc.components.utils.handler.TcFreemarkerExceptionHandler
+                    com.ysu.zyw.tc.components.handler.TcFreemarkerExceptionHandler
                 </prop>
             </props>
         </property>
@@ -38,7 +38,7 @@
         <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
-    <bean class="com.ysu.zyw.tc.components.utils.freemarker.TcFreemarkerRender">
+    <bean class="TcFreemarkerRender">
         <property name="freeMarkerConfigurer" ref="freeMarkerConfigurer"/>
     </bean>
 

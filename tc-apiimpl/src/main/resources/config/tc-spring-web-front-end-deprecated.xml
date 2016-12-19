@@ -21,7 +21,7 @@
           class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="formatters">
             <set>
-                <bean class="com.ysu.zyw.tc.components.utils.converters.TcDateFormatter">
+                <bean class="com.ysu.zyw.tc.components.converters.TcDateFormatter">
                     <property name="dateFormat"
                               value="#{T(com.ysu.zyw.tc.base.utils.TcDateUtils).FULL_DATE_FORMAT_VALUE}"/>
                 </bean>
@@ -39,7 +39,7 @@
 
     <bean class="com.ysu.zyw.tc.api.fk.TcExceptionResponseDecorator"/>
 
-    <bean class="com.ysu.zyw.tc.components.utils.handler.TcHandleExceptionHandler">
+    <bean class="com.ysu.zyw.tc.components.handler.TcHandleExceptionHandler">
         <property name="view5xx" value="/server_error.json"/>
         <property name="ajax5xx" value="/server_error.json"/>
     </bean>

@@ -20,7 +20,7 @@
     <dubbo:protocol name="rest"
                     server="servlet"
                     port="${properties.rpc.dubbox.protocol.rest.port}"
-                    extension="com.ysu.zyw.tc.components.utils.dubbox.TcDubboxJacksonObjectMapperProvider,com.ysu.zyw.tc.components.utils.dubbox.TcValidationExceptionMapper"/>
+                    extension="TcDubboxJacksonObjectMapperProvider,TcValidationExceptionMapper"/>
 
     <dubbo:provider timeout="${properties.rpc.dubbox.provider.timeout}"
                     retries="${properties.rpc.dubbox.provider.retries}"

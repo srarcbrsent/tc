@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean class="com.ysu.zyw.tc.components.retry.TcRetryConfiguration"/>
+    <bean class="TcRetryConfiguration"/>
 
     <bean id="retryTemplate" class="org.springframework.retry.support.RetryTemplate">
         <property name="retryPolicy">
@@ -18,6 +18,6 @@
         <property name="listeners" ref="retryLogListener"/>
     </bean>
 
-    <bean id="retryLogListener" class="com.ysu.zyw.tc.components.retry.TcRetryLogListener"/>
+    <bean id="retryLogListener" class="TcRetryLogListener"/>
 
 </beans>

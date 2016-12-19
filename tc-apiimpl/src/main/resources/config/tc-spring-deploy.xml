@@ -26,6 +26,6 @@
 
     <import resource="classpath*:/config/tc-spring-svc.xml"/>
 
-    <bean id="tcApplicationExaminer" class="com.ysu.zyw.tc.components.utils.TcApplicationExaminer"/>
+    <bean id="tcApplicationExaminer" class="com.ysu.zyw.tc.components.support.TcApplicationExaminer"/>
 
 </beans>

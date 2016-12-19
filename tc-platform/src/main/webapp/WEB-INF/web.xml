@@ -11,7 +11,7 @@
     <!-- xsrf filter -->
     <filter>
         <filter-name>xsrfFilter</filter-name>
-        <filter-class>com.ysu.zyw.tc.platform.fk.filters.TcXsrfTokenFilter</filter-class>
+        <filter-class>TcXsrfTokenFilter</filter-class>
     </filter>
 
     <filter-mapping>

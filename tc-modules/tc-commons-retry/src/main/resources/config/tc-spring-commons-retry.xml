@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="com.ysu.zyw.tc.components.commons.retry.TcRetryConfiguration"/>
+
+    <bean id="retryTemplate" class="org.springframework.retry.support.RetryTemplate">
+        <property name="retryPolicy">
+            <bean class="org.springframework.retry.policy.SimpleRetryPolicy">
+                <property name="maxAttempts" value="${properties.retry.max.attempts}"/>
+            </bean>
+        </property>
+        <property name="backOffPolicy">
+            <bean class="org.springframework.retry.backoff.NoBackOffPolicy"/>
+        </property>
+        <property name="listeners" ref="retryLogListener"/>
+    </bean>
+
+    <bean id="retryLogListener" class="com.ysu.zyw.tc.components.commons.retry.TcRetryLogListener"/>
+
+</beans>

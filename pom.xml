@@ -11,6 +11,19 @@
     <modules>
         <module>tc-base</module>
         <module>tc-components</module>
+        <module>tc-modules/tc-rpc-httpx</module>
+        <module>tc-modules/tc-mbg-plugins</module>
+        <module>tc-modules/tc-cache-api</module>
+        <module>tc-modules/tc-cache-redis</module>
+        <module>tc-modules/tc-cache-codis</module>
+        <module>tc-modules/tc-commons-region</module>
+        <module>tc-modules/tc-mq-metaq</module>
+        <module>tc-modules/tc-commons-retry</module>
+        <module>tc-modules/tc-dubbox-support</module>
+        <module>tc-modules/tc-servlet-support</module>
+        <module>tc-modules/tc-freemarker-support</module>
+        <module>tc-modules/tc-aliyun-support</module>
+        <module>tc-modules/tc-commons-upload</module>
         <module>tc-apimodel</module>
         <module>tc-api</module>
         <module>tc-apiimpl</module>
@@ -165,6 +178,85 @@
             <dependency>
                 <groupId>com.ysu.zyw</groupId>
                 <artifactId>tc-platform</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- modules -->
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-rpc-httpx</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-mbg-plugins</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-cache-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-cache-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-cache-codis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-commons-region</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-mq-metaq</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-commons-retry</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-dubbox-support</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-servlet-support</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-freemarker-support</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-aliyun-support</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-commons-upload</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

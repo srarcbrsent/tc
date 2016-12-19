@@ -65,20 +65,20 @@
     </bean>
 
     <!-- string key (string serialization), object value (jdk serialization) -->
-    <bean id="soRedisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
+    <bean id="soRedisService" class="TcCacheServiceImpl">
         <property name="redisTemplate" ref="soRedisTemplate"/>
         <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.redis.ops.TcRedisOpsForGroupedValue">
+            <bean class="TcRedisOpsForGroupedValue">
                 <property name="redisTemplate" ref="soRedisTemplate"/>
             </bean>
         </property>
     </bean>
 
     <!-- string key (string serialization), string value (string serialization) -->
-    <bean id="ssRedisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
+    <bean id="ssRedisService" class="TcCacheServiceImpl">
         <property name="redisTemplate" ref="ssRedisTemplate"/>
         <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.redis.ops.TcRedisOpsForGroupedValue">
+            <bean class="TcRedisOpsForGroupedValue">
                 <property name="redisTemplate" ref="ssRedisTemplate"/>
             </bean>
         </property>

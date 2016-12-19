@@ -103,7 +103,7 @@
         </property>
     </bean>
 
-    <bean class="com.ysu.zyw.tc.components.httpx.TcHttpxService">
+    <bean class="TcHttpxService">
         <property name="camouflageException" value="${properties.rpc.httpx.camouflage.exception}"/>
     </bean>
 

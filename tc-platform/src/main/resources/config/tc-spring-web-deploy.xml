@@ -16,7 +16,7 @@
     <bean id="threadPoolTaskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
         <property name="poolSize" value="${properties.web.thread.pool.task.scheduler.pool.size}"/>
         <property name="errorHandler">
-            <bean class="com.ysu.zyw.tc.components.utils.pool.TcThreadPoolErrorLogHandler"/>
+            <bean class="com.ysu.zyw.tc.components.pool.TcThreadPoolErrorLogHandler"/>
         </property>
     </bean>
 
@@ -36,6 +36,6 @@
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:/config/tc-spring-web-front-end.xml"/>
 
-    <bean id="tcApplicationExaminer" class="com.ysu.zyw.tc.components.utils.TcApplicationExaminer"/>
+    <bean id="tcApplicationExaminer" class="com.ysu.zyw.tc.components.support.TcApplicationExaminer"/>
 
 </beans>

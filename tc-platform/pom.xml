@@ -38,6 +38,12 @@
             <artifactId>tc-sso</artifactId>
         </dependency>
 
+        <!-- modules -->
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-servlet-support</artifactId>
+        </dependency>
+
         <!-- spring dependency -->
         <dependency>
             <groupId>org.springframework</groupId>

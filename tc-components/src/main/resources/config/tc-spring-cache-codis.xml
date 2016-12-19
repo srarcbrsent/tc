@@ -19,7 +19,7 @@
         </property>
     </bean>
 
-    <bean id="codisConnectionFactory" class="com.ysu.zyw.tc.components.cache.codis.TcCodisConnectionFactory">
+    <bean id="codisConnectionFactory" class="TcCodisConnectionFactory">
         <property name="zkAddr" value="${properties.cache.codis.zookeeper.addr}"/>
         <property name="zkSessionTimeoutMs" value="${properties.cache.codis.zookeeper.session.timeout.ms}"/>
         <property name="zkProxyDir" value="${properties.cache.codis.zookeeper.proxy.dir}"/>
@@ -66,27 +66,27 @@
     </bean>
 
     <!-- string key (string serialization), object value (jdk serialization) -->
-    <bean id="soCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
+    <bean id="soCodisService" class="TcCacheServiceImpl">
         <property name="redisTemplate" ref="soCodisTemplate"/>
         <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+            <bean class="TcCodisOpsForGroupedValue">
                 <property name="redisTemplate" ref="soCodisTemplate"/>
             </bean>
         </property>
     </bean>
 
     <!-- string key (string serialization), string value (string serialization) -->
-    <bean id="ssCodisService" class="com.ysu.zyw.tc.components.cache.TcCacheServiceImpl">
+    <bean id="ssCodisService" class="TcCacheServiceImpl">
         <property name="redisTemplate" ref="ssCodisTemplate"/>
         <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.codis.ops.TcCodisOpsForGroupedValue">
+            <bean class="TcCodisOpsForGroupedValue">
                 <property name="redisTemplate" ref="ssCodisTemplate"/>
             </bean>
         </property>
     </bean>
 
     <!-- codis cache : object key (jdk serialization), object value (jdk serialization) -->
-    <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
+    <bean id="codisCache" class="TcCodisCache">
         <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).CODIS_CACHE}"/>
         <property name="codisTemplate" ref="ooCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>

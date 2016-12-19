@@ -16,7 +16,7 @@
     <bean id="forkJoinPool" class="org.springframework.scheduling.concurrent.ForkJoinPoolFactoryBean">
         <property name="parallelism" value="${properties.thread.pool.fork.join.pool.size}"/>
         <property name="uncaughtExceptionHandler">
-            <bean class="com.ysu.zyw.tc.components.utils.pool.TcUncaughtExceptionHandler"/>
+            <bean class="com.ysu.zyw.tc.components.pool.TcUncaughtExceptionHandler"/>
         </property>
     </bean>
 

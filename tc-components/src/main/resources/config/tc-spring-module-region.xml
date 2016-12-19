@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="regionService" class="com.ysu.zyw.tc.components.region.TcRegionService">
+    <bean id="regionService" class="TcRegionService">
         <property name="regionFilepath" value="/region/region.json"/>
     </bean>
 
