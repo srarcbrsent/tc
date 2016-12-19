@@ -10,180 +10,27 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tc-sso</artifactId>
-    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-base</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.ysu.zyw</groupId>
-            <artifactId>tc-components</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ysu.zyw</groupId>
-            <artifactId>tc-apimodel</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ysu.zyw</groupId>
-            <artifactId>tc-api</artifactId>
-        </dependency>
-
-        <!-- spring dependency -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-expression</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-websocket</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-messaging</artifactId>
-        </dependency>
-
-        <!-- dubbox -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dubbo</artifactId>
-            <version>${pom.version.dubbox}</version>
-        </dependency>
-
-        <!-- dubbox rest rpc -->
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxrs</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson2-provider</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
-        <finalName>ROOT</finalName>
-
         <plugins>
-            <!-- war plugin -->
+            <!-- maven jar plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-            </plugin>
-            <!-- jetty plugin -->
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.3.11.v20160721</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
-                    <war>${project.build.directory}/${project.build.finalName}</war>
-                    <webApp>
-                        <contextPath>/</contextPath>
-                        <defaultsDescriptor>
-                            ${project.build.outputDirectory}/jetty/webdefault.xml
-                        </defaultsDescriptor>
-                    </webApp>
-                    <scanIntervalSeconds>1</scanIntervalSeconds>
-                    <jettyXml>
-                        ${project.build.outputDirectory}/jetty/jetty.xml,
-                        ${project.build.outputDirectory}/jetty/jetty-http.xml,
-                        ${project.build.outputDirectory}/jetty/jetty-ssl.xml,
-                        ${project.build.outputDirectory}/jetty/jetty-https.xml
-                    </jettyXml>
-                    <stopKey>stop-tc-platform</stopKey>
-                    <stopPort>7071</stopPort>
-                    <systemProperties>
-                        <systemProperty>
-                            <name>logback.configurationFile</name>
-                            <value>file:///${project.build.outputDirectory}/logback.xml</value>
-                        </systemProperty>
-                    </systemProperties>
+                    <excludes>
+                        <exclude>logback.xml</exclude>
+                        <exclude>log4j.properties</exclude>
+                    </excludes>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>ch.qos.logback</groupId>
-                        <artifactId>logback-classic</artifactId>
-                        <version>1.1.7</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                        <version>1.7.21</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

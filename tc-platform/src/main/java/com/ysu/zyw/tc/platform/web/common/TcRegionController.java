@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.platform.web.common;
 
 import com.ysu.zyw.tc.base.ex.TcResourceNotFoundException;
-import com.ysu.zyw.tc.components.region.TcRegionService;
+import com.ysu.zyw.tc.components.commons.region.TcRegionService;
 import com.ysu.zyw.tc.model.components.region.TcProvince;
 import com.ysu.zyw.tc.model.mw.TcR;
 import io.swagger.annotations.Api;

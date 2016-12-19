@@ -1,12 +1,12 @@
 package com.ysu.zyw.tc.platform.web.account;
 
 import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
+import com.ysu.zyw.tc.components.servlet.support.TcXsrfTokenFilter;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.platform.fk.filters.TcXsrfTokenFilter;
 import com.ysu.zyw.tc.platform.fk.shiro.TcCredentialsMatcher;
 import com.ysu.zyw.tc.platform.svc.TcSessionService;
 import com.ysu.zyw.tc.platform.svc.TcVerificationCodeService;

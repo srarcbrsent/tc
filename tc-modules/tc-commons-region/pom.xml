@@ -21,7 +21,6 @@
         <dependency>
             <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-apimodel</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>

@@ -11,7 +11,7 @@
     <!-- xsrf filter -->
     <filter>
         <filter-name>xsrfFilter</filter-name>
-        <filter-class>TcXsrfTokenFilter</filter-class>
+        <filter-class>com.ysu.zyw.tc.components.servlet.support.TcXsrfTokenFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -44,7 +44,7 @@
             classpath*:/config/tc-spring-cache-redis.xml,
             classpath*:/config/tc-spring-mq-metaq.xml,
             classpath*:/config/tc-spring-rpc-httpx.xml,
-            classpath*:/config/tc-spring-module-region.xml
+            classpath*:/config/tc-spring-commons-region.xml
         </param-value>
     </context-param>
 
@@ -53,7 +53,7 @@
     </listener>
 
     <listener>
-        <listener-class>com.ysu.zyw.tc.components.utils.servlet.context.TcContextInitializer</listener-class>
+        <listener-class>com.ysu.zyw.tc.components.servlet.support.TcContextInitializer</listener-class>
     </listener>
 
     <!-- spring mvc config -->
@@ -74,29 +74,6 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.json</url-pattern>
-    </servlet-mapping>
-
-    <!-- druid monitor -->
-    <servlet>
-        <servlet-name>DruidStatView</servlet-name>
-        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-        <init-param>
-            <param-name>resetEnable</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>loginUsername</param-name>
-            <param-value>tc_admin</param-value>
-        </init-param>
-        <init-param>
-            <param-name>loginPassword</param-name>
-            <param-value>123456</param-value>
-        </init-param>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>DruidStatView</servlet-name>
-        <url-pattern>/druid-monitor/*</url-pattern>
     </servlet-mapping>
 
     <!-- error page -->
