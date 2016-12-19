@@ -15,6 +15,11 @@
     <dependencies>
         <dependency>
             <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-cache-api</artifactId>
         </dependency>
 

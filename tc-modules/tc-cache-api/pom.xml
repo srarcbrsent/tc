@@ -13,21 +13,21 @@
     <artifactId>tc-cache-api</artifactId>
 
     <dependencies>
-        <!-- project -->
         <dependency>
             <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-base</artifactId>
         </dependency>
 
-        <!-- redis -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

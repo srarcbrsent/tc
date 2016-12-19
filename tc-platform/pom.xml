@@ -13,6 +13,7 @@
     <packaging>war</packaging>
 
     <dependencies>
+        <!-- project -->
         <dependency>
             <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-base</artifactId>
@@ -150,6 +151,7 @@
             <artifactId>spring-messaging</artifactId>
         </dependency>
 
+        <!-- aop dependency -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
@@ -199,7 +201,7 @@
             <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
 
-        <!-- utils -->
+        <!-- commons utils -->
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>

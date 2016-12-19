@@ -33,6 +33,32 @@
             <artifactId>tc-api</artifactId>
         </dependency>
 
+        <!-- modules -->
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-cache-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-commons-retry</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-dubbox-support</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-mq-metaq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-servlet-support</artifactId>
+        </dependency>
+
         <!-- spring dependency -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -94,16 +120,7 @@
             <artifactId>spring-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-websocket</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-messaging</artifactId>
-        </dependency>
-
+        <!-- aop dependency -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>

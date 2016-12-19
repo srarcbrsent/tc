@@ -37,7 +37,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- excel -->
+        <!-- dependency -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -46,6 +46,12 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
         </dependency>
 
         <!-- commons util -->
@@ -74,14 +80,7 @@
             <artifactId>commons-beanutils</artifactId>
         </dependency>
 
-        <!-- jsch -->
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.54</version>
-        </dependency>
-
-        <!-- tester -->
+        <!-- demos -->
         <dependency>
             <groupId>io.reactivex</groupId>
             <artifactId>rxjava</artifactId>
