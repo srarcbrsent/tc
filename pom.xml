@@ -29,6 +29,7 @@
         <module>tc-sso</module>
         <module>tc-apiimpl</module>
         <module>tc-platform</module>
+        <module>tc-demos</module>
     </modules>
 
     <properties>

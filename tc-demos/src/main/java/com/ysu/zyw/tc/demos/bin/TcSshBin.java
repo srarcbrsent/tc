@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.bin;
+package com.ysu.zyw.tc.demos.bin;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
