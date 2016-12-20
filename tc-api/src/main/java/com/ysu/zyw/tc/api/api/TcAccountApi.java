@@ -5,12 +5,8 @@ import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.model.validator.constraints.Id;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.Range;
 import org.jboss.resteasy.annotations.Form;
 
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -23,7 +19,7 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<String> createAccount(
-            @Valid TiAccount tiAccount
+            TiAccount tiAccount
     );
 
     @GET
@@ -31,8 +27,8 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<Void> deleteAccount(
-            @NotEmpty @Id @PathParam(value = "id") String accountId,
-            @NotEmpty @Id @QueryParam(value = "delector") String delector
+            @PathParam(value = "id") String accountId,
+            @QueryParam(value = "delector") String delector
     );
 
     @POST
@@ -40,7 +36,7 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<Void> updateAccount(
-            @Valid TiAccount tiAccount
+            TiAccount tiAccount
     );
 
     @GET
@@ -48,7 +44,7 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.WILDCARD})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<ToAccount> findAccount(
-            @NotEmpty @Id @PathParam(value = "id") String accountId
+            @PathParam(value = "id") String accountId
     );
 
     @POST
@@ -65,8 +61,8 @@ public interface TcAccountApi {
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcP<List<ToAccount>> findAccounts(
             @Form TiFindAccountsTerms tiFindAccountsTerms,
-            @NotEmpty @Range(min = 0, max = Long.MAX_VALUE) @PathParam(value = "currentPage") Integer currentPage,
-            @NotEmpty @Range(min = 1, max = 30) @PathParam(value = "pageSize") Integer pageSize
+            @PathParam(value = "currentPage") Integer currentPage,
+            @PathParam(value = "pageSize") Integer pageSize
     );
 
 }

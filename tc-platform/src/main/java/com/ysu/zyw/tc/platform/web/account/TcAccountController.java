@@ -3,8 +3,6 @@ package com.ysu.zyw.tc.platform.web.account;
 import com.ysu.zyw.tc.api.api.TcAccountApi;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.mw.TcR;
-import com.ysu.zyw.tc.model.validator.mode.TcC;
-import com.ysu.zyw.tc.model.validator.mode.TcU;
 import com.ysu.zyw.tc.platform.svc.TcSessionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,7 +10,6 @@ import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +35,7 @@ public class TcAccountController {
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/create_account", method = RequestMethod.POST)
     public ResponseEntity<TcR<String>> createAccount(
-            @RequestBody @Validated(value = TcC.class) TiAccount tiAccount) {
+            @RequestBody TiAccount tiAccount) {
 
         String accountId = tcSessionService.getAccountId();
         tiAccount.setOperatorAccountId(accountId);
@@ -67,7 +64,7 @@ public class TcAccountController {
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/update_account", method = RequestMethod.POST)
     public ResponseEntity<TcR<Void>> updateAccount(
-            @RequestBody @Validated(value = TcU.class) TiAccount tiAccount) {
+            @RequestBody TiAccount tiAccount) {
 
         String accountId = tcSessionService.getAccountId();
         tiAccount.setOperatorAccountId(accountId);
