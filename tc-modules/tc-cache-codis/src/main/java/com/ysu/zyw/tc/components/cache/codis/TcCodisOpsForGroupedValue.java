@@ -25,9 +25,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Since codis not support keys command, so the group operation must be redesigned, and we decided to
  * use a hash structure to implement that feature.
- *
+ * <p>
  * According to the redis community, if we want to set a expire time to a hash field, we can use that:
- *
+ * <p>
  * If you need expiration for "data is invalid after X seconds" reasons, you can store another field
  * in your hash with [fieldname]_expiresAt then always retrieve that with your [fieldname] to check
  * if the data is still valid.
@@ -51,8 +51,8 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
     protected String expiresAtFiled(String field) {
         checkNotNull(field);
         if (field.contains(HASH_FIELD_EXPIRES_AT_SUFFIX)) {
-            throw new TcException(HASH_FIELD_EXPIRES_AT_SUFFIX +
-                    " is a inner access field part, you can not use it in your code");
+            throw new TcException("[{}] is a inner access field part, you can not use it in your code",
+                    HASH_FIELD_EXPIRES_AT_SUFFIX);
         }
         return field + HASH_FIELD_EXPIRES_AT_SUFFIX;
     }
@@ -215,7 +215,9 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
         redisTemplate.opsForHash().delete(group, key, expiresAtFiled(key));
     }
 
-    // @warn may contains some expired keys, no necessary to implement accurate keys command.
+    /**
+     * @warn may contains some expired keys, no necessary to implement accurate keys command.
+     */
     @Override
     public Set<String> keys(@Nonnull String group) {
         checkNotNull(group, "empty group is not allowed");
