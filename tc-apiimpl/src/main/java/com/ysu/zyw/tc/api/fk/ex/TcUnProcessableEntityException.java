@@ -1,20 +1,36 @@
 package com.ysu.zyw.tc.api.fk.ex;
 
 import com.ysu.zyw.tc.base.ex.TcException;
-import com.ysu.zyw.tc.model.mw.TcExtra;
+import com.ysu.zyw.tc.base.utils.TcFormatUtils;
 import lombok.Getter;
+
+import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TcUnProcessableEntityException extends TcException {
 
     @Getter
-    private TcExtra tcExtra;
+    private int code;
 
-    public TcUnProcessableEntityException(TcExtra tcExtra) {
-        super("");
-        checkNotNull(tcExtra);
-        this.tcExtra = tcExtra;
+    @Getter
+    private String description;
+
+    @Getter
+    private Object extra;
+
+    public TcUnProcessableEntityException(int code, @Nonnull String description) {
+        super(description);
+        checkNotNull(description);
+        this.code = code;
+        this.description = description;
+    }
+
+    public TcUnProcessableEntityException(int code, @Nonnull String description, @Nonnull Object... infos) {
+        super(TcFormatUtils.format(description, infos));
+        checkNotNull(description);
+        this.code = code;
+        this.description = TcFormatUtils.format(description, infos);
     }
 
 }

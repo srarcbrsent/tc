@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ysu.zyw.tc.base.ex.TcResourceNotFoundException;
 import com.ysu.zyw.tc.base.utils.TcSerializationUtils;
 import com.ysu.zyw.tc.model.components.region.TcProvince;
 import lombok.Getter;
@@ -44,7 +43,7 @@ public class TcRegionService implements InitializingBean {
         checkNotNull(tcCityListGroup);
         List<TcProvince.TcCity> tcCityList = tcCityListGroup.get(provinceCode);
         if (Objects.isNull(tcCityList)) {
-            throw new TcResourceNotFoundException("city with province code [" + provinceCode + "] not exists");
+            return Lists.newArrayList();
         }
         return tcCityList;
     }
@@ -53,7 +52,7 @@ public class TcRegionService implements InitializingBean {
         checkNotNull(tcDistrictListGroup);
         List<TcProvince.TcCity.TcDistrict> tcDistrictList = tcDistrictListGroup.get(cityCode);
         if (Objects.isNull(tcDistrictList)) {
-            throw new TcResourceNotFoundException("district with city code [" + cityCode + "] not exists");
+            return Lists.newArrayList();
         }
         return tcDistrictList;
     }
@@ -64,8 +63,10 @@ public class TcRegionService implements InitializingBean {
                 .parallelStream()
                 .flatMap(Collection::parallelStream)
                 .filter(tcDistrict -> tcDistrict.getCode().equals(code)).findFirst();
-        TcProvince.TcCity.TcDistrict tcDistrict = tcDistrictOptional.orElseThrow(
-                () -> new TcResourceNotFoundException("district with code [" + code + "] not exists"));
+        TcProvince.TcCity.TcDistrict tcDistrict = tcDistrictOptional.orElse(null);
+        if (Objects.isNull(tcDistrict)) {
+            return null;
+        }
         TcProvince.TcCity.TcDistrict copyDistrict = tcDistrict.copy();
         TcProvince.TcCity copyCity = tcDistrict.getTcCity().copy();
         TcProvince copyProvince = tcDistrict.getTcCity().getTcProvince().copy();

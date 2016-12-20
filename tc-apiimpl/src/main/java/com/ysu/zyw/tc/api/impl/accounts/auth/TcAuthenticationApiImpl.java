@@ -43,7 +43,7 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
 
         List<ToMenu> toMenus = tcAuthService.fetchMenus(accountId);
 
-        return TcP.ok(null);
+        return TcP.ok(toMenus);
     }
 
     @Override

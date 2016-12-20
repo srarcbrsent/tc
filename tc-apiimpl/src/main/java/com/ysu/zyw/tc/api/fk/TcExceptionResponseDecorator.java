@@ -1,20 +1,15 @@
 package com.ysu.zyw.tc.api.fk;
 
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
-import com.ysu.zyw.tc.base.ex.TcResourceConflictException;
-import com.ysu.zyw.tc.base.ex.TcResourceNotFoundException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
-import com.ysu.zyw.tc.model.mw.TcExtra;
 import com.ysu.zyw.tc.model.mw.TcR;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 
-import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Objects;
 
@@ -28,12 +23,11 @@ public class TcExceptionResponseDecorator {
     }
 
     /**
-     * 1 => 如果内部抛出了任何异常，封装为TcR返回
-     * 2 => 如果状态码为422 则必须有extra描述情况，如果没有设置默认值
+     * 1 => 如果内部抛出了TcUnProcessableEntityException 包装并返回对应code
+     * 2 => 如果内部抛出了任何异常 包装为R.SERVER_ERROR返回
      */
     @Around(value = "pointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
         try {
             log.info("call open apiimpl [{}]", proceedingJoinPoint.getSignature().getName());
             Date startTime = new Date();
@@ -41,34 +35,23 @@ public class TcExceptionResponseDecorator {
             log.info("call open apiimpl [{}] finish, take time [{}]", proceedingJoinPoint.getSignature().getName(),
                     TcDateUtils.duration(startTime, new Date()));
             if (Objects.isNull(result)) {
-                log.warn("[{}][{}][{}]", "OpenApi切面-请求无任何返回值", "切面异常捕获", proceedingJoinPoint.getArgs());
-                return determineResponse(method).setCode(TcR.R.NOT_FOUND);
+                log.warn("open apiimpl [{}] return a null object", proceedingJoinPoint.getSignature().getName());
             }
             return result;
-        } catch (TcResourceNotFoundException e) {
-            // 如果内部抛出了资源不存在异常 则对页面返回 404 资源不存在
-            log.error("[{}][{}][{}]", "OpenApi切面-资源不存在", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
-            return determineResponse(method).setCode(TcR.R.NOT_FOUND);
-        } catch (TcResourceConflictException e) {
-            // 如果内部抛出了资源冲突异常 则对页面返回 409 冲突异常
-            log.error("[{}][{}][{}]", "OpenApi切面-资源冲突", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
-            return determineResponse(method).setCode(TcR.R.CONFLICT);
         } catch (TcUnProcessableEntityException e) {
-            // 如果内部抛出了验证错误异常 则对页面返回 422 无法处理的请求
-            TcExtra tcExtra = e.getTcExtra();
-            log.warn("[{}][{}][{}][{}]", "OpenApi切面-无法处理的请求-业务级异常", "切面异常捕获",
-                    proceedingJoinPoint.getArgs(), tcExtra);
-            return determineResponse(method).setCode(TcR.R.UNPROCESSABLE_ENTITY).setExtra(tcExtra);
+            // 如果内部抛出了无法处理的请求异常 直接包装返回值
+            int code = e.getCode();
+            String description = e.getDescription();
+            Object extra = e.getExtra();
+            log.warn("[{}][{}][{}][{}][{}][{}]", "OpenApi切面-无法处理的请求-业务级异常", "切面异常捕获",
+                    proceedingJoinPoint.getSignature().getName(),
+                    proceedingJoinPoint.getArgs(), code, description);
+            return TcR.code(code, description).setExtra(extra);
         } catch (Exception e) {
             // 如果内部抛出了异常 则对页面返回 500 服务器异常
             log.error("[{}][{}][{}]", "OpenApi切面-服务器异常", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
-            return determineResponse(method).setCode(TcR.R.SERVER_ERROR);
+            return TcR.error();
         }
-    }
-
-    // generic type with jackson serialization, do not cause any problem, if use other serialization, may failed.
-    private <T> TcR<T> determineResponse(Method method) {
-        return new TcR<>();
     }
 
 }

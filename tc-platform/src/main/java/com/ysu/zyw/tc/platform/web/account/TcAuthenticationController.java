@@ -93,9 +93,7 @@ public class TcAuthenticationController {
         // verify verification code
         boolean verificationCodeMatch = tcVerificationCodeService.isVerificationCodeMatch(verificationCode);
         if (!verificationCodeMatch) {
-            TcR<Integer> tcR = TcR.ok(1);
-            tcR.extra("验证码输入错误，请重试！");
-            return ResponseEntity.ok(tcR);
+            return ResponseEntity.ok(TcR.code(1, "验证码输入错误！"));
         }
 
         // login
@@ -104,17 +102,11 @@ public class TcAuthenticationController {
         try {
             SecurityUtils.getSubject().login(token);
         } catch (UnknownAccountException e) {
-            TcR<Integer> tcR = TcR.ok(2);
-            tcR.extra("账号不存在，请重试！");
-            return ResponseEntity.ok(tcR);
+            return ResponseEntity.ok(TcR.code(2, "账号不存在！"));
         } catch (LockedAccountException e) {
-            TcR<Integer> tcR = TcR.ok(3);
-            tcR.extra("账号被锁定，请稍后再试！");
-            return ResponseEntity.ok(tcR);
+            return ResponseEntity.ok(TcR.code(3, "账号被锁定！"));
         } catch (IncorrectCredentialsException e) {
-            TcR<Integer> tcR = TcR.ok(4);
-            tcR.extra("账号密码错误，请重试！");
-            return ResponseEntity.ok(tcR);
+            return ResponseEntity.ok(TcR.code(4, "账号密码错误！"));
         }
 
         // set cookie
@@ -129,7 +121,7 @@ public class TcAuthenticationController {
         // TODO: 2016/11/26
 
         // successful
-        return ResponseEntity.ok(TcR.ok(0).extra("登陆成功！"));
+        return ResponseEntity.ok(TcR.code(0, "登陆成功！"));
     }
 
     @ApiOperation(

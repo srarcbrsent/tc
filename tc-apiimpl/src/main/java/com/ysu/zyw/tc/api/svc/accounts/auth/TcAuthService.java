@@ -10,7 +10,6 @@ import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
-import com.ysu.zyw.tc.model.mw.TcExtra;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -55,8 +54,8 @@ public class TcAuthService {
     private TcAccountService tcAccountService;
 
     /**
-     * @throws TcUnProcessableEntityException 业务级更新失败: 内嵌TcVerifyFailure异常信息
-     *                                        code == 1 => 账号不存在;
+     * @throws TcUnProcessableEntityException 不符合业务规则要求时抛出
+     * @code code == 1 => 账号不存在;
      */
     @Transactional
     public int grantRole(@Nonnull String accountId,
@@ -65,7 +64,7 @@ public class TcAuthService {
         checkArgument(CollectionUtils.isNotEmpty(roleIdList));
 
         if (!tcAccountService.existId(accountId)) {
-            throw new TcUnProcessableEntityException(new TcExtra(1, "账号不存在！"));
+            throw new TcUnProcessableEntityException(1, "账号不存在！");
         }
 
         Date now = new Date();
@@ -87,8 +86,8 @@ public class TcAuthService {
     }
 
     /**
-     * @throws TcUnProcessableEntityException 业务级更新失败: 内嵌TcVerifyFailure异常信息
-     *                                        code == 1 => 账号不存在;
+     * @throws TcUnProcessableEntityException 不符合业务规则要求时抛出
+     * @code code == 1 => 账号不存在;
      */
     @Transactional
     public int grantPermission(@Nonnull String accountId,
@@ -97,7 +96,7 @@ public class TcAuthService {
         checkArgument(CollectionUtils.isNotEmpty(permissionIdList));
 
         if (!tcAccountService.existId(accountId)) {
-            throw new TcUnProcessableEntityException(new TcExtra(1, "账号不存在！"));
+            throw new TcUnProcessableEntityException(1, "账号不存在！");
         }
 
         Date now = new Date();

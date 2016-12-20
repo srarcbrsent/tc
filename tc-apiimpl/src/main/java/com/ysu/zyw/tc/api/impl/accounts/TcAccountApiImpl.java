@@ -10,7 +10,6 @@ import com.ysu.zyw.tc.model.mw.TcR;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 
 public class TcAccountApiImpl implements TcAccountApi {
 
@@ -47,14 +46,10 @@ public class TcAccountApiImpl implements TcAccountApi {
     @Override
     public TcR<ToAccount> findAccount(String accountId) {
 
-        // throws TcResourceNotFoundException
+        // throws TcUnProcessableEntityException
         ToAccount toAccount = tcAccountService.findAccount(accountId, false);
 
-        if (Objects.nonNull(toAccount)) {
-            return TcR.ok(toAccount);
-        } else {
-            return new TcR<>(TcR.R.NOT_FOUND);
-        }
+        return TcR.ok(toAccount);
     }
 
     @Override

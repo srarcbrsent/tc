@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.platform.web.common;
 
-import com.ysu.zyw.tc.base.ex.TcResourceNotFoundException;
 import com.ysu.zyw.tc.components.commons.region.TcRegionService;
 import com.ysu.zyw.tc.model.components.region.TcProvince;
 import com.ysu.zyw.tc.model.mw.TcR;
@@ -45,12 +44,7 @@ public class TcRegionController {
     @RequestMapping(value = "/find_cities/{code}", method = RequestMethod.GET)
     public ResponseEntity<TcR<List<TcProvince.TcCity>>> findCities(
             @PathVariable(value = "code") String provinceCode) {
-        List<TcProvince.TcCity> cityList;
-        try {
-            cityList = tcRegionService.findCityList(provinceCode);
-        } catch (TcResourceNotFoundException e) {
-            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND));
-        }
+        List<TcProvince.TcCity> cityList = tcRegionService.findCityList(provinceCode);
         checkNotNull(cityList);
         return ResponseEntity.ok(TcR.ok(cityList));
     }
@@ -62,12 +56,7 @@ public class TcRegionController {
     @RequestMapping(value = "/find_districts/{code}", method = RequestMethod.GET)
     public ResponseEntity<TcR<List<TcProvince.TcCity.TcDistrict>>> findDistricts(
             @PathVariable(value = "code") String cityCode) {
-        List<TcProvince.TcCity.TcDistrict> districtList;
-        try {
-            districtList = tcRegionService.findDistrictList(cityCode);
-        } catch (TcResourceNotFoundException e) {
-            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND));
-        }
+        List<TcProvince.TcCity.TcDistrict> districtList = tcRegionService.findDistrictList(cityCode);
         checkNotNull(districtList);
         return ResponseEntity.ok(TcR.ok(districtList));
     }
@@ -79,13 +68,8 @@ public class TcRegionController {
     @RequestMapping(value = "/find_district/{code}", method = RequestMethod.GET)
     public ResponseEntity<TcR<TcProvince.TcCity.TcDistrict>> findDistrict(
             @PathVariable(value = "code") String code) {
-        TcProvince.TcCity.TcDistrict district;
-        try {
-            district = tcRegionService.findDistrict(code);
-        } catch (TcResourceNotFoundException e) {
-            return ResponseEntity.ok(new TcR<>(TcR.R.NOT_FOUND));
-        }
-        checkNotNull(district);
+        TcProvince.TcCity.TcDistrict district = tcRegionService.findDistrict(code);
+        // may null
         return ResponseEntity.ok(TcR.ok(district));
     }
 

@@ -84,20 +84,19 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
             return tcR.get();
         }
 
-        if (tcR.isUnProcessableEntity()) {
-            int code = tcR.getExtra().getCode();
+        int code = tcR.getCode();
 
-            // code == 1 => 账号不存在;
-            if (Objects.equals(code, 1)) {
-                throw new UnknownAccountException("账号不存在，请重试！");
-            }
-            // code == 2 => 账号被锁定;
-            if (Objects.equals(code, 2)) {
-                throw new LockedAccountException("账号被锁定，请稍后再试！");
-            }
+        // code == 1 => 账号不存在;
+        if (Objects.equals(code, 1)) {
+            throw new UnknownAccountException("账号不存在！");
+        }
+        // code == 2 => 账号被锁定;
+        if (Objects.equals(code, 2)) {
+            throw new LockedAccountException("账号被锁定！");
         }
 
-        throw new TcException("系统异常，请稍后再试！");
+        // Unreachable
+        throw new TcException("系统异常！");
     }
 
     protected List<ToRole> fetchRoles(String accountId) {
