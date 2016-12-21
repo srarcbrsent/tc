@@ -52,11 +52,6 @@
 
         <dependency>
             <groupId>com.ysu.zyw</groupId>
-            <artifactId>tc-commons-region</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-commons-retry</artifactId>
         </dependency>
 

@@ -43,8 +43,7 @@
             classpath*:/config/tc-spring-deploy.xml,
             classpath*:/config/tc-spring-cache-redis.xml,
             classpath*:/config/tc-spring-mq-metaq.xml,
-            classpath*:/config/tc-spring-rpc-httpx.xml,
-            classpath*:/config/tc-spring-commons-region.xml
+            classpath*:/config/tc-spring-rpc-httpx.xml
         </param-value>
     </context-param>
 

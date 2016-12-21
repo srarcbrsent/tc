@@ -16,7 +16,6 @@
         <module>tc-modules/tc-cache-api</module>
         <module>tc-modules/tc-cache-redis</module>
         <module>tc-modules/tc-cache-codis</module>
-        <module>tc-modules/tc-commons-region</module>
         <module>tc-modules/tc-mq-metaq</module>
         <module>tc-modules/tc-commons-retry</module>
         <module>tc-modules/tc-dubbox-support</module>
@@ -210,12 +209,6 @@
             <dependency>
                 <groupId>com.ysu.zyw</groupId>
                 <artifactId>tc-cache-codis</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.ysu.zyw</groupId>
-                <artifactId>tc-commons-region</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
