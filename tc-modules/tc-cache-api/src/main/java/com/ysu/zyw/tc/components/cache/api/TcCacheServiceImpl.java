@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.components.cache.api;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcUtils;
 import lombok.Getter;
@@ -11,7 +12,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -32,7 +32,7 @@ public class TcCacheServiceImpl implements TcCacheService {
 
     @Getter
     @Setter
-    private RedisTemplate<String, Serializable> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Getter
     @Setter
@@ -49,7 +49,7 @@ public class TcCacheServiceImpl implements TcCacheService {
 
     @Override
     public void set(@Nonnull String key,
-                    @Nonnull Serializable value,
+                    @Nonnull Object value,
                     long timeout) {
         checkNotNull(key, "empty key is not allowed");
         checkNotNull(value, "null value is not allowed");
@@ -58,10 +58,10 @@ public class TcCacheServiceImpl implements TcCacheService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends Serializable> T get(@Nonnull String key,
-                                          @Nonnull Class<T> clazz) {
+    public <T> T get(@Nonnull String key,
+                     @Nonnull TypeReference<T> typeReference) {
         checkNotNull(key, "empty key is not allowed");
-        checkNotNull(clazz, "null clazz is not allowed");
+        checkNotNull(typeReference, "null clazz is not allowed");
         Object sValue = redisTemplate.opsForValue().get(key);
         return (T) sValue;
     }
@@ -76,11 +76,11 @@ public class TcCacheServiceImpl implements TcCacheService {
     // call this get method concurrently, you should not give a lock and all request will go through
     // concurrently.
     @Override
-    @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
-    public <T extends Serializable> T get(@Nonnull String key,
-                                          @Nonnull Callable<T> valueLoader,
-                                          long timeout,
-                                          @Nullable final ReentrantLock lock) {
+    @SuppressWarnings({"unchecked"})
+    public <T> T get(@Nonnull String key,
+                     @Nonnull Callable<T> valueLoader,
+                     long timeout,
+                     @Nullable final ReentrantLock lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -114,9 +114,9 @@ public class TcCacheServiceImpl implements TcCacheService {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Serializable> T loadValue(@Nonnull String key,
-                                                 @Nonnull Callable<T> valueLoader,
-                                                 long timeout) {
+    private <T> T loadValue(@Nonnull String key,
+                            @Nonnull Callable<T> valueLoader,
+                            long timeout) {
         // lock and get
         T sValue = TcUtils.doQuietly(() -> (T) redisTemplate.opsForValue().get(key), null);
         if (Objects.nonNull(sValue)) {
@@ -127,9 +127,9 @@ public class TcCacheServiceImpl implements TcCacheService {
     }
 
     @SuppressWarnings("Duplicates")
-    private <T extends Serializable> T loadValueByValueLoaderAndCacheIt(@Nonnull String key,
-                                                                        @Nonnull Callable<T> valueLoader,
-                                                                        long timeout) {
+    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String key,
+                                                   @Nonnull Callable<T> valueLoader,
+                                                   long timeout) {
         T loadedValue;
         try {
             loadedValue = valueLoader.call();

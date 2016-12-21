@@ -11,16 +11,12 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcCity implements Serializable {
+public class ToProvince implements Serializable {
 
-    private static final long serialVersionUID = -6778902834090224369L;
+    private static final long serialVersionUID = -2800094899251202570L;
 
     private String id;
 
     private String name;
-
-    private String provinceId;
-
-    private String provinceName;
 
 }

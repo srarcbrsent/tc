@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcUtils;
 import com.ysu.zyw.tc.components.cache.api.TcOpsForGroupedValue;
@@ -10,7 +11,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -46,7 +46,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
 
     @Getter
     @Setter
-    protected RedisTemplate<String, Serializable> redisTemplate;
+    protected RedisTemplate<String, Object> redisTemplate;
 
     protected String expiresAtFiled(String field) {
         checkNotNull(field);
@@ -70,7 +70,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
     @Override
     public void set(@Nonnull String group,
                     @Nonnull String key,
-                    @Nonnull Serializable value,
+                    @Nonnull Object value,
                     long timeout) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
@@ -81,12 +81,12 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Serializable> T get(@Nonnull String group,
-                                          @Nonnull String key,
-                                          @Nonnull Class<T> clazz) {
+    public <T> T get(@Nonnull String group,
+                     @Nonnull String key,
+                     @Nonnull TypeReference<T> typeReference) {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
-        checkNotNull(clazz, "null clazz is not allowed");
+        checkNotNull(typeReference, "null clazz is not allowed");
         if (exists(group, key)) {
             return (T) redisTemplate.opsForHash().get(group, key);
         } else {
@@ -105,11 +105,11 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
     // concurrently.
     @SuppressWarnings({"Duplicates", "unchecked"})
     @Override
-    public <T extends Serializable> T get(@Nonnull String group,
-                                          @Nonnull String key,
-                                          @Nonnull Callable<T> valueLoader,
-                                          long timeout,
-                                          @Nullable final ReentrantLock lock) {
+    public <T> T get(@Nonnull String group,
+                     @Nonnull String key,
+                     @Nonnull Callable<T> valueLoader,
+                     long timeout,
+                     @Nullable final ReentrantLock lock) {
         // special, other apiimpl if the cache service itself is offline, they may throw an exception(such
         // as JodisPool is empty), but this apiimpl is different, because this apiimpl means load by cache, if
         // not loaded, then load by value loader, this not loaded include the cache is not exists and
@@ -145,10 +145,10 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Serializable> T loadValue(@Nonnull String group,
-                                                 @Nonnull String key,
-                                                 @Nonnull Callable<T> valueLoader,
-                                                 long timeout) {
+    private <T> T loadValue(@Nonnull String group,
+                            @Nonnull String key,
+                            @Nonnull Callable<T> valueLoader,
+                            long timeout) {
         // lock and get
         T sValue = TcUtils.doQuietly(() -> {
             if (exists(group, key)) {
@@ -165,10 +165,10 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
     }
 
     @SuppressWarnings("Duplicates")
-    private <T extends Serializable> T loadValueByValueLoaderAndCacheIt(@Nonnull String group,
-                                                                        @Nonnull String key,
-                                                                        @Nonnull Callable<T> valueLoader,
-                                                                        long timeout) {
+    private <T> T loadValueByValueLoaderAndCacheIt(@Nonnull String group,
+                                                   @Nonnull String key,
+                                                   @Nonnull Callable<T> valueLoader,
+                                                   long timeout) {
         T loadedValue;
         try {
             loadedValue = valueLoader.call();

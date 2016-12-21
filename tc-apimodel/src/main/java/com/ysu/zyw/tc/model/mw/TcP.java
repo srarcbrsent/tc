@@ -38,7 +38,10 @@ public class TcP<T> extends TcR<T> implements Serializable {
     public static <T> TcP<T> ok(@Nonnull T body) {
         checkNotNull(body);
         TcP<T> tcP = new TcP<>();
-        tcP.setCode(R.SUCCESS)
+        tcP.setCurrentPage(1)
+                .setTotalPage(1)
+                .setPageSize(Integer.MAX_VALUE)
+                .setCode(R.SUCCESS)
                 .setDescription(R.SUCCESS_DESCRIPTION)
                 .setBody(body);
         return tcP;

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcRegion implements Serializable {
+public class ToRegion implements Serializable {
 
     private static final long serialVersionUID = 2479179145801894893L;
 
