@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.api.api;
+package com.ysu.zyw.tc.api.api.accounts;
 
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;

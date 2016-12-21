@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.platform.fk.shiro.filter;
 
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
+import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
 import com.ysu.zyw.tc.base.constant.TcConstant;
 import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;

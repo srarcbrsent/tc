@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.platform.web.account;
 
-import com.ysu.zyw.tc.api.api.TcAccountApi;
+import com.ysu.zyw.tc.api.api.accounts.TcAccountApi;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.platform.svc.TcSessionService;

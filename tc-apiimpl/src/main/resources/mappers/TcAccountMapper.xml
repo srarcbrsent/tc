@@ -3,12 +3,11 @@
 <mapper namespace="com.ysu.zyw.tc.api.dao.mappers.TcAccountMapper">
   <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcAccount">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="region" jdbcType="VARCHAR" property="region" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="email_activated" jdbcType="INTEGER" property="emailActivated" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="mobile_activated" jdbcType="INTEGER" property="mobileActivated" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="random_token" jdbcType="VARCHAR" property="randomToken" />
@@ -18,6 +17,7 @@
     <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
     <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
     <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -78,9 +78,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, region, nickname, email, email_activated, mobile, mobile_activated, avatar, password, 
-    random_token, lock_release_time, delected, updated_person, updated_timestamp, created_person, 
-    created_timestamp
+    id, email, email_activated, mobile, mobile_activated, region, avatar, password, random_token, 
+    lock_release_time, delected, updated_person, updated_timestamp, created_person, created_timestamp, 
+    nickname
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountExample" resultMap="BaseResultMap">
     select
@@ -116,30 +116,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
-    insert into mb_account (id, region, nickname, 
-      email, email_activated, mobile, 
-      mobile_activated, avatar, password, 
-      random_token, lock_release_time, delected, 
-      updated_person, updated_timestamp, created_person, 
-      created_timestamp)
-    values (#{id,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{emailActivated,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
-      #{mobileActivated,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{randomToken,jdbcType=VARCHAR}, #{lockReleaseTime,jdbcType=TIMESTAMP}, #{delected,jdbcType=INTEGER}, 
-      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
-      #{createdTimestamp,jdbcType=TIMESTAMP})
+    insert into mb_account (id, email, email_activated, 
+      mobile, mobile_activated, region, 
+      avatar, password, random_token, 
+      lock_release_time, delected, updated_person, 
+      updated_timestamp, created_person, created_timestamp, 
+      nickname)
+    values (#{id,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{emailActivated,jdbcType=INTEGER}, 
+      #{mobile,jdbcType=VARCHAR}, #{mobileActivated,jdbcType=INTEGER}, #{region,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{randomToken,jdbcType=VARCHAR}, 
+      #{lockReleaseTime,jdbcType=TIMESTAMP}, #{delected,jdbcType=INTEGER}, #{updatedPerson,jdbcType=VARCHAR}, 
+      #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP}, 
+      #{nickname,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
     insert into mb_account
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="region != null">
-        region,
-      </if>
-      <if test="nickname != null">
-        nickname,
       </if>
       <if test="email != null">
         email,
@@ -152,6 +146,9 @@
       </if>
       <if test="mobileActivated != null">
         mobile_activated,
+      </if>
+      <if test="region != null">
+        region,
       </if>
       <if test="avatar != null">
         avatar,
@@ -180,16 +177,13 @@
       <if test="createdTimestamp != null">
         created_timestamp,
       </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="region != null">
-        #{region,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
@@ -202,6 +196,9 @@
       </if>
       <if test="mobileActivated != null">
         #{mobileActivated,jdbcType=INTEGER},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
       </if>
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
@@ -230,6 +227,9 @@
       <if test="createdTimestamp != null">
         #{createdTimestamp,jdbcType=TIMESTAMP},
       </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountExample" resultType="java.lang.Long">
@@ -244,12 +244,6 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.region != null">
-        region = #{record.region,jdbcType=VARCHAR},
-      </if>
-      <if test="record.nickname != null">
-        nickname = #{record.nickname,jdbcType=VARCHAR},
-      </if>
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
       </if>
@@ -261,6 +255,9 @@
       </if>
       <if test="record.mobileActivated != null">
         mobile_activated = #{record.mobileActivated,jdbcType=INTEGER},
+      </if>
+      <if test="record.region != null">
+        region = #{record.region,jdbcType=VARCHAR},
       </if>
       <if test="record.avatar != null">
         avatar = #{record.avatar,jdbcType=VARCHAR},
@@ -289,6 +286,9 @@
       <if test="record.createdTimestamp != null">
         created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -297,12 +297,11 @@
   <update id="updateByExample" parameterType="map">
     update mb_account
     set id = #{record.id,jdbcType=VARCHAR},
-      region = #{record.region,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       email_activated = #{record.emailActivated,jdbcType=INTEGER},
       mobile = #{record.mobile,jdbcType=VARCHAR},
       mobile_activated = #{record.mobileActivated,jdbcType=INTEGER},
+      region = #{record.region,jdbcType=VARCHAR},
       avatar = #{record.avatar,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       random_token = #{record.randomToken,jdbcType=VARCHAR},
@@ -311,7 +310,8 @@
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{record.createdPerson,jdbcType=VARCHAR},
-      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
+      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
+      nickname = #{record.nickname,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -319,12 +319,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
     update mb_account
     <set>
-      <if test="region != null">
-        region = #{region,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
-      </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
@@ -336,6 +330,9 @@
       </if>
       <if test="mobileActivated != null">
         mobile_activated = #{mobileActivated,jdbcType=INTEGER},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
       </if>
       <if test="avatar != null">
         avatar = #{avatar,jdbcType=VARCHAR},
@@ -364,17 +361,19 @@
       <if test="createdTimestamp != null">
         created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
       </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
     update mb_account
-    set region = #{region,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
+    set email = #{email,jdbcType=VARCHAR},
       email_activated = #{emailActivated,jdbcType=INTEGER},
       mobile = #{mobile,jdbcType=VARCHAR},
       mobile_activated = #{mobileActivated,jdbcType=INTEGER},
+      region = #{region,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       random_token = #{randomToken,jdbcType=VARCHAR},
@@ -383,7 +382,8 @@
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{createdPerson,jdbcType=VARCHAR},
-      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
+      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
+      nickname = #{nickname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountExample" resultType="java.lang.String">
@@ -406,12 +406,11 @@
   <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccount">
     insert into mb_account (
       id, 
-      region, 
-      nickname, 
       email, 
       email_activated, 
       mobile, 
       mobile_activated, 
+      region, 
       avatar, 
       password, 
       random_token, 
@@ -420,16 +419,16 @@
       updated_person, 
       updated_timestamp, 
       created_person, 
-      created_timestamp
+      created_timestamp, 
+      nickname
     ) values 
     <foreach collection="list" item="item" separator=", ">
       (#{item.id,jdbcType=VARCHAR}, 
-      #{item.region,jdbcType=VARCHAR}, 
-      #{item.nickname,jdbcType=VARCHAR}, 
       #{item.email,jdbcType=VARCHAR}, 
       #{item.emailActivated,jdbcType=INTEGER}, 
       #{item.mobile,jdbcType=VARCHAR}, 
       #{item.mobileActivated,jdbcType=INTEGER}, 
+      #{item.region,jdbcType=VARCHAR}, 
       #{item.avatar,jdbcType=VARCHAR}, 
       #{item.password,jdbcType=VARCHAR}, 
       #{item.randomToken,jdbcType=VARCHAR}, 
@@ -438,7 +437,8 @@
       #{item.updatedPerson,jdbcType=VARCHAR}, 
       #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 
       #{item.createdPerson,jdbcType=VARCHAR}, 
-      #{item.createdTimestamp,jdbcType=TIMESTAMP})
+      #{item.createdTimestamp,jdbcType=TIMESTAMP}, 
+      #{item.nickname,jdbcType=VARCHAR})
     </foreach>
   </insert>
 </mapper>

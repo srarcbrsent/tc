@@ -28,11 +28,11 @@
 
     <dubbo:monitor protocol="registry"/>
 
-    <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAccountApi"
+    <dubbo:service interface="com.ysu.zyw.tc.api.api.accounts.TcAccountApi"
                    ref="tcAccountsApi"
                    version="1.0"/>
 
-    <dubbo:service interface="com.ysu.zyw.tc.api.api.TcAuthenticationApi"
+    <dubbo:service interface="com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi"
                    ref="tcAuthenticationApi"
                    version="1.0"/>
 

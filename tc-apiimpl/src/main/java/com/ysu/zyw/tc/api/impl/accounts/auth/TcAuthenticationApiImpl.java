@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.impl.accounts.auth;
 
-import com.ysu.zyw.tc.api.api.TcAuthenticationApi;
+import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;

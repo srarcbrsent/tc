@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.api.api;
+package com.ysu.zyw.tc.api.api.accounts;
 
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
