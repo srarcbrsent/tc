@@ -30,7 +30,7 @@ public class TcResponseEntityDecorator {
             // 如果内部抛出了异常
             log.error("[{}][{}][{}][{}][{}]", "OpenApi切面-服务器异常", "切面异常捕获",
                     proceedingJoinPoint.getSignature().getName(), proceedingJoinPoint.getArgs(), e);
-            return ResponseEntity.ok(TcR.error());
+            return ResponseEntity.ok(TcR.ex());
         }
     }
 

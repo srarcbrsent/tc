@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * 1. TcR.code == R.SUCCESS => success, have body (except TcR<Void>)
  * 2. TcR.code == ? => custom code
- * 3. TcR.code == R.SERVER_ERROR => server error, may happen in any apis.
+ * 3. TcR.code == R.SERVER_ERROR => server ex, may happen in any apis.
  */
 @Data
 @Accessors(chain = true)
@@ -64,7 +64,7 @@ public class TcR<T> implements Serializable {
                 .setDescription(description);
     }
 
-    public static <T> TcR<T> error() {
+    public static <T> TcR<T> ex() {
         return new TcR<T>()
                 .setCode(R.SERVER_ERROR)
                 .setDescription(R.SERVER_ERROR_DESCRIPTION);

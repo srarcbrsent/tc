@@ -45,7 +45,7 @@ public class TcConstant {
 
     }
 
-    public static abstract class S {
+    public static abstract class Session {
 
         public static final String SESSION_SHIRO_MATCHER_ONCE_TOKEN = "session_matcher_token";
 

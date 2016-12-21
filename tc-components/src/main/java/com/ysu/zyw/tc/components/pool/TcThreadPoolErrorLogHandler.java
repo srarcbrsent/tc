@@ -8,7 +8,7 @@ public class TcThreadPoolErrorLogHandler implements ErrorHandler {
 
     @Override
     public void handleError(Throwable t) {
-        log.error("Unexpected error occurred in scheduled task.", t);
+        log.error("Unexpected ex occurred in scheduled task.", t);
     }
 
 }

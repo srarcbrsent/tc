@@ -21,7 +21,7 @@ public class TcCredentialsMatcher implements CredentialsMatcher {
 
     public String createTokenAndSet2Session() {
         String token = RandomStringUtils.randomNumeric(48);
-        SecurityUtils.getSubject().getSession().setAttribute(TcConstant.S.SESSION_SHIRO_MATCHER_ONCE_TOKEN, token);
+        SecurityUtils.getSubject().getSession().setAttribute(TcConstant.Session.SESSION_SHIRO_MATCHER_ONCE_TOKEN, token);
         return token;
     }
 
@@ -33,12 +33,12 @@ public class TcCredentialsMatcher implements CredentialsMatcher {
 
     private String doFindTokenOrThrow() {
         Object tokenObject =
-                SecurityUtils.getSubject().getSession().getAttribute(TcConstant.S.SESSION_SHIRO_MATCHER_ONCE_TOKEN);
+                SecurityUtils.getSubject().getSession().getAttribute(TcConstant.Session.SESSION_SHIRO_MATCHER_ONCE_TOKEN);
         if (Objects.isNull(tokenObject)) {
             throw new IncorrectCredentialsException("do not have any token.");
         } else {
             // token can only be used once.
-            SecurityUtils.getSubject().getSession().removeAttribute(TcConstant.S.SESSION_SHIRO_MATCHER_ONCE_TOKEN);
+            SecurityUtils.getSubject().getSession().removeAttribute(TcConstant.Session.SESSION_SHIRO_MATCHER_ONCE_TOKEN);
         }
 
         return tokenObject.toString();

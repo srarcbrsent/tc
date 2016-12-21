@@ -32,7 +32,7 @@ public class TcHandleExceptionHandler implements HandlerExceptionResolver {
                                          Object handler,
                                          Exception ex) {
 
-        log.error("Unexpected error occurred in handle request.", ex);
+        log.error("Unexpected ex occurred in handle request.", ex);
 
         // if handler is instance of HandlerMethod then it's a http request,
         // otherwise it's a websocket request or other service.

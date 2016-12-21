@@ -15,7 +15,7 @@ public class TcFreemarkerExceptionHandler implements TemplateExceptionHandler {
     @SneakyThrows
     @Override
     public void handleTemplateException(TemplateException te, Environment env, Writer out) throws TemplateException {
-        log.error("Unexpected error occurred in freemarker process.", te);
+        log.error("Unexpected ex occurred in freemarker process.", te);
 
         out.close();
 

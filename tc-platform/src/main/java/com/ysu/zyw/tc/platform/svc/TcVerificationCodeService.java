@@ -29,14 +29,14 @@ public class TcVerificationCodeService {
         }
         String encodedVerificationCode = encodeVerificationCodeWithDatetime(verificationCode);
         SecurityUtils.getSubject().getSession()
-                .setAttribute(TcConstant.S.SESSION_VERIFICATION_CODE, encodedVerificationCode);
+                .setAttribute(TcConstant.Session.SESSION_VERIFICATION_CODE, encodedVerificationCode);
         log.info("verification code -> [{}]", verificationCode);
         return verificationCode;
     }
 
     public boolean isVerificationCodeMatch(String verificationCode) {
         String encodedVerificationCodeInSession =
-                (String) SecurityUtils.getSubject().getSession().getAttribute(TcConstant.S.SESSION_VERIFICATION_CODE);
+                (String) SecurityUtils.getSubject().getSession().getAttribute(TcConstant.Session.SESSION_VERIFICATION_CODE);
         if (Objects.isNull(encodedVerificationCodeInSession)) {
             return false;
         }

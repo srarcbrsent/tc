@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * 1. TcP.code == R.SUCCESS => success, have body (except TcP<Void>)
  * 2. TcP.code == ? => custom code
- * 3. TcP.code == R.SERVER_ERROR => server error, may happen in any apis.
+ * 3. TcP.code == R.SERVER_ERROR => server ex, may happen in any apis.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

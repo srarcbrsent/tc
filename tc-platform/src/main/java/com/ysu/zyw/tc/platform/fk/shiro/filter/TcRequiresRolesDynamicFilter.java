@@ -32,7 +32,7 @@ public class TcRequiresRolesDynamicFilter extends AccessControlFilter {
             return true;
         }
 
-        String accountId = subject.getSession().getAttribute(TcConstant.S.SESSION_ACCOUNT_ID).toString();
+        String accountId = subject.getSession().getAttribute(TcConstant.Session.SESSION_ACCOUNT_ID).toString();
         checkNotNull(accountId);
         return isAccessAllowed(accountId, (String[]) mappedValue);
     }

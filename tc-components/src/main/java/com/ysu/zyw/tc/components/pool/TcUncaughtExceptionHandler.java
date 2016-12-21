@@ -7,7 +7,7 @@ public class TcUncaughtExceptionHandler implements Thread.UncaughtExceptionHandl
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        log.error("Unexpected error occurred in scheduled task. thread [{}]", t.getName(), e);
+        log.error("Unexpected ex occurred in scheduled task. thread [{}]", t.getName(), e);
     }
 
 }
