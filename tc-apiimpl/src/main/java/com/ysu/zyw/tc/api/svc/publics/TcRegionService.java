@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,7 +30,10 @@ public class TcRegionService {
         tcRegionExample.createCriteria()
                 .andParentIdEqualTo(countryId);
         List<TcRegion> provinces = tcRegionMapper.selectByExample(tcRegionExample);
-        return provinces.stream().map(this::convert2ToProvince).collect(Collectors.toList());
+        return provinces.stream()
+                .map(this::convert2ToProvince)
+                .sorted(Comparator.comparing(ToProvince::getId))
+                .collect(Collectors.toList());
     }
 
     public List<ToCity> findCities(@Nonnull String provinceId) {
@@ -44,7 +48,10 @@ public class TcRegionService {
                 .andParentIdEqualTo(provinceId);
         List<TcRegion> cities = tcRegionMapper.selectByExample(tcRegionExample);
 
-        return cities.stream().map(city -> convert2ToCity(province, city)).collect(Collectors.toList());
+        return cities.stream()
+                .map(city -> convert2ToCity(province, city))
+                .sorted(Comparator.comparing(ToCity::getId))
+                .collect(Collectors.toList());
     }
 
     public List<ToRegion> findRegions(@Nonnull String cityId) {
@@ -61,7 +68,10 @@ public class TcRegionService {
                 .andParentIdEqualTo(cityId);
         List<TcRegion> regions = tcRegionMapper.selectByExample(tcRegionExample);
 
-        return regions.stream().map(region -> convert2ToRegion(province, city, region)).collect(Collectors.toList());
+        return regions.stream()
+                .map(region -> convert2ToRegion(province, city, region))
+                .sorted(Comparator.comparing(ToRegion::getId))
+                .collect(Collectors.toList());
     }
 
     public ToRegion findRegion(@Nonnull String regionId) {

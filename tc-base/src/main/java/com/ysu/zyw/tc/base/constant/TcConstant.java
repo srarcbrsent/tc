@@ -17,6 +17,8 @@ public class TcConstant {
 
         public static final String REDIS_CACHE = "redisCache";
 
+        public static final String SS_REDIS_SERVICE = "ssRedisService";
+
         public static final String SHIRO_AUTHENTICATION_CACHE = "authenticationCache";
 
         public static final String SHIRO_AUTHORIZATION_CACHE = "authorizationCache";

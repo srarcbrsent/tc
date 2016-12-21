@@ -119,8 +119,7 @@ public class TcAccountService {
                 .setId(id)
                 .setDelected(false)
                 .setLockReleaseTime(now)
-                // FIXME if random token is already exists, account creation failed.
-                .setRandomToken(TcIdGen.upperCaseUuid().substring(0, 16))
+                .setRandomToken(randomToken())
                 .setUpdatedPerson(tiAccount.getOperatorAccountId())
                 .setUpdatedTimestamp(now)
                 .setCreatedPerson(tiAccount.getOperatorAccountId())
@@ -536,6 +535,15 @@ public class TcAccountService {
         int count = tcAccountMapper.updateByPrimaryKeySelective(tcAccount);
 
         checkArgument(count == 1);
+    }
+
+    private String randomToken() {
+        String randomToken = TcIdGen.upperCaseUuid().substring(0, 16);
+        TcAccountExample tcAccountExample = new TcAccountExample();
+        tcAccountExample.createCriteria()
+                .andRandomTokenEqualTo(randomToken);
+        long count = tcAccountMapper.countByExample(tcAccountExample);
+        return count == 0 ? randomToken : randomToken();
     }
 
     private ToAccount convert2ToAccount(@Nonnull TcAccount tcAccount) {

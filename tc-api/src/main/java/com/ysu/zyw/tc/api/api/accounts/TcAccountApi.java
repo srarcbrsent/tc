@@ -14,6 +14,12 @@ import java.util.List;
 @Path(value = "/accounts")
 public interface TcAccountApi {
 
+    /**
+     * @code code == 0 创建成功：可登陆账号的accountId;
+     * @code code == 11 => 昵称重复;
+     * @code code == 12 => 邮箱重复;
+     * @code code == 13 => 手机重复;
+     */
     @POST
     @Path(value = "/create_account")
     @Consumes(value = {MediaType.APPLICATION_JSON})

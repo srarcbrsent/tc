@@ -23,7 +23,7 @@ public class TcRegionImportBin {
                             "id, parent_id, `name`, updated_person, updated_timestamp, created_person, created_timestamp" +
                             ") VALUES (" +
                             "'" + "P" + code.substring(0, 2) + "C" + code.substring(2, 4) + "R" + code.substring(4, 6) + "'," +
-                            "'" + "C" + code.substring(2, 6) + "'," +
+                            "'" + "P" + code.substring(0, 2) + "C" + code.substring(2, 4) + "'," +
                             "'" + name.split("　　　")[1].trim() + "'," +
                             "'" + "00000000000000000000000000000000" + "'," +
                             "'" + "2016-12-12 12:12:12.000" + "'," +
