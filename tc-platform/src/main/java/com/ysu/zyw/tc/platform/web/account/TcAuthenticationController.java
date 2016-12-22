@@ -125,6 +125,15 @@ public class TcAuthenticationController {
     }
 
     @ApiOperation(
+            value = "是否已登陆",
+            notes = "是否已登陆")
+    @ApiResponse(code = 200, message = "成功")
+    @RequestMapping(value = "/authenticated", method = RequestMethod.GET)
+    public TcR<Boolean> authenticated() {
+        return TcR.ok(SecurityUtils.getSubject().isAuthenticated());
+    }
+
+    @ApiOperation(
             value = "登出",
             notes = "登出")
     @ApiResponse(code = 200, message = "成功")

@@ -1,6 +1,8 @@
 // 登陆相关
 var _signupVue = new Vue({
+
     el: '#doc-signup-div',
+
     data: {
         uiElement: {
             formElement: {
@@ -21,23 +23,25 @@ var _signupVue = new Vue({
             rememberMeValid: true
         }
     },
+
     mounted: function () {
         this.reloadVerificationCode();
     },
+
     methods: {
 
         layerLoading: undefined,
 
         reloadVerificationCode: function () {
             axios
-                .get(__openApiBase + '/auths/get_verification_code.json', __axiosConfig)
+                .get(TcC.openApiBase('/auths/get_verification_code.json'), TcC.axiosConfig)
                 .then(function (response) {
-                    __doWithTcR(response.data, function (body) {
+                    TcC.doWithTcR(response.data, function (body) {
                         _signupVue.hiddenElement.verificationCode = body;
                     });
                 })
-                .catch(function () {
-                    layer.alert('抱歉，系统异常，请稍后再试！');
+                .catch(function (error) {
+                    TcC.defaultAxiosExHandler(error);
                 });
         },
 
@@ -45,9 +49,9 @@ var _signupVue = new Vue({
             // TODO wait vue validation released.
             _signupVue.layerLoading = layer.load(1, {shade: [0.7, '#fff']});
             axios
-                .get(__openApiBase + '/auths/get_token.json', __axiosConfig)
+                .get(TcC.openApiBase('/auths/get_token.json'), TcC.axiosConfig)
                 .then(function (tokenR) {
-                    __doWithTcR(tokenR.data, function (token) {
+                    TcC.doWithTcR(tokenR.data, function (token) {
                         var password = _signupVue.uiElement.formElement.password;
                         _signupVue.uiElement.formElement.password = $.md5($.md5(password) + token);
                         _signupVue.doSignup();
@@ -55,36 +59,36 @@ var _signupVue = new Vue({
                 })
                 .catch(function (error) {
                     layer.close(_signupVue.layerLoading);
-                    layer.alert('抱歉，系统异常，请稍后再试！');
+                    TcC.defaultAxiosExHandler(error);
                 });
         },
 
         doSignup: function () {
             axios
-                .post(__openApiBase + '/auth/signup.json', $.param(_signupVue.uiElement.formElement), __axiosConfig)
+                .post(TcC.openApiBase('/auth/signup.json'), $.param(_signupVue.uiElement.formElement), TcC.axiosConfig)
                 .then(function (response) {
                     layer.close(_signupVue.layerLoading);
-                    __doWithTcR(response.data, function (body) {
+                    TcC.doWithTcR(response.data, function (body) {
                         if (body === 0) {
                             // signup succ, reload page, will auto redirect to home.
-                            window.location.reload();
+                            location.reload();
                             return;
-                        } else if (body == 1) {
+                        } else if (body === 1) {
                             // verification code not match
                             _signupVue.uiElement.signupErrorMsg = '验证码输入错误，请重新登陆！';
                             _signupVue.reset();
                             return;
-                        } else if (body == 2) {
+                        } else if (body === 2) {
                             // account not exists
                             _signupVue.uiElement.signupErrorMsg = '账号不存在，请重新登陆！';
                             _signupVue.reset();
                             return;
-                        } else if (body == 3) {
+                        } else if (body === 3) {
                             // account be locked
                             _signupVue.uiElement.signupErrorMsg = '账号被锁定，请稍后再试！';
                             _signupVue.reset();
                             return;
-                        } else if (body == 4) {
+                        } else if (body === 4) {
                             // account not match password
                             _signupVue.uiElement.signupErrorMsg = '账号密码错误，请重新登陆！';
                             _signupVue.reset();
@@ -95,7 +99,7 @@ var _signupVue = new Vue({
                 })
                 .catch(function (error) {
                     layer.close(_signupVue.layerLoading);
-                    layer.alert('抱歉，系统异常，请稍后再试！');
+                    TcC.defaultAxiosExHandler(error);
                 });
         },
 
@@ -107,6 +111,7 @@ var _signupVue = new Vue({
             _signupVue.reloadVerificationCode();
         }
     },
+
     computed: {
         // -- styles
         usernameClass: function () {

@@ -4,39 +4,164 @@
         type="text/javascript"></script>
 <!-- @build -->
 
+<style type="text/css">
+    /** privilege infrastructure */
+    .tc-pv-control {
+        display: none;
+    }
+</style>
+
 <script type="text/javascript">
-    // tc base
-    var __openApiBase = '${openApiBase}';
-    var __staticBase = '${staticBase}';
+    // system infrastructure
+    var TcC = {
+        // tc base
+        _openApiBase: '${openApiBase}',
+        _staticBase: '${staticBase}',
 
-    // ajax help config
-    var __axiosConfig = {
-        // 6s
-        timeout: 6000,
-        xsrfCookieName: 'XSRF-TOKEN',
-        xsrfHeaderName: 'X-XSRF-TOKEN',
-        // 50k
-        maxContentLength: 51200
+        openApiBase: function (path) {
+            return TcC._openApiBase + path;
+        },
+
+        // ajax help config
+        axiosConfig: {
+            // 6s
+            timeout: 6000,
+            xsrfCookieName: 'XSRF-TOKEN',
+            xsrfHeaderName: 'X-XSRF-TOKEN',
+            // 50k
+            maxContentLength: 51200
+        },
+
+        // ajax helper func
+        doWithTcR: function (tcR, okCallback, exCallback) {
+            if (_.isUndefined(tcR)) {
+                layer.alert('系统繁忙，请稍后再试！');
+            }
+            if (tcR.code == 200) {
+                if (_.isFunction(okCallback)) {
+                    okCallback(tcR.body);
+                } else {
+                    // do nothing
+                }
+            } else {
+                if (_.isFunction(exCallback)) {
+                    exCallback(tcR.code, tcR.message, tcR.extra);
+                } else {
+                    layer.msg('系统异常，请刷新页面再试！');
+                }
+            }
+        },
+
+        defaultAxiosExHandler: function (error) {
+            layer.alert('抱歉，系统异常，请稍后再试！');
+        }
     };
 
-    // ajax helper func
-    var __doWithTcR = function (tcR, okCallback, exCallback) {
-        if (_.isUndefined(tcR)) {
-            layer.alert('系统繁忙，请稍后再试！');
-        }
-        if (tcR.code == 200) {
-            if (_.isFunction(okCallback)) {
-                okCallback(tcR.body);
-            } else {
-                // do nothing
+    // privilege infrastructure
+    var TcPi = new Vue({
+        el: 'body',
+
+        data: {
+
+            authenticated: null,
+
+            roles: null,
+
+            permissions: null
+
+        },
+
+        mounted: function () {
+            // get auth status
+            this.doGetAuthenticatedStatus();
+            // get roles
+            this.doGetRoles();
+            // get permissions
+            this.doGetPermissions();
+        },
+
+        watch: {
+            roles: function (currVal, oldVal) {
+                // nothing to do
+            },
+
+            permissions: function (currVal, oldVal) {
+                if (!_.isNull(currVal) && _.isArray(currVal)) {
+                    var stringPermissions = [];
+                    var $pvControlElements = $('.tc-pv-control');
+                    var $authorizedElements = $pvControlElements.filter(function (index, element) {
+                        return _.contains(stringPermissions, $(element).data('pms'));
+                    });
+                    var $unauthorizedElements = $pvControlElements.filter(function (index, element) {
+                        return !_.contains(stringPermissions, $(element).data('pms'));
+                    });
+                    $unauthorizedElements.each(function (index, element) {
+                        var method = $(element).data('invoke-when-unauthorized');
+                        if (!_.isUndefined(method)) {
+                            try {
+                                eval(method + '()')();
+                            } catch (e) {
+                                console.error(e);
+                            }
+                        }
+                        $(element).addClass('tc-pv-control');
+                    });
+                    $authorizedElements.each(function (index, element) {
+                        var method = $(element).data('invoke-when-authorized');
+                        if (!_.isUndefined(method)) {
+                            try {
+                                eval(method + '()')();
+                            } catch (e) {
+                                console.error(e);
+                            }
+                        }
+                        $(element).removeClass('tc-pv-control');
+                    });
+                }
             }
-        } else {
-            if (_.isFunction(exCallback)) {
-                exCallback(tcR.code, tcR.message, tcR.extra);
-            } else {
-                layer.msg('系统异常，请刷新页面再试！');
+        },
+
+        methods: {
+            doGetAuthenticatedStatus: function () {
+                axios
+                    .get(TcC.openApiBase('/auths/authenticated.json'), TcC.axiosConfig)
+                    .then(function (response) {
+                        TcC.doWithTcR(response.data, function (body) {
+                            TcPi.authenticated = body;
+                        });
+                    })
+                    .catch(function (error) {
+                        TcC.defaultAxiosExHandler(error);
+                    });
+            },
+
+            doGetRoles: function () {
+                axios
+                    .get(TcC.openApiBase('/auths/get_permissions.json'), TcC.axiosConfig)
+                    .then(function (response) {
+                        TcC.doWithTcR(response.data, function (body) {
+                            TcPi.roles = body;
+                        });
+                    })
+                    .catch(function (error) {
+                        TcC.defaultAxiosExHandler(error);
+                    });
+            },
+
+            doGetPermissions: function () {
+                axios
+                    .get(TcC.openApiBase('/auths/get_permissions.json'), TcC.axiosConfig)
+                    .then(function (response) {
+                        TcC.doWithTcR(response.data, function (body) {
+                            TcPi.permissions = body;
+                        });
+                    })
+                    .catch(function (error) {
+                        TcC.defaultAxiosExHandler(error);
+                    });
             }
         }
-    };
+
+    });
 </script>
 <!-- - post-lib -->
