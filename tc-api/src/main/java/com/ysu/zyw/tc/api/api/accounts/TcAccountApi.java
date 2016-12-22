@@ -19,6 +19,7 @@ public interface TcAccountApi {
      * @code code == 11 => 昵称重复;
      * @code code == 12 => 邮箱重复;
      * @code code == 13 => 手机重复;
+     * @code code == 9999 => 系统异常;
      */
     @POST
     @Path(value = "/create_account")
@@ -31,6 +32,7 @@ public interface TcAccountApi {
     /**
      * @code code == 0 删除成功;
      * @code code == 1 => 账号不存在;
+     * @code code == 9999 => 系统异常;
      */
     @GET
     @Path(value = "/delete_account/{id}")
@@ -47,6 +49,7 @@ public interface TcAccountApi {
      * @code code == 11 => 昵称重复;
      * @code code == 12 => 邮箱重复;
      * @code code == 13 => 手机重复;
+     * @code code == 9999 => 系统异常;
      */
     @POST
     @Path(value = "/update_account")
@@ -56,6 +59,10 @@ public interface TcAccountApi {
             TiAccount tiAccount
     );
 
+    /**
+     * @code code == 0 查询成功;
+     * @code code == 9999 => 系统异常;
+     */
     @GET
     @Path(value = "/find_account/{id}")
     @Consumes(value = {MediaType.WILDCARD})
@@ -64,6 +71,10 @@ public interface TcAccountApi {
             @PathParam(value = "id") String accountId
     );
 
+    /**
+     * @code code == 0 查询成功;
+     * @code code == 9999 => 系统异常;
+     */
     @POST
     @Path(value = "/count_accounts")
     @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
@@ -72,6 +83,10 @@ public interface TcAccountApi {
             @Form TiFindAccountsTerms tiFindAccountsTerms
     );
 
+    /**
+     * @code code == 0 查询成功;
+     * @code code == 9999 => 系统异常;
+     */
     @POST
     @Path(value = "/find_accounts/{currentPage}/{pageSize}")
     @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})

@@ -49,6 +49,7 @@ public class TcAccountController {
      * @code code == 12 => 邮箱重复;
      * @code code == 13 => 手机重复;
      * @code code == 8888 => 信息有误, extra = 错误信息;
+     * @code code == 9999 => 系统异常;
      */
     @ApiOperation(
             value = "创建账号",
@@ -76,6 +77,7 @@ public class TcAccountController {
      * @code code == 0 删除成功,
      * @code code == 1 => 账号不存在;
      * @code code == 8888 => 信息有误, extra = 错误信息;
+     * @code code == 9999 => 系统异常;
      */
     @ApiOperation(
             value = "删除账号",
@@ -101,6 +103,7 @@ public class TcAccountController {
      * @code code == 12 => 邮箱重复;
      * @code code == 13 => 手机重复;
      * @code code == 8888 => 信息有误, extra = 错误信息;
+     * @code code == 9999 => 系统异常;
      */
     @ApiOperation(
             value = "更新账号",
