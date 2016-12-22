@@ -19,7 +19,7 @@ public class TcMainController {
             notes = "跳转到404错误页")
     @RequestMapping(value = "/not_found")
     public ResponseEntity<?> resourceNotFoundJson() {
-        return ResponseEntity.ok(TcR.ex());
+        return ResponseEntity.ok(TcR.errs());
     }
 
     @ApiOperation(
@@ -28,7 +28,7 @@ public class TcMainController {
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/server_error")
     public ResponseEntity<?> internalServerErrorJson() {
-        return ResponseEntity.ok(TcR.ex());
+        return ResponseEntity.ok(TcR.errs());
     }
 
 }

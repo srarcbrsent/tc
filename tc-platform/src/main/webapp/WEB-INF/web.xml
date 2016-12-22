@@ -75,7 +75,7 @@
         <url-pattern>*.json</url-pattern>
     </servlet-mapping>
 
-    <!-- ex page -->
+    <!-- errs page -->
     <error-page>
         <error-code>500</error-code>
         <location>/500.json</location>

@@ -50,7 +50,7 @@ public class TcExceptionResponseDecorator {
         } catch (Exception e) {
             // 如果内部抛出了异常 则对页面返回 500 服务器异常
             log.error("[{}][{}][{}]", "OpenApi切面-服务器异常", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
-            return TcR.ex();
+            return TcR.errs();
         }
     }
 

@@ -39,7 +39,7 @@
 //
 //         // jquery binding
 //         var $signin_form = $("#signin_form");
-//         var validator = $signin_form.validate({
+//         var validation = $signin_form.validate({
 //             debug: true,
 //
 //             ignore: '.layui-unselect',
@@ -101,7 +101,7 @@
 //
 //         // form reset event
 //         $signin_form.find('button[type = reset]').click(function () {
-//             validator.resetForm();
+//             validation.resetForm();
 //         });
 //
 //         // layui binding

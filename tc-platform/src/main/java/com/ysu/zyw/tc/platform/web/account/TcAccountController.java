@@ -1,9 +1,9 @@
 package com.ysu.zyw.tc.platform.web.account;
 
 import com.ysu.zyw.tc.api.api.accounts.TcAccountApi;
-import com.ysu.zyw.tc.base.validator.TcRule;
-import com.ysu.zyw.tc.base.validator.TcValidationRules;
-import com.ysu.zyw.tc.base.validator.TcValidator;
+import com.ysu.zyw.tc.base.validation.TcValidationUtils;
+import com.ysu.zyw.tc.base.validation.group.TcC;
+import com.ysu.zyw.tc.base.validation.group.TcU;
 import com.ysu.zyw.tc.components.servlet.support.TcServletUtils;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.menum.TmPlatform;
@@ -22,7 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Api(value = "账号控制器")
@@ -36,12 +40,15 @@ public class TcAccountController {
     @Resource
     private TcSessionService tcSessionService;
 
+    @Resource
+    private Validator validator;
+
     /**
-     * @code code == 0 创建成功：可登陆账号的accountId;
+     * @code code == 0 创建成功, body = 可登陆账号的accountId;
      * @code code == 11 => 昵称重复;
      * @code code == 12 => 邮箱重复;
      * @code code == 13 => 手机重复;
-     * @code code == 20 => 信息有误;
+     * @code code == 8888 => 信息有误, extra = 错误信息;
      */
     @ApiOperation(
             value = "创建账号",
@@ -51,29 +58,25 @@ public class TcAccountController {
     public ResponseEntity<TcR<String>> createAccount(
             @RequestBody TiAccount tiAccount, HttpServletRequest request) {
 
-        TcValidationRules tcValidationRules = TcValidationRules.newShortCircuitInstance()
-                .rule(() -> TcValidator.isNull(tiAccount.getId()), "唯一标志不正确")
-                .rule(() -> TcValidator.isRegion(tiAccount.getRegion()), "区域格式不正确")
-                .rule(() -> TcValidator.isNormalStr(tiAccount.getNickname(), 6, 16), "昵称不正确(6-16位)")
-                .rule(() -> TcValidator.isEmail(tiAccount.getEmail()), "邮箱不正确")
-                .rule(() -> TcValidator.nonNull(tiAccount.getEmailActivated()), "邮箱是否激活不正确")
-                .rule(() -> TcValidator.isMobile(tiAccount.getMobile()), "电话不正确")
-                .rule(() -> TcValidator.nonNull(tiAccount.getMobileActivated()), "电话是否激活不正确")
-                .rule(((TcRule) () -> TcValidator.isPicUrl(tiAccount.getAvatar()))
-                        .when(() -> Objects.nonNull(tiAccount.getAvatar())), "头像地址不正确")
-                .rule(() -> TcValidator.isNormalStr(tiAccount.getPassword(), 32, 32), "密码格式不正确");
-        if (!tcValidationRules.doValid()) {
-            return ResponseEntity.ok(TcR.code(20, tcValidationRules.getError()));
+        Set<ConstraintViolation<TiAccount>> violations = validator.validate(tiAccount, TcC.class);
+        if (!violations.isEmpty()) {
+            List<String> errs = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+            return ResponseEntity.ok(TcR.br(errs));
         }
 
-        tiAccount.setOperatorAccountId(tcSessionService.getAccountId())
-                .setSigninIp(TcServletUtils.extractIp(request))
-                .setSigninPlatform(TmPlatform.PC_PLATFORM);
+        tiAccount.setSigninIp(TcServletUtils.extractIp(request))
+                .setSigninPlatform(TmPlatform.PC_PLATFORM)
+                .setOperatorAccountId(tcSessionService.getAccountId());
         TcR<String> tcR = tcAccountApi.createAccount(tiAccount);
 
         return ResponseEntity.ok(tcR);
     }
 
+    /**
+     * @code code == 0 删除成功,
+     * @code code == 1 => 账号不存在;
+     * @code code == 8888 => 信息有误, extra = 错误信息;
+     */
     @ApiOperation(
             value = "删除账号",
             notes = "删除账号")
@@ -82,12 +85,23 @@ public class TcAccountController {
     public ResponseEntity<TcR<Void>> deleteAccount(
             @PathVariable(value = "id") String deleteAccountId) {
 
+        if (!TcValidationUtils.isId(deleteAccountId)) {
+            return ResponseEntity.ok(TcR.br("不合法的主键信息"));
+        }
+
         String accountId = tcSessionService.getAccountId();
         TcR<Void> tcR = tcAccountApi.deleteAccount(deleteAccountId, accountId);
 
         return ResponseEntity.ok(tcR);
     }
 
+    /**
+     * @code code == 0 更新成功;
+     * @code code == 11 => 昵称重复;
+     * @code code == 12 => 邮箱重复;
+     * @code code == 13 => 手机重复;
+     * @code code == 8888 => 信息有误, extra = 错误信息;
+     */
     @ApiOperation(
             value = "更新账号",
             notes = "更新账号")
@@ -96,8 +110,13 @@ public class TcAccountController {
     public ResponseEntity<TcR<Void>> updateAccount(
             @RequestBody TiAccount tiAccount) {
 
-        String accountId = tcSessionService.getAccountId();
-        tiAccount.setOperatorAccountId(accountId);
+        Set<ConstraintViolation<TiAccount>> violations = validator.validate(tiAccount, TcU.class);
+        if (!violations.isEmpty()) {
+            List<String> errs = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+            return ResponseEntity.ok(TcR.br(errs));
+        }
+
+        tiAccount.setOperatorAccountId(tcSessionService.getAccountId());
         TcR<Void> tcR = tcAccountApi.updateAccount(tiAccount);
 
         return ResponseEntity.ok(tcR);

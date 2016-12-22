@@ -196,6 +196,12 @@
             <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
 
+        <!-- validator -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
         <!-- commons utils -->
         <dependency>
             <groupId>commons-fileupload</groupId>

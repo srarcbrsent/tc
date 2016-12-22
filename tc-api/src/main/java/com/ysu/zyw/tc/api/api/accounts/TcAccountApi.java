@@ -15,7 +15,7 @@ import java.util.List;
 public interface TcAccountApi {
 
     /**
-     * @code code == 0 创建成功：可登陆账号的accountId;
+     * @code code == 0 创建成功, 可登陆账号的accountId;
      * @code code == 11 => 昵称重复;
      * @code code == 12 => 邮箱重复;
      * @code code == 13 => 手机重复;
@@ -28,6 +28,10 @@ public interface TcAccountApi {
             TiAccount tiAccount
     );
 
+    /**
+     * @code code == 0 删除成功;
+     * @code code == 1 => 账号不存在;
+     */
     @GET
     @Path(value = "/delete_account/{id}")
     @Consumes(value = {MediaType.WILDCARD})
@@ -37,6 +41,13 @@ public interface TcAccountApi {
             @QueryParam(value = "delector") String delector
     );
 
+    /**
+     * @code code == 0 更新成功;
+     * @code code == 1 => 账号不存在;
+     * @code code == 11 => 昵称重复;
+     * @code code == 12 => 邮箱重复;
+     * @code code == 13 => 手机重复;
+     */
     @POST
     @Path(value = "/update_account")
     @Consumes(value = {MediaType.APPLICATION_JSON})

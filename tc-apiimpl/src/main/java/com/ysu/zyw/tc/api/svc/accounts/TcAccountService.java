@@ -124,14 +124,6 @@ public class TcAccountService {
                 .setUpdatedTimestamp(now)
                 .setCreatedPerson(tiAccount.getOperatorAccountId())
                 .setCreatedTimestamp(now);
-        // if no mobile set, mobile activated auto set to false
-        if (StringUtils.isBlank(tcAccount.getMobile())) {
-            tcAccount.setMobileActivated(false);
-        }
-        // if no email set, email activated auto set to false
-        if (StringUtils.isBlank(tcAccount.getEmail())) {
-            tcAccount.setEmailActivated(false);
-        }
 
         // account assist
         TcAccountAssist tcAccountAssist = new TcAccountAssist();
@@ -332,12 +324,14 @@ public class TcAccountService {
         TcAccountExample tcAccountExample =
                 buildFindAccountCondition(
                         tiFindAccountsTerms.getIds(),
+                        tiFindAccountsTerms.getRegion(),
                         tiFindAccountsTerms.getNickname(),
-                        tiFindAccountsTerms.getMobile(),
                         tiFindAccountsTerms.getEmail(),
-                        tiFindAccountsTerms.getMobileActivated(),
                         tiFindAccountsTerms.getEmailActivated(),
-                        tiFindAccountsTerms.getLocked());
+                        tiFindAccountsTerms.getMobile(),
+                        tiFindAccountsTerms.getMobileActivated(),
+                        tiFindAccountsTerms.getLocked(),
+                        tiFindAccountsTerms.getRandomToken());
         return tcAccountMapper.countByExample(tcAccountExample);
     }
 
@@ -348,12 +342,14 @@ public class TcAccountService {
         TcAccountExample tcAccountExample =
                 buildFindAccountCondition(
                         tiFindAccountsTerms.getIds(),
+                        tiFindAccountsTerms.getRegion(),
                         tiFindAccountsTerms.getNickname(),
-                        tiFindAccountsTerms.getMobile(),
                         tiFindAccountsTerms.getEmail(),
-                        tiFindAccountsTerms.getMobileActivated(),
                         tiFindAccountsTerms.getEmailActivated(),
-                        tiFindAccountsTerms.getLocked());
+                        tiFindAccountsTerms.getMobile(),
+                        tiFindAccountsTerms.getMobileActivated(),
+                        tiFindAccountsTerms.getLocked(),
+                        tiFindAccountsTerms.getRandomToken());
         TcPaginationUtils.Pagination pagination = TcPaginationUtils.paging(currentPage, pageSize);
         tcAccountExample.setStartLine(pagination.getStartLine());
         tcAccountExample.setPageSize(pagination.getPageSize());
@@ -367,32 +363,37 @@ public class TcAccountService {
 
     private TcAccountExample buildFindAccountCondition(
             @Nullable List<String> ids,
+            @Nullable String region,
             @Nullable String nickname,
-            @Nullable String mobile,
             @Nullable String email,
-            @Nullable Boolean mobileActivated,
             @Nullable Boolean emailActivated,
-            @Nullable Boolean locked) {
+            @Nullable String mobile,
+            @Nullable Boolean mobileActivated,
+            @Nullable Boolean locked,
+            @Nullable String randomToken) {
         TcAccountExample tcAccountExample = new TcAccountExample();
         TcAccountExample.Criteria criteria = tcAccountExample.createCriteria();
         criteria.andDelectedEqualTo(false);
         if (CollectionUtils.isNotEmpty(ids)) {
             criteria.andIdIn(ids);
         }
-        if (StringUtils.isNotEmpty(nickname)) {
+        if (StringUtils.isNotBlank(region)) {
+            criteria.andRegionEqualTo(region);
+        }
+        if (StringUtils.isNotBlank(nickname)) {
             criteria.andNicknameEqualTo(nickname);
         }
-        if (StringUtils.isNotEmpty(email)) {
+        if (StringUtils.isNotBlank(email)) {
             criteria.andEmailEqualTo(email);
         }
-        if (StringUtils.isNotEmpty(mobile)) {
+        if (Objects.nonNull(emailActivated)) {
+            criteria.andEmailActivatedEqualTo(emailActivated);
+        }
+        if (StringUtils.isNotBlank(mobile)) {
             criteria.andEmailEqualTo(email);
         }
         if (Objects.nonNull(mobileActivated)) {
             criteria.andMobileActivatedEqualTo(mobileActivated);
-        }
-        if (Objects.nonNull(emailActivated)) {
-            criteria.andEmailActivatedEqualTo(emailActivated);
         }
         if (Objects.nonNull(locked)) {
             Date now = new Date();
@@ -401,6 +402,9 @@ public class TcAccountService {
             } else {
                 criteria.andLockReleaseTimeLessThanOrEqualTo(now);
             }
+        }
+        if (StringUtils.isNotBlank(randomToken)) {
+            criteria.andRandomTokenEqualTo(randomToken);
         }
         return tcAccountExample;
     }

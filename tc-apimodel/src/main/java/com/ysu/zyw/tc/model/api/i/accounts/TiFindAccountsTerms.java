@@ -28,20 +28,20 @@ public class TiFindAccountsTerms implements Serializable {
     @FormParam(value = "nickname")
     private String nickname;
 
-    @FormParam(value = "account")
-    private String account;
+    @FormParam(value = "email")
+    private String email;
+
+    @FormParam(value = "emailActivated")
+    private Boolean emailActivated;
 
     @FormParam(value = "mobile")
     private String mobile;
 
-    @FormParam(value = "email")
-    private String email;
-
     @FormParam(value = "mobileActivated")
     private Boolean mobileActivated;
 
-    @FormParam(value = "emailActivated")
-    private Boolean emailActivated;
+    @FormParam(value = "randomToken")
+    private String randomToken;
 
     @FormParam(value = "locked")
     private Boolean locked;
