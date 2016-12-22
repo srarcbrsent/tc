@@ -319,6 +319,9 @@ public class TcAccountService {
         return tcAccount;
     }
 
+    /**
+     * @return 数量
+     */
     @Transactional(readOnly = true)
     public long countAccounts(@Nonnull TiFindAccountsTerms tiFindAccountsTerms) {
         TcAccountExample tcAccountExample =
@@ -335,6 +338,9 @@ public class TcAccountService {
         return tcAccountMapper.countByExample(tcAccountExample);
     }
 
+    /**
+     * @return 列表
+     */
     @Transactional(readOnly = true)
     public List<ToAccount> findAccounts(@Nonnull TiFindAccountsTerms tiFindAccountsTerms,
                                         int currentPage,
@@ -409,6 +415,9 @@ public class TcAccountService {
         return tcAccountExample;
     }
 
+    /**
+     * @return 账号id是否存在
+     */
     @Transactional(readOnly = true)
     public boolean existId(@Nonnull String id) {
         checkNotNull(id);
@@ -421,6 +430,9 @@ public class TcAccountService {
         return count == 1;
     }
 
+    /**
+     * @return 昵称是否存在
+     */
     @Transactional(readOnly = true)
     public boolean existNickname(@Nonnull String nickname) {
         checkNotNull(nickname);
@@ -433,6 +445,9 @@ public class TcAccountService {
         return count == 1;
     }
 
+    /**
+     * @return 邮箱是否存在
+     */
     @Transactional(readOnly = true)
     public boolean existEmail(@Nonnull String email) {
         checkNotNull(email);
@@ -445,6 +460,9 @@ public class TcAccountService {
         return count == 1;
     }
 
+    /**
+     * @return 电话是否存在
+     */
     @Transactional(readOnly = true)
     public boolean existMobile(@Nonnull String mobile) {
         checkNotNull(mobile);

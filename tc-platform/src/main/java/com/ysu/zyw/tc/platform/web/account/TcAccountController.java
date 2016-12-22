@@ -74,7 +74,7 @@ public class TcAccountController {
     }
 
     /**
-     * @code code == 0 删除成功,
+     * @code code == 0 删除成功;
      * @code code == 1 => 账号不存在;
      * @code code == 8888 => 信息有误, extra = 错误信息;
      * @code code == 9999 => 系统异常;

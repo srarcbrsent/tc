@@ -15,7 +15,7 @@ import java.util.List;
 public interface TcAccountApi {
 
     /**
-     * @code code == 0 创建成功, 可登陆账号的accountId;
+     * @code code == 0 创建成功, body = 可登陆账号的accountId;
      * @code code == 11 => 昵称重复;
      * @code code == 12 => 邮箱重复;
      * @code code == 13 => 手机重复;
@@ -60,7 +60,8 @@ public interface TcAccountApi {
     );
 
     /**
-     * @code code == 0 查询成功;
+     * @code code == 0 查询成功, body = 指定账号信息;
+     * @code code == 1 => 账号不存在;
      * @code code == 9999 => 系统异常;
      */
     @GET
@@ -72,7 +73,7 @@ public interface TcAccountApi {
     );
 
     /**
-     * @code code == 0 查询成功;
+     * @code code == 0 查询成功, body = 数量;
      * @code code == 9999 => 系统异常;
      */
     @POST
@@ -84,7 +85,7 @@ public interface TcAccountApi {
     );
 
     /**
-     * @code code == 0 查询成功;
+     * @code code == 0 查询成功, body = 列表;
      * @code code == 9999 => 系统异常;
      */
     @POST
