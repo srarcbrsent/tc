@@ -99,11 +99,11 @@ public class TcAccountService {
         }
 
         if (StringUtils.isNotBlank(tiAccount.getEmail()) && existEmail(tiAccount.getEmail())) {
-            throw new TcUnProcessableEntityException(12, "邮箱[{}]重复", tiAccount.getEmail());
+            throw new TcUnProcessableEntityException(12, "邮箱[{}]重复！", tiAccount.getEmail());
         }
 
         if (StringUtils.isNotBlank(tiAccount.getMobile()) && existMobile(tiAccount.getMobile())) {
-            throw new TcUnProcessableEntityException(13, "手机[{}]重复", tiAccount.getMobile());
+            throw new TcUnProcessableEntityException(13, "手机[{}]重复！", tiAccount.getMobile());
         }
 
         // id
