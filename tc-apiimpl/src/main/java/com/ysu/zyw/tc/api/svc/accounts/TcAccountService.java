@@ -58,7 +58,6 @@ public class TcAccountService {
         TcAccountExample tcAccountExample = new TcAccountExample();
         tcAccountExample.setStartLine(0);
         tcAccountExample.setPageSize(1);
-        TcAccountExample.Criteria criteria = tcAccountExample.createCriteria();
         if (canEmailLogin) {
             tcAccountExample.or().andEmailEqualTo(username);
         }
