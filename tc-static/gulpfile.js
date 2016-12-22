@@ -49,15 +49,11 @@ gulp.task('default', ['local-dev'], function () {
 
 gulp.task('local-dev', function (cb) {
     _environment.dev = true;
-    _environment.staticBase = _environment.localhostProtocolAndHost +
-        (_environment.localhostPort === 80 ? '' : ':' + _environment.localhostPort);
     task(cb);
 });
 
 gulp.task('local-pdu', function (cb) {
-    _environment.dev = true;
-    _environment.staticBase = _environment.localhostProtocolAndHost +
-        (_environment.localhostPort === 80 ? '' : ':' + _environment.localhostPort);
+    _environment.dev = false;
     task(cb);
 });
 
@@ -180,7 +176,9 @@ gulp.task('libs-other', function () {
         .src([
             'src/resources/libs/**/*.*',
             '!src/resources/libs/**/*.js',
-            '!src/resources/libs/**/*.css'])
+            '!src/resources/libs/**/*.css',
+            // layer 动态加载内容 在special进行编译
+            '!src/resources/libs/layer/skin/default/*.*'])
         .pipe(gulp.dest('dist/resources/libs'));
 });
 
@@ -228,7 +226,7 @@ gulp.task('html', function () {
 gulp.task('special', function () {
     return gulp
     // 因为静态资源合并 相对路径发生改变 手动加载此文件
-        .src('src/resources/libs/layer/skin/default/layer.css')
+        .src('src/resources/libs/layer/skin/default/*.*')
         .pipe(gulp.dest('dist/resources/libs/skin/default'));
 });
 
