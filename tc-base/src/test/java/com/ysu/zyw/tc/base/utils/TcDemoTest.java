@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.BooleanUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -51,6 +52,11 @@ public class TcDemoTest {
     public void test02() {
         System.out.println(TcFormatUtils.format("helo [{}] [{}]", 1,
                 new User().setId("3").setCompanyId("1"), new User().setId("4").setCompanyId("2")));
+    }
+
+    @Test
+    public void test03() {
+        System.out.println(BooleanUtils.isTrue(null));
     }
 
 }

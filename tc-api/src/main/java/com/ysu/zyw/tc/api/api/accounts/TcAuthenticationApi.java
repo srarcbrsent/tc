@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.api.api.accounts;
 
+import com.ysu.zyw.tc.model.api.i.accounts.TiSignupTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
@@ -22,12 +23,10 @@ public interface TcAuthenticationApi {
      */
     @POST
     @Path(value = "/signup")
-    @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
+    @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<ToAccount> signup(
-            @FormParam(value = "username") String username,
-            @FormParam(value = "canEmailLogin") @DefaultValue(value = "true") Boolean canEmailLogin,
-            @FormParam(value = "canMobileLogin") @DefaultValue(value = "true") Boolean canMobileLogin
+            TiSignupTerms tiSignupTerms
     );
 
     /**

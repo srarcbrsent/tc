@@ -3,12 +3,14 @@ package com.ysu.zyw.tc.api.impl.accounts.auth;
 import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
+import com.ysu.zyw.tc.model.api.i.accounts.TiSignupTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
+import org.apache.commons.lang3.BooleanUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -24,13 +26,14 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
     private TcAccountService tcAccountService;
 
     @Override
-    public TcR<ToAccount> signup(String username,
-                                 Boolean canEmailLogin,
-                                 Boolean canMobileLogin) {
+    public TcR<ToAccount> signup(TiSignupTerms tiSignupTerms) {
 
         // throws TcUnProcessableEntityException
-        String succLoginAccountId =
-                tcAccountService.signup(username, canEmailLogin, canMobileLogin);
+        String succLoginAccountId = tcAccountService.signup(
+                tiSignupTerms.getUsername(),
+                BooleanUtils.isTrue(tiSignupTerms.getCanEmailLogin()),
+                BooleanUtils.isTrue(tiSignupTerms.getCanEmailLogin())
+        );
 
         checkNotNull(succLoginAccountId);
         ToAccount toAccount = tcAccountService.findAccount(succLoginAccountId, true);
