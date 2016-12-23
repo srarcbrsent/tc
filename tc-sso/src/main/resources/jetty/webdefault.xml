@@ -48,7 +48,7 @@
 
 
     <!-- ==================================================================== -->
-    <!-- Context params to control Session Cookies                            -->
+    <!-- Context params to control SessionKey Cookies                            -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
     <!--
       UNCOMMENT TO ACTIVATE

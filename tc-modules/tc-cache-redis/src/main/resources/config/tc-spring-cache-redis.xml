@@ -14,7 +14,9 @@
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
-                <ref bean="redisCache"/>
+                <ref bean="ssRedisCache"/>
+                <ref bean="soRedisCache"/>
+                <ref bean="ooRedisCache"/>
             </set>
         </property>
     </bean>
@@ -64,17 +66,7 @@
         <property name="valueSerializer" ref="objectValueSerializer"/>
     </bean>
 
-    <!-- string key (string serialization), object value (jdk serialization) -->
-    <bean id="soRedisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
-        <property name="redisTemplate" ref="soRedisTemplate"/>
-        <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.redis.TcRedisOpsForGroupedValue">
-                <property name="redisTemplate" ref="soRedisTemplate"/>
-            </bean>
-        </property>
-    </bean>
-
-    <!-- string key (string serialization), string value (string serialization) -->
+    <!-- service -->
     <bean id="ssRedisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
         <property name="redisTemplate" ref="ssRedisTemplate"/>
         <property name="tcOpsForGroupedValue">
@@ -84,9 +76,45 @@
         </property>
     </bean>
 
-    <!-- redis cache : object key (jdk serialization), object value (jdk serialization) -->
-    <bean id="redisCache" class="org.springframework.data.redis.cache.RedisCache">
-        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).REDIS_CACHE}"/>
+    <bean id="soRedisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
+        <property name="redisTemplate" ref="soRedisTemplate"/>
+        <property name="tcOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.redis.TcRedisOpsForGroupedValue">
+                <property name="redisTemplate" ref="soRedisTemplate"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="ooRedisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
+        <property name="redisTemplate" ref="ooRedisTemplate"/>
+        <property name="tcOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.redis.TcRedisOpsForGroupedValue">
+                <property name="redisTemplate" ref="ooRedisTemplate"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- cache -->
+    <bean id="ssRedisCache" class="org.springframework.data.redis.cache.RedisCache">
+        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SS_REDIS_CACHE}"/>
+        <constructor-arg index="1">
+            <null/>
+        </constructor-arg>
+        <constructor-arg index="2" ref="ssRedisTemplate"/>
+        <constructor-arg index="3" value="${properties.cache.redis.cache.expiration.millis}"/>
+    </bean>
+
+    <bean id="soRedisCache" class="org.springframework.data.redis.cache.RedisCache">
+        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SO_REDIS_CACHE}"/>
+        <constructor-arg index="1">
+            <null/>
+        </constructor-arg>
+        <constructor-arg index="2" ref="soRedisTemplate"/>
+        <constructor-arg index="3" value="${properties.cache.redis.cache.expiration.millis}"/>
+    </bean>
+
+    <bean id="ooRedisCache" class="org.springframework.data.redis.cache.RedisCache">
+        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).OO_REDIS_CACHE}"/>
         <constructor-arg index="1">
             <null/>
         </constructor-arg>

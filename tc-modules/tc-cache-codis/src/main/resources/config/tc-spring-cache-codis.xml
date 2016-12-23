@@ -14,7 +14,9 @@
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
-                <ref bean="codisCache"/>
+                <ref bean="ssCodisCache"/>
+                <ref bean="soCodisCache"/>
+                <ref bean="ooCodisCache"/>
             </set>
         </property>
     </bean>
@@ -53,29 +55,19 @@
         <property name="valueSerializer" ref="stringValueSerializer"/>
     </bean>
 
-    <bean id="ooCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" ref="codisConnectionFactory"/>
-        <property name="keySerializer" ref="objectKeySerializer"/>
-        <property name="valueSerializer" ref="objectValueSerializer"/>
-    </bean>
-
     <bean id="soCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="codisConnectionFactory"/>
         <property name="keySerializer" ref="stringKeySerializer"/>
         <property name="valueSerializer" ref="objectValueSerializer"/>
     </bean>
 
-    <!-- string key (string serialization), object value (jdk serialization) -->
-    <bean id="soCodisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
-        <property name="redisTemplate" ref="soCodisTemplate"/>
-        <property name="tcOpsForGroupedValue">
-            <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisOpsForGroupedValue">
-                <property name="redisTemplate" ref="soCodisTemplate"/>
-            </bean>
-        </property>
+    <bean id="ooCodisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="codisConnectionFactory"/>
+        <property name="keySerializer" ref="objectKeySerializer"/>
+        <property name="valueSerializer" ref="objectValueSerializer"/>
     </bean>
 
-    <!-- string key (string serialization), string value (string serialization) -->
+    <!-- service -->
     <bean id="ssCodisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
         <property name="redisTemplate" ref="ssCodisTemplate"/>
         <property name="tcOpsForGroupedValue">
@@ -85,9 +77,39 @@
         </property>
     </bean>
 
-    <!-- codis cache : object key (jdk serialization), object value (jdk serialization) -->
-    <bean id="codisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
-        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).CODIS_CACHE}"/>
+    <bean id="soCodisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
+        <property name="redisTemplate" ref="soCodisTemplate"/>
+        <property name="tcOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisOpsForGroupedValue">
+                <property name="redisTemplate" ref="soCodisTemplate"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="ooCodisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
+        <property name="redisTemplate" ref="ooCodisTemplate"/>
+        <property name="tcOpsForGroupedValue">
+            <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisOpsForGroupedValue">
+                <property name="redisTemplate" ref="ooCodisTemplate"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- cache -->
+    <bean id="ssCodisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
+        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SS_CODIS_CACHE}"/>
+        <property name="codisTemplate" ref="ssCodisTemplate"/>
+        <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
+    </bean>
+
+    <bean id="soCodisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
+        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SO_CODIS_CACHE}"/>
+        <property name="codisTemplate" ref="soCodisTemplate"/>
+        <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
+    </bean>
+
+    <bean id="ooCodisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
+        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).OO_CODIS_CACHE}"/>
         <property name="codisTemplate" ref="ooCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
     </bean>

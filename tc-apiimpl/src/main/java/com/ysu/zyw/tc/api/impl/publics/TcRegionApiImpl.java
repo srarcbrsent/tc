@@ -21,7 +21,7 @@ public class TcRegionApiImpl implements TcRegionApi {
     @Resource
     private TcRegionService tcRegionService;
 
-    @Resource(name = TcConstant.Sys.SS_REDIS_SERVICE)
+    @Resource(name = TcConstant.BeanNames.SS_REDIS_SERVICE)
     private TcCacheService tcCacheService;
 
     private static final long CACHE_REGION_TIMEOUT = 60 * 60 * 1000;

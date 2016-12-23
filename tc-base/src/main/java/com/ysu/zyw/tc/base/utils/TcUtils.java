@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -53,6 +54,12 @@ public class TcUtils {
         if (!expression) {
             tcTask.execute();
         }
+    }
+
+    public static void doWithTiming(@Nonnull TcTask tcTask, String expression) {
+        Date before = new Date();
+        tcTask.execute();
+        log.info(expression, TcDateUtils.duration(before, new Date()));
     }
 
     public static <T1, T2, R1, R2> void match(@Nonnull List<T1> l1,
