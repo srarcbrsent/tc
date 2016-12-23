@@ -5,7 +5,6 @@ import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
-import org.jboss.resteasy.annotations.Form;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -78,10 +77,10 @@ public interface TcAccountApi {
      */
     @POST
     @Path(value = "/count_accounts")
-    @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
+    @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<Long> countAccounts(
-            @Form TiFindAccountsTerms tiFindAccountsTerms
+            TiFindAccountsTerms tiFindAccountsTerms
     );
 
     /**
@@ -90,10 +89,10 @@ public interface TcAccountApi {
      */
     @POST
     @Path(value = "/find_accounts/{currentPage}/{pageSize}")
-    @Consumes(value = {MediaType.APPLICATION_FORM_URLENCODED})
+    @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcP<List<ToAccount>> findAccounts(
-            @Form TiFindAccountsTerms tiFindAccountsTerms,
+            TiFindAccountsTerms tiFindAccountsTerms,
             @PathParam(value = "currentPage") Integer currentPage,
             @PathParam(value = "pageSize") Integer pageSize
     );

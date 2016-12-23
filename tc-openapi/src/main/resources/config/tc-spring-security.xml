@@ -5,17 +5,17 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="shiroCache" class="com.ysu.zyw.tc.platform.fk.shiro.TcShiroCacheManager.TcShiroCache">
-        <constructor-arg ref="redisCache"/>
+        <constructor-arg value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).OO_REDIS_CACHE}"/>
     </bean>
 
     <bean id="shiroCacheManager" class="com.ysu.zyw.tc.platform.fk.shiro.TcShiroCacheManager">
         <property name="shiroCacheContainer">
             <map>
-                <entry key="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).SHIRO_AUTHENTICATION_CACHE}"
+                <entry key="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SHIRO_AUTHENTICATION_CACHE}"
                        value-ref="shiroCache"/>
-                <entry key="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).SHIRO_AUTHORIZATION_CACHE}"
+                <entry key="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SHIRO_AUTHORIZATION_CACHE}"
                        value-ref="shiroCache"/>
-                <entry key="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).SHIRO_ACTIVE_SESSION_CACHE}"
+                <entry key="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SHIRO_ACTIVE_SESSION_CACHE}"
                        value-ref="shiroCache"/>
             </map>
         </property>
@@ -57,10 +57,10 @@
         <property name="cachingEnabled" value="true"/>
         <property name="authenticationCachingEnabled" value="true"/>
         <property name="authenticationCacheName"
-                  value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).SHIRO_AUTHENTICATION_CACHE}"/>
+                  value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SHIRO_AUTHENTICATION_CACHE}"/>
         <property name="authorizationCachingEnabled" value="true"/>
         <property name="authorizationCacheName"
-                  value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.Sys).SHIRO_AUTHORIZATION_CACHE}"/>
+                  value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).SHIRO_AUTHORIZATION_CACHE}"/>
         <property name="cacheManager" ref="shiroCacheManager"/>
     </bean>
 

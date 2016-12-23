@@ -7,9 +7,6 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- !!!! Database !!!! -->
-
-
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
         <property name="url" value="${properties.jdbc.core.url}"/>
@@ -54,11 +51,5 @@
     <tx:annotation-driven transaction-manager="txManager"
                           order="0"
                           proxy-target-class="true"/>
-
-    <!-- !!!! Codis !!!! -->
-    <!-- !!!! Mongodb !!!! -->
-    <!-- !!!! MessageQueue !!!! -->
-    <!-- !!!! ElasticJob !!!! -->
-    <!-- !!!! ElasticSearch !!!! -->
 
 </beans>
