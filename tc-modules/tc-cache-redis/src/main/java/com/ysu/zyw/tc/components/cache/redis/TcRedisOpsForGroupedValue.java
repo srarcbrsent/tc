@@ -1,6 +1,7 @@
 package com.ysu.zyw.tc.components.cache.redis;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.collect.Sets;
 import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcUtils;
 import com.ysu.zyw.tc.components.cache.api.TcOpsForGroupedValue;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Nonnull;
@@ -18,13 +20,14 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
 public class TcRedisOpsForGroupedValue implements TcOpsForGroupedValue {
 
-    protected static final String GROUP_FIELD_PREFIX = "group:";
+    protected static final String GROUP_FIELD_PREFIX = "GROUP_";
 
     protected static final String GROUP_NAME_KEY_SPLIT = ":";
 
@@ -181,7 +184,15 @@ public class TcRedisOpsForGroupedValue implements TcOpsForGroupedValue {
     @Override
     public Set<String> keys(@Nonnull String group) {
         checkNotNull(group, "empty group is not allowed");
-        return redisTemplate.keys(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + "*");
+        if (redisTemplate.getKeySerializer() instanceof JdkSerializationRedisSerializer) {
+            log.warn("object key serialization(jdk serialization) strategy do not support keys command");
+            return Sets.newHashSet();
+        }
+        return redisTemplate.keys(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT + "*")
+                .stream()
+                .map(key ->
+                        key.split(GROUP_FIELD_PREFIX + group + GROUP_NAME_KEY_SPLIT)[1]
+                ).collect(Collectors.toSet());
     }
 
     @Override

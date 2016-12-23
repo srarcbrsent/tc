@@ -36,11 +36,11 @@ import java.util.stream.IntStream;
 @SuppressWarnings("Duplicates")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath*:/config/tc-import-cache-redis.xml",
-        "classpath*:/config/tc-spring-cache-redis.xml"
+        "classpath*:/config/tc-import-cache-codis.xml",
+        "classpath*:/config/tc-spring-cache-codis.xml"
 })
 @Slf4j
-public class TcRedisServiceTest {
+public class TcCodisServiceTest {
 
     @Resource
     private ApplicationContext applicationContext;
@@ -53,14 +53,13 @@ public class TcRedisServiceTest {
 
     private static final int DELAY = 500;
 
-    private ExecutorService executorService;
+    private static final int CLUSTER_DELAY = 5000;
 
-    private boolean objectKeySerializationStrategy = false;
+    private ExecutorService executorService;
 
     @Before
     public void setUp() throws Exception {
-        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.OO_REDIS_SERVICE, TcCacheService.class);
-        objectKeySerializationStrategy = true;
+        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.OO_CODIS_SERVICE, TcCacheService.class);
         executorService = Executors.newFixedThreadPool(THREADS);
     }
 
@@ -71,16 +70,13 @@ public class TcRedisServiceTest {
 
     @Test
     public void allInOne() {
-        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.SS_REDIS_SERVICE, TcCacheService.class);
-        objectKeySerializationStrategy = false;
+        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.SS_CODIS_SERVICE, TcCacheService.class);
         log.info("---------- SS_REDIS_CACHE_START");
         loop();
-        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.SO_REDIS_SERVICE, TcCacheService.class);
-        objectKeySerializationStrategy = false;
+        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.SO_CODIS_SERVICE, TcCacheService.class);
         log.info("---------- SO_REDIS_CACHE_START");
         loop();
-        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.OO_REDIS_SERVICE, TcCacheService.class);
-        objectKeySerializationStrategy = true;
+        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.OO_CODIS_SERVICE, TcCacheService.class);
         log.info("---------- OO_REDIS_CACHE_START");
         loop();
     }
@@ -330,7 +326,7 @@ public class TcRedisServiceTest {
         });
         Assert.assertEquals(value, sValue);
         try {
-            TimeUnit.MILLISECONDS.sleep(timeout);
+            TimeUnit.MILLISECONDS.sleep(timeout + CLUSTER_DELAY);
         } catch (InterruptedException e) {
             log.error("", e);
         }
@@ -402,11 +398,7 @@ public class TcRedisServiceTest {
         delKeys.forEach(id -> tcOpsForGroupedValue.delete(group, id));
 
         Set<String> keys = tcOpsForGroupedValue.keys(group);
-        if (objectKeySerializationStrategy) {
-            Assert.assertEquals(0, keys.size());
-        } else {
-            Assert.assertEquals(lftKeys.size(), keys.size());
-        }
+        Assert.assertEquals(lftKeys.size(), keys.size());
 
 
         Assert.assertEquals(0, CollectionUtils.removeAll(keys, lftKeys).size());

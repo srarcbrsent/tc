@@ -187,12 +187,12 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
         checkNotNull(group, "empty group is not allowed");
         checkNotNull(key, "empty key is not allowed");
         Long expiresAt = (Long) redisTemplate.opsForHash().get(group, expiresAtFiled(key));
-        if (new Date().getTime() > expiresAt) {
-            // expire
+        if (Objects.nonNull(expiresAt) && new Date().getTime() <= expiresAt) {
+            return true;
+        } else {
+            // expiresAt not present or key expired
             delete(group, key);
             return false;
-        } else {
-            return true;
         }
     }
 

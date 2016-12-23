@@ -16,3 +16,9 @@
 
 |序号|应用名|版本|部署路径|域名|端口号|备注|
 |-|-|-|-|-|-|-|
+|01|tc-apiimpl-1|latest|/User/env/local/tc-apiimpl-1|api.tc.com|80|-|
+|02|tc-apiimpl-2|latest|/User/env/local/tc-apiimpl-2|api.tc.com|80|-|
+|03|tc-openapi-1|latest|/User/env/local/tc-openapi-1|openapi.tc.com|80|-|
+|04|tc-openapi-2|latest|/User/env/local/tc-openapi-2|openapi.tc.com|80|-|
+|05|tc-static-resources|latest|/User/env/local/tc-static-resources|static.tc.com|80|-|
+|06|tc-static-html|latest|/User/env/local/tc-static-html|www.tc.com|80|-|

@@ -26,6 +26,7 @@
         <property name="port" value="${properties.cache.redis.port}"/>
         <property name="password" value="${properties.cache.redis.password}"/>
         <property name="usePool" value="true"/>
+        <property name="timeout" value="${properties.cache.redis.jedis.timeout}"/>
         <property name="poolConfig">
             <bean class="redis.clients.jedis.JedisPoolConfig">
                 <property name="maxTotal" value="${properties.cache.redis.pool.config.max.total}"/>

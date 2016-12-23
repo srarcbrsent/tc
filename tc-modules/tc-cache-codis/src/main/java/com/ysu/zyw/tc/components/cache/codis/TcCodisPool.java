@@ -29,7 +29,9 @@ public class TcCodisPool extends JedisPool {
         checkNotNull(zkProxyDir, "empty zk proxy dir is not allowed");
         checkNotNull(codisPoolConfig, "null codis pool config is not allowed");
         checkArgument(connectionTimeout > 0, "negative connection timeout is not allowed");
-        checkNotNull(password, "codis password is required");
+        if (Objects.isNull(password)) {
+            log.warn("no password set to codis, it's dangerous");
+        }
         log.info("init round robin jedis pool, zkAddr [{}], zkSessionTimeout [{}], zkProxyDir [{}]",
                 zkAddr, zkSessionTimeoutMs, zkProxyDir);
         roundRobinJedisPool = RoundRobinJedisPool
