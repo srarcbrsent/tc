@@ -7,30 +7,17 @@
 <style type="text/css">
     /** privilege infrastructure */
     .tc-pv-control {
-        display: none;
+        visibility: hidden;
     }
 </style>
 
 <script type="text/javascript">
     // system infrastructure
     var TcC = {
-        // tc base
+
         _openApiBase: '${openApiBase}',
+
         _staticBase: '${staticBase}',
-
-        openApiBase: function (path) {
-            return TcC._openApiBase + path;
-        },
-
-        // ajax help config
-        axiosConfig: {
-            // 6s
-            timeout: 6000,
-            xsrfCookieName: 'XSRF-TOKEN',
-            xsrfHeaderName: 'X-XSRF-TOKEN',
-            // 50k
-            maxContentLength: 51200
-        },
 
         // ajax helper func
         doWithTcR: function (tcR, okCallback, exCallback) {
@@ -57,27 +44,55 @@
         }
     };
 
-    // privilege infrastructure
-    var TcPi = new Vue({
-        el: 'body',
+    // axios infrastructure
+    var TcAxios = {
+
+        axiosConfig: {
+            baseURL: TcC._openApiBase,
+            // 6s
+            timeout: 6000,
+            xsrfCookieName: 'XSRF-TOKEN',
+            xsrfHeaderName: 'X-XSRF-TOKEN',
+            // 50k
+            maxContentLength: 51200
+        }
+
+    };
+
+    (function () {
+        // Add a request interceptor
+        axios.interceptors.request.use(function (config) {
+            return config;
+        }, function (error) {
+            TcC.defaultAxiosExHandler(error);
+            return Promise.reject(error);
+        });
+
+        // Add a response interceptor
+        axios.interceptors.response.use(function (response) {
+            return response;
+        }, function (error) {
+            TcC.defaultAxiosExHandler(error);
+            return Promise.reject(error);
+        });
+    })();
+
+    // privilege infrastructure (will extends by every page vue)
+    var _TcPi = {
 
         data: {
 
-            authenticated: null,
+            _Pi: {
+                authenticated: null,
 
-            roles: null,
+                roles: null,
 
-            permissions: null
+                permissions: null
+            }
 
         },
 
         mounted: function () {
-            // get auth status
-            this.doGetAuthenticatedStatus();
-            // get roles
-            this.doGetRoles();
-            // get permissions
-            this.doGetPermissions();
         },
 
         watch: {
@@ -95,33 +110,46 @@
                     var $unauthorizedElements = $pvControlElements.filter(function (index, element) {
                         return !_.contains(stringPermissions, $(element).data('pms'));
                     });
-                    $unauthorizedElements.each(function (index, element) {
-                        var method = $(element).data('invoke-when-unauthorized');
-                        if (!_.isUndefined(method)) {
-                            try {
-                                eval(method + '()')();
-                            } catch (e) {
-                                console.error(e);
-                            }
-                        }
-                        $(element).addClass('tc-pv-control');
-                    });
                     $authorizedElements.each(function (index, element) {
-                        var method = $(element).data('invoke-when-authorized');
-                        if (!_.isUndefined(method)) {
-                            try {
-                                eval(method + '()')();
-                            } catch (e) {
-                                console.error(e);
-                            }
+                        var methods = $(element).data('invoke-when-authorized');
+                        if (!_.isUndefined(methods)) {
+                            this._invokePvMethod(methods);
                         }
-                        $(element).removeClass('tc-pv-control');
+                        $(this).remove();
                     });
+                    $unauthorizedElements.each(function (index, element) {
+                        var methods = $(element).data('invoke-when-unauthorized');
+                        if (!_.isUndefined(methods)) {
+                            this._invokePvMethod(methods);
+                        }
+                        $(this).remove();
+                    });
+                }
+            },
+
+            _invokePvMethod: function (methods) {
+                try {
+                    _.each(methods.split(','), function (method) {
+                        if (_.isFunction(this.builtinAuthMethod[method])) {
+                            this.builtinAuthMethod[method]();
+                        }
+                    });
+                } catch (e) {
+                    console.error(e);
                 }
             }
         },
 
         methods: {
+
+            builtinAuthMethod: {
+
+                noClick: function () {
+
+                }
+
+            },
+
             doGetAuthenticatedStatus: function () {
                 axios
                     .get(TcC.openApiBase('/auths/authenticated.json'), TcC.axiosConfig)
@@ -162,6 +190,6 @@
             }
         }
 
-    });
+    };
 </script>
 <!-- - post-lib -->
