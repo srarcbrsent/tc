@@ -46,7 +46,7 @@ public class TcExceptionResponseDecorator {
             log.warn("[{}][{}][{}][{}][{}][{}]", "OpenApi切面-无法处理的请求-业务级异常", "切面异常捕获",
                     proceedingJoinPoint.getSignature().getName(),
                     proceedingJoinPoint.getArgs(), code, description);
-            return TcR.code(code, description).setExtra(extra);
+            return TcR.code(code, description, extra);
         } catch (Exception e) {
             // 如果内部抛出了异常 则对页面返回 500 服务器异常
             log.error("[{}][{}][{}]", "OpenApi切面-服务器异常", "切面异常捕获", proceedingJoinPoint.getArgs(), e);

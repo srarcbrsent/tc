@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * springmvc's return value means the response of this layer, and the response
  * of next layer will carry some special response headers(such as encoding,
  * transfer-encoding gzip etc.), and those response header has it's own meaning.
- *
+ * <p>
  * for example, the lower layer server encoding the response to gzip, and add a
  * header named content-encoding: gzip, and upper layer receive the response
  * carry a header named content-encoding: gzip, and directly return it to
@@ -176,6 +176,16 @@ public class TcHttpxService {
         if (propertyReadMethod == null) {
             methodName = "is" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) +
                     propertyName.substring(1);
+            try {
+                propertyReadMethod = clazz.getMethod(methodName);
+            } catch (NoSuchMethodException e) {
+                // ignore
+            }
+        }
+        if (propertyReadMethod == null) {
+            // boolean property named isXxx read property is isXxx, not isIsXxx
+            methodName = propertyName;
+            // if no such get method at all, throw NoSuchMethodException.
             propertyReadMethod = clazz.getMethod(methodName);
         }
         checkArgument(propertyReadMethod.getParameterCount() == 0, "get method can not have args");

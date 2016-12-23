@@ -13,9 +13,10 @@ import java.io.Serializable;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * 1. TcP.code == R.SUCCESS => success, have body (except TcP<Void>)
- * 2. TcP.code == ? => custom code
- * 3. TcP.code == R.SERVER_ERROR => server errs, may happen in any apis.
+ * 1. TcP.code == com.ysu.zyw.tc.model.mw.Rc.SUCCESS => success, have body (at least a empty collection)
+ * 2. TcP.code == other => custom code, depends on api.
+ * 3. TcP.code == com.ysu.zyw.tc.model.mw.Rc.BAD_REQUEST => request param error, may contains extra.
+ * 4. TcP.code == com.ysu.zyw.tc.model.mw..Rc.SERVER_ERROR => server errs, may happen in any apis.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -41,8 +42,8 @@ public class TcP<T> extends TcR<T> implements Serializable {
         tcP.setCurrentPage(1)
                 .setTotalPage(1)
                 .setPageSize(Integer.MAX_VALUE)
-                .setCode(R.SUCCESS)
-                .setDescription(R.SUCCESS_DESCRIPTION)
+                .setCode(Rc.SUCCESS)
+                .setDescription(Rc.SUCCESS_DESCRIPTION)
                 .setBody(body);
         return tcP;
     }
@@ -53,8 +54,8 @@ public class TcP<T> extends TcR<T> implements Serializable {
         tcP.setCurrentPage(currentPage)
                 .setPageSize(pageSize)
                 .setTotalPage(totalPage)
-                .setCode(R.SUCCESS)
-                .setDescription(R.SUCCESS_DESCRIPTION)
+                .setCode(Rc.SUCCESS)
+                .setDescription(Rc.SUCCESS_DESCRIPTION)
                 .setBody(body);
         return tcP;
     }
@@ -67,10 +68,33 @@ public class TcP<T> extends TcR<T> implements Serializable {
         return tcP;
     }
 
+    public static <T> TcP<T> code(int code, @Nonnull String description, @Nonnull Object body) {
+        checkNotNull(description);
+        TcP<T> tcP = new TcP<>();
+        tcP.setCode(code)
+                .setDescription(description)
+                .addExtra(body);
+        return tcP;
+    }
+
+    public static <T> TcP<T> br() {
+        TcP<T> tcP = new TcP<>();
+        tcP.setCode(Rc.BAD_REQUEST)
+                .setDescription(Rc.BAD_REQUEST_DESCRIPTION);
+        return tcP;
+    }
+
+    public static <T> TcP<T> br(@Nonnull Object extra) {
+        checkNotNull(extra);
+        TcP<T> tcP = br();
+        tcP.addExtra(extra);
+        return tcP;
+    }
+
     public static <T> TcP<T> error() {
         TcP<T> tcP = new TcP<>();
-        tcP.setCode(R.SERVER_ERROR)
-                .setDescription(R.SERVER_ERROR_DESCRIPTION);
+        tcP.setCode(Rc.SERVER_ERROR)
+                .setDescription(Rc.SERVER_ERROR_DESCRIPTION);
         return tcP;
     }
 
