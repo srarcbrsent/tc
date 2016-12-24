@@ -67,18 +67,18 @@ public class TcValidationUtils extends GenericValidator {
     }
 
     public static boolean isEnglishStr(String value, int min, int max) {
-        return nonNull(value) &&
-                GenericValidator.matchRegexp(value, "^[_a-zA-Z0-9]{" + min + "," + max + "}");
+        return nonNull(value)
+                && GenericValidator.matchRegexp(value, "^[_a-zA-Z0-9]{" + min + "," + max + "}");
     }
 
     public static boolean isNormalStr(String value, int min, int max) {
-        return nonNull(value) &&
-                GenericValidator.matchRegexp(value, "^[\\-_a-zA-Z0-9\u4e00-\u9fa5]{" + min + "," + max + "}");
+        return nonNull(value)
+                && GenericValidator.matchRegexp(value, "^[\\-_a-zA-Z0-9\u4e00-\u9fa5]{" + min + "," + max + "}");
     }
 
     public static boolean isRichText(String value) {
-        return nonNull(value) &&
-                GenericValidator.matchRegexp(value, "^[/\"<>~!@#$%^&*()-=_a-zA-Z0-9\u4e00-\u9fa5]+");
+        return nonNull(value)
+                && GenericValidator.matchRegexp(value, "^[/\"<>~!@#$%^&*()-=_a-zA-Z0-9\u4e00-\u9fa5]+");
     }
 
     public static List<String> unwrap(Set<ConstraintViolation<? extends Object>> violations) {

@@ -74,7 +74,7 @@
                 <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                     <!-- share webmvc object mapper -->
                     <property name="objectMapper"
-                              value="#{T(com.ysu.zyw.tc.base.utils.TcSerializationUtils).objectMapper}"/>
+                              value="#{T(com.ysu.zyw.tc.base.utils.TcSerializationUtils).OBJECT_MAPPER}"/>
                     <property name="supportedMediaTypes">
                         <list>
                             <value>#{T(org.springframework.http.MediaType).APPLICATION_JSON}</value>

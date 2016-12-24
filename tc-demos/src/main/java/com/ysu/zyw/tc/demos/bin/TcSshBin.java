@@ -49,13 +49,15 @@ public class TcSshBin {
         while (true) {
             while (inputStream.available() > 0) {
                 int i = inputStream.read(bytes, 0, 1024);
-                if (i < 0)
+                if (i < 0) {
                     break;
+                }
                 sb.append(new String(bytes, 0, i, Charset.forName("UTF-8")));
             }
             if (channel.isClosed()) {
-                if (inputStream.available() > 0)
+                if (inputStream.available() > 0) {
                     continue;
+                }
                 exitStatus = channel.getExitStatus();
                 break;
             }
@@ -74,7 +76,7 @@ public class TcSshBin {
 
     public static void main(String[] args) {
 
-        final String[] HOSTS = {
+        final String[] hosts = {
                 "172.16.75.40",
                 "172.16.75.41",
                 "172.16.75.42",
@@ -99,11 +101,11 @@ public class TcSshBin {
                 "172.16.75.32"
         };
 
-        final String USERNAME = "****";
+        final String username = "****";
 
-        final String PASSWORD = "****";
+        final String password = "****";
 
-        Arrays.stream(HOSTS).forEach(host -> exec(host, 22, USERNAME, PASSWORD, "hostname"));
+        Arrays.stream(hosts).forEach(host -> exec(host, 22, username, password, "hostname"));
     }
 
 }

@@ -76,26 +76,31 @@ public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
         }
 
         // content
-        String primaryKeyColumnNames = String.join(", ", introspectedTable.getPrimaryKeyColumns().stream().map
-                (IntrospectedColumn::getActualColumnName).collect(Collectors.toList()));
+        String primaryKeyColumnNames = String.join(", ",
+                introspectedTable
+                        .getPrimaryKeyColumns()
+                        .stream()
+                        .map(IntrospectedColumn::getActualColumnName)
+                        .collect(Collectors.toList()));
+
         String content =
-                "select\n" +
-                        "    <if test=\"distinct\">\n" +
-                        "      distinct\n" +
-                        "    </if>\n" +
-                        "    " + primaryKeyColumnNames + "\n" +
-                        "    from " + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName() + "\n" +
-                        "    <if test=\"_parameter != null\">\n" +
-                        "      <include refid=\"" + introspectedTable.getExampleWhereClauseId() + "\" />\n" +
-                        "    </if>\n" +
-                        "    <if test=\"orderByClause != null\">\n" +
-                        "      order by ${orderByClause}\n" +
-                        "    </if>\n" +
-                        "    <if test=\"" + TcPaginationPlugin.START_LINE + " != null and " + TcPaginationPlugin
-                        .PAGE_SIZE + " != null and " + TcPaginationPlugin.PAGE_SIZE + " > 0\">\n" +
-                        "      limit #{" + TcPaginationPlugin.START_LINE + "}, #{" + TcPaginationPlugin.PAGE_SIZE +
-                        "}\n" +
-                        "    </if>";
+                "select\n"
+                        + "    <if test=\"distinct\">\n"
+                        + "      distinct\n"
+                        + "    </if>\n"
+                        + "    " + primaryKeyColumnNames + "\n"
+                        + "    from " + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName() + "\n"
+                        + "    <if test=\"_parameter != null\">\n"
+                        + "      <include refid=\"" + introspectedTable.getExampleWhereClauseId() + "\" />\n"
+                        + "    </if>\n"
+                        + "    <if test=\"orderByClause != null\">\n"
+                        + "      order by ${orderByClause}\n"
+                        + "    </if>\n"
+                        + "    <if test=\"" + TcPaginationPlugin.START_LINE + " != null and "
+                        + TcPaginationPlugin.PAGE_SIZE + " != null and " + TcPaginationPlugin.PAGE_SIZE + " > 0\">\n"
+                        + "      limit #{" + TcPaginationPlugin.START_LINE + "}, #{" + TcPaginationPlugin.PAGE_SIZE
+                        + "}\n"
+                        + "    </if>";
         xmlElement.addElement(new TextElement(content));
 
         document.getRootElement().addElement(xmlElement);

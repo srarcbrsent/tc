@@ -5,7 +5,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="shiroCache" class="com.ysu.zyw.tc.platform.fk.shiro.TcShiroCacheManager.TcShiroCache">
-        <constructor-arg value="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).OO_REDIS_CACHE}"/>
+        <constructor-arg ref="#{T(com.ysu.zyw.tc.base.constant.TcConstant.BeanNames).OO_REDIS_CACHE}"/>
     </bean>
 
     <bean id="shiroCacheManager" class="com.ysu.zyw.tc.platform.fk.shiro.TcShiroCacheManager">

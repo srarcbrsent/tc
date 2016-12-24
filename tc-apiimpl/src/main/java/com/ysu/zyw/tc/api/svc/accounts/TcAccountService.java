@@ -75,9 +75,9 @@ public class TcAccountService {
 
         // the password check is pass to caller
 
-        if (Objects.nonNull(tcAccount.getLockReleaseTime()) &&
-                // 当前时间在解锁之前之前
-                new Date().before(tcAccount.getLockReleaseTime())) {
+        // 当前时间在解锁之前之前
+        if (Objects.nonNull(tcAccount.getLockReleaseTime())
+                && new Date().before(tcAccount.getLockReleaseTime())) {
             // 被锁定
             throw new TcUnProcessableEntityException(2, "账号被锁定！");
         }
@@ -228,13 +228,13 @@ public class TcAccountService {
                 .setUpdatedPerson(tiAccount.getOperatorAccountId())
                 .setUpdatedTimestamp(now);
         // if mobile changed, auto set mobile activated to false.
-        if (StringUtils.isNotBlank(tcAccount.getMobile()) &&
-                Objects.equals(tcAccount.getMobile(), originalTcAccount.getMobile())) {
+        if (StringUtils.isNotBlank(tcAccount.getMobile())
+                && Objects.equals(tcAccount.getMobile(), originalTcAccount.getMobile())) {
             tcAccount.setMobileActivated(false);
         }
         // if email changed, auto set email activated to false.
-        if (StringUtils.isNotBlank(tcAccount.getEmail()) &&
-                Objects.equals(tcAccount.getEmail(), originalTcAccount.getEmail())) {
+        if (StringUtils.isNotBlank(tcAccount.getEmail())
+                && Objects.equals(tcAccount.getEmail(), originalTcAccount.getEmail())) {
             tcAccount.setEmailActivated(false);
         }
 
@@ -543,8 +543,8 @@ public class TcAccountService {
             throw new TcUnProcessableEntityException(1, "账号不存在！");
         }
 
-        if (Objects.nonNull(originalTcAccount.getLockReleaseTime()) &&
-                originalTcAccount.getLockReleaseTime().after(lockReleaseTime)) {
+        if (Objects.nonNull(originalTcAccount.getLockReleaseTime())
+                && originalTcAccount.getLockReleaseTime().after(lockReleaseTime)) {
             throw new TcUnProcessableEntityException(2, "账号已经被锁定更长时间！");
         }
 

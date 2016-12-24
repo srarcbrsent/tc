@@ -212,8 +212,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
             </plugin>
+
             <!-- mybatis generator -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
@@ -234,6 +234,7 @@
                     </configurationFile>
                 </configuration>
             </plugin>
+
             <!-- jetty plugin -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>

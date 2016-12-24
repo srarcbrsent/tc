@@ -11,12 +11,12 @@ import java.io.OutputStream;
  */
 public interface TcUploadService {
 
-    public String upload(@Nonnull TcUploadResourceData metadata, @Nonnull InputStream inputStream);
+    String upload(@Nonnull TcUploadResourceData metadata, @Nonnull InputStream inputStream);
 
-    public OutputStream download(@Nonnull TcUploadResourceData metadata);
+    OutputStream download(@Nonnull TcUploadResourceData metadata);
 
-    public void delete(@Nonnull TcUploadResourceData metadata);
+    void delete(@Nonnull TcUploadResourceData metadata);
 
-    public boolean exists(@Nonnull TcUploadResourceData metadata);
+    boolean exists(@Nonnull TcUploadResourceData metadata);
 
 }

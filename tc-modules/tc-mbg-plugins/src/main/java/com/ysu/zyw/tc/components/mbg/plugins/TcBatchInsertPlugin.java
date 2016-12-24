@@ -39,8 +39,8 @@ public class TcBatchInsertPlugin extends PluginAdapter {
 
     protected void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
         Method method = new Method(BATCH_INSERT);
-        String modelType = CollectionUtils.isEmpty(introspectedTable.getBLOBColumns()) ?
-                introspectedTable.getBaseRecordType() : introspectedTable.getRecordWithBLOBsType();
+        String modelType = CollectionUtils.isEmpty(introspectedTable.getBLOBColumns())
+                ? introspectedTable.getBaseRecordType() : introspectedTable.getRecordWithBLOBsType();
         FullyQualifiedJavaType modelListType = new FullyQualifiedJavaType("java.util.List<" + modelType + ">");
         method.addParameter(new Parameter(modelListType, "records"));
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("int");
@@ -60,19 +60,25 @@ public class TcBatchInsertPlugin extends PluginAdapter {
         String columns = String.join(", \n      ", introspectedTable.getAllColumns().stream().map(IntrospectedColumn
                 ::getActualColumnName).collect(Collectors.toList()));
 
-        String contentA = "insert into " + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName() + " " +
-                "(\n" +
-                "      " + columns + "\n" +
-                "    ) values ";
+        String contentA =
+                "insert into "
+                        + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName() + " "
+                        + "(\n"
+                        + "      " + columns + "\n"
+                        + "    ) values ";
 
         XmlElement foreachXmlElement = new XmlElement("foreach");
         foreachXmlElement.addAttribute(new Attribute("collection", "list"));
         foreachXmlElement.addAttribute(new Attribute("item", "item"));
         foreachXmlElement.addAttribute(new Attribute("separator", ", "));
 
-        String contentB = String.join(", \n      ", introspectedTable.getAllColumns().stream().map
-                (introspectedColumn2InsertSql()
-                ).collect(Collectors.toList()));
+        String contentB = String.join(", \n      ",
+                introspectedTable
+                        .getAllColumns()
+                        .stream()
+                        .map(introspectedColumn2InsertSql())
+                        .collect(Collectors.toList())
+        );
 
         foreachXmlElement.addElement(new TextElement("(" + contentB + ")"));
 
@@ -85,8 +91,8 @@ public class TcBatchInsertPlugin extends PluginAdapter {
     protected Function<IntrospectedColumn, String> introspectedColumn2InsertSql() {
         // transform column like 'id' to insert part like '#{item.id,jdbcType=VARCHAR}'
         return introspectedColumn ->
-                "#{item." + introspectedColumn.getJavaProperty() + ",jdbcType=" + introspectedColumn
-                        .getJdbcTypeName() + "}";
+                "#{item." + introspectedColumn.getJavaProperty()
+                        + ",jdbcType=" + introspectedColumn.getJdbcTypeName() + "}";
     }
 
     @Override

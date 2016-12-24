@@ -12,7 +12,11 @@ public class TcServletUtils {
 
     private static final String X_REQUESTED_WITH_HEADER = "X-Requested-With";
 
-    private static final String IP_REGEXP = "^(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])\\.(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])$";
+    private static final String IP_REGEXP =
+            "^(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])"
+                    + "\\.(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])"
+                    + "\\.(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])"
+                    + "\\.(\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5])$";
 
     public static String extractIp(HttpServletRequest request) {
         if (isIp(request.getHeader(X_REAL_IP_HEADER))) {

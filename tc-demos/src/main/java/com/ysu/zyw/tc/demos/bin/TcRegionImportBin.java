@@ -19,44 +19,32 @@ public class TcRegionImportBin {
                 String name = line.split("     ")[1];
 
                 if (name.contains("　　　")) {
-                    System.out.println("INSERT INTO dd_region (" +
-                            "id, parent_id, `name`, updated_person, updated_timestamp, created_person, created_timestamp" +
-                            ") VALUES (" +
-                            "'" + "P" + code.substring(0, 2) + "C" + code.substring(2, 4) + "R" + code.substring(4, 6) + "'," +
-                            "'" + "P" + code.substring(0, 2) + "C" + code.substring(2, 4) + "'," +
-                            "'" + name.split("　　　")[1].trim() + "'," +
-                            "'" + "00000000000000000000000000000000" + "'," +
-                            "'" + "2016-12-12 12:12:12.000" + "'," +
-                            "'" + "00000000000000000000000000000000" + "'," +
-                            "'" + "2016-12-12 12:12:12.000" + "'" +
-                            ");");
+                    print("P" + code.substring(0, 2) + "C" + code.substring(2, 4) + "R" + code.substring(4, 6),
+                            "P" + code.substring(0, 2) + "C" + code.substring(2, 4),
+                            name.split("　　　")[1].trim());
                 } else if (name.contains("　　")) {
-                    System.out.println("INSERT INTO dd_region (" +
-                            "id, parent_id, `name`, updated_person, updated_timestamp, created_person, created_timestamp" +
-                            ") VALUES (" +
-                            "'" + "P" + code.substring(0, 2) + "C" + code.substring(2, 4) + "'," +
-                            "'" + "P" + code.substring(0, 2) + "'," +
-                            "'" + name.split("　　")[1].trim() + "'," +
-                            "'" + "00000000000000000000000000000000" + "'," +
-                            "'" + "2016-12-12 12:12:12.000" + "'," +
-                            "'" + "00000000000000000000000000000000" + "'," +
-                            "'" + "2016-12-12 12:12:12.000" + "'" +
-                            ");");
+                    print("P" + code.substring(0, 2) + "C" + code.substring(2, 4),
+                            "P" + code.substring(0, 2),
+                            name.split("　　")[1].trim());
                 } else if (name.contains("　")) {
-                    System.out.println("INSERT INTO dd_region (" +
-                            "id, parent_id, `name`, updated_person, updated_timestamp, created_person, created_timestamp" +
-                            ") VALUES (" +
-                            "'" + "P" + code.substring(0, 2) + "'," +
-                            "'" + "CHN" + "'," +
-                            "'" + name.split("　")[1].trim() + "'," +
-                            "'" + "00000000000000000000000000000000" + "'," +
-                            "'" + "2016-12-12 12:12:12.000" + "'," +
-                            "'" + "00000000000000000000000000000000" + "'," +
-                            "'" + "2016-12-12 12:12:12.000" + "'" +
-                            ");");
+                    print("P" + code.substring(0, 2), "CHN", name.split("　")[1].trim());
                 }
             });
         }
+    }
+
+    private void print(String code, String parentCode, String name) {
+        System.out.println("INSERT INTO dd_region ("
+                + "id, parent_id, `name`, updated_person, updated_timestamp, created_person, created_timestamp"
+                + ") VALUES ("
+                + "'" + code + "',"
+                + "'" + parentCode + "',"
+                + "'" + name + "',"
+                + "'" + "00000000000000000000000000000000" + "',"
+                + "'" + "2016-12-12 12:12:12.000" + "',"
+                + "'" + "00000000000000000000000000000000" + "',"
+                + "'" + "2016-12-12 12:12:12.000" + "'"
+                + ");");
     }
 
     public static void main(String[] args) throws IOException {

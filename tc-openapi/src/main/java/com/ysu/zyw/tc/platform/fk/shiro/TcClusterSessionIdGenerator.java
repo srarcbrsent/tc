@@ -14,12 +14,12 @@ public class TcClusterSessionIdGenerator implements SessionIdGenerator {
 
     @Override
     public Serializable generateId(Session session) {
-        String id = UUID.randomUUID().toString() +
-                DigestUtils.md5DigestAsHex(session.getHost().getBytes()) +
-                "-" +
-                DigestUtils.md5DigestAsHex(String.valueOf(session.getStartTimestamp().getTime()).getBytes()) +
-                "-" +
-                RandomStringUtils.randomNumeric(16);
+        String id = UUID.randomUUID().toString()
+                + DigestUtils.md5DigestAsHex(session.getHost().getBytes())
+                + "-"
+                + DigestUtils.md5DigestAsHex(String.valueOf(session.getStartTimestamp().getTime()).getBytes())
+                + "-"
+                + RandomStringUtils.randomNumeric(16);
         if (log.isDebugEnabled()) {
             log.debug("tc cluster session id generator generate session id [{}]", id);
         }

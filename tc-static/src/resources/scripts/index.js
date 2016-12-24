@@ -33,25 +33,26 @@ var _signupVue = new Vue({
         layerLoading: undefined,
 
         reloadVerificationCode: function () {
-            axios
-                .get(TcC.openApiBase('/auths/get_verification_code.json'), TcC.axiosConfig)
+            _TcAxios
+                .get('/auths/get_verification_code.json')
                 .then(function (response) {
-                    TcC.doWithTcR(response.data, function (body) {
+                    _TcC.doWithTcR(response.data, function (body) {
                         _signupVue.hiddenElement.verificationCode = body;
                     });
+                    throw new Error();
                 })
                 .catch(function (error) {
-                    TcC.defaultAxiosExHandler(error);
+                    _TcC.defaultAxiosExHandler(error);
                 });
         },
 
         signup: function () {
             // TODO wait vue validation released.
             _signupVue.layerLoading = layer.load(1, {shade: [0.7, '#fff']});
-            axios
-                .get(TcC.openApiBase('/auths/get_token.json'), TcC.axiosConfig)
+            _TcAxios
+                .get('/auths/get_token.json')
                 .then(function (tokenR) {
-                    TcC.doWithTcR(tokenR.data, function (token) {
+                    _TcC.doWithTcR(tokenR.data, function (token) {
                         var password = _signupVue.uiElement.formElement.password;
                         _signupVue.uiElement.formElement.password = $.md5($.md5(password) + token);
                         _signupVue.doSignup();
@@ -59,16 +60,16 @@ var _signupVue = new Vue({
                 })
                 .catch(function (error) {
                     layer.close(_signupVue.layerLoading);
-                    TcC.defaultAxiosExHandler(error);
+                    _TcC.defaultAxiosExHandler(error);
                 });
         },
 
         doSignup: function () {
-            axios
-                .post(TcC.openApiBase('/auth/signup.json'), $.param(_signupVue.uiElement.formElement), TcC.axiosConfig)
+            _TcAxios
+                .post('/auth/signup.json', $.param(_signupVue.uiElement.formElement))
                 .then(function (response) {
                     layer.close(_signupVue.layerLoading);
-                    TcC.doWithTcR(response.data, function (body) {
+                    _TcC.doWithTcR(response.data, function (body) {
                         if (body === 0) {
                             // signup succ, reload page, will auto redirect to home.
                             location.reload();
@@ -99,7 +100,7 @@ var _signupVue = new Vue({
                 })
                 .catch(function (error) {
                     layer.close(_signupVue.layerLoading);
-                    TcC.defaultAxiosExHandler(error);
+                    _TcC.defaultAxiosExHandler(error);
                 });
         },
 

@@ -100,10 +100,10 @@ public class TcHttpxService {
         if (Objects.isNull(obj)) {
             return new LinkedMultiValueMap<>();
         }
-        if (obj instanceof Collection ||
-                obj.getClass().isArray() ||
-                ClassUtils.isPrimitiveOrWrapper(obj.getClass()) ||
-                obj instanceof String) {
+        if (obj instanceof Collection
+                || obj.getClass().isArray()
+                || ClassUtils.isPrimitiveOrWrapper(obj.getClass())
+                || obj instanceof String) {
             throw new TcException("list / primitive / string value is not supported");
         }
 
@@ -127,8 +127,8 @@ public class TcHttpxService {
             rValue.entrySet().forEach(entry -> {
                 checkArgument(entry.getKey() instanceof String, "map key must is string");
                 String key = String.valueOf(entry.getKey());
-                String oKey = StringUtils.hasText(currentPath) ?
-                        (currentPath + TcConstant.Str.DOT + key) : key;
+                String oKey = StringUtils.hasText(currentPath)
+                        ? (currentPath + TcConstant.Str.DOT + key) : key;
                 Object oValue = entry.getValue();
                 copy2MultiValueMap(multiValueMap, oKey, oValue);
             });
@@ -153,8 +153,8 @@ public class TcHttpxService {
                 try {
                     String key = field.getName();
                     Method readMethod = findPropertyReadMethod(key, field.getDeclaringClass());
-                    String oKey = StringUtils.hasText(currentPath) ?
-                            (currentPath + TcConstant.Str.DOT + key) : key;
+                    String oKey = StringUtils.hasText(currentPath)
+                            ? (currentPath + TcConstant.Str.DOT + key) : key;
                     Object oValue = readMethod.invoke(obj);
                     copy2MultiValueMap(multiValueMap, oKey, oValue);
                 } catch (InvocationTargetException | NoSuchMethodException e) {
@@ -166,16 +166,16 @@ public class TcHttpxService {
 
     protected Method findPropertyReadMethod(String propertyName, Class<?> clazz) throws NoSuchMethodException {
         Method propertyReadMethod = null;
-        String methodName = "get" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) +
-                propertyName.substring(1);
+        String methodName = "get" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH)
+                + propertyName.substring(1);
         try {
             propertyReadMethod = clazz.getMethod(methodName);
         } catch (NoSuchMethodException e) {
             // ignore
         }
         if (propertyReadMethod == null) {
-            methodName = "is" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH) +
-                    propertyName.substring(1);
+            methodName = "is" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH)
+                    + propertyName.substring(1);
             try {
                 propertyReadMethod = clazz.getMethod(methodName);
             } catch (NoSuchMethodException e) {

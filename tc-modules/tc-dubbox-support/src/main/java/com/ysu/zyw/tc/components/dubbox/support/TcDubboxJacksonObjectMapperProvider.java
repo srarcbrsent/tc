@@ -12,7 +12,7 @@ public class TcDubboxJacksonObjectMapperProvider implements ContextResolver<Obje
     @Override
     public ObjectMapper getContext(Class<?> aClass) {
         log.info("start to use tc object mapper as resteasy jaxrs jackson object mapper provider");
-        return TcSerializationUtils.objectMapper;
+        return TcSerializationUtils.OBJECT_MAPPER;
     }
 
 }

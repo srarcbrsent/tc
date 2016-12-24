@@ -17,12 +17,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @UtilityClass
 public class TcSerializationUtils {
 
-    public static final ObjectMapper objectMapper;
+    public static final ObjectMapper OBJECT_MAPPER;
 
     static {
-        objectMapper = new ObjectMapper();
-        objectMapper.setDateFormat(new SimpleDateFormat(TcDateUtils.FULL_DATE_FORMAT_VALUE));
-        objectMapper.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        OBJECT_MAPPER = new ObjectMapper();
+        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(TcDateUtils.FULL_DATE_FORMAT_VALUE));
+        OBJECT_MAPPER.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 
     @SneakyThrows
@@ -59,21 +59,21 @@ public class TcSerializationUtils {
     @SneakyThrows
     public static String writeJson(@Nonnull Object object) {
         checkNotNull(object, "null writeJson object is not allowed");
-        return objectMapper.writeValueAsString(object);
+        return OBJECT_MAPPER.writeValueAsString(object);
     }
 
     @SneakyThrows
     public static <T> T readJson(@Nonnull String text, @Nonnull Class<T> clazz) {
         checkNotNull(text, "null readJson str is not allowed");
         checkNotNull(clazz, "null readJson clazz is not allowed");
-        return objectMapper.readValue(text, clazz);
+        return OBJECT_MAPPER.readValue(text, clazz);
     }
 
     @SneakyThrows
     public static <T> T readJson(@Nonnull String text, @Nonnull TypeReference<T> typeReference) {
         checkNotNull(text, "null readJson str is not allowed");
         checkNotNull(typeReference, "null readJson type reference is not allowed");
-        return objectMapper.readValue(text, typeReference);
+        return OBJECT_MAPPER.readValue(text, typeReference);
     }
 
 }

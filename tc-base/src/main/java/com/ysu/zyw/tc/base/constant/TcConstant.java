@@ -7,13 +7,13 @@ package com.ysu.zyw.tc.base.constant;
  */
 public class TcConstant {
 
-    public static abstract class Base {
+    public abstract static class Base {
 
-        public static final String STR_32x0 = "00000000000000000000000000000000";
+        public static final String STR_32_0 = "00000000000000000000000000000000";
 
     }
 
-    public static abstract class BeanNames {
+    public abstract static class BeanNames {
 
         // shiro
         public static final String SHIRO_AUTHENTICATION_CACHE = "authenticationCache";
@@ -52,7 +52,17 @@ public class TcConstant {
 
     }
 
-    public static abstract class Str {
+    public  abstract static class AspectOrder {
+
+        public static final int TRANSACTION_ASPECT_ORDER = 0;
+
+        public static final int CACHE_ASPECT_ORDER = -20;
+
+        public static final int EXCEPTION_DECORATOR_ASPECT_ORDER = -500;
+
+    }
+
+    public abstract static class Str {
 
         public static final String EMPTY = "";
 
@@ -72,7 +82,7 @@ public class TcConstant {
 
     }
 
-    public static abstract class SessionKey {
+    public abstract static class SessionKey {
 
         public static final String SHIRO_MATCHER_ONCE_TOKEN = "session_shiro_matcher_token";
 

@@ -2,13 +2,13 @@ package com.ysu.zyw.tc.base.constant;
 
 public class TcTopics {
 
-    public static abstract class Topic {
+    public abstract static class Topic {
 
         public static final String TOPIC_ACCOUNT = "topic_account";
 
     }
 
-    public static abstract class TopicAttr {
+    public abstract static class TopicAttr {
 
         public static final String CREATE = "CREATE";
 

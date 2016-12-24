@@ -9,7 +9,7 @@
 
     <cache:annotation-driven cache-manager="cacheManager"
                              proxy-target-class="true"
-                             order="-20"/>
+                             order="#{T(com.ysu.zyw.tc.base.constant.TcConstant.AspectOrder).CACHE_ASPECT_ORDER}"/>
 
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
@@ -73,8 +73,10 @@
         <property name="tcOpsForGroupedValue">
             <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisOpsForGroupedValue">
                 <property name="redisTemplate" ref="ssCodisTemplate"/>
+                <property name="tryLockTimeout" value="${${properties.cache.codis.cache.try.lock.time.millis}}"/>
             </bean>
         </property>
+        <property name="tryLockTimeout" value="${properties.cache.codis.cache.try.lock.time.millis}"/>
     </bean>
 
     <bean id="soCodisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
@@ -82,8 +84,10 @@
         <property name="tcOpsForGroupedValue">
             <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisOpsForGroupedValue">
                 <property name="redisTemplate" ref="soCodisTemplate"/>
+                <property name="tryLockTimeout" value="${${properties.cache.codis.cache.try.lock.time.millis}}"/>
             </bean>
         </property>
+        <property name="tryLockTimeout" value="${properties.cache.codis.cache.try.lock.time.millis}"/>
     </bean>
 
     <bean id="ooCodisService" class="com.ysu.zyw.tc.components.cache.api.TcCacheServiceImpl">
@@ -91,8 +95,10 @@
         <property name="tcOpsForGroupedValue">
             <bean class="com.ysu.zyw.tc.components.cache.codis.TcCodisOpsForGroupedValue">
                 <property name="redisTemplate" ref="ooCodisTemplate"/>
+                <property name="tryLockTimeout" value="${${properties.cache.codis.cache.try.lock.time.millis}}"/>
             </bean>
         </property>
+        <property name="tryLockTimeout" value="${properties.cache.codis.cache.try.lock.time.millis}"/>
     </bean>
 
     <!-- cache -->

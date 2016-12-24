@@ -17,7 +17,7 @@ public class TcApplicationExaminer implements InitializingBean {
 
     private void logSystemTime() {
         log.info("application-timezone: [{}]",
-                TcSerializationUtils.objectMapper.getDateFormat().getTimeZone());
+                TcSerializationUtils.OBJECT_MAPPER.getDateFormat().getTimeZone());
         log.info("application-time: [{}]", TcDateUtils.format(new Date()));
     }
 

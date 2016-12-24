@@ -19,11 +19,13 @@ public class TcMonitorFilter extends OncePerRequestFilter {
 
     @Getter
     @Setter
-    private int warnTimeout = 5000;
+    private int warnTimeout;
 
     @Getter
     @Setter
-    private int errorTimeout = 15000;
+    private int errorTimeout;
+
+    private static final long NANO_2_MS = 1_000_000L;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -34,14 +36,14 @@ public class TcMonitorFilter extends OncePerRequestFilter {
         long nanos = Duration.between(now, LocalDateTime.now()).get(ChronoUnit.NANOS);
 
         if (maxThan(nanos, errorTimeout)) {
-            log.warn("request [{}] process take time [{}]", request.getRequestURI(), nanos / 1_000_000);
+            log.warn("request [{}] process take time [{}]", request.getRequestURI(), nanos / NANO_2_MS);
         } else if (maxThan(nanos, warnTimeout)) {
-            log.error("request [{}] process take time [{}]", request.getRequestURI(), nanos / 1_000_000);
+            log.error("request [{}] process take time [{}]", request.getRequestURI(), nanos / NANO_2_MS);
         }
     }
 
     private boolean maxThan(long nanos, int timeout) {
-        return nanos > timeout * 1_000_000;
+        return nanos > timeout * NANO_2_MS;
     }
 
 }

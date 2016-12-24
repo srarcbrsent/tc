@@ -75,9 +75,9 @@ public class TcAuthService {
                                 TcIdGen.upperCaseUuid(),
                                 accountId,
                                 roleId,
-                                TcConstant.Base.STR_32x0,
+                                TcConstant.Base.STR_32_0,
                                 now,
-                                TcConstant.Base.STR_32x0,
+                                TcConstant.Base.STR_32_0,
                                 now
                         )
                 )
@@ -107,9 +107,9 @@ public class TcAuthService {
                                 TcIdGen.upperCaseUuid(),
                                 accountId,
                                 permissionId,
-                                TcConstant.Base.STR_32x0,
+                                TcConstant.Base.STR_32_0,
                                 now,
-                                TcConstant.Base.STR_32x0,
+                                TcConstant.Base.STR_32_0,
                                 now
                         )
                 )
@@ -265,8 +265,8 @@ public class TcAuthService {
                 }
 
                 // lToMenu is parent
-                if (lToMenu.getLevel() - rToMenu.getLevel() == -1 &&
-                        rToMenu.getStructure().contains(lToMenu.getStructure())) {
+                if (lToMenu.getLevel() - rToMenu.getLevel() == -1
+                        && rToMenu.getStructure().contains(lToMenu.getStructure())) {
                     if (Objects.isNull(lToMenu.getSubMenus())) {
                         lToMenu.setSubMenus(Lists.newArrayList());
                     }

@@ -40,7 +40,7 @@ public class TcCacheServiceImpl implements TcCacheService {
 
     @Getter
     @Setter
-    private static long tryLockTimeout = 3000;
+    private long tryLockTimeout;
 
     @Override
     public <R> R doInCache(@Nonnull Function<RedisTemplate, R> task) {

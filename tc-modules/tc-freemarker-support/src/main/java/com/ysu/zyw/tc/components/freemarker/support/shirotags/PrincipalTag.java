@@ -1,10 +1,10 @@
 package com.ysu.zyw.tc.components.freemarker.support.shirotags;
 
 import freemarker.core.Environment;
-import freemarker.log.Logger;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModelException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -28,8 +28,8 @@ import java.util.Map;
  *
  * @since 0.2
  */
+@Slf4j
 public class PrincipalTag extends SecureTag {
-    static final Logger log = Logger.getLogger("PrincipalTag");
 
     /**
      * The type of principal to be retrieved, or null if the default principal should be used.
@@ -111,9 +111,11 @@ public class PrincipalTag extends SecureTag {
             }
 
             // property not found, throw
-            throw new TemplateModelException("Property [" + property + "] not found in principal of type [" + principal.getClass().getName() + "]");
+            throw new TemplateModelException("Property [" + property + "] not found in principal of type ["
+                    + principal.getClass().getName() + "]");
         } catch (Exception ex) {
-            throw new TemplateModelException("Error reading property [" + property + "] from principal of type [" + principal.getClass().getName() + "]", ex);
+            throw new TemplateModelException("Error reading property [" + property + "] from principal of type ["
+                    + principal.getClass().getName() + "]", ex);
         }
     }
 }

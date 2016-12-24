@@ -4,37 +4,42 @@
         type="text/javascript"></script>
 <!-- @build -->
 
-<style type="text/css">
-    /** privilege infrastructure */
-    .tc-pv-control {
-        visibility: hidden;
-    }
-</style>
-
 <script type="text/javascript">
     // system infrastructure
-    var TcC = {
+    var _TcC = {
 
         _openApiBase: '${openApiBase}',
 
         _staticBase: '${staticBase}',
 
         // ajax helper func
-        doWithTcR: function (tcR, okCallback, exCallback) {
+        doWithTcR: function (tcR, okCallback, otherCallback, badRequestCallback, exCallback) {
             if (_.isUndefined(tcR)) {
                 layer.alert('系统繁忙，请稍后再试！');
             }
-            if (tcR.code == 200) {
+            if (tcR.code == 0) {
                 if (_.isFunction(okCallback)) {
                     okCallback(tcR.body);
                 } else {
                     // do nothing
                 }
-            } else {
+            } else if (tcR.code == 8888) {
+                if (_.isFunction(badRequestCallback)) {
+                    badRequestCallback(tcR.code, tcR.message, tcR.extra);
+                } else {
+                    layer.msg('系统繁忙，请刷新页面再试！');
+                }
+            } else if (tcR.code == 9999) {
                 if (_.isFunction(exCallback)) {
                     exCallback(tcR.code, tcR.message, tcR.extra);
                 } else {
                     layer.msg('系统异常，请刷新页面再试！');
+                }
+            } else {
+                if (_.isFunction(otherCallback)) {
+                    otherCallback(tcR.code, tcR.message, tcR.extra);
+                } else {
+                    // do nothing
                 }
             }
         },
@@ -45,149 +50,74 @@
     };
 
     // axios infrastructure
-    var TcAxios = {
+    var _TcAxios = axios.create({
 
-        axiosConfig: {
-            baseURL: TcC._openApiBase,
-            // 6s
-            timeout: 6000,
-            xsrfCookieName: 'XSRF-TOKEN',
-            xsrfHeaderName: 'X-XSRF-TOKEN',
-            // 50k
-            maxContentLength: 51200
-        }
+        baseURL: _TcC._openApiBase,
 
-    };
+        // 6s
+        timeout: 6000,
+
+        xsrfCookieName: 'XSRF-TOKEN',
+
+        xsrfHeaderName: 'X-XSRF-TOKEN',
+
+        // 50k
+        maxContentLength: 51200
+
+    });
 
     (function () {
-        // Add a request interceptor
-        axios.interceptors.request.use(function (config) {
+        // Add a request interceptor, only logic, do nothing
+        _TcAxios.interceptors.request.use(function (config) {
             return config;
         }, function (error) {
-            TcC.defaultAxiosExHandler(error);
             return Promise.reject(error);
         });
 
-        // Add a response interceptor
-        axios.interceptors.response.use(function (response) {
+        // Add a response interceptor, only logic, do nothing
+        _TcAxios.interceptors.response.use(function (response) {
             return response;
         }, function (error) {
-            TcC.defaultAxiosExHandler(error);
             return Promise.reject(error);
         });
     })();
 
     // privilege infrastructure (will extends by every page vue)
     var _TcPi = {
-
-        data: {
-
-            _Pi: {
-                authenticated: null,
-
-                roles: null,
-
-                permissions: null
-            }
-
+        doGetAuthenticatedStatus: function () {
+            _TcAxios
+                .get('/auths/authenticated.json')
+                .then(function (response) {
+                    _TcC.doWithTcR(response.data, function (body) {
+                    });
+                })
+                .catch(function (error) {
+                    _TcC.defaultAxiosExHandler(error);
+                });
         },
 
-        mounted: function () {
+        doGetRoles: function () {
+            _TcAxios
+                .get('/auths/get_permissions.json')
+                .then(function (response) {
+                    _TcC.doWithTcR(response.data, function (body) {
+                    });
+                })
+                .catch(function (error) {
+                    _TcC.defaultAxiosExHandler(error);
+                });
         },
 
-        watch: {
-            roles: function (currVal, oldVal) {
-                // nothing to do
-            },
-
-            permissions: function (currVal, oldVal) {
-                if (!_.isNull(currVal) && _.isArray(currVal)) {
-                    var stringPermissions = [];
-                    var $pvControlElements = $('.tc-pv-control');
-                    var $authorizedElements = $pvControlElements.filter(function (index, element) {
-                        return _.contains(stringPermissions, $(element).data('pms'));
+        doGetPermissions: function () {
+            _TcAxios
+                .get('/auths/get_permissions.json')
+                .then(function (response) {
+                    _TcC.doWithTcR(response.data, function (body) {
                     });
-                    var $unauthorizedElements = $pvControlElements.filter(function (index, element) {
-                        return !_.contains(stringPermissions, $(element).data('pms'));
-                    });
-                    $authorizedElements.each(function (index, element) {
-                        var methods = $(element).data('invoke-when-authorized');
-                        if (!_.isUndefined(methods)) {
-                            this._invokePvMethod(methods);
-                        }
-                        $(this).remove();
-                    });
-                    $unauthorizedElements.each(function (index, element) {
-                        var methods = $(element).data('invoke-when-unauthorized');
-                        if (!_.isUndefined(methods)) {
-                            this._invokePvMethod(methods);
-                        }
-                        $(this).remove();
-                    });
-                }
-            },
-
-            _invokePvMethod: function (methods) {
-                try {
-                    _.each(methods.split(','), function (method) {
-                        if (_.isFunction(this.builtinAuthMethod[method])) {
-                            this.builtinAuthMethod[method]();
-                        }
-                    });
-                } catch (e) {
-                    console.error(e);
-                }
-            }
-        },
-
-        methods: {
-
-            builtinAuthMethod: {
-
-                noClick: function () {
-
-                }
-
-            },
-
-            doGetAuthenticatedStatus: function () {
-                axios
-                    .get(TcC.openApiBase('/auths/authenticated.json'), TcC.axiosConfig)
-                    .then(function (response) {
-                        TcC.doWithTcR(response.data, function (body) {
-                            TcPi.authenticated = body;
-                        });
-                    })
-                    .catch(function (error) {
-                        TcC.defaultAxiosExHandler(error);
-                    });
-            },
-
-            doGetRoles: function () {
-                axios
-                    .get(TcC.openApiBase('/auths/get_permissions.json'), TcC.axiosConfig)
-                    .then(function (response) {
-                        TcC.doWithTcR(response.data, function (body) {
-                            TcPi.roles = body;
-                        });
-                    })
-                    .catch(function (error) {
-                        TcC.defaultAxiosExHandler(error);
-                    });
-            },
-
-            doGetPermissions: function () {
-                axios
-                    .get(TcC.openApiBase('/auths/get_permissions.json'), TcC.axiosConfig)
-                    .then(function (response) {
-                        TcC.doWithTcR(response.data, function (body) {
-                            TcPi.permissions = body;
-                        });
-                    })
-                    .catch(function (error) {
-                        TcC.defaultAxiosExHandler(error);
-                    });
-            }
+                })
+                .catch(function (error) {
+                    _TcC.defaultAxiosExHandler(error);
+                });
         }
 
     };

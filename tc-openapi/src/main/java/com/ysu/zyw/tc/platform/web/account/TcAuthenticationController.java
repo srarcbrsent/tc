@@ -83,7 +83,7 @@ public class TcAuthenticationController {
             notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<TcR<Integer>> _signup(
+    public ResponseEntity<TcR<Integer>> signup(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String cltPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,

@@ -33,7 +33,7 @@ public class TcRedisOpsForGroupedValue implements TcOpsForGroupedValue {
 
     @Getter
     @Setter
-    private static long tryLockTimeout = 3000;
+    private long tryLockTimeout;
 
     @Getter
     @Setter

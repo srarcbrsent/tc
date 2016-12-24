@@ -35,8 +35,8 @@ public class TcVerificationCodeService {
     }
 
     public boolean isVerificationCodeMatch(String verificationCode) {
-        String encodedVerificationCodeInSession =
-                (String) SecurityUtils.getSubject().getSession().getAttribute(TcConstant.SessionKey.INDEX_VERIFICATION_CODE);
+        String encodedVerificationCodeInSession = (String) SecurityUtils.getSubject().getSession()
+                        .getAttribute(TcConstant.SessionKey.INDEX_VERIFICATION_CODE);
         if (Objects.isNull(encodedVerificationCodeInSession)) {
             return false;
         }

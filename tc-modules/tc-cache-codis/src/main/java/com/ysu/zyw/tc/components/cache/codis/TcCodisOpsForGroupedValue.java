@@ -40,7 +40,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
 
     @Getter
     @Setter
-    private static long tryLockTimeout = 3000;
+    private long tryLockTimeout;
 
     private static final String HASH_FIELD_EXPIRES_AT_SUFFIX = "___expiresAt";
 

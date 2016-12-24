@@ -2,6 +2,7 @@ package com.ysu.zyw.tc.components.servlet.support;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -40,12 +41,12 @@ public class TcXsrfTokenFilter extends OncePerRequestFilter {
                 if (Objects.isNull(header)) {
                     log.warn("req [{}] has xsrf cookie but do not pass a xsrf token in xml http req, not a valid req",
                             request.getRequestURI());
-                    response.sendError(500, "拒绝服务");
+                    response.sendError(HttpStatus.FORBIDDEN.value(), "拒绝服务");
                     return;
                 }
                 if (!Objects.equals(cookie.getValue(), header)) {
                     log.warn("req [{}] has xsrf cookie and xsrf token but they are not match", request.getRequestURI());
-                    response.sendError(500, "拒绝服务");
+                    response.sendError(HttpStatus.FORBIDDEN.value(), "拒绝服务");
                     return;
                 }
             }

@@ -11,7 +11,7 @@
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper"
-                          value="#{T(com.ysu.zyw.tc.base.utils.TcSerializationUtils).objectMapper}"/>
+                          value="#{T(com.ysu.zyw.tc.base.utils.TcSerializationUtils).OBJECT_MAPPER}"/>
             </bean>
         </mvc:message-converters>
         <mvc:async-support default-timeout="30000" task-executor="threadPoolTaskScheduler"/>

@@ -63,7 +63,10 @@ public class TcImageUtils {
      * @param wrapWhite 比例不对时是否需要补白：true为补白; false为不补白;
      */
     @SneakyThrows
-    public static ByteArrayOutputStream scale(@Nonnull InputStream inputStream, int height, int width, boolean wrapWhite) {
+    public static ByteArrayOutputStream scale(@Nonnull InputStream inputStream,
+                                              int height,
+                                              int width,
+                                              boolean wrapWhite) {
         checkNotNull(inputStream);
         checkArgument(height > 0);
         checkArgument(width > 0);

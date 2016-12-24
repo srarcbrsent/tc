@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.platform.fk;
 
+import com.ysu.zyw.tc.base.constant.TcConstant;
 import com.ysu.zyw.tc.model.mw.TcR;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,12 +11,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 
 @Aspect
-@Order(value = -500)
+@Order(value = TcConstant.AspectOrder.EXCEPTION_DECORATOR_ASPECT_ORDER)
 @Slf4j
 public class TcResponseEntityDecorator {
 
-    @Pointcut(value = "execution(public org.springframework.http.ResponseEntity com.ysu.zyw.tc.platform.web..*(..)) " +
-            "&& @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    @Pointcut(value = "execution(public org.springframework.http.ResponseEntity com.ysu.zyw.tc.platform.web..*(..)) "
+            + "&& @annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void pointcut() {
     }
 
