@@ -17,7 +17,7 @@ public interface TcCacheService {
 
     <T> T get(@Nonnull String key, @Nonnull TypeReference<T> typeReference);
 
-    <T> T get(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout, @Nullable final ReentrantLock lock);
+    <T> T get(@Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout, @Nullable ReentrantLock lock);
 
     boolean exists(@Nonnull String key);
 

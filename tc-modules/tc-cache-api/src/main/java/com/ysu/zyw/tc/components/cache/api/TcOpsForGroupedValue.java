@@ -15,7 +15,7 @@ public interface TcOpsForGroupedValue {
     <T> T get(@Nonnull String group, @Nonnull String key, @Nonnull TypeReference<T> typeReference);
 
     <T> T get(@Nonnull String group, @Nonnull String key, @Nonnull Callable<T> valueLoader, long timeout,
-              @Nullable final ReentrantLock lock);
+              @Nullable ReentrantLock lock);
 
     boolean exists(@Nonnull String group, @Nonnull String key);
 

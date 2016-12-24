@@ -34,88 +34,153 @@
 
 <module name="Checker">
 
+    <!-- 编码utf8 -->
     <property name="charset" value="UTF-8"/>
 
-    <!-- Checks whether files end with a new line.                        -->
-    <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
+    <!-- 文件末尾必须有一行空行 -->
     <module name="NewlineAtEndOfFile"/>
 
-    <module name="FileLength"/>
+    <!-- 文件长度 -->
+    <module name="FileLength">
+        <property name="max" value="2000"/>
+    </module>
 
-    <module name="FileTabCharacter"/>
+    <!-- 文件中不允许出现tab -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
 
     <module name="TreeWalker">
 
-        <!-- required for SuppressWarningsFilter (and other Suppress* rules not used here) -->
-        <!-- see http://checkstyle.sourceforge.net/config_annotation.html#SuppressWarningsHolder -->
-        <module name="SuppressWarningsHolder"/>
-
-        <!-- Checks for Naming Conventions.                  -->
-        <!-- See http://checkstyle.sf.net/config_naming.html -->
+        <!-- 常量名 -->
         <module name="ConstantName"/>
+        <!-- 局部最终变量 -->
         <module name="LocalFinalVariableName"/>
+        <!-- 局部变量 -->
         <module name="LocalVariableName"/>
+        <!-- -->
         <module name="MemberName"/>
+        <!-- 方法名 -->
         <module name="MethodName"/>
+        <!-- 包名 -->
         <module name="PackageName"/>
+        <!-- 参数名 -->
         <module name="ParameterName"/>
+        <!-- 静态变量名 -->
         <module name="StaticVariableName"/>
+        <!-- 类型名(类/接口) -->
         <module name="TypeName"/>
+        <!-- 范型名 -->
+        <module name="ClassTypeParameterName"/>
+        <!-- 接口范型名 -->
+        <module name="InterfaceTypeParameterName"/>
 
-        <!-- Checks for imports                              -->
-        <!-- See http://checkstyle.sf.net/config_import.html -->
+        <!-- 非法引包(sun.*) -->
         <module name="IllegalImport"/>
+        <!-- 多余的引入 -->
         <module name="RedundantImport"/>
-        <module name="UnusedImports"/>
 
-        <!-- Checks for Size Violations.                    -->
-        <!-- See http://checkstyle.sf.net/config_sizes.html -->
+        <!-- 行长度 -->
         <module name="LineLength">
             <property name="max" value="120"/>
         </module>
-        <module name="MethodLength"/>
+        <!-- 方法长度 -->
+        <module name="MethodLength">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="200"/>
+        </module>
 
-        <!-- Checks for whitespace                               -->
-        <!-- See http://checkstyle.sf.net/config_whitespace.html -->
-        <module name="EmptyForIteratorPad"/>
+        <!-- 检测一行一条语句 -->
+        <module name="OneStatementPerLine"/>
+        <!-- 检查只使用一个空格当作分割(超过1个失败) -->
+        <module name="SingleSpaceSeparator"/>
+        <!-- 检查'<'和'>'两边的空白 -->
+        <module name="GenericWhitespace"/>
+        <!-- 检查方法签名后的空白(方法名和左括号) -->
         <module name="MethodParamPad"/>
-        <module name="NoWhitespaceAfter"/>
+        <!-- token之前无空格? -->
         <module name="NoWhitespaceBefore"/>
-        <module name="OperatorWrap"/>
-        <module name="ParenPad"/>
-        <module name="TypecastParenPad"/>
+        <!-- token之后无空格? -->
+        <module name="NoWhitespaceAfter"/>
+        <!-- token之后有空白 -->
         <module name="WhitespaceAfter"/>
+        <!-- 检查分隔符两边的空白 -->
         <module name="WhitespaceAround"/>
+        <!-- 检查操作符两边的空白? -->
+        <module name="OperatorWrap">
+            <property name="option" value="NL"/>
+            <property name="tokens"
+                      value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF,
+                      LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR "/>
+        </module>
+        <!-- 检查分隔符两边的空白 -->
+        <module name="SeparatorWrap">
+            <property name="tokens" value="DOT"/>
+            <property name="option" value="NL"/>
+        </module>
+        <!-- 检查圆括号内侧的空白 -->
+        <module name="ParenPad"/>
+        <!-- 检查强制转型括号内侧的空白 -->
+        <module name="TypecastParenPad"/>
+        <!-- Java代码缩进 -->
+        <module name="Indentation">
+            <!-- 数组初始化换行8个空格 -->
+            <property name="arrayInitIndent" value="8"/>
+            <!-- 多行(多行参数)8个空格 -->
+            <property name="lineWrappingIndentation" value="8"/>
+        </module>
+        <!-- 注释缩进 -->
+        <module name="CommentsIndentation"/>
 
-        <!-- Modifier Checks                                    -->
-        <!-- See http://checkstyle.sf.net/config_modifiers.html -->
+        <!-- 修饰符顺序 -->
         <module name="ModifierOrder"/>
+        <!-- 多余修饰符 -->
         <module name="RedundantModifier"/>
-
-        <!-- Checks for blocks. You know, those {}'s         -->
-        <!-- See http://checkstyle.sf.net/config_blocks.html -->
+        <!-- 不需要的嵌套花括号 -->
         <module name="AvoidNestedBlocks"/>
+        <!-- 空白块 -->
         <module name="EmptyBlock"/>
-        <module name="LeftCurly"/>
+        <!-- 空白catch块 -->
+        <module name="EmptyCatchBlock"/>
+        <!-- 空白循环迭代 -->
+        <module name="EmptyForIteratorPad"/>
+        <!-- 左花括号 -->
+        <module name="LeftCurly">
+            <!-- 当前花括号最多容纳行数 -->
+            <property name="maxLineLength" value="120"/>
+        </module>
+        <!-- 需要花括号(单语句) -->
         <module name="NeedBraces"/>
+        <!-- 右花括号 -->
         <module name="RightCurly"/>
 
-        <!-- Checks for common coding problems               -->
-        <!-- See http://checkstyle.sf.net/config_coding.html -->
+
         <module name="EmptyStatement"/>
+        <!-- Switch缺少default -->
         <module name="MissingSwitchDefault"/>
+        <!-- 可简化的boolean类型表达式 -->
         <module name="SimplifyBooleanExpression"/>
+        <!-- 可简化的boolean类型返回值 -->
         <module name="SimplifyBooleanReturn"/>
 
-        <!-- Miscellaneous other checks.                   -->
-        <!-- See http://checkstyle.sf.net/config_misc.html -->
+        <!-- 数组声明 -->
         <module name="ArrayTypeStyle"/>
+        <!-- long类型常量大写L -->
         <module name="UpperEll"/>
 
-    </module>
+        <!-- for嵌套 -->
+        <module name="NestedForDepth">
+            <property name="max" value="3"/>
+        </module>
+        <!-- try嵌套 -->
+        <module name="NestedTryDepth">
+            <property name="max" value="3"/>
+        </module>
+        <!-- if嵌套 -->
+        <module name="NestedIfDepth">
+            <property name="max" value="3"/>
+        </module>
 
-    <!-- Support @SuppressWarnings (added in Checkstyle 5.7) -->
-    <!-- see http://checkstyle.sourceforge.net/config.html#SuppressWarningsFilter -->
-    <module name="SuppressWarningsFilter"/>
+    </module>
 
 </module>

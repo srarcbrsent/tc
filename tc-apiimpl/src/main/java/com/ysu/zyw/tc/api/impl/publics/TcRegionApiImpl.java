@@ -46,13 +46,12 @@ public class TcRegionApiImpl implements TcRegionApi {
     public TcP<List<ToProvince>> findProvinces(String countryId) {
         checkNotNull(countryId);
 
-        List<ToProvince> provinces =
-                tcCacheService.get(
-                        tcCacheService.buildLogicKey(CACHE_KEY_PROVINCES, countryId),
-                        () -> tcRegionService.findProvinces(countryId),
-                        CACHE_REGION_TIMEOUT,
-                        CACHE_LOCK_PROVINCES
-                );
+        List<ToProvince> provinces = tcCacheService.get(
+                tcCacheService.buildLogicKey(CACHE_KEY_PROVINCES, countryId),
+                () -> tcRegionService.findProvinces(countryId),
+                CACHE_REGION_TIMEOUT,
+                CACHE_LOCK_PROVINCES
+        );
 
         return TcP.ok(provinces);
     }
@@ -61,13 +60,12 @@ public class TcRegionApiImpl implements TcRegionApi {
     public TcP<List<ToCity>> findCities(String provinceId) {
         checkNotNull(provinceId);
 
-        List<ToCity> cities =
-                tcCacheService.get(
-                        tcCacheService.buildLogicKey(CACHE_KEY_CITIES, provinceId),
-                        () -> tcRegionService.findCities(provinceId),
-                        CACHE_REGION_TIMEOUT,
-                        CACHE_LOCK_CITIES
-                );
+        List<ToCity> cities = tcCacheService.get(
+                tcCacheService.buildLogicKey(CACHE_KEY_CITIES, provinceId),
+                () -> tcRegionService.findCities(provinceId),
+                CACHE_REGION_TIMEOUT,
+                CACHE_LOCK_CITIES
+        );
 
         return TcP.ok(cities);
     }
@@ -76,13 +74,12 @@ public class TcRegionApiImpl implements TcRegionApi {
     public TcP<List<ToRegion>> findRegions(String cityId) {
         checkNotNull(cityId);
 
-        List<ToRegion> regions =
-                tcCacheService.get(
-                        tcCacheService.buildLogicKey(CACHE_KEY_REGIONS, cityId),
-                        () -> tcRegionService.findRegions(cityId),
-                        CACHE_REGION_TIMEOUT,
-                        CACHE_LOCK_REGIONS
-                );
+        List<ToRegion> regions = tcCacheService.get(
+                tcCacheService.buildLogicKey(CACHE_KEY_REGIONS, cityId),
+                () -> tcRegionService.findRegions(cityId),
+                CACHE_REGION_TIMEOUT,
+                CACHE_LOCK_REGIONS
+        );
 
         return TcP.ok(regions);
     }
@@ -91,13 +88,12 @@ public class TcRegionApiImpl implements TcRegionApi {
     public TcR<ToRegion> findRegion(String regionId) {
         checkNotNull(regionId);
 
-        ToRegion region =
-                tcCacheService.get(
-                        tcCacheService.buildLogicKey(CACHE_KEY_REGION, regionId),
-                        () -> tcRegionService.findRegion(regionId),
-                        CACHE_REGION_TIMEOUT,
-                        CACHE_LOCK_REGION
-                );
+        ToRegion region = tcCacheService.get(
+                tcCacheService.buildLogicKey(CACHE_KEY_REGION, regionId),
+                () -> tcRegionService.findRegion(regionId),
+                CACHE_REGION_TIMEOUT,
+                CACHE_LOCK_REGION
+        );
 
         return TcP.ok(region);
     }

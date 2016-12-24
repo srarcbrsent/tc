@@ -20,6 +20,7 @@ before_install:
   - cd ..
 
 install:
+  - mvn checkstyle:check
   - mvn clean install
 
 notifications:

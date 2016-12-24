@@ -19,11 +19,9 @@ public class TcDateUtils {
 
     public static final String SIMPLE_DATE_FORMAT_VALUE = "yyyy-MM-dd HH:mm:ss";
 
-    public static final String[] DATE_FORMATS =
-            {
-                    FULL_DATE_FORMAT_VALUE,
-                    SIMPLE_DATE_FORMAT_VALUE
-            };
+    public static final String[] DATE_FORMATS = new String[]{
+            FULL_DATE_FORMAT_VALUE, SIMPLE_DATE_FORMAT_VALUE
+    };
 
     @SneakyThrows
     public static Date parse(@Nonnull String text) {

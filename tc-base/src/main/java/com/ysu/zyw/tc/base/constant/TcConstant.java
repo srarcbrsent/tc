@@ -52,7 +52,7 @@ public class TcConstant {
 
     }
 
-    public  abstract static class AspectOrder {
+    public abstract static class AspectOrder {
 
         public static final int TRANSACTION_ASPECT_ORDER = 0;
 

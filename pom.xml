@@ -912,8 +912,18 @@
                     <configuration>
                         <configLocation>.checks.xml</configLocation>
                         <encoding>UTF-8</encoding>
-                        <excludes>com/ysu/zyw/tc/api/dao/mappers/*,com/ysu/zyw/tc/api/dao/po/*</excludes>
+                        <excludes>
+                            com/ysu/zyw/tc/api/dao/mappers/*,
+                            com/ysu/zyw/tc/api/dao/po/*
+                        </excludes>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>7.3</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <!-- maven site plugin -->
                 <plugin>

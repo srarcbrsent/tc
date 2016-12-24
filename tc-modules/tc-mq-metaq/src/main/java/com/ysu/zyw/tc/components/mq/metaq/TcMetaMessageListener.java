@@ -43,6 +43,6 @@ public abstract class TcMetaMessageListener<T> extends DefaultMessageListener<T>
         }
     }
 
-    public abstract void doOnReceiveMessages(final MetaqMessage<T> msg);
+    public abstract void doOnReceiveMessages(MetaqMessage<T> msg);
 
 }
