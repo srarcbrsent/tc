@@ -6,6 +6,7 @@
 // [npm install --save-dev run-sequence] -> 顺序执行
 // [npm install --save-dev jshint] -> JS校验核心
 // [npm install --save-dev gulp-jshint] -> JS校验
+// [npm install --save-dev gulp-csslint] -> CSS校验
 // [npm install --save-dev gulp-file-include] -> HTML合并
 // [npm install --save-dev gulp-replace] -> 替换文本
 // [npm install --save-dev gulp-htmlmin] -> 压缩HTML
@@ -24,6 +25,7 @@ var del = require('del');
 var gulpif = require('gulp-if');
 var filter = require('gulp-filter');
 var jshint = require('gulp-jshint');
+var csslint = require('gulp-csslint');
 var fileInclude = require('gulp-file-include');
 var replace = require('gulp-replace');
 var htmlmin = require('gulp-htmlmin');
@@ -111,6 +113,9 @@ gulp.task('javascript', function () {
 gulp.task('stylesheet', function () {
     return gulp
         .src('src/resources/styles/**/*.css')
+        // 静态检查
+        .pipe(csslint())
+        .pipe(csslint.formatter())
         // 替换静态资源前缀路径
         .pipe(replace(/\/tc-static\/src\/resources/g, _environment.staticBase))
         // 压缩(开发不压缩)
