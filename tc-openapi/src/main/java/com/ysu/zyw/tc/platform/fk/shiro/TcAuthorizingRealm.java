@@ -62,7 +62,7 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
 
         String uUsername = ((UsernamePasswordToken) token).getUsername();
         checkArgument(uUsername.length() > 0);
-        String uPassword = String.valueOf(((UsernamePasswordToken) token).getPassword());
+        // this is => String uPassword = String.valueOf(((UsernamePasswordToken) token).getPassword());
 
         ToAccount toAccount = fetchAccount(uUsername);
 

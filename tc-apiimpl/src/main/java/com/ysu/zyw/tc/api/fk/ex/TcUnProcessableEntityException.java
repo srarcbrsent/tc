@@ -3,6 +3,7 @@ package com.ysu.zyw.tc.api.fk.ex;
 import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcFormatUtils;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -17,6 +18,7 @@ public class TcUnProcessableEntityException extends TcException {
     private String description;
 
     @Getter
+    @Setter
     private Object extra;
 
     public TcUnProcessableEntityException(int code, @Nonnull String description) {

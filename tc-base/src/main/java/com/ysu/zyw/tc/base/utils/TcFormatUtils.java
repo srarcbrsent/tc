@@ -25,7 +25,8 @@ public class TcFormatUtils {
         return MessageFormatter.arrayFormat(format, args).getMessage();
     }
 
-    public static String format(@Nullable Object... args) {
+    public static String format(@Nonnull Object... args) {
+        checkNotNull(args);
         List<String> strs = Lists.newArrayList();
         for (Object ignored : args) {
             strs.add("[{}]");

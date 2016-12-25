@@ -46,14 +46,16 @@ public class TcSerializationUtils {
         }
     }
 
+    @SneakyThrows
     public static byte[] serializeStr(@Nonnull String text) {
         checkNotNull(text, "null writeJson text is not allowed");
-        return text.getBytes();
+        return text.getBytes("UTF-8");
     }
 
+    @SneakyThrows
     public static String deserializeStr(@Nonnull byte[] bytes) {
         checkNotNull(bytes, "null readJson bytes is not allowed");
-        return new String(bytes);
+        return new String(bytes, "UTF-8");
     }
 
     @SneakyThrows

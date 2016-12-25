@@ -59,7 +59,7 @@ public class TcHttpxService {
     public <T> ResponseEntity<T> getText4Entity(@Nonnull String url,
                                                 @Nullable Map<String, String> pathVariables,
                                                 @Nullable HttpHeaders httpHeaders,
-                                                @Nullable MultiValueMap<String, String> requestBody,
+                                                @Nonnull MultiValueMap<String, String> requestBody,
                                                 @Nonnull ParameterizedTypeReference<T> typeReference) {
         checkNotNull(url);
         checkNotNull(typeReference);

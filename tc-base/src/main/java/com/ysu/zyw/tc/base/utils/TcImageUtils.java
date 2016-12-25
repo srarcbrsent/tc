@@ -75,10 +75,9 @@ public class TcImageUtils {
         Image img = bufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         if ((bufferedImage.getHeight() > height) || (bufferedImage.getWidth() > width)) {
             if (bufferedImage.getHeight() > bufferedImage.getWidth()) {
-                ratio = (new Integer(height)).doubleValue()
-                        / bufferedImage.getHeight();
+                ratio = (double) height / bufferedImage.getHeight();
             } else {
-                ratio = (new Integer(width)).doubleValue() / bufferedImage.getWidth();
+                ratio = (double) width / bufferedImage.getWidth();
             }
             AffineTransformOp affineTransformOp = new AffineTransformOp(AffineTransform
                     .getScaleInstance(ratio, ratio), null);

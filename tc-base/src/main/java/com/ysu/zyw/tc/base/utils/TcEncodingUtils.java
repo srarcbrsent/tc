@@ -16,7 +16,7 @@ public class TcEncodingUtils {
 
     @SneakyThrows
     public static String md5(String text) {
-        MessageDigest messageDigest = null;
+        MessageDigest messageDigest;
         messageDigest = MessageDigest.getInstance("MD5");
         messageDigest.update(text.getBytes());
         byte[] bytes = messageDigest.digest();

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- ignore bugs we do not case -->
+    <Match>
+        <Bug category="I18N"/>
+    </Match>
+    <!-- generic ignore -->
+    <Match>
+        <Or>
+            <!-- 公开签名升级为保护签名 -->
+            <Bug pattern="MS_PKGPROTECT"/>
+            <!-- 返回嵌套对象 -->
+            <Bug pattern="EI_EXPOSE_REP"/>
+            <Bug pattern="EI_EXPOSE_REP2"/>
+        </Or>
+    </Match>
+    <!-- framework ignore -->
+    <Match>
+        <Class name="com.ysu.zyw.tc.components.support.TcApplicationContextHolder"/>
+        <!-- 写静态属性 -->
+        <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+    </Match>
+    <!-- ignore bugs in dao classes -->
+    <Match>
+        <Class name="com.ysu.zyw.tc.api.dao.po.*"/>
+    </Match>
+    <Match>
+        <Class name="com.ysu.zyw.tc.api.dao.mappers.*"/>
+    </Match>
+    <!-- ignore bugs in test classes -->
+    <Match>
+        <Class name="~.*\.*Test"/>
+    </Match>
+</FindBugsFilter>

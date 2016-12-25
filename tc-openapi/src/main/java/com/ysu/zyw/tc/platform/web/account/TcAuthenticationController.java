@@ -116,8 +116,8 @@ public class TcAuthenticationController {
         tcSessionService.initSessionAfterSignup();
 
         // find menus
-        String accountId = tcSessionService.getAccountId();
-        TcP<List<ToMenu>> menus = tcAuthenticationApi.findMenus(accountId);
+        // String accountId = tcSessionService.getAccountId();
+        // TcP<List<ToMenu>> menus = tcAuthenticationApi.findMenus(accountId);
         // TODO: 2016/11/26
 
         // successful
