@@ -936,7 +936,7 @@
                     <artifactId>findbugs-maven-plugin</artifactId>
                     <version>3.0.4</version>
                     <configuration>
-                        <excludeFilterFile>.findbugs.xml</excludeFilterFile>
+                        <excludeFilterFile>.findbugs_ex.xml</excludeFilterFile>
                         <fork>false</fork>
                         <encoding>UTF-8</encoding>
                     </configuration>
