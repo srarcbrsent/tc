@@ -3,6 +3,7 @@ package com.ysu.zyw.tc.base.utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ysu.zyw.tc.base.constant.TcConstant;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -49,13 +50,13 @@ public class TcSerializationUtils {
     @SneakyThrows
     public static byte[] serializeStr(@Nonnull String text) {
         checkNotNull(text, "null writeJson text is not allowed");
-        return text.getBytes("UTF-8");
+        return text.getBytes(TcConstant.DEFAULT_CHARSET);
     }
 
     @SneakyThrows
     public static String deserializeStr(@Nonnull byte[] bytes) {
         checkNotNull(bytes, "null readJson bytes is not allowed");
-        return new String(bytes, "UTF-8");
+        return new String(bytes, TcConstant.DEFAULT_CHARSET);
     }
 
     @SneakyThrows

@@ -7,6 +7,8 @@ package com.ysu.zyw.tc.base.constant;
  */
 public class TcConstant {
 
+    public static final String DEFAULT_CHARSET = "UTF-8";
+
     public abstract static class Base {
 
         public static final String STR_32_0 = "00000000000000000000000000000000";
