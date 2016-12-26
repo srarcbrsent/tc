@@ -1,5 +1,4 @@
-// 登陆相关
-var _signupVue = new Vue({
+var indexVue = new Vue({
 
     el: '#doc-signup-div',
 
@@ -37,7 +36,7 @@ var _signupVue = new Vue({
                 .get('/auths/get_verification_code.json')
                 .then(function (response) {
                     _TcC.doWithTcR(response.data, function (body) {
-                        _signupVue.hiddenElement.verificationCode = body;
+                        indexVue.hiddenElement.verificationCode = body;
                     });
                     throw new Error();
                 })
@@ -48,27 +47,27 @@ var _signupVue = new Vue({
 
         signup: function () {
             // TODO wait vue validation released.
-            _signupVue.layerLoading = layer.load(1, {shade: [0.7, '#fff']});
+            indexVue.layerLoading = layer.load(1, {shade: [0.7, '#fff']});
             _TcAxios
                 .get('/auths/get_token.json')
                 .then(function (tokenR) {
                     _TcC.doWithTcR(tokenR.data, function (token) {
-                        var password = _signupVue.uiElement.formElement.password;
-                        _signupVue.uiElement.formElement.password = $.md5($.md5(password) + token);
-                        _signupVue.doSignup();
+                        var password = indexVue.uiElement.formElement.password;
+                        indexVue.uiElement.formElement.password = $.md5($.md5(password) + token);
+                        indexVue.doSignup();
                     });
                 })
                 .catch(function (error) {
-                    layer.close(_signupVue.layerLoading);
+                    layer.close(indexVue.layerLoading);
                     _TcC.defaultAxiosExHandler(error);
                 });
         },
 
         doSignup: function () {
             _TcAxios
-                .post('/auth/signup.json', $.param(_signupVue.uiElement.formElement))
+                .post('/auth/signup.json', $.param(indexVue.uiElement.formElement))
                 .then(function (response) {
-                    layer.close(_signupVue.layerLoading);
+                    layer.close(indexVue.layerLoading);
                     _TcC.doWithTcR(response.data, function (body) {
                         if (body === 0) {
                             // signup succ, reload page, will auto redirect to home.
@@ -76,40 +75,40 @@ var _signupVue = new Vue({
                             return;
                         } else if (body === 1) {
                             // verification code not match
-                            _signupVue.uiElement.signupErrorMsg = '验证码输入错误，请重新登陆！';
-                            _signupVue.reset();
+                            indexVue.uiElement.signupErrorMsg = '验证码输入错误，请重新登陆！';
+                            indexVue.reset();
                             return;
                         } else if (body === 2) {
                             // account not exists
-                            _signupVue.uiElement.signupErrorMsg = '账号不存在，请重新登陆！';
-                            _signupVue.reset();
+                            indexVue.uiElement.signupErrorMsg = '账号不存在，请重新登陆！';
+                            indexVue.reset();
                             return;
                         } else if (body === 3) {
                             // account be locked
-                            _signupVue.uiElement.signupErrorMsg = '账号被锁定，请稍后再试！';
-                            _signupVue.reset();
+                            indexVue.uiElement.signupErrorMsg = '账号被锁定，请稍后再试！';
+                            indexVue.reset();
                             return;
                         } else if (body === 4) {
                             // account not match password
-                            _signupVue.uiElement.signupErrorMsg = '账号密码错误，请重新登陆！';
-                            _signupVue.reset();
+                            indexVue.uiElement.signupErrorMsg = '账号密码错误，请重新登陆！';
+                            indexVue.reset();
                             return;
                         }
                         layer.alert('抱歉，系统繁忙，请稍后再试！');
                     });
                 })
                 .catch(function (error) {
-                    layer.close(_signupVue.layerLoading);
+                    layer.close(indexVue.layerLoading);
                     _TcC.defaultAxiosExHandler(error);
                 });
         },
 
         reset: function () {
-            _signupVue.uiElement.formElement.username = '';
-            _signupVue.uiElement.formElement.password = '';
-            _signupVue.uiElement.formElement.verificationCode = '';
-            _signupVue.uiElement.formElement.rememberMe = false;
-            _signupVue.reloadVerificationCode();
+            indexVue.uiElement.formElement.username = '';
+            indexVue.uiElement.formElement.password = '';
+            indexVue.uiElement.formElement.verificationCode = '';
+            indexVue.uiElement.formElement.rememberMe = false;
+            indexVue.reloadVerificationCode();
         }
     },
 
