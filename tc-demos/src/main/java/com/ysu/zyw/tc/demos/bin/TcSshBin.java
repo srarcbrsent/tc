@@ -4,7 +4,6 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import com.ysu.zyw.tc.base.constant.TcConstant;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 @Slf4j
@@ -53,7 +52,7 @@ public class TcSshBin {
                 if (i < 0) {
                     break;
                 }
-                sb.append(new String(bytes, 0, i, Charset.forName(TcConstant.DEFAULT_CHARSET)));
+                sb.append(new String(bytes, 0, i, StandardCharsets.UTF_8));
             }
             if (channel.isClosed()) {
                 if (inputStream.available() > 0) {
