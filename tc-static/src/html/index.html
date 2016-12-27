@@ -64,7 +64,8 @@
                                    name="verificationCode"
                                    placeholder="请输入右方的验证码"
                                    v-model="uiElement.formElement.verificationCode">
-                            <span class="am-input-group-label doc-verification-code-span">
+                            <span v-cloak
+                                  class="am-input-group-label doc-verification-code-span">
                                 <span>{{ hiddenElement.verificationCode }}</span>
                                 <i class="am-icon-refresh am-icon-fw"
                                    v-on:click="reloadVerificationCode"></i>
@@ -92,12 +93,6 @@
                     </div>
 
                     <div>
-                        <h6 class="am-text-danger"
-                            v-if="showSignupErrorMsg">
-                            <strong>
-                                登陆失败，原因：({{ uiElement.signupErrorMsg }})
-                            </strong>
-                        </h6>
                         <button type="button"
                                 class="am-btn am-btn-primary"
                                 v-bind:class="formClass"
@@ -123,7 +118,8 @@
 </div>
 <!-- - wrapper -->
 @@include('src/html/commons/flib.html')
-<script src="/tc-static/src/resources/libs/jquery.md5.min.js"
+@@include('src/html/commons/pms.html')
+<script src="/tc-static/src/resources/libs/hashes.min.js"
         type="application/javascript"></script>
 <script src="/tc-static/src/resources/scripts/index.js"
         type="application/javascript"></script>

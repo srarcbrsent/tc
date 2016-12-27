@@ -72,6 +72,11 @@
 
         <dependency>
             <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-rpc-httpx</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-servlet-support</artifactId>
         </dependency>
 

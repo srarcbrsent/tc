@@ -7,8 +7,17 @@
 
         <div class="am-topbar-right">
             <a class="am-btn am-btn-default am-topbar-btn am-btn-sm"
+               v-if="!authenticated"
                href="/">
                 登陆
+            </a>
+        </div>
+
+        <div class="am-topbar-right">
+            <a class="am-btn am-btn-default am-topbar-btn am-btn-sm"
+               v-if="authenticated"
+               v-on:click="signout">
+                登出
             </a>
         </div>
 

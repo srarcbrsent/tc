@@ -19,17 +19,11 @@
         _staticBase: '${staticBase}',
 
         // ajax helper func
-        doWithTcR: function (tcR, okCallback, otherCallback, badRequestCallback, exCallback) {
+        doWithTcR: function (tcR, okCallback, badRequestCallback, exCallback) {
             if (_.isUndefined(tcR)) {
                 layer.alert('系统繁忙，请稍后再试！');
             }
-            if (tcR.code == 0) {
-                if (_.isFunction(okCallback)) {
-                    okCallback(tcR.body);
-                } else {
-                    // do nothing
-                }
-            } else if (tcR.code == 8888) {
+            if (tcR.code == 8888) {
                 if (_.isFunction(badRequestCallback)) {
                     badRequestCallback(tcR.code, tcR.message, tcR.extra);
                 } else {
@@ -42,8 +36,8 @@
                     layer.msg('系统异常，请刷新页面再试！');
                 }
             } else {
-                if (_.isFunction(otherCallback)) {
-                    otherCallback(tcR.code, tcR.message, tcR.extra);
+                if (_.isFunction(okCallback)) {
+                    okCallback(tcR.code, tcR.body, tcR.extra);
                 } else {
                     // do nothing
                 }
@@ -51,7 +45,8 @@
         },
 
         defaultAxiosExHandler: function (error) {
-            layer.alert('抱歉，系统异常，请稍后再试！');
+            console.error(error);
+            layer.alert('抱歉，系统繁忙，请稍后再试！');
         }
     };
 
@@ -62,6 +57,8 @@
 
         // 6s
         timeout: 6000,
+
+        withCredentials: true,
 
         xsrfCookieName: 'XSRF-TOKEN',
 
@@ -90,72 +87,5 @@
             return Promise.reject(error);
         });
     })();
-
-    // privilege infrastructure
-    var privilegeVue = new Vue({
-
-        el: 'body',
-
-        data: {
-
-            authenticated: false,
-
-            permissions: []
-
-        },
-
-        mounted: function () {
-            this.doGetAuthenticatedStatus();
-            this.doGetPermissions();
-        },
-
-        methods: {
-
-            doGetAuthenticatedStatus: function () {
-                _TcAxios
-                    .get('/auths/authenticated.json')
-                    .then(function (response) {
-                        _TcC.doWithTcR(response.data, function (body) {
-                            privilegeVue.authenticated = body;
-                        });
-                    })
-                    .catch(function (error) {
-                        _TcC.defaultAxiosExHandler(error);
-                    });
-            },
-
-            doGetPermissions: function () {
-                _TcAxios
-                    .get('/auths/get_permissions.json')
-                    .then(function (response) {
-                        _TcC.doWithTcR(response.data, function (body) {
-                            privilegeVue.permissions = body;
-                        });
-                    })
-                    .catch(function (error) {
-                        _TcC.defaultAxiosExHandler(error);
-                    });
-            }
-
-        },
-
-        computed: {
-
-            hasPermission: function (permission) {
-                return !_.isUndefined(permission) && _.contains(this.permissions, permission);
-            },
-
-            hasAnyPermission: function (permissions) {
-                return !_.isUndefined(permissions)
-                    && _.intersection(this.permissions, permissions.split(',')).length > 0;
-            },
-
-            hasAllPermissions: function (permissions) {
-                return !_.isUndefined(permissions)
-                    && _.union(this.permissions, permissions.split(',')).length == this.permissions.length;
-            }
-
-        }
-    });
 </script>
 <!-- - post-lib -->
