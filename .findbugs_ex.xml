@@ -2,7 +2,7 @@
 <FindBugsFilter>
     <!-- Findbugs configuration, authored by yaowu.zhang. -->
 
-    <!-- ignore bugs we do not case -->
+    <!-- ignore bugs we do not care -->
     <Match>
         <Bug category="I18N"/>
     </Match>

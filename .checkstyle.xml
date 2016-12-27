@@ -104,6 +104,8 @@
         </module>
         <!-- 注释缩进 -->
         <module name="CommentsIndentation"/>
+        <!-- 空行缩进 -->
+        <module name="EmptyLineSeparator"/>
 
         <!-- 修饰符顺序 -->
         <module name="ModifierOrder"/>
