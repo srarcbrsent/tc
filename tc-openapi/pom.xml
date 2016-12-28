@@ -34,11 +34,6 @@
             <artifactId>tc-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.ysu.zyw</groupId>
-            <artifactId>tc-sso</artifactId>
-        </dependency>
-
         <!-- modules -->
         <dependency>
             <groupId>com.ysu.zyw</groupId>
@@ -231,6 +226,28 @@
                 </properties.pom.activation.spring.profile>
                 <properties.pom.activation.spring.web.profile>
                     classpath*:/properties/dev/spring-web.properties
+                </properties.pom.activation.spring.web.profile>
+            </properties>
+            <dependencies>
+                <!-- swagger ui only dev mode -->
+                <dependency>
+                    <groupId>io.springfox</groupId>
+                    <artifactId>springfox-swagger-ui</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>tc_docker</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <properties.pom.activation.spring.profile>
+                    classpath*:/properties/docker/spring.properties
+                </properties.pom.activation.spring.profile>
+                <properties.pom.activation.spring.web.profile>
+                    classpath*:/properties/docker/spring-web.properties
                 </properties.pom.activation.spring.web.profile>
             </properties>
             <dependencies>

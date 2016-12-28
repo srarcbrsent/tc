@@ -25,7 +25,6 @@
         <module>tc-modules/tc-commons-upload</module>
         <module>tc-apimodel</module>
         <module>tc-api</module>
-        <module>tc-sso</module>
         <module>tc-apiimpl</module>
         <module>tc-openapi</module>
         <module>tc-demos</module>
@@ -175,12 +174,6 @@
             <dependency>
                 <groupId>com.ysu.zyw</groupId>
                 <artifactId>tc-apiimpl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.ysu.zyw</groupId>
-                <artifactId>tc-sso</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
