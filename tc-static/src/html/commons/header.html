@@ -1,22 +1,27 @@
 <header id="header"
-        class="am-topbar">
+        class="am-topbar"
+        v-bind:class="{ 'am-topbar-inverse': authenticated }">
     <div class="am-collapse am-topbar-collapse am-container">
         <ul class="am-nav am-nav-pills am-topbar-nav">
             <li><a href="/">这只是一个实验工程，目的是为了能有一个工程来做其他实验。_(:3」∠)_</a></li>
         </ul>
 
-        <div class="am-topbar-right">
-            <a class="am-btn am-btn-default am-topbar-btn am-btn-sm"
+        <div v-cloak
+             class="am-topbar-right">
+            <a class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"
                v-if="!authenticated"
                href="/">
+                <i class="am-icon-sign-in"></i>
                 登陆
             </a>
         </div>
 
-        <div class="am-topbar-right">
-            <a class="am-btn am-btn-default am-topbar-btn am-btn-sm"
+        <div v-cloak
+             class="am-topbar-right">
+            <a class="am-btn am-btn-primary am-topbar-btn am-btn-sm"
                v-if="authenticated"
                v-on:click="signout">
+                <i class="am-icon-sign-out"></i>
                 登出
             </a>
         </div>

@@ -39,10 +39,10 @@ var revCollector = require('gulp-rev-collector');
 
 var _environment = {
     dev: false,
+    htmlBase: 'http://www.tc.com',
     staticBase: 'http://static.tc.com',
     openApiBase: 'http://openapi.tc.com',
-    localhostProtocolAndHost: 'http://tc.com',
-    localhostPort: 80
+    port: 80
 };
 
 // 默认开发模式下编译
@@ -61,6 +61,7 @@ gulp.task('local-pdu', function (cb) {
 
 gulp.task('remote-pdu', function (cb) {
     _environment.dev = false;
+    _environment.htmlBase = 'http://www.tc.com';
     _environment.openApiBase = 'http://openapi.tc.com';
     _environment.staticBase = 'http://static.tc.com';
     task(cb);
@@ -209,6 +210,8 @@ gulp.task('html', function () {
         }))
         // 替换静态资源前缀路径
         .pipe(replace(/\/tc-static\/src\/resources/g, _environment.staticBase))
+        // 替换根路径
+        .pipe(replace(/\$\{htmlBase}/g, _environment.htmlBase))
         // 替换后端接口openApiBase
         .pipe(replace(/\$\{openApiBase}/g, _environment.openApiBase))
         // 替换静态资源staticBase
@@ -240,7 +243,7 @@ gulp.task('start', ['local'], function () {
     connect.server({
         name: 'tc-static',
         root: ['dist/html', 'dist/resources'],
-        port: _environment.localhostPort,
+        port: _environment.port,
         livereload: true
     });
 });

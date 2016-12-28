@@ -180,13 +180,13 @@
 | 内部域名 | rds.docker.tc.com |
 | 内部端口 | 6479 |
 | 认证信息 | 开发: 123456 生产: Rjr7)71qnbldjcvvjw4= |
-| VOLUMES | /Users/zhangyaowu/env/docker/redis/data |
+| VOLUMES | /Users/zhangyaowu/env/docker/rds/data |
 
 | 实例 | Zookeeper |
 | --- | --- |
 | 版本 | zookeeper:latest |
 | 内部域名 | zk.docker.tc.com |
 | 内部端口 | 2281 |
-| VOLUMES | /Users/zhangyaowu/env/docker/zookeeper/data<br/>/Users/zhangyaowu/env/docker/zookeeper/datalog |
+| VOLUMES | /Users/zhangyaowu/env/docker/zk1/data<br/>/Users/zhangyaowu/env/docker/zk1/datalog |
 
 

@@ -3,23 +3,25 @@ var indexVue = new Vue({
     el: '#doc-signup-div',
 
     data: {
-        uiElement: {
-            formElement: {
+        ui: {
+            form: {
                 username: '',
                 password: '',
                 verificationCode: '',
                 rememberMe: false
-            }
-        },
-        hiddenElement: {
+            },
             verificationCode: ''
         },
-        stateElement: {
+
+        hidden: {},
+
+        state: {
             usernameValid: true,
             passwordValid: true,
             verificationCodeValid: true,
             rememberMeValid: true
         }
+
     },
 
     mounted: function () {
@@ -35,7 +37,7 @@ var indexVue = new Vue({
                 .get('/auths/get_verification_code.json')
                 .then(function (response) {
                     _TcC.doWithTcR(response.data, function (code, body) {
-                        indexVue.hiddenElement.verificationCode = body;
+                        indexVue.ui.verificationCode = body;
                     });
                 })
                 .catch(function (error) {
@@ -46,14 +48,14 @@ var indexVue = new Vue({
         signup: function () {
             // TODO wait vue validation released.
             indexVue._layerLoading = layer.load(1, {shade: [0.7, '#fff']});
-            var password = indexVue.uiElement.formElement.password;
-            indexVue.uiElement.formElement.password = (new Hashes.SHA1).hex(password);
+            var password = indexVue.ui.form.password;
+            indexVue.ui.form.password = (new Hashes.SHA1).hex(password);
             indexVue.doSignup();
         },
 
         doSignup: function () {
             _TcAxios
-                .post('/auths/signup.json', $.param(indexVue.uiElement.formElement))
+                .post('/auths/signup.json', $.param(indexVue.ui.form))
                 .then(function (response) {
                     layer.close(indexVue._layerLoading);
                     _TcC.doWithTcR(response.data, function (code, body) {
@@ -92,42 +94,42 @@ var indexVue = new Vue({
         },
 
         reset: function () {
-            indexVue.uiElement.formElement.username = '';
-            indexVue.uiElement.formElement.password = '';
-            indexVue.uiElement.formElement.verificationCode = '';
-            indexVue.uiElement.formElement.rememberMe = false;
+            indexVue.ui.form.username = '';
+            indexVue.ui.form.password = '';
+            indexVue.ui.form.verificationCode = '';
+            indexVue.ui.form.rememberMe = false;
             indexVue.reloadVerificationCode();
         }
     },
 
     computed: {
-        // -- styles
-        usernameClass: function () {
+        // -- styles validation
+        validationStylesUsername: function () {
             return {
-                'am-input-group-primary': this.stateElement.usernameValid,
-                'am-input-group-danger': !this.stateElement.usernameValid
+                'am-input-group-primary': this.state.usernameValid,
+                'am-input-group-danger': !this.state.usernameValid
             };
         },
 
-        passwordClass: function () {
+        validationStylesPassword: function () {
             return {
-                'am-input-group-primary': this.stateElement.passwordValid,
-                'am-input-group-danger': !this.stateElement.passwordValid
+                'am-input-group-primary': this.state.passwordValid,
+                'am-input-group-danger': !this.state.passwordValid
             };
         },
 
-        verificationCodeClass: function () {
+        validationStylesVerificationCode: function () {
             return {
-                'am-input-group-primary': this.stateElement.verificationCodeValid,
-                'am-input-group-danger': !this.stateElement.verificationCodeValid
+                'am-input-group-primary': this.state.verificationCodeValid,
+                'am-input-group-danger': !this.state.verificationCodeValid
             };
         },
 
-        formClass: function () {
+        validationStylesSubmit: function () {
             return {
-                'am-disabled': !(this.stateElement.usernameValid &&
-                this.stateElement.passwordValid &&
-                this.stateElement.verificationCodeValid)
+                'am-disabled': !(this.state.usernameValid &&
+                this.state.passwordValid &&
+                this.state.verificationCodeValid)
             };
         }
 

@@ -6,11 +6,8 @@
         el: '#header',
 
         data: {
-
             authenticated: false,
-
             permissions: []
-
         },
 
         mounted: function () {
@@ -19,7 +16,6 @@
         },
 
         methods: {
-
             doGetAuthenticatedStatus: function () {
                 _TcAxios
                     .get('/auths/authenticated.json')
@@ -51,32 +47,29 @@
                     .get('/auths/signout.json')
                     .then(function (response) {
                         _TcC.doWithTcR(response.data, function () {
-                            location.href = '/';
+                            location.href = _TcC._htmlBase;
                         });
                     })
                     .catch(function (error) {
                         _TcC.defaultAxiosExHandler(error);
                     });
             }
-
         },
 
         computed: {
-
             hasPermission: function (permission) {
-                return !_.isUndefined(permission) && _.contains(pmsData.permissions, permission);
+                return !_.isUndefined(permission) && _.contains(headerPmsVue.permissions, permission);
             },
 
             hasAnyPermission: function (permissions) {
                 return !_.isUndefined(permissions)
-                    && _.intersection(pmsData.permissions, permissions.split(',')).length > 0;
+                    && _.intersection(headerPmsVue.permissions, permissions.split(',')).length > 0;
             },
 
             hasAllPermissions: function (permissions) {
-                return !_.isUndefined(permissions)
-                    && _.union(pmsData.permissions, permissions.split(',')).length == pmsData.permissions.length;
+                var unionPms = _.union(headerPmsVue.permissions, permissions.split(','));
+                return !_.isUndefined(permissions) && (unionPms.length == headerPmsVue.permissions.length);
             }
-
         }
 
     });
