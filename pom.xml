@@ -23,6 +23,7 @@
         <module>tc-modules/tc-freemarker-support</module>
         <module>tc-modules/tc-aliyun-support</module>
         <module>tc-modules/tc-commons-upload</module>
+        <module>tc-modules/tc-crawler</module>
         <module>tc-apimodel</module>
         <module>tc-api</module>
         <module>tc-apiimpl</module>
@@ -616,6 +617,20 @@
                 <groupId>io.reactivex</groupId>
                 <artifactId>rxjava</artifactId>
                 <version>${pom.version.rxjava}</version>
+            </dependency>
+
+            <!-- crawler -->
+            <dependency>
+                <groupId>edu.uci.ics</groupId>
+                <artifactId>crawler4j</artifactId>
+                <version>4.2</version>
+            </dependency>
+
+            <!-- jsoup -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.10.1</version>
             </dependency>
 
             <!-- commons utils -->
