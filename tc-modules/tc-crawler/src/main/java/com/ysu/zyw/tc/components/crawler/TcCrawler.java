@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class TcCrawler extends WebCrawler {
 
-    private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
+    private static final Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
             + "|png|mp3|mp3|zip|gz))$");
 
     /**
