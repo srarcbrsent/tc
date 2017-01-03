@@ -1,59 +1,87 @@
-local upload = require "resty.upload"
+local resty_upload = require "resty.upload"
+local resty_random = require "resty.random"
+local resty_string = require "resty.string"
+local cjson = require "cjson"
 
-local chunk_size = 4096
-local form = upload:new(chunk_size)
-local file
-local filelen=0
-form:set_timeout(0) -- 1 sec
-local filename
+local trunk_size = 4096
+local fs_folder = "/Users/zhangyaowu/env/data/upload"
+local http_base = "http://static.tc.com/resources"
 
-function get_filename(res)
-    local filename = ngx.re.match(res,'(.+)filename="(.+)"(.*)')
-    if filename then
-        return filename[2]
-    end
+-- header: ["Content-Disposition","form-data; name=\"file1\"; filename=\"a.txt\""]
+-- header: ["Content-Type","text\/plain"]
+-- body: xxx
+-- part_end: none
+-- header
+-- header
+-- body
+-- part_end
+-- eof
+
+-- init
+local form, err = resty_upload:new(trunk_size)
+
+if not form then
+    ngx.log(ngx.ERR, "failed to new upload", err)
+    local response = {}
+    response["code"] = 500
+    response["description"] = "服务器异常，请稍后再试！"
+    ngx.say(cjson.encode(response))
 end
 
-local osfilepath = "/usr/local/openresty/nginx/html/"
-local i=0
+local rs = {}
+local file
+local fieldname
+local fileextension
+local sub_dist
 while true do
+    -- read
     local typ, res, err = form:read()
     if not typ then
-        ngx.say("failed to read: ", err)
+        ngx.log(ngx.ERR, "failed to find upload type", err)
+        local response = {}
+        response["code"] = 500
+        response["description"] = "服务器异常，请稍后再试！"
+        ngx.say(cjson.encode(response))
         return
     end
+
     if typ == "header" then
-        if res[1] ~= "Content-Type" then
-            filename = get_filename(res[2])
-            if filename then
-                i=i+1
-                filepath = osfilepath  .. filename
-                file = io.open(filepath,"w+")
-                if not file then
-                    ngx.say("failed to open file ")
-                    return
-                end
-            else
-            end
+        -- generate filename
+        local filename = resty_string.to_hex(resty_random.bytes(24))
+        if not filename then
+            local response = {}
+            response["code"] = 500
+            response["description"] = "服务器异常，请稍后再试！"
+            ngx.say(cjson.encode(response))
+            return
         end
-    elseif typ == "body" then
-        if file then
-            filelen= filelen + tonumber(string.len(res))
+        -- new file
+        file = io.open(fs_folder .. "/" .. dist .. "/" .. filename .. file_extension, "w+")
+        if not file then
+            local response = {}
+            response["code"] = 500
+            response["description"] = "服务器异常，请稍后再试！"
+            ngx.say(cjson.encode(response))
+            return
+        end
+        rs[field_name] = http_base .. "/" .. field_name .. file_extension
+    end
+
+    if typ == "body" then
+        -- save file
+        if file ~= nil then
             file:write(res)
-        else
         end
-    elseif typ == "part_end" then
-        if file then
-            file:close()
-            file = nil
-            ngx.say("file upload success")
-        end
-    elseif typ == "eof" then
+    end
+
+    if typ == "part_end" then
+        file:close()
+        file = nil
+    end
+
+    if typ == "eof" then
         break
-    else
     end
 end
-if i==0 then
-    ngx.say("please upload at least one file!")
-    return
-end
+
+ngx.say(cjson.encode(rs))

@@ -237,10 +237,9 @@ public class TcCrawler implements PageProcessor {
 
     public static void main(String[] args) throws InterruptedException {
         Spider.create(new TcCrawler())
-                .addUrl(buildNextRequest("书籍"))
-                .addUrl(buildNextRequest("乐器"))
-                .addUrl(buildNextRequest("手机"))
-                .addUrl(buildNextRequest("萌"))
+                .addUrl(buildNextRequest("乐视"))
+                .addUrl(buildNextRequest("西瓜"))
+                .addUrl(buildNextRequest("cosplay"))
                 .thread(15)
                 .run();
     }
