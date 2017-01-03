@@ -106,10 +106,30 @@
         <table tableName="pv_menu"
                domainObjectName="TcMenu"
                mapperName="TcMenuMapper"/>
-        
+
         <table tableName="dd_region"
                domainObjectName="TcRegion"
                mapperName="TcRegionMapper"/>
+
+        <table tableName="it_shop"
+               domainObjectName="TcShop"
+               mapperName="TcShopMapper"/>
+
+        <table tableName="it_item"
+               domainObjectName="TcItem"
+               mapperName="TcItemMapper"/>
+
+        <table tableName="it_item_cover"
+               domainObjectName="TcItemCover"
+               mapperName="TcItemCoverMapper"/>
+
+        <table tableName="it_item_attr"
+               domainObjectName="TcItemAttr"
+               mapperName="TcItemAttrMapper"/>
+
+        <table tableName="it_item_detail"
+               domainObjectName="TcItemDetail"
+               mapperName="TcItemDetailMapper"/>
 
     </context>
 

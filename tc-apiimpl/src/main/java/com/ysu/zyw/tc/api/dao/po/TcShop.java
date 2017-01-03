@@ -11,30 +11,24 @@ import java.util.Date;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcAccount {
+public class TcShop {
     private String id;
 
-    private String region;
+    private String name;
 
-    private String nickname;
+    private String location;
 
-    private String email;
+    private Integer describingRate;
 
-    private Boolean emailActivated;
+    private Integer serviceRate;
 
-    private String mobile;
+    private Integer deliveryRate;
 
-    private Boolean mobileActivated;
+    private Integer comprehensiveRate;
 
-    private String avatar;
+    private String supportCod;
 
-    private String password;
-
-    private String randomToken;
-
-    private Date lockReleaseTime;
-
-    private Boolean delected;
+    private String supportOnlinePay;
 
     private String updatedPerson;
 

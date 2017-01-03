@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysu.zyw.tc.api.dao.mappers.TcShopMapper">
+  <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcShop">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="describing_rate" jdbcType="INTEGER" property="describingRate" />
+    <result column="service_rate" jdbcType="INTEGER" property="serviceRate" />
+    <result column="delivery_rate" jdbcType="INTEGER" property="deliveryRate" />
+    <result column="comprehensive_rate" jdbcType="INTEGER" property="comprehensiveRate" />
+    <result column="support_cod" jdbcType="VARCHAR" property="supportCod" />
+    <result column="support_online_pay" jdbcType="VARCHAR" property="supportOnlinePay" />
+    <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
+    <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
+    <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
+    <result column="created_timestamp" jdbcType="TIMESTAMP" property="createdTimestamp" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, location, describing_rate, service_rate, delivery_rate, comprehensive_rate, 
+    support_cod, support_online_pay, updated_person, updated_timestamp, created_person, 
+    created_timestamp
+  </sql>
+  <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcShopExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from it_shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startLine != null and pageSize != null and pageSize > 0">
+      limit #{startLine} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from it_shop
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from it_shop
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcShopExample">
+    delete from it_shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcShop">
+    insert into it_shop (id, name, location, 
+      describing_rate, service_rate, delivery_rate, 
+      comprehensive_rate, support_cod, support_online_pay, 
+      updated_person, updated_timestamp, created_person, 
+      created_timestamp)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
+      #{describingRate,jdbcType=INTEGER}, #{serviceRate,jdbcType=INTEGER}, #{deliveryRate,jdbcType=INTEGER}, 
+      #{comprehensiveRate,jdbcType=INTEGER}, #{supportCod,jdbcType=VARCHAR}, #{supportOnlinePay,jdbcType=VARCHAR}, 
+      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
+      #{createdTimestamp,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcShop">
+    insert into it_shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="describingRate != null">
+        describing_rate,
+      </if>
+      <if test="serviceRate != null">
+        service_rate,
+      </if>
+      <if test="deliveryRate != null">
+        delivery_rate,
+      </if>
+      <if test="comprehensiveRate != null">
+        comprehensive_rate,
+      </if>
+      <if test="supportCod != null">
+        support_cod,
+      </if>
+      <if test="supportOnlinePay != null">
+        support_online_pay,
+      </if>
+      <if test="updatedPerson != null">
+        updated_person,
+      </if>
+      <if test="updatedTimestamp != null">
+        updated_timestamp,
+      </if>
+      <if test="createdPerson != null">
+        created_person,
+      </if>
+      <if test="createdTimestamp != null">
+        created_timestamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="describingRate != null">
+        #{describingRate,jdbcType=INTEGER},
+      </if>
+      <if test="serviceRate != null">
+        #{serviceRate,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryRate != null">
+        #{deliveryRate,jdbcType=INTEGER},
+      </if>
+      <if test="comprehensiveRate != null">
+        #{comprehensiveRate,jdbcType=INTEGER},
+      </if>
+      <if test="supportCod != null">
+        #{supportCod,jdbcType=VARCHAR},
+      </if>
+      <if test="supportOnlinePay != null">
+        #{supportOnlinePay,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedPerson != null">
+        #{updatedPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTimestamp != null">
+        #{updatedTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdPerson != null">
+        #{createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimestamp != null">
+        #{createdTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcShopExample" resultType="java.lang.Long">
+    select count(*) from it_shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update it_shop
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.describingRate != null">
+        describing_rate = #{record.describingRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceRate != null">
+        service_rate = #{record.serviceRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliveryRate != null">
+        delivery_rate = #{record.deliveryRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.comprehensiveRate != null">
+        comprehensive_rate = #{record.comprehensiveRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.supportCod != null">
+        support_cod = #{record.supportCod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supportOnlinePay != null">
+        support_online_pay = #{record.supportOnlinePay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedPerson != null">
+        updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedTimestamp != null">
+        updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdPerson != null">
+        created_person = #{record.createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTimestamp != null">
+        created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update it_shop
+    set id = #{record.id,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      describing_rate = #{record.describingRate,jdbcType=INTEGER},
+      service_rate = #{record.serviceRate,jdbcType=INTEGER},
+      delivery_rate = #{record.deliveryRate,jdbcType=INTEGER},
+      comprehensive_rate = #{record.comprehensiveRate,jdbcType=INTEGER},
+      support_cod = #{record.supportCod,jdbcType=VARCHAR},
+      support_online_pay = #{record.supportOnlinePay,jdbcType=VARCHAR},
+      updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
+      updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
+      created_person = #{record.createdPerson,jdbcType=VARCHAR},
+      created_timestamp = #{record.createdTimestamp,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcShop">
+    update it_shop
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="describingRate != null">
+        describing_rate = #{describingRate,jdbcType=INTEGER},
+      </if>
+      <if test="serviceRate != null">
+        service_rate = #{serviceRate,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryRate != null">
+        delivery_rate = #{deliveryRate,jdbcType=INTEGER},
+      </if>
+      <if test="comprehensiveRate != null">
+        comprehensive_rate = #{comprehensiveRate,jdbcType=INTEGER},
+      </if>
+      <if test="supportCod != null">
+        support_cod = #{supportCod,jdbcType=VARCHAR},
+      </if>
+      <if test="supportOnlinePay != null">
+        support_online_pay = #{supportOnlinePay,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedPerson != null">
+        updated_person = #{updatedPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedTimestamp != null">
+        updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdPerson != null">
+        created_person = #{createdPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTimestamp != null">
+        created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcShop">
+    update it_shop
+    set name = #{name,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      describing_rate = #{describingRate,jdbcType=INTEGER},
+      service_rate = #{serviceRate,jdbcType=INTEGER},
+      delivery_rate = #{deliveryRate,jdbcType=INTEGER},
+      comprehensive_rate = #{comprehensiveRate,jdbcType=INTEGER},
+      support_cod = #{supportCod,jdbcType=VARCHAR},
+      support_online_pay = #{supportOnlinePay,jdbcType=VARCHAR},
+      updated_person = #{updatedPerson,jdbcType=VARCHAR},
+      updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
+      created_person = #{createdPerson,jdbcType=VARCHAR},
+      created_timestamp = #{createdTimestamp,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectPrimaryKeyByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcShopExample" resultType="java.lang.String">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    id
+    from it_shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startLine != null and pageSize != null and pageSize > 0">
+      limit #{startLine}, #{pageSize}
+    </if>
+  </select>
+  <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcShop">
+    insert into it_shop (
+      id, 
+      name, 
+      location, 
+      describing_rate, 
+      service_rate, 
+      delivery_rate, 
+      comprehensive_rate, 
+      support_cod, 
+      support_online_pay, 
+      updated_person, 
+      updated_timestamp, 
+      created_person, 
+      created_timestamp
+    ) values 
+    <foreach collection="list" item="item" separator=", ">
+      (#{item.id,jdbcType=VARCHAR}, 
+      #{item.name,jdbcType=VARCHAR}, 
+      #{item.location,jdbcType=VARCHAR}, 
+      #{item.describingRate,jdbcType=INTEGER}, 
+      #{item.serviceRate,jdbcType=INTEGER}, 
+      #{item.deliveryRate,jdbcType=INTEGER}, 
+      #{item.comprehensiveRate,jdbcType=INTEGER}, 
+      #{item.supportCod,jdbcType=VARCHAR}, 
+      #{item.supportOnlinePay,jdbcType=VARCHAR}, 
+      #{item.updatedPerson,jdbcType=VARCHAR}, 
+      #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 
+      #{item.createdPerson,jdbcType=VARCHAR}, 
+      #{item.createdTimestamp,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+</mapper>

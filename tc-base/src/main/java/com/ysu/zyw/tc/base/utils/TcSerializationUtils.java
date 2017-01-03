@@ -23,7 +23,7 @@ public class TcSerializationUtils {
     static {
         OBJECT_MAPPER = new ObjectMapper();
         OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(TcDateUtils.FULL_DATE_FORMAT_VALUE));
-        OBJECT_MAPPER.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     @SneakyThrows

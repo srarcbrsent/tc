@@ -11,30 +11,24 @@ import java.util.Date;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcAccount {
+public class TcItem {
     private String id;
 
-    private String region;
+    private String shopId;
 
-    private String nickname;
+    private String title;
 
-    private String email;
+    private String description;
 
-    private Boolean emailActivated;
+    private Long price;
 
-    private String mobile;
+    private Integer stock;
 
-    private Boolean mobileActivated;
+    private Integer salesVolume;
 
-    private String avatar;
+    private Integer favVolume;
 
-    private String password;
-
-    private String randomToken;
-
-    private Date lockReleaseTime;
-
-    private Boolean delected;
+    private Integer commentsVolue;
 
     private String updatedPerson;
 
