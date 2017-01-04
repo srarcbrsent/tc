@@ -7,6 +7,11 @@
     <bean class="com.ysu.zyw.tc.components.se.elasticsearch.TcTransportClientFactoryBean"
           destroy-method="close">
         <property name="inetAddresses" ref="inetAddresses"/>
+        <property name="settings">
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry key="cluster.name" value="${properties.se.elasticsearch.cluster.name}"/>
+            </map>
+        </property>
     </bean>
 
 </beans>

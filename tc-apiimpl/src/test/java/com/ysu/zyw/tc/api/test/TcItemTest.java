@@ -31,7 +31,6 @@ public class TcItemTest {
 
     @Test
     public void testBySpringDataES() {
-
     }
 
 }

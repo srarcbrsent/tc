@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
 public class TcTransportClientFactoryBean implements FactoryBean<TransportClient>, Closeable {
@@ -29,14 +30,15 @@ public class TcTransportClientFactoryBean implements FactoryBean<TransportClient
 
     @Getter
     @Setter
-    private Settings settings = Settings.EMPTY;
+    private Map<String, String> settings;
 
     private TransportClient client;
 
     @Override
     public TransportClient getObject() throws Exception {
+        checkNotNull(settings);
         checkArgument(MapUtils.isNotEmpty(inetAddresses));
-        PreBuiltTransportClient client = new PreBuiltTransportClient(settings);
+        PreBuiltTransportClient client = new PreBuiltTransportClient(Settings.builder().put(settings).build());
         inetAddresses.entrySet().forEach(entry -> {
             try {
                 client.addTransportAddress(
