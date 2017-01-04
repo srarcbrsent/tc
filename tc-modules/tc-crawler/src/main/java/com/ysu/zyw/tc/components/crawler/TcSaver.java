@@ -19,12 +19,12 @@ import java.util.Objects;
 @Slf4j
 public class TcSaver {
 
-    private static final DruidDataSource dataSource = new DruidDataSource();
+    private static final DruidDataSource DATA_SOURCE = new DruidDataSource();
 
     static {
-        dataSource.setUrl("jdbc:mysql://rdb.tc.com:3306/tc?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
-        dataSource.setUsername("tc_develop");
-        dataSource.setPassword("123456");
+        DATA_SOURCE.setUrl("jdbc:mysql://rdb.tc.com:3306/tc?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+        DATA_SOURCE.setUsername("tc_develop");
+        DATA_SOURCE.setPassword("123456");
     }
 
     private static final String[] PROVINCES = {
@@ -114,7 +114,7 @@ public class TcSaver {
                     i));
         }
 
-        DruidPooledConnection connection = dataSource.getConnection();
+        DruidPooledConnection connection = DATA_SOURCE.getConnection();
         connection.setAutoCommit(false);
         try {
             if (!Objects.isNull(shop)) {
@@ -137,7 +137,7 @@ public class TcSaver {
 
     @SneakyThrows
     private static String findShopId(String shopName) {
-        DruidPooledConnection connection = dataSource.getConnection();
+        DruidPooledConnection connection = DATA_SOURCE.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM it_shop WHERE name = ?");
         preparedStatement.setString(1, shopName);
         ResultSet resultSet = null;
@@ -157,21 +157,21 @@ public class TcSaver {
     @SneakyThrows
     private static void insertShop(DruidPooledConnection connection, TcCrawlerShop shop) {
         PreparedStatement preparedStatement = connection.prepareStatement(
-                "INSERT INTO it_shop(" +
-                        "id, " +
-                        "name, " +
-                        "location, " +
-                        "describing_rate, " +
-                        "service_rate, " +
-                        "delivery_rate, " +
-                        "comprehensive_rate, " +
-                        "support_cod, " +
-                        "support_online_pay, " +
-                        "updated_person, " +
-                        "updated_timestamp, " +
-                        "created_person, " +
-                        "created_timestamp" +
-                        ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                "INSERT INTO it_shop("
+                        + "id, "
+                        + "name, "
+                        + "location, "
+                        + "describing_rate, "
+                        + "service_rate, "
+                        + "delivery_rate, "
+                        + "comprehensive_rate, "
+                        + "support_cod, "
+                        + "support_online_pay, "
+                        + "updated_person, "
+                        + "updated_timestamp, "
+                        + "created_person, "
+                        + "created_timestamp"
+                        + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         preparedStatement.setString(1, shop.getId());
         preparedStatement.setString(2, shop.getName());
         preparedStatement.setString(3, PROVINCES[RandomUtils.nextInt(0, PROVINCES.length)]);
@@ -191,21 +191,22 @@ public class TcSaver {
     @SneakyThrows
     private static void insertItem(DruidPooledConnection connection, TcCrawlerItem item) {
         PreparedStatement preparedStatement = connection.prepareStatement(
-                "INSERT INTO it_item(" +
-                        "id, " +
-                        "shop_id, " +
-                        "title, " +
-                        "description, " +
-                        "price, " +
-                        "stock, " +
-                        "sales_volume, " +
-                        "fav_volume, " +
-                        "comments_volue, " +
-                        "updated_person, " +
-                        "updated_timestamp, " +
-                        "created_person, " +
-                        "created_timestamp" +
-                        ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                "INSERT INTO it_item("
+                        + "id, "
+                        + "shop_id, "
+                        + "title, "
+                        + "description, "
+                        + "price, "
+                        + "stock, "
+                        + "sales_volume, "
+                        + "fav_volume, "
+                        + "comments_volue, "
+                        + "delected, "
+                        + "updated_person, "
+                        + "updated_timestamp, "
+                        + "created_person, "
+                        + "created_timestamp"
+                        + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         preparedStatement.setString(1, item.getId());
         preparedStatement.setString(2, item.getShopId());
         preparedStatement.setString(3, item.getTitle());
@@ -215,10 +216,11 @@ public class TcSaver {
         preparedStatement.setInt(7, RandomUtils.nextInt(10, 1500));
         preparedStatement.setInt(8, RandomUtils.nextInt(100, 15000));
         preparedStatement.setInt(9, RandomUtils.nextInt(5, 500));
-        preparedStatement.setString(10, TcConstant.Base.STR_32_0);
-        preparedStatement.setString(11, "2016-12-31 12:12:12");
-        preparedStatement.setString(12, TcConstant.Base.STR_32_0);
-        preparedStatement.setString(13, "2016-12-31 12:12:12");
+        preparedStatement.setString(10, "0");
+        preparedStatement.setString(11, TcConstant.Base.STR_32_0);
+        preparedStatement.setString(12, "2016-12-31 12:12:12");
+        preparedStatement.setString(13, TcConstant.Base.STR_32_0);
+        preparedStatement.setString(14, "2016-12-31 12:12:12");
         preparedStatement.execute();
     }
 
@@ -227,17 +229,17 @@ public class TcSaver {
         for (int i = 0; i < attrs.size(); i++) {
             TcCrawlerItemAttr attr = attrs.get(i);
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO it_item_attr(" +
-                            "id, " +
-                            "item_id, " +
-                            "name, " +
-                            "value, " +
-                            "sequence, " +
-                            "updated_person, " +
-                            "updated_timestamp, " +
-                            "created_person, " +
-                            "created_timestamp" +
-                            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO it_item_attr("
+                            + "id, "
+                            + "item_id, "
+                            + "name, "
+                            + "value, "
+                            + "sequence, "
+                            + "updated_person, "
+                            + "updated_timestamp, "
+                            + "created_person, "
+                            + "created_timestamp"
+                            + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, attr.getId());
             preparedStatement.setString(2, attr.getItemId());
             preparedStatement.setString(3, attr.getName());
@@ -256,16 +258,16 @@ public class TcSaver {
         for (int i = 0; i < covers.size(); i++) {
             TcCrawlerItemCover cover = covers.get(i);
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO it_item_cover(" +
-                            "id, " +
-                            "item_id, " +
-                            "cover, " +
-                            "sequence, " +
-                            "updated_person, " +
-                            "updated_timestamp, " +
-                            "created_person, " +
-                            "created_timestamp" +
-                            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO it_item_cover("
+                            + "id, "
+                            + "item_id, "
+                            + "cover, "
+                            + "sequence, "
+                            + "updated_person, "
+                            + "updated_timestamp, "
+                            + "created_person, "
+                            + "created_timestamp"
+                            + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, cover.getId());
             preparedStatement.setString(2, cover.getItemId());
             preparedStatement.setString(3, cover.getCover());
@@ -283,16 +285,16 @@ public class TcSaver {
         for (int i = 0; i < details.size(); i++) {
             TcCrawlerItemDetail detail = details.get(i);
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO it_item_detail(" +
-                            "id, " +
-                            "item_id, " +
-                            "detail, " +
-                            "sequence, " +
-                            "updated_person, " +
-                            "updated_timestamp, " +
-                            "created_person, " +
-                            "created_timestamp" +
-                            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO it_item_detail("
+                            + "id, "
+                            + "item_id, "
+                            + "detail, "
+                            + "sequence, "
+                            + "updated_person, "
+                            + "updated_timestamp, "
+                            + "created_person, "
+                            + "created_timestamp"
+                            + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, detail.getId());
             preparedStatement.setString(2, detail.getItemId());
             preparedStatement.setString(3, detail.getDetail());

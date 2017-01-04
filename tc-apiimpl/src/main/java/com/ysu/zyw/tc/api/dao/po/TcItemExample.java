@@ -705,6 +705,76 @@ public class TcItemExample {
             return (Criteria) this;
         }
 
+        public Criteria andDelectedIsNull() {
+            addCriterion("delected is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedIsNotNull() {
+            addCriterion("delected is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedEqualTo(Boolean value) {
+            addCriterion("delected =", value, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedNotEqualTo(Boolean value) {
+            addCriterion("delected <>", value, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedGreaterThan(Boolean value) {
+            addCriterion("delected >", value, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("delected >=", value, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedLessThan(Boolean value) {
+            addCriterion("delected <", value, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedLessThanOrEqualTo(Boolean value) {
+            addCriterion("delected <=", value, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedLike(Boolean value) {
+            addCriterion("delected like", value, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedNotLike(Boolean value) {
+            addCriterion("delected not like", value, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedIn(List<Boolean> values) {
+            addCriterion("delected in", values, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedNotIn(List<Boolean> values) {
+            addCriterion("delected not in", values, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedBetween(Boolean value1, Boolean value2) {
+            addCriterion("delected between", value1, value2, "delected");
+            return (Criteria) this;
+        }
+
+        public Criteria andDelectedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("delected not between", value1, value2, "delected");
+            return (Criteria) this;
+        }
+
         public Criteria andUpdatedPersonIsNull() {
             addCriterion("updated_person is null");
             return (Criteria) this;

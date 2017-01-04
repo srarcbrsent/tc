@@ -11,6 +11,7 @@
     <result column="sales_volume" jdbcType="INTEGER" property="salesVolume" />
     <result column="fav_volume" jdbcType="INTEGER" property="favVolume" />
     <result column="comments_volue" jdbcType="INTEGER" property="commentsVolue" />
+    <result column="delected" jdbcType="VARCHAR" property="delected" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
     <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
     <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, shop_id, title, description, price, stock, sales_volume, fav_volume, comments_volue, 
-    updated_person, updated_timestamp, created_person, created_timestamp
+    delected, updated_person, updated_timestamp, created_person, created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcItemExample" resultMap="BaseResultMap">
     select
@@ -115,13 +116,13 @@
     insert into it_item (id, shop_id, title, 
       description, price, stock, 
       sales_volume, fav_volume, comments_volue, 
-      updated_person, updated_timestamp, created_person, 
-      created_timestamp)
+      delected, updated_person, updated_timestamp, 
+      created_person, created_timestamp)
     values (#{id,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{price,jdbcType=BIGINT}, #{stock,jdbcType=INTEGER}, 
       #{salesVolume,jdbcType=INTEGER}, #{favVolume,jdbcType=INTEGER}, #{commentsVolue,jdbcType=INTEGER}, 
-      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
-      #{createdTimestamp,jdbcType=TIMESTAMP})
+      #{delected,jdbcType=VARCHAR}, #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, 
+      #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcItem">
     insert into it_item
@@ -152,6 +153,9 @@
       </if>
       <if test="commentsVolue != null">
         comments_volue,
+      </if>
+      <if test="delected != null">
+        delected,
       </if>
       <if test="updatedPerson != null">
         updated_person,
@@ -193,6 +197,9 @@
       </if>
       <if test="commentsVolue != null">
         #{commentsVolue,jdbcType=INTEGER},
+      </if>
+      <if test="delected != null">
+        #{delected,jdbcType=VARCHAR},
       </if>
       <if test="updatedPerson != null">
         #{updatedPerson,jdbcType=VARCHAR},
@@ -244,6 +251,9 @@
       <if test="record.commentsVolue != null">
         comments_volue = #{record.commentsVolue,jdbcType=INTEGER},
       </if>
+      <if test="record.delected != null">
+        delected = #{record.delected,jdbcType=VARCHAR},
+      </if>
       <if test="record.updatedPerson != null">
         updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       </if>
@@ -272,6 +282,7 @@
       sales_volume = #{record.salesVolume,jdbcType=INTEGER},
       fav_volume = #{record.favVolume,jdbcType=INTEGER},
       comments_volue = #{record.commentsVolue,jdbcType=INTEGER},
+      delected = #{record.delected,jdbcType=VARCHAR},
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{record.createdPerson,jdbcType=VARCHAR},
@@ -307,6 +318,9 @@
       <if test="commentsVolue != null">
         comments_volue = #{commentsVolue,jdbcType=INTEGER},
       </if>
+      <if test="delected != null">
+        delected = #{delected,jdbcType=VARCHAR},
+      </if>
       <if test="updatedPerson != null">
         updated_person = #{updatedPerson,jdbcType=VARCHAR},
       </if>
@@ -332,6 +346,7 @@
       sales_volume = #{salesVolume,jdbcType=INTEGER},
       fav_volume = #{favVolume,jdbcType=INTEGER},
       comments_volue = #{commentsVolue,jdbcType=INTEGER},
+      delected = #{delected,jdbcType=VARCHAR},
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{createdPerson,jdbcType=VARCHAR},
@@ -366,6 +381,7 @@
       sales_volume, 
       fav_volume, 
       comments_volue, 
+      delected, 
       updated_person, 
       updated_timestamp, 
       created_person, 
@@ -381,6 +397,7 @@
       #{item.salesVolume,jdbcType=INTEGER}, 
       #{item.favVolume,jdbcType=INTEGER}, 
       #{item.commentsVolue,jdbcType=INTEGER}, 
+      #{item.delected,jdbcType=VARCHAR}, 
       #{item.updatedPerson,jdbcType=VARCHAR}, 
       #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 
       #{item.createdPerson,jdbcType=VARCHAR}, 

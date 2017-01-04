@@ -117,7 +117,10 @@
 
         <table tableName="it_item"
                domainObjectName="TcItem"
-               mapperName="TcItemMapper"/>
+               mapperName="TcItemMapper">
+            <columnOverride column="delected"
+                            javaType="java.lang.Boolean"/>
+        </table>
 
         <table tableName="it_item_cover"
                domainObjectName="TcItemCover"

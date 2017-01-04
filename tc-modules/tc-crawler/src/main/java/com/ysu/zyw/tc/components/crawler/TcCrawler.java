@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.base.utils.TcSerializationUtils;
 import com.ysu.zyw.tc.base.utils.TcUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,17 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class TcCrawler implements PageProcessor {
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
 
 
-    private static final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public void process(Page page) {
         if (isTaobaoItemPage(page)) {
-            System.out.println("======> HIT");
+            log.info("hit taobao item page");
             TcUtils.doQuietly(() -> {
                 String shopName = extractShopName(page);
                 int shopDescRate = extractShopDescRate(page);
@@ -60,7 +62,7 @@ public class TcCrawler implements PageProcessor {
                         itemDetails);
             });
         } else if (isTaobaoSearchPage(page)) {
-            System.out.println("======> NOT HIT");
+            log.info("hit taobao search page");
             addLoops(page);
         }
     }
@@ -78,12 +80,10 @@ public class TcCrawler implements PageProcessor {
                             });
                     List<String> pics1 = Lists.newArrayList();
                     hashMap.entrySet().forEach(entry -> {
-                        if (entry.getKey().equals("success")
+                        if (!(entry.getKey().equals("success")
                                 || entry.getKey().equals("size")
                                 || entry.getKey().equals("conflict")
-                                || entry.getKey().equals("req")) {
-                            // nothing to do
-                        } else {
+                                || entry.getKey().equals("req"))) {
                             pics1.add("https://img.alicdn.com/imgextra/i3/2928049528/" + entry.getKey());
                         }
                     });
@@ -218,7 +218,7 @@ public class TcCrawler implements PageProcessor {
                 }
             });
         } catch (Exception e) {
-            // ignore
+            log.debug("", e);
         }
     }
 

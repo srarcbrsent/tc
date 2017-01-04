@@ -30,6 +30,8 @@ public class TcItem {
 
     private Integer commentsVolue;
 
+    private Boolean delected;
+
     private String updatedPerson;
 
     private Date updatedTimestamp;
