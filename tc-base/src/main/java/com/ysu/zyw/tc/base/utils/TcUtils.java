@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -60,6 +61,10 @@ public class TcUtils {
         Date before = new Date();
         tcTask.execute();
         log.info(expression, TcDateUtils.duration(before, new Date()));
+    }
+
+    public static <T> T defaultValue(T value, Supplier<T> defaultValue) {
+        return Objects.isNull(value) ? defaultValue.get() : value;
     }
 
     public static <T1, T2, R1, R2> void match(@Nonnull List<T1> l1,

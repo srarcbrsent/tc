@@ -29,6 +29,7 @@
         <module>tc-apiimpl</module>
         <module>tc-openapi</module>
         <module>tc-demos</module>
+        <module>tc-modules/tc-se-elasticsearch</module>
     </modules>
 
     <properties>
@@ -254,6 +255,12 @@
             <dependency>
                 <groupId>com.ysu.zyw</groupId>
                 <artifactId>tc-commons-upload</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-se-elasticsearch</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

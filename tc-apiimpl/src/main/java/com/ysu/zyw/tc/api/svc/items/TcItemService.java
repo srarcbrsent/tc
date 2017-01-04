@@ -1,20 +1,20 @@
 package com.ysu.zyw.tc.api.svc.items;
 
-import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.dao.mappers.*;
-import com.ysu.zyw.tc.api.dao.po.TcItem;
-import com.ysu.zyw.tc.api.dao.po.TcItemExample;
-import com.ysu.zyw.tc.api.dao.po.TcShop;
-import com.ysu.zyw.tc.api.dao.po.TcShopExample;
+import com.ysu.zyw.tc.api.dao.po.*;
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
+import com.ysu.zyw.tc.model.api.o.items.ToItem;
+import com.ysu.zyw.tc.model.api.o.items.ToShop;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -62,7 +62,7 @@ public class TcItemService {
      * @code code == 1 => 店铺不存在;
      */
     @Transactional(readOnly = true)
-    public TcShop findShop(@Nonnull String id) {
+    public ToShop findShop(@Nonnull String id) {
         checkNotNull(id);
 
         TcShopExample tcShopExample = new TcShopExample();
@@ -77,8 +77,7 @@ public class TcItemService {
             throw new TcUnProcessableEntityException(1, "店铺不存在！");
         }
 
-        // TODO: 2017/1/4 类型转换
-        return tcShops.get(0);
+        return convert2ToShop(tcShops.get(0));
     }
 
     /**
@@ -137,26 +136,48 @@ public class TcItemService {
     }
 
     /**
-     * @return 商品列表
+     * @throws TcUnProcessableEntityException 不符合业务规则要求时抛出
+     * @code code == 1 => 商品不存在;
      */
     @Transactional(readOnly = true)
-    public List<TcItem> findItems(@Nonnull List<String> ids) {
-        checkNotNull(ids);
-
-        if (CollectionUtils.isEmpty(ids)) {
-            return Lists.newArrayList();
-        }
+    public ToItem findItem(@Nonnull String id) {
+        checkNotNull(id);
 
         TcItemExample tcItemExample = new TcItemExample();
         tcItemExample.setStartLine(0);
         tcItemExample.setPageSize(1);
         tcItemExample.createCriteria()
-                .andIdIn(ids)
+                .andIdEqualTo(id)
                 .andDelectedEqualTo(false);
         List<TcItem> tcItems = tcItemMapper.selectByExample(tcItemExample);
 
-        // TODO: 2017/1/4 类型转换 商品属性 封面 详情获取
-        return tcItems;
+        if (CollectionUtils.isEmpty(tcItems)) {
+            throw new TcUnProcessableEntityException(1, "商品不存在！");
+        }
+
+        TcItem tcItem = tcItems.get(0);
+
+
+        // find covers
+        TcItemCoverExample tcItemCoverExample = new TcItemCoverExample();
+        tcItemCoverExample.createCriteria()
+                .andItemIdEqualTo(tcItem.getId());
+        List<TcItemCover> tcItemCovers = tcItemCoverMapper.selectByExample(tcItemCoverExample);
+
+        // find attrs
+        TcItemAttrExample tcItemAttrExample = new TcItemAttrExample();
+        tcItemAttrExample.createCriteria()
+                .andItemIdEqualTo(tcItem.getId());
+        List<TcItemAttr> tcItemAttrs = tcItemAttrMapper.selectByExample(tcItemAttrExample);
+
+        // find details
+        TcItemDetailExample tcItemDetailExample = new TcItemDetailExample();
+        tcItemDetailExample.createCriteria()
+                .andItemIdEqualTo(tcItem.getId());
+        List<TcItemDetail> tcItemDetails = tcItemDetailMapper.selectByExample(tcItemDetailExample);
+
+        // convert and inject
+        return convert2ToItem(tcItem, tcItemCovers, tcItemAttrs, tcItemDetails);
     }
 
     /**
@@ -173,6 +194,53 @@ public class TcItemService {
         long count = tcItemMapper.countByExample(tcItemExample);
 
         return count == 1;
+    }
+
+    private ToShop convert2ToShop(@Nonnull TcShop tcShop) {
+        checkNotNull(tcShop);
+        ToShop toShop = new ToShop();
+        BeanUtils.copyProperties(tcShop, toShop);
+        return toShop;
+    }
+
+    private ToItem convert2ToItem(@Nonnull TcItem tcItem,
+                                  @Nonnull List<TcItemCover> tcItemCovers,
+                                  @Nonnull List<TcItemAttr> tcItemAttrs,
+                                  @Nonnull List<TcItemDetail> tcItemDetails) {
+        checkNotNull(tcItem);
+        checkNotNull(tcItemCovers);
+        checkNotNull(tcItemAttrs);
+        checkNotNull(tcItemDetails);
+
+        // base info
+        ToItem toItem = new ToItem();
+        BeanUtils.copyProperties(tcItem, toItem);
+
+        // cover info
+        List<ToItem.ToItemCover> toItemCovers = tcItemCovers.stream().map(tcItemCover -> {
+            ToItem.ToItemCover cover = new ToItem.ToItemCover();
+            BeanUtils.copyProperties(tcItemCover, cover);
+            return cover;
+        }).collect(Collectors.toList());
+        toItem.setCovers(toItemCovers);
+
+        // attr info
+        List<ToItem.ToItemAttr> toItemAttrs = tcItemAttrs.stream().map(tcItemAttr -> {
+            ToItem.ToItemAttr attr = new ToItem.ToItemAttr();
+            BeanUtils.copyProperties(tcItemAttr, attr);
+            return attr;
+        }).collect(Collectors.toList());
+        toItem.setAttrs(toItemAttrs);
+
+        // detail info
+        List<ToItem.ToItemDetail> toItemDetails = tcItemDetails.stream().map(tcItemDetail -> {
+            ToItem.ToItemDetail detail = new ToItem.ToItemDetail();
+            BeanUtils.copyProperties(tcItemDetail, detail);
+            return detail;
+        }).collect(Collectors.toList());
+        toItem.setDetails(toItemDetails);
+
+        return toItem;
     }
 
 }

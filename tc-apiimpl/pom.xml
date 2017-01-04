@@ -59,6 +59,11 @@
             <artifactId>tc-servlet-support</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-se-elasticsearch</artifactId>
+        </dependency>
+
         <!-- spring dependency -->
         <dependency>
             <groupId>org.springframework</groupId>
