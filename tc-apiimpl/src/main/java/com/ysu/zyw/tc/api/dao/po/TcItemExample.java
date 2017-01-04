@@ -645,63 +645,63 @@ public class TcItemExample {
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueIsNull() {
-            addCriterion("comments_volue is null");
+        public Criteria andCommentsVolumeIsNull() {
+            addCriterion("comments_volume is null");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueIsNotNull() {
-            addCriterion("comments_volue is not null");
+        public Criteria andCommentsVolumeIsNotNull() {
+            addCriterion("comments_volume is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueEqualTo(Integer value) {
-            addCriterion("comments_volue =", value, "commentsVolue");
+        public Criteria andCommentsVolumeEqualTo(Integer value) {
+            addCriterion("comments_volume =", value, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueNotEqualTo(Integer value) {
-            addCriterion("comments_volue <>", value, "commentsVolue");
+        public Criteria andCommentsVolumeNotEqualTo(Integer value) {
+            addCriterion("comments_volume <>", value, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueGreaterThan(Integer value) {
-            addCriterion("comments_volue >", value, "commentsVolue");
+        public Criteria andCommentsVolumeGreaterThan(Integer value) {
+            addCriterion("comments_volume >", value, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueGreaterThanOrEqualTo(Integer value) {
-            addCriterion("comments_volue >=", value, "commentsVolue");
+        public Criteria andCommentsVolumeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("comments_volume >=", value, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueLessThan(Integer value) {
-            addCriterion("comments_volue <", value, "commentsVolue");
+        public Criteria andCommentsVolumeLessThan(Integer value) {
+            addCriterion("comments_volume <", value, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueLessThanOrEqualTo(Integer value) {
-            addCriterion("comments_volue <=", value, "commentsVolue");
+        public Criteria andCommentsVolumeLessThanOrEqualTo(Integer value) {
+            addCriterion("comments_volume <=", value, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueIn(List<Integer> values) {
-            addCriterion("comments_volue in", values, "commentsVolue");
+        public Criteria andCommentsVolumeIn(List<Integer> values) {
+            addCriterion("comments_volume in", values, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueNotIn(List<Integer> values) {
-            addCriterion("comments_volue not in", values, "commentsVolue");
+        public Criteria andCommentsVolumeNotIn(List<Integer> values) {
+            addCriterion("comments_volume not in", values, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueBetween(Integer value1, Integer value2) {
-            addCriterion("comments_volue between", value1, value2, "commentsVolue");
+        public Criteria andCommentsVolumeBetween(Integer value1, Integer value2) {
+            addCriterion("comments_volume between", value1, value2, "commentsVolume");
             return (Criteria) this;
         }
 
-        public Criteria andCommentsVolueNotBetween(Integer value1, Integer value2) {
-            addCriterion("comments_volue not between", value1, value2, "commentsVolue");
+        public Criteria andCommentsVolumeNotBetween(Integer value1, Integer value2) {
+            addCriterion("comments_volume not between", value1, value2, "commentsVolume");
             return (Criteria) this;
         }
 

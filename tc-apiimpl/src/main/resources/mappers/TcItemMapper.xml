@@ -10,7 +10,7 @@
     <result column="stock" jdbcType="INTEGER" property="stock" />
     <result column="sales_volume" jdbcType="INTEGER" property="salesVolume" />
     <result column="fav_volume" jdbcType="INTEGER" property="favVolume" />
-    <result column="comments_volue" jdbcType="INTEGER" property="commentsVolue" />
+    <result column="comments_volume" jdbcType="INTEGER" property="commentsVolume" />
     <result column="delected" jdbcType="VARCHAR" property="delected" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
     <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
@@ -76,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, shop_id, title, description, price, stock, sales_volume, fav_volume, comments_volue, 
+    id, shop_id, title, description, price, stock, sales_volume, fav_volume, comments_volume, 
     delected, updated_person, updated_timestamp, created_person, created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcItemExample" resultMap="BaseResultMap">
@@ -115,12 +115,12 @@
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcItem">
     insert into it_item (id, shop_id, title, 
       description, price, stock, 
-      sales_volume, fav_volume, comments_volue, 
+      sales_volume, fav_volume, comments_volume, 
       delected, updated_person, updated_timestamp, 
       created_person, created_timestamp)
     values (#{id,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{price,jdbcType=BIGINT}, #{stock,jdbcType=INTEGER}, 
-      #{salesVolume,jdbcType=INTEGER}, #{favVolume,jdbcType=INTEGER}, #{commentsVolue,jdbcType=INTEGER}, 
+      #{salesVolume,jdbcType=INTEGER}, #{favVolume,jdbcType=INTEGER}, #{commentsVolume,jdbcType=INTEGER}, 
       #{delected,jdbcType=VARCHAR}, #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, 
       #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP})
   </insert>
@@ -151,8 +151,8 @@
       <if test="favVolume != null">
         fav_volume,
       </if>
-      <if test="commentsVolue != null">
-        comments_volue,
+      <if test="commentsVolume != null">
+        comments_volume,
       </if>
       <if test="delected != null">
         delected,
@@ -195,8 +195,8 @@
       <if test="favVolume != null">
         #{favVolume,jdbcType=INTEGER},
       </if>
-      <if test="commentsVolue != null">
-        #{commentsVolue,jdbcType=INTEGER},
+      <if test="commentsVolume != null">
+        #{commentsVolume,jdbcType=INTEGER},
       </if>
       <if test="delected != null">
         #{delected,jdbcType=VARCHAR},
@@ -248,8 +248,8 @@
       <if test="record.favVolume != null">
         fav_volume = #{record.favVolume,jdbcType=INTEGER},
       </if>
-      <if test="record.commentsVolue != null">
-        comments_volue = #{record.commentsVolue,jdbcType=INTEGER},
+      <if test="record.commentsVolume != null">
+        comments_volume = #{record.commentsVolume,jdbcType=INTEGER},
       </if>
       <if test="record.delected != null">
         delected = #{record.delected,jdbcType=VARCHAR},
@@ -281,7 +281,7 @@
       stock = #{record.stock,jdbcType=INTEGER},
       sales_volume = #{record.salesVolume,jdbcType=INTEGER},
       fav_volume = #{record.favVolume,jdbcType=INTEGER},
-      comments_volue = #{record.commentsVolue,jdbcType=INTEGER},
+      comments_volume = #{record.commentsVolume,jdbcType=INTEGER},
       delected = #{record.delected,jdbcType=VARCHAR},
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
@@ -315,8 +315,8 @@
       <if test="favVolume != null">
         fav_volume = #{favVolume,jdbcType=INTEGER},
       </if>
-      <if test="commentsVolue != null">
-        comments_volue = #{commentsVolue,jdbcType=INTEGER},
+      <if test="commentsVolume != null">
+        comments_volume = #{commentsVolume,jdbcType=INTEGER},
       </if>
       <if test="delected != null">
         delected = #{delected,jdbcType=VARCHAR},
@@ -345,7 +345,7 @@
       stock = #{stock,jdbcType=INTEGER},
       sales_volume = #{salesVolume,jdbcType=INTEGER},
       fav_volume = #{favVolume,jdbcType=INTEGER},
-      comments_volue = #{commentsVolue,jdbcType=INTEGER},
+      comments_volume = #{commentsVolume,jdbcType=INTEGER},
       delected = #{delected,jdbcType=VARCHAR},
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
@@ -380,7 +380,7 @@
       stock, 
       sales_volume, 
       fav_volume, 
-      comments_volue, 
+      comments_volume, 
       delected, 
       updated_person, 
       updated_timestamp, 
@@ -396,7 +396,7 @@
       #{item.stock,jdbcType=INTEGER}, 
       #{item.salesVolume,jdbcType=INTEGER}, 
       #{item.favVolume,jdbcType=INTEGER}, 
-      #{item.commentsVolue,jdbcType=INTEGER}, 
+      #{item.commentsVolume,jdbcType=INTEGER}, 
       #{item.delected,jdbcType=VARCHAR}, 
       #{item.updatedPerson,jdbcType=VARCHAR}, 
       #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 

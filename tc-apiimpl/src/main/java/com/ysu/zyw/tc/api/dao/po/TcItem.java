@@ -28,7 +28,7 @@ public class TcItem {
 
     private Integer favVolume;
 
-    private Integer commentsVolue;
+    private Integer commentsVolume;
 
     private Boolean delected;
 
