@@ -22,7 +22,7 @@
         <param-value>
             classpath*:/config/tc-spring-deploy.xml,
             classpath*:/config/tc-spring-cache-redis.xml,
-            classpath*:/config/tc-spring-es-elasticsearch.xml,
+            classpath*:/config/tc-spring-se-elasticsearch.xml,
             classpath*:/config/tc-dubbox-provider.xml
         </param-value>
     </context-param>

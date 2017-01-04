@@ -24,19 +24,18 @@
         <module>tc-modules/tc-aliyun-support</module>
         <module>tc-modules/tc-commons-upload</module>
         <module>tc-modules/tc-crawler</module>
+        <module>tc-modules/tc-se-elasticsearch</module>
         <module>tc-apimodel</module>
         <module>tc-api</module>
         <module>tc-apiimpl</module>
         <module>tc-openapi</module>
         <module>tc-demos</module>
-        <module>tc-modules/tc-se-elasticsearch</module>
     </modules>
 
     <properties>
         <pom.version.spring>4.3.5.RELEASE</pom.version.spring>
         <pom.version.spring.data.redis>1.7.5.RELEASE</pom.version.spring.data.redis>
         <pom.version.spring.data.mongodb>1.9.5.RELEASE</pom.version.spring.data.mongodb>
-        <pom.version.spring.data.elasticsearch>2.0.4.RELEASE</pom.version.spring.data.elasticsearch>
         <pom.version.spring.retry>1.1.4.RELEASE</pom.version.spring.retry>
         <pom.version.jackson.databind>2.8.4</pom.version.jackson.databind>
         <pom.version.aspectj>1.8.9</pom.version.aspectj>
@@ -45,7 +44,7 @@
         <pom.version.shiro>1.3.2</pom.version.shiro>
         <pom.version.codis.client>0.3.0</pom.version.codis.client>
         <pom.version.metaq.client>1.4.6.3-SNAPSHOT</pom.version.metaq.client>
-        <pom.version.elasticsearch.client>2.4.1</pom.version.elasticsearch.client>
+        <pom.version.elasticsearch.client>5.1.1</pom.version.elasticsearch.client>
         <pom.version.activemq.client>5.14.1</pom.version.activemq.client>
         <pom.version.curator>2.9.1</pom.version.curator>
         <pom.version.mybatis>3.4.1</pom.version.mybatis>
@@ -143,6 +142,11 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
         </dependency>
     </dependencies>
 
@@ -384,14 +388,8 @@
 
             <!-- elasticsearch -->
             <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-elasticsearch</artifactId>
-                <version>${pom.version.spring.data.elasticsearch}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch</artifactId>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>transport</artifactId>
                 <version>${pom.version.elasticsearch.client}</version>
             </dependency>
 
@@ -854,6 +852,12 @@
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>1.2.16</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-to-slf4j</artifactId>
+                <version>2.7</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

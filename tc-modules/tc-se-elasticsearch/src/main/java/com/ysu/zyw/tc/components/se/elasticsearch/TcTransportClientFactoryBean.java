@@ -1,0 +1,71 @@
+package com.ysu.zyw.tc.components.se.elasticsearch;
+
+import com.ysu.zyw.tc.base.ex.TcException;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.springframework.beans.factory.FactoryBean;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Map;
+import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkArgument;
+
+@Slf4j
+public class TcTransportClientFactoryBean implements FactoryBean<TransportClient>, Closeable {
+
+    @Getter
+    @Setter
+    private Map<String, Integer> inetAddresses;
+
+    @Getter
+    @Setter
+    private Settings settings = Settings.EMPTY;
+
+    private TransportClient client;
+
+    @Override
+    public TransportClient getObject() throws Exception {
+        checkArgument(MapUtils.isNotEmpty(inetAddresses));
+        PreBuiltTransportClient client = new PreBuiltTransportClient(settings);
+        inetAddresses.entrySet().forEach(entry -> {
+            try {
+                client.addTransportAddress(
+                        new InetSocketTransportAddress(InetAddress.getByName(entry.getKey()), entry.getValue()));
+                log.info("add socket transport address [{}:{}] to client", entry.getKey(), entry.getValue());
+            } catch (UnknownHostException e) {
+                throw new TcException(e);
+            }
+        });
+        this.client = client;
+        log.info("successful create transport client instance ...");
+        return client;
+    }
+
+    @Override
+    public Class<?> getObjectType() {
+        return TransportClient.class;
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return true;
+    }
+
+    @Override
+    public void close() throws IOException {
+        if (Objects.nonNull(client)) {
+            client.close();
+            log.info("successful close transport client ...");
+        }
+    }
+}

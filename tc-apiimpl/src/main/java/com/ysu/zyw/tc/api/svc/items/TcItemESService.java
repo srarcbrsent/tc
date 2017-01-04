@@ -12,20 +12,38 @@ public class TcItemESService {
     @Resource
     private TcItemService tcItemService;
 
-    public void search() {
+    /**
+     * 查询数量
+     */
+    public void count() {
 
     }
 
-    public void fullIndex() {
+    /**
+     * 查询列表
+     */
+    public void query() {
 
     }
 
-    public void deltaIndex() {
+    /**
+     * 推荐词
+     */
+    public void suggest() {
 
     }
 
-    public void deleteIndex() {
+    /**
+     * 建索引
+     */
+    public void index() {
 
+    }
+
+    /**
+     * 删索引
+     */
+    public void delete() {
     }
 
 }

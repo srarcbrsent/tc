@@ -10,13 +10,6 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- !!!! Infrastructure !!!! -->
-
-    <!-- aop -->
-    <!-- response-decorator: -500 / cache: -20 / transaction: 0 -->
-    <aop:aspectj-autoproxy proxy-target-class="true"
-                           expose-proxy="true"/>
-
     <!-- !!!! Import !!!! -->
     <context:property-placeholder file-encoding="UTF-8"
                                   location="${properties.pom.activation.spring.profile}"/>
@@ -25,6 +18,23 @@
     <import resource="classpath*:/config/tc-spring-dao.xml"/>
 
     <import resource="classpath*:/config/tc-spring-svc.xml"/>
+
+    <!-- !!!! Infrastructure !!!! -->
+
+    <!-- aop -->
+    <!-- response-decorator: -500 / cache: -20 / transaction: 0 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"
+                           expose-proxy="true"/>
+
+    <!-- elasticsearch -->
+    <bean id="inetAddresses" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map key-type="java.lang.String" value-type="java.lang.Integer">
+                <entry key="${properties.se.elasticsearch.node1.host}"
+                       value="${properties.se.elasticsearch.node1.port}"/>
+            </map>
+        </property>
+    </bean>
 
     <bean id="tcApplicationExaminer" class="com.ysu.zyw.tc.components.support.TcApplicationExaminer"/>
 

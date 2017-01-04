@@ -20,7 +20,7 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
+            <artifactId>spring-context-support</artifactId>
             <scope>provided</scope>
         </dependency>
 

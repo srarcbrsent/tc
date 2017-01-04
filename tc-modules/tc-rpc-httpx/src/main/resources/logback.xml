@@ -8,7 +8,7 @@
     <property name="properties.logback.appender.log.project.base" value="/tc-components"/>
 
     <property name="logback.appender.layout.pattern"
-              value="[%level] [%date] [%cn] [%t] [%file:%line] %logger{0} - %msg%n"/>
+              value="[%level] [%date] [%cn] [%t] [%logger{10}:%line] - %msg%n"/>
 
     <property name="properties.logback.log.level" value="INFO"/>
 
