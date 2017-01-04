@@ -12,6 +12,7 @@ import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -31,6 +32,7 @@ import java.util.stream.Stream;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Slf4j
 @Service
 public class TcAccountService {
 

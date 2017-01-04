@@ -585,62 +585,62 @@ public class TcShopExample {
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodEqualTo(String value) {
+        public Criteria andSupportCodEqualTo(Boolean value) {
             addCriterion("support_cod =", value, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodNotEqualTo(String value) {
+        public Criteria andSupportCodNotEqualTo(Boolean value) {
             addCriterion("support_cod <>", value, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodGreaterThan(String value) {
+        public Criteria andSupportCodGreaterThan(Boolean value) {
             addCriterion("support_cod >", value, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodGreaterThanOrEqualTo(String value) {
+        public Criteria andSupportCodGreaterThanOrEqualTo(Boolean value) {
             addCriterion("support_cod >=", value, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodLessThan(String value) {
+        public Criteria andSupportCodLessThan(Boolean value) {
             addCriterion("support_cod <", value, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodLessThanOrEqualTo(String value) {
+        public Criteria andSupportCodLessThanOrEqualTo(Boolean value) {
             addCriterion("support_cod <=", value, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodLike(String value) {
+        public Criteria andSupportCodLike(Boolean value) {
             addCriterion("support_cod like", value, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodNotLike(String value) {
+        public Criteria andSupportCodNotLike(Boolean value) {
             addCriterion("support_cod not like", value, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodIn(List<String> values) {
+        public Criteria andSupportCodIn(List<Boolean> values) {
             addCriterion("support_cod in", values, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodNotIn(List<String> values) {
+        public Criteria andSupportCodNotIn(List<Boolean> values) {
             addCriterion("support_cod not in", values, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodBetween(String value1, String value2) {
+        public Criteria andSupportCodBetween(Boolean value1, Boolean value2) {
             addCriterion("support_cod between", value1, value2, "supportCod");
             return (Criteria) this;
         }
 
-        public Criteria andSupportCodNotBetween(String value1, String value2) {
+        public Criteria andSupportCodNotBetween(Boolean value1, Boolean value2) {
             addCriterion("support_cod not between", value1, value2, "supportCod");
             return (Criteria) this;
         }
@@ -655,62 +655,62 @@ public class TcShopExample {
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayEqualTo(String value) {
+        public Criteria andSupportOnlinePayEqualTo(Boolean value) {
             addCriterion("support_online_pay =", value, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayNotEqualTo(String value) {
+        public Criteria andSupportOnlinePayNotEqualTo(Boolean value) {
             addCriterion("support_online_pay <>", value, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayGreaterThan(String value) {
+        public Criteria andSupportOnlinePayGreaterThan(Boolean value) {
             addCriterion("support_online_pay >", value, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayGreaterThanOrEqualTo(String value) {
+        public Criteria andSupportOnlinePayGreaterThanOrEqualTo(Boolean value) {
             addCriterion("support_online_pay >=", value, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayLessThan(String value) {
+        public Criteria andSupportOnlinePayLessThan(Boolean value) {
             addCriterion("support_online_pay <", value, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayLessThanOrEqualTo(String value) {
+        public Criteria andSupportOnlinePayLessThanOrEqualTo(Boolean value) {
             addCriterion("support_online_pay <=", value, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayLike(String value) {
+        public Criteria andSupportOnlinePayLike(Boolean value) {
             addCriterion("support_online_pay like", value, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayNotLike(String value) {
+        public Criteria andSupportOnlinePayNotLike(Boolean value) {
             addCriterion("support_online_pay not like", value, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayIn(List<String> values) {
+        public Criteria andSupportOnlinePayIn(List<Boolean> values) {
             addCriterion("support_online_pay in", values, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayNotIn(List<String> values) {
+        public Criteria andSupportOnlinePayNotIn(List<Boolean> values) {
             addCriterion("support_online_pay not in", values, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayBetween(String value1, String value2) {
+        public Criteria andSupportOnlinePayBetween(Boolean value1, Boolean value2) {
             addCriterion("support_online_pay between", value1, value2, "supportOnlinePay");
             return (Criteria) this;
         }
 
-        public Criteria andSupportOnlinePayNotBetween(String value1, String value2) {
+        public Criteria andSupportOnlinePayNotBetween(Boolean value1, Boolean value2) {
             addCriterion("support_online_pay not between", value1, value2, "supportOnlinePay");
             return (Criteria) this;
         }

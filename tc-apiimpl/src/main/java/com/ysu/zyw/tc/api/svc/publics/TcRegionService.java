@@ -7,6 +7,7 @@ import com.ysu.zyw.tc.api.dao.po.TcRegionExample;
 import com.ysu.zyw.tc.model.api.o.publics.ToCity;
 import com.ysu.zyw.tc.model.api.o.publics.ToProvince;
 import com.ysu.zyw.tc.model.api.o.publics.ToRegion;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Slf4j
 @Service
 public class TcRegionService {
 

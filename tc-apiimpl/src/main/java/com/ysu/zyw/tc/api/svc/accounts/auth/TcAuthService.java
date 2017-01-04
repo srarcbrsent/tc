@@ -10,6 +10,7 @@ import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+@Slf4j
 @Service
 public class TcAuthService {
 

@@ -26,9 +26,9 @@ public class TcShop {
 
     private Integer comprehensiveRate;
 
-    private String supportCod;
+    private Boolean supportCod;
 
-    private String supportOnlinePay;
+    private Boolean supportOnlinePay;
 
     private String updatedPerson;
 
