@@ -118,6 +118,8 @@
                             javaType="java.lang.Boolean"/>
             <columnOverride column="support_online_pay"
                             javaType="java.lang.Boolean"/>
+            <columnOverride column="locked"
+                            javaType="java.lang.Boolean"/>
         </table>
 
         <table tableName="it_item"

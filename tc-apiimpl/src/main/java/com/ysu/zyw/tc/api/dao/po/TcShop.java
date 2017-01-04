@@ -30,6 +30,8 @@ public class TcShop {
 
     private Boolean supportOnlinePay;
 
+    private Boolean locked;
+
     private String updatedPerson;
 
     private Date updatedTimestamp;

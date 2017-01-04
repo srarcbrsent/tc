@@ -25,4 +25,16 @@ public class TcItemService {
     @Resource
     private TcShopMapper tcShopMapper;
 
+    public void findShop(String id) {
+
+    }
+
+    public void deleteItem(String id) {
+
+    }
+
+    public void findItem(String id) {
+
+    }
+
 }

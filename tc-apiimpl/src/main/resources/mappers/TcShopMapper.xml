@@ -11,6 +11,7 @@
     <result column="comprehensive_rate" jdbcType="INTEGER" property="comprehensiveRate" />
     <result column="support_cod" jdbcType="VARCHAR" property="supportCod" />
     <result column="support_online_pay" jdbcType="VARCHAR" property="supportOnlinePay" />
+    <result column="locked" jdbcType="VARCHAR" property="locked" />
     <result column="updated_person" jdbcType="VARCHAR" property="updatedPerson" />
     <result column="updated_timestamp" jdbcType="TIMESTAMP" property="updatedTimestamp" />
     <result column="created_person" jdbcType="VARCHAR" property="createdPerson" />
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, name, location, describing_rate, service_rate, delivery_rate, comprehensive_rate, 
-    support_cod, support_online_pay, updated_person, updated_timestamp, created_person, 
+    support_cod, support_online_pay, locked, updated_person, updated_timestamp, created_person, 
     created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcShopExample" resultMap="BaseResultMap">
@@ -116,13 +117,13 @@
     insert into it_shop (id, name, location, 
       describing_rate, service_rate, delivery_rate, 
       comprehensive_rate, support_cod, support_online_pay, 
-      updated_person, updated_timestamp, created_person, 
-      created_timestamp)
+      locked, updated_person, updated_timestamp, 
+      created_person, created_timestamp)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
       #{describingRate,jdbcType=INTEGER}, #{serviceRate,jdbcType=INTEGER}, #{deliveryRate,jdbcType=INTEGER}, 
       #{comprehensiveRate,jdbcType=INTEGER}, #{supportCod,jdbcType=VARCHAR}, #{supportOnlinePay,jdbcType=VARCHAR}, 
-      #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, 
-      #{createdTimestamp,jdbcType=TIMESTAMP})
+      #{locked,jdbcType=VARCHAR}, #{updatedPerson,jdbcType=VARCHAR}, #{updatedTimestamp,jdbcType=TIMESTAMP}, 
+      #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcShop">
     insert into it_shop
@@ -153,6 +154,9 @@
       </if>
       <if test="supportOnlinePay != null">
         support_online_pay,
+      </if>
+      <if test="locked != null">
+        locked,
       </if>
       <if test="updatedPerson != null">
         updated_person,
@@ -194,6 +198,9 @@
       </if>
       <if test="supportOnlinePay != null">
         #{supportOnlinePay,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null">
+        #{locked,jdbcType=VARCHAR},
       </if>
       <if test="updatedPerson != null">
         #{updatedPerson,jdbcType=VARCHAR},
@@ -245,6 +252,9 @@
       <if test="record.supportOnlinePay != null">
         support_online_pay = #{record.supportOnlinePay,jdbcType=VARCHAR},
       </if>
+      <if test="record.locked != null">
+        locked = #{record.locked,jdbcType=VARCHAR},
+      </if>
       <if test="record.updatedPerson != null">
         updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       </if>
@@ -273,6 +283,7 @@
       comprehensive_rate = #{record.comprehensiveRate,jdbcType=INTEGER},
       support_cod = #{record.supportCod,jdbcType=VARCHAR},
       support_online_pay = #{record.supportOnlinePay,jdbcType=VARCHAR},
+      locked = #{record.locked,jdbcType=VARCHAR},
       updated_person = #{record.updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{record.updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{record.createdPerson,jdbcType=VARCHAR},
@@ -308,6 +319,9 @@
       <if test="supportOnlinePay != null">
         support_online_pay = #{supportOnlinePay,jdbcType=VARCHAR},
       </if>
+      <if test="locked != null">
+        locked = #{locked,jdbcType=VARCHAR},
+      </if>
       <if test="updatedPerson != null">
         updated_person = #{updatedPerson,jdbcType=VARCHAR},
       </if>
@@ -333,6 +347,7 @@
       comprehensive_rate = #{comprehensiveRate,jdbcType=INTEGER},
       support_cod = #{supportCod,jdbcType=VARCHAR},
       support_online_pay = #{supportOnlinePay,jdbcType=VARCHAR},
+      locked = #{locked,jdbcType=VARCHAR},
       updated_person = #{updatedPerson,jdbcType=VARCHAR},
       updated_timestamp = #{updatedTimestamp,jdbcType=TIMESTAMP},
       created_person = #{createdPerson,jdbcType=VARCHAR},
@@ -367,6 +382,7 @@
       comprehensive_rate, 
       support_cod, 
       support_online_pay, 
+      locked, 
       updated_person, 
       updated_timestamp, 
       created_person, 
@@ -382,6 +398,7 @@
       #{item.comprehensiveRate,jdbcType=INTEGER}, 
       #{item.supportCod,jdbcType=VARCHAR}, 
       #{item.supportOnlinePay,jdbcType=VARCHAR}, 
+      #{item.locked,jdbcType=VARCHAR}, 
       #{item.updatedPerson,jdbcType=VARCHAR}, 
       #{item.updatedTimestamp,jdbcType=TIMESTAMP}, 
       #{item.createdPerson,jdbcType=VARCHAR}, 

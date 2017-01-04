@@ -715,6 +715,76 @@ public class TcShopExample {
             return (Criteria) this;
         }
 
+        public Criteria andLockedIsNull() {
+            addCriterion("locked is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedIsNotNull() {
+            addCriterion("locked is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedEqualTo(Boolean value) {
+            addCriterion("locked =", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedNotEqualTo(Boolean value) {
+            addCriterion("locked <>", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedGreaterThan(Boolean value) {
+            addCriterion("locked >", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("locked >=", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedLessThan(Boolean value) {
+            addCriterion("locked <", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedLessThanOrEqualTo(Boolean value) {
+            addCriterion("locked <=", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedLike(Boolean value) {
+            addCriterion("locked like", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedNotLike(Boolean value) {
+            addCriterion("locked not like", value, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedIn(List<Boolean> values) {
+            addCriterion("locked in", values, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedNotIn(List<Boolean> values) {
+            addCriterion("locked not in", values, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedBetween(Boolean value1, Boolean value2) {
+            addCriterion("locked between", value1, value2, "locked");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockedNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("locked not between", value1, value2, "locked");
+            return (Criteria) this;
+        }
+
         public Criteria andUpdatedPersonIsNull() {
             addCriterion("updated_person is null");
             return (Criteria) this;
