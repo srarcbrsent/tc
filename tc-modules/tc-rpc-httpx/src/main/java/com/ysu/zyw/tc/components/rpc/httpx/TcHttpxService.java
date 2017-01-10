@@ -17,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.Resource;
-import javax.validation.constraints.NotNull;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -264,24 +263,25 @@ public class TcHttpxService {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public <T> T orElseGet(@NotNull ResponseEntity<T> responseEntity,
-                           @Nullable T value) {
+    public <T> T orElseGet(@Nonnull ResponseEntity<T> responseEntity,
+                           @Nonnull Supplier<T> defaultValueSupplier) {
         checkNotNull(responseEntity);
+        checkNotNull(defaultValueSupplier);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             return responseEntity.getBody();
         } else {
-            return value;
+            return defaultValueSupplier.get();
         }
     }
 
-    public <T> T orElseThrow(@NotNull ResponseEntity<T> responseEntity,
-                             @NotNull Supplier<RuntimeException> supplier) {
+    public <T> T orElseThrow(@Nonnull ResponseEntity<T> responseEntity,
+                             @Nonnull Supplier<RuntimeException> exceptionSupplier) {
         checkNotNull(responseEntity);
-        checkNotNull(supplier);
+        checkNotNull(exceptionSupplier);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             return responseEntity.getBody();
         } else {
-            throw supplier.get();
+            throw exceptionSupplier.get();
         }
     }
 
