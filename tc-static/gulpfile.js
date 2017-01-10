@@ -138,7 +138,7 @@ gulp.task('mg-script-libs', function (cb) {
             'src/resources/libs/jquery-3.1.0.min.js',
             'src/resources/libs/vue.min.js',
             'src/resources/libs/axios.min.js',
-            'src/resources/libs/underscore.min.js',
+            'src/resources/libs/lodash.min.js',
             'src/resources/libs/assets/js/amazeui.min.js',
             'src/resources/libs/layer/layer.min.js'
         ])
