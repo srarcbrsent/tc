@@ -104,7 +104,7 @@
     </bean>
 
     <bean class="com.ysu.zyw.tc.components.rpc.httpx.TcHttpxService">
-        <property name="camouflageException" value="${properties.rpc.httpx.camouflage.exception}"/>
+        <property name="swallowException" value="${properties.rpc.httpx.swallow.exception}"/>
     </bean>
 
 </beans>

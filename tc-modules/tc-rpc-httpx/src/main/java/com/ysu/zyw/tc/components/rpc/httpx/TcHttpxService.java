@@ -53,7 +53,7 @@ public class TcHttpxService {
 
     @Getter
     @Setter
-    private boolean camouflageException;
+    private boolean swallowException;
 
     public <T> ResponseEntity<T> getText4Entity(@Nonnull String url,
                                                 @Nullable Map<String, String> pathVariables,
@@ -223,7 +223,7 @@ public class TcHttpxService {
             uriVariables = Maps.newHashMap();
         }
 
-        if (BooleanUtils.isTrue(camouflageException)) {
+        if (BooleanUtils.isTrue(swallowException)) {
             try {
                 return doExecute(url, httpMethod, httpEntity, typeReference, uriVariables);
             } catch (Exception e) {

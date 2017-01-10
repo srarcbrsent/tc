@@ -18,6 +18,7 @@
         <module>tc-modules/tc-cache-codis</module>
         <module>tc-modules/tc-mq-metaq</module>
         <module>tc-modules/tc-commons-retry</module>
+        <module>tc-modules/tc-commons-utils</module>
         <module>tc-modules/tc-dubbox-support</module>
         <module>tc-modules/tc-servlet-support</module>
         <module>tc-modules/tc-freemarker-support</module>
@@ -230,6 +231,12 @@
             <dependency>
                 <groupId>com.ysu.zyw</groupId>
                 <artifactId>tc-commons-retry</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-commons-utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
