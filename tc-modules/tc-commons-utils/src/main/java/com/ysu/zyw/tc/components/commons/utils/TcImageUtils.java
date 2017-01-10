@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.base.utils;
+package com.ysu.zyw.tc.components.commons.utils;
 
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -154,7 +154,6 @@ public class TcImageUtils {
      * @param code               文本验证码
      * @param width              图片宽度
      * @param height             图片高度
-     * @param interLines         图片中干扰线的条数
      * @param bgColor            图片颜色，若为null，则采用随机颜色
      * @param fontColor          字体颜色，若为null，则采用随机颜色
      * @param interLineColor     干扰线颜色，若为null，则采用随机颜色

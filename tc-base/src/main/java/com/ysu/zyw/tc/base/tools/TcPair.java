@@ -11,10 +11,12 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcTuple<K, V> implements Serializable {
+public class TcPair<K, V> implements Serializable {
 
-    private K firstValue;
+    private static final long serialVersionUID = 8868470434090722774L;
 
-    private V secondValue;
+    private K left;
+
+    private V right;
 
 }
