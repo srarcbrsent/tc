@@ -52,6 +52,7 @@
         <pom.version.dubbox>2.8.4</pom.version.dubbox>
         <pom.version.resteasy>3.0.19.Final</pom.version.resteasy>
         <pom.version.rxjava>1.2.2</pom.version.rxjava>
+        <pom.version.disconf>2.6.36</pom.version.disconf>
         <pom.version.swagger>2.5.0</pom.version.swagger>
     </properties>
 
@@ -821,6 +822,13 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${pom.version.swagger}</version>
+            </dependency>
+
+            <!-- disconf -->
+            <dependency>
+                <groupId>com.baidu.disconf</groupId>
+                <artifactId>disconf-client</artifactId>
+                <version>${pom.version.disconf}</version>
             </dependency>
 
             <!-- log -->

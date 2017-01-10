@@ -178,6 +178,12 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
+
+        <!-- disconf -->
+        <dependency>
+            <groupId>com.baidu.disconf</groupId>
+            <artifactId>disconf-client</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>
