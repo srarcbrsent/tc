@@ -19,4 +19,8 @@ public class TcPair<K, V> implements Serializable {
 
     private V right;
 
+    public static <K, V> TcPair<K, V> with(K left, V right) {
+        return new TcPair<>(left, right);
+    }
+
 }

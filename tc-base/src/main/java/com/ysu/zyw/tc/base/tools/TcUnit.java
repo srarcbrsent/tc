@@ -17,4 +17,8 @@ public class TcUnit<T> implements Serializable {
 
     private T value;
 
+    public static <T> TcUnit<T> with(T value) {
+        return new TcUnit<>(value);
+    }
+
 }
