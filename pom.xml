@@ -746,6 +746,12 @@
                 <version>3.15</version>
             </dependency>
 
+            <dependency>
+                <groupId>net.coobird</groupId>
+                <artifactId>thumbnailator</artifactId>
+                <version>0.4.8</version>
+            </dependency>
+
             <!-- test -->
             <dependency>
                 <groupId>junit</groupId>

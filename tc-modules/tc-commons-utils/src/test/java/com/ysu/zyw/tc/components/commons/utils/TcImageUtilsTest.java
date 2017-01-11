@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.base.utils;
+package com.ysu.zyw.tc.components.commons.utils;
 
 import org.junit.After;
 import org.junit.Before;

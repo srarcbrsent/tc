@@ -11,12 +11,10 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TcTriple<K, V, T> implements Serializable {
+public class TcUnit<T> implements Serializable {
 
-    private K firstValue;
+    private static final long serialVersionUID = -1455160712092699531L;
 
-    private V secondValue;
-
-    private T thirdValue;
+    private T value;
 
 }

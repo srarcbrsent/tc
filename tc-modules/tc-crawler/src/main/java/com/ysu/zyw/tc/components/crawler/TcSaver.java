@@ -137,26 +137,24 @@ public class TcSaver {
 
     @SneakyThrows
     private static String findShopId(String shopName) {
-        DruidPooledConnection connection = DATA_SOURCE.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM it_shop WHERE name = ?");
-        preparedStatement.setString(1, shopName);
-        ResultSet resultSet = null;
-        try {
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            } else {
-                return null;
+        try (DruidPooledConnection connection = DATA_SOURCE.getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement("SELECT id FROM it_shop WHERE name = ?")) {
+
+            preparedStatement.setString(1, shopName);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString(1);
+                } else {
+                    return null;
+                }
             }
-        } finally {
-            JdbcUtils.closeResultSet(resultSet);
-            JdbcUtils.closeConnection(connection);
         }
     }
 
     @SneakyThrows
     private static void insertShop(DruidPooledConnection connection, TcCrawlerShop shop) {
-        PreparedStatement preparedStatement = connection.prepareStatement(
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO it_shop("
                         + "id, "
                         + "name, "
@@ -171,26 +169,27 @@ public class TcSaver {
                         + "updated_timestamp, "
                         + "created_person, "
                         + "created_timestamp"
-                        + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, shop.getId());
-        preparedStatement.setString(2, shop.getName());
-        preparedStatement.setString(3, PROVINCES[RandomUtils.nextInt(0, PROVINCES.length)]);
-        preparedStatement.setInt(4, shop.getDescribingRate());
-        preparedStatement.setInt(5, shop.getServiceRate());
-        preparedStatement.setInt(6, shop.getDeliveryRate());
-        preparedStatement.setInt(7, shop.getComprehensiveRate());
-        preparedStatement.setString(8, RandomUtils.nextBoolean() ? "0" : "1");
-        preparedStatement.setString(9, RandomUtils.nextBoolean() ? "0" : "1");
-        preparedStatement.setString(10, TcConstant.Base.STR_32_0);
-        preparedStatement.setString(11, "2016-12-31 12:12:12");
-        preparedStatement.setString(12, TcConstant.Base.STR_32_0);
-        preparedStatement.setString(13, "2016-12-31 12:12:12");
-        preparedStatement.execute();
+                        + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+            preparedStatement.setString(1, shop.getId());
+            preparedStatement.setString(2, shop.getName());
+            preparedStatement.setString(3, PROVINCES[RandomUtils.nextInt(0, PROVINCES.length)]);
+            preparedStatement.setInt(4, shop.getDescribingRate());
+            preparedStatement.setInt(5, shop.getServiceRate());
+            preparedStatement.setInt(6, shop.getDeliveryRate());
+            preparedStatement.setInt(7, shop.getComprehensiveRate());
+            preparedStatement.setString(8, RandomUtils.nextBoolean() ? "0" : "1");
+            preparedStatement.setString(9, RandomUtils.nextBoolean() ? "0" : "1");
+            preparedStatement.setString(10, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(11, "2016-12-31 12:12:12");
+            preparedStatement.setString(12, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(13, "2016-12-31 12:12:12");
+            preparedStatement.execute();
+        }
     }
 
     @SneakyThrows
     private static void insertItem(DruidPooledConnection connection, TcCrawlerItem item) {
-        PreparedStatement preparedStatement = connection.prepareStatement(
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO it_item("
                         + "id, "
                         + "shop_id, "
@@ -206,22 +205,23 @@ public class TcSaver {
                         + "updated_timestamp, "
                         + "created_person, "
                         + "created_timestamp"
-                        + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, item.getId());
-        preparedStatement.setString(2, item.getShopId());
-        preparedStatement.setString(3, item.getTitle());
-        preparedStatement.setString(4, item.getDescription());
-        preparedStatement.setLong(5, item.getPrice());
-        preparedStatement.setInt(6, item.getStock());
-        preparedStatement.setInt(7, RandomUtils.nextInt(10, 1500));
-        preparedStatement.setInt(8, RandomUtils.nextInt(100, 15000));
-        preparedStatement.setInt(9, RandomUtils.nextInt(5, 500));
-        preparedStatement.setString(10, "0");
-        preparedStatement.setString(11, TcConstant.Base.STR_32_0);
-        preparedStatement.setString(12, "2016-12-31 12:12:12");
-        preparedStatement.setString(13, TcConstant.Base.STR_32_0);
-        preparedStatement.setString(14, "2016-12-31 12:12:12");
-        preparedStatement.execute();
+                        + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+            preparedStatement.setString(1, item.getId());
+            preparedStatement.setString(2, item.getShopId());
+            preparedStatement.setString(3, item.getTitle());
+            preparedStatement.setString(4, item.getDescription());
+            preparedStatement.setLong(5, item.getPrice());
+            preparedStatement.setInt(6, item.getStock());
+            preparedStatement.setInt(7, RandomUtils.nextInt(10, 1500));
+            preparedStatement.setInt(8, RandomUtils.nextInt(100, 15000));
+            preparedStatement.setInt(9, RandomUtils.nextInt(5, 500));
+            preparedStatement.setString(10, "0");
+            preparedStatement.setString(11, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(12, "2016-12-31 12:12:12");
+            preparedStatement.setString(13, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(14, "2016-12-31 12:12:12");
+            preparedStatement.execute();
+        }
     }
 
     @SneakyThrows
@@ -257,7 +257,7 @@ public class TcSaver {
     private static void insertItemCover(DruidPooledConnection connection, List<TcCrawlerItemCover> covers) {
         for (int i = 0; i < covers.size(); i++) {
             TcCrawlerItemCover cover = covers.get(i);
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "INSERT INTO it_item_cover("
                             + "id, "
                             + "item_id, "
@@ -267,16 +267,17 @@ public class TcSaver {
                             + "updated_timestamp, "
                             + "created_person, "
                             + "created_timestamp"
-                            + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            preparedStatement.setString(1, cover.getId());
-            preparedStatement.setString(2, cover.getItemId());
-            preparedStatement.setString(3, cover.getCover());
-            preparedStatement.setLong(4, cover.getSequence());
-            preparedStatement.setString(5, TcConstant.Base.STR_32_0);
-            preparedStatement.setString(6, "2016-12-31 12:12:12");
-            preparedStatement.setString(7, TcConstant.Base.STR_32_0);
-            preparedStatement.setString(8, "2016-12-31 12:12:12");
-            preparedStatement.execute();
+                            + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+                preparedStatement.setString(1, cover.getId());
+                preparedStatement.setString(2, cover.getItemId());
+                preparedStatement.setString(3, cover.getCover());
+                preparedStatement.setLong(4, cover.getSequence());
+                preparedStatement.setString(5, TcConstant.Base.STR_32_0);
+                preparedStatement.setString(6, "2016-12-31 12:12:12");
+                preparedStatement.setString(7, TcConstant.Base.STR_32_0);
+                preparedStatement.setString(8, "2016-12-31 12:12:12");
+                preparedStatement.execute();
+            }
         }
     }
 
@@ -284,7 +285,7 @@ public class TcSaver {
     private static void insertItemDetail(DruidPooledConnection connection, List<TcCrawlerItemDetail> details) {
         for (int i = 0; i < details.size(); i++) {
             TcCrawlerItemDetail detail = details.get(i);
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
                     "INSERT INTO it_item_detail("
                             + "id, "
                             + "item_id, "
@@ -294,16 +295,17 @@ public class TcSaver {
                             + "updated_timestamp, "
                             + "created_person, "
                             + "created_timestamp"
-                            + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            preparedStatement.setString(1, detail.getId());
-            preparedStatement.setString(2, detail.getItemId());
-            preparedStatement.setString(3, detail.getDetail());
-            preparedStatement.setLong(4, detail.getSequence());
-            preparedStatement.setString(5, TcConstant.Base.STR_32_0);
-            preparedStatement.setString(6, "2016-12-31 12:12:12");
-            preparedStatement.setString(7, TcConstant.Base.STR_32_0);
-            preparedStatement.setString(8, "2016-12-31 12:12:12");
-            preparedStatement.execute();
+                            + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+                preparedStatement.setString(1, detail.getId());
+                preparedStatement.setString(2, detail.getItemId());
+                preparedStatement.setString(3, detail.getDetail());
+                preparedStatement.setLong(4, detail.getSequence());
+                preparedStatement.setString(5, TcConstant.Base.STR_32_0);
+                preparedStatement.setString(6, "2016-12-31 12:12:12");
+                preparedStatement.setString(7, TcConstant.Base.STR_32_0);
+                preparedStatement.setString(8, "2016-12-31 12:12:12");
+                preparedStatement.execute();
+            }
         }
     }
 
