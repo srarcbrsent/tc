@@ -5,7 +5,7 @@ package com.ysu.zyw.tc.base.constant;
  *
  * @author yaowu.zhang
  */
-public class TcConstant {
+public abstract class TcConstant {
 
     public abstract static class Base {
 
@@ -79,16 +79,6 @@ public class TcConstant {
         public static final String DOUBLE_QUOTE = "\"";
 
         public static final String DOT = ".";
-
-    }
-
-    public abstract static class SessionKey {
-
-        public static final String SHIRO_MATCHER_ONCE_TOKEN = "session_shiro_matcher_token";
-
-        public static final String INDEX_VERIFICATION_CODE = "session_index_verification_code";
-
-        public static final String S_ACCOUNT_ID = "session_account_id";
 
     }
 

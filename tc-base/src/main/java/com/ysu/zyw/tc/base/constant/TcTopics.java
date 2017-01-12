@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.base.constant;
 
-public class TcTopics {
+public abstract class TcTopics {
 
     public abstract static class Topic {
 
