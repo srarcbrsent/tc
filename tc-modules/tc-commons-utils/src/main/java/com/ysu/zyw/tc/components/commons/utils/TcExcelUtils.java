@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.export;
+package com.ysu.zyw.tc.components.commons.utils;
 
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
@@ -16,7 +16,7 @@ import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class TcExcelExporter {
+public class TcExcelUtils {
 
     public String contentType() {
         return "application/vnd.ms-excel";
@@ -45,10 +45,10 @@ public class TcExcelExporter {
         return workbook.createSheet();
     }
 
-    public TcExcelExporter write(@Nonnull HSSFSheet sheet,
-                                 int row,
-                                 int column,
-                                 @Nonnull String value) {
+    public TcExcelUtils write(@Nonnull HSSFSheet sheet,
+                              int row,
+                              int column,
+                              @Nonnull String value) {
         checkNotNull(sheet);
         checkNotNull(value);
         this.write(sheet, row, column, cell -> cell.setCellValue(value));
@@ -56,10 +56,10 @@ public class TcExcelExporter {
         return this;
     }
 
-    public TcExcelExporter write(@Nonnull HSSFSheet sheet,
-                                 int row,
-                                 int column,
-                                 @Nonnull Consumer<HSSFCell> consumer) {
+    public TcExcelUtils write(@Nonnull HSSFSheet sheet,
+                              int row,
+                              int column,
+                              @Nonnull Consumer<HSSFCell> consumer) {
         checkNotNull(sheet);
         checkNotNull(consumer);
         HSSFCell cell = sheet.getRow(row).getCell(column);
