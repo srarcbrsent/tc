@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -32,6 +33,12 @@ public class TcCodisCache implements Cache, InitializingBean {
     @Getter
     @Setter
     private long expiration = -1;
+
+    @Getter
+    @Setter
+    private boolean pessimistic = false;
+
+    private static final ReentrantLock LOCK_VALUE_LOCK = new ReentrantLock();
 
     @Getter
     @Setter
@@ -95,29 +102,38 @@ public class TcCodisCache implements Cache, InitializingBean {
             }
             return value;
         } else {
-            // FIXME only lock key will lead to a data race, such like one obj '1' and another obj '1'
-            // and they standard by the same key-value pair, but they are not the same key, so if
-            // two thread use them call this method the same time, the value loader will be call twice
-            //noinspection SynchronizationOnLocalVariableOrMethodParameter
-            synchronized (key) {
-                // lock and get
-                T sValue = null;
+            if (pessimistic) {
                 try {
-                    sValue = (T) codisTemplate.opsForValue().get(key);
-                } catch (Exception e) {
-                    log.error("", e);
+                    LOCK_VALUE_LOCK.lock();
+                    return tryLoadValue(key, valueLoader);
+                } finally {
+                    LOCK_VALUE_LOCK.unlock();
                 }
-                if (Objects.nonNull(sValue)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("get object [{}] from cache by key [{}]", sValue, key);
-                    }
-                    return sValue;
-                }
-                // not found, try load value
-                return loadValue(key, valueLoader, expiration);
+            } else {
+                return tryLoadValue(key, valueLoader);
             }
         }
     }
+
+    @SuppressWarnings("unchecked")
+    private <T> T tryLoadValue(Object key, Callable<T> valueLoader) {
+        // lock and get
+        T sValue = null;
+        try {
+            sValue = (T) codisTemplate.opsForValue().get(key);
+        } catch (Exception e) {
+            log.error("", e);
+        }
+        if (Objects.nonNull(sValue)) {
+            if (log.isDebugEnabled()) {
+                log.debug("get object [{}] from cache by key [{}]", sValue, key);
+            }
+            return sValue;
+        }
+        // not found, try load value
+        return loadValue(key, valueLoader, expiration);
+    }
+
 
     private <T> T loadValue(@Nonnull Object key, @Nonnull Callable<T> valueLoader, long timeout) {
         T loadedValue;
