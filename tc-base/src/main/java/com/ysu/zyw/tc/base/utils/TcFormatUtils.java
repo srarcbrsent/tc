@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
@@ -32,6 +33,18 @@ public class TcFormatUtils {
             strs.add("[{}]");
         }
         return format(strs.stream().collect(Collectors.joining(" ")), args);
+    }
+
+    private static final String OVER_LENGTH_DECORATE = "...";
+
+    public static String maxLen(@Nonnull String value, int maxLen, @Nullable String decorate) {
+        checkNotNull(value);
+        checkArgument(maxLen > 0);
+        if (value.length() > maxLen) {
+            value = value.substring(0, maxLen - 1)
+                    + (Objects.isNull(decorate) ? OVER_LENGTH_DECORATE : decorate);
+        }
+        return value;
     }
 
 }
