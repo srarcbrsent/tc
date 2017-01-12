@@ -27,12 +27,12 @@ public class TcCodisPool extends JedisPool {
         checkNotNull(zkAddr, "empty zk addr is not allowed");
         checkArgument(zkSessionTimeoutMs > 0, "negative zk service timeout ms is not allowed");
         checkNotNull(zkProxyDir, "empty zk proxy dir is not allowed");
-        checkNotNull(codisPoolConfig, "null codis pool config is not allowed");
+        checkNotNull(codisPoolConfig, "null codis exhandler config is not allowed");
         checkArgument(connectionTimeout > 0, "negative connection timeout is not allowed");
         if (Objects.isNull(password)) {
             log.warn("no password set to codis, it's dangerous");
         }
-        log.info("init round robin jedis pool, zkAddr [{}], zkSessionTimeout [{}], zkProxyDir [{}]",
+        log.info("init round robin jedis exhandler, zkAddr [{}], zkSessionTimeout [{}], zkProxyDir [{}]",
                 zkAddr, zkSessionTimeoutMs, zkProxyDir);
         roundRobinJedisPool = RoundRobinJedisPool
                 .create()
@@ -66,7 +66,7 @@ public class TcCodisPool extends JedisPool {
                 resource.close();
             } catch (Exception e) {
                 returnBrokenResource(resource);
-                throw new JedisException("Could not return the resource to the pool", e);
+                throw new JedisException("Could not return the resource to the exhandler", e);
             }
         }
     }
@@ -75,7 +75,7 @@ public class TcCodisPool extends JedisPool {
     public void close() {
         super.close();
         roundRobinJedisPool.close();
-        log.info("close codis pool (include round robin jedis pool)");
+        log.info("close codis exhandler (include round robin jedis exhandler)");
     }
 
 }

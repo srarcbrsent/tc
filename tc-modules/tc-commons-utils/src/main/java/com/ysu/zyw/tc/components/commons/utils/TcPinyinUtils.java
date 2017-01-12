@@ -32,7 +32,7 @@ public class TcPinyinUtils {
         checkArgument(new String(new char[]{ch}).matches("[\u4e00-\u9fa5]"));
 
         HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
-        format.setCaseType(HanyuPinyinCaseType.UPPERCASE);
+        format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
         format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
         format.setVCharType(HanyuPinyinVCharType.WITH_V);
         return PinyinHelper.toHanyuPinyinStringArray(ch, format);

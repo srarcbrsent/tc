@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.pool;
+package com.ysu.zyw.tc.components.exhandler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ErrorHandler;

@@ -24,14 +24,14 @@ public class TcPinyinUtilsTest {
     public void toPinyin() throws Exception {
         String[] me = TcPinyinUtils.toPinyin('我');
         Assert.assertEquals(1, me.length);
-        Assert.assertEquals("WO", me[0]);
+        Assert.assertEquals("wo", me[0]);
     }
 
     @Test
     public void toPinyin1() throws Exception {
         String lls = "人生如剑";
         LinkedHashMap<Character, String[]> lifeLikeSword = TcPinyinUtils.toPinyin(lls);
-        String[] pinyins = new String[]{"REN", "SHENG", "RU", "JIAN"};
+        String[] pinyins = new String[]{"ren", "sheng", "ru", "jian"};
         AtomicInteger index = new AtomicInteger(0);
         lifeLikeSword.forEach((key, value) -> {
             Assert.assertEquals(lls.charAt(index.intValue()), (char) key);

@@ -37,9 +37,9 @@ public class TcCodisConnectionFactory extends JedisConnectionFactory {
         if (Objects.nonNull(tcCodisPool)) {
             try {
                 tcCodisPool.close();
-                log.info("success close codis pool ...");
+                log.info("success close codis exhandler ...");
             } catch (Exception ex) {
-                log.error("Cannot properly close codis pool", ex);
+                log.error("Cannot properly close codis exhandler", ex);
             }
             tcCodisPool = null;
         }
@@ -54,8 +54,8 @@ public class TcCodisConnectionFactory extends JedisConnectionFactory {
                 getPoolConfig(),
                 getTimeout(),
                 StringUtils.isNotEmpty(getPassword()) ? getPassword() : null);
-        checkNotNull(tcCodisPool, "codis pool creation failed");
-        log.info("success create codis pool ...");
+        checkNotNull(tcCodisPool, "codis exhandler creation failed");
+        log.info("success create codis exhandler ...");
         return tcCodisPool;
     }
 
