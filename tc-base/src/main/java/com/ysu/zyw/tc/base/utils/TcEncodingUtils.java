@@ -1,47 +1,41 @@
 package com.ysu.zyw.tc.base.utils;
 
-import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 
-import java.security.MessageDigest;
+import javax.annotation.Nonnull;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
 @UtilityClass
 public class TcEncodingUtils {
 
-    private static final char[] HEX_DIGITS = new char[]{
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
-    };
-
-    @SneakyThrows
-    public static String md5(String text) {
-        MessageDigest messageDigest;
-        messageDigest = MessageDigest.getInstance("MD5");
-        messageDigest.update(text.getBytes());
-        byte[] bytes = messageDigest.digest();
-        int len = bytes.length;
-        StringBuilder sb = new StringBuilder(len * 2);
-        for (byte aByte : bytes) {
-            sb.append(HEX_DIGITS[(aByte >> 4) & 0x0f]);
-            sb.append(HEX_DIGITS[aByte & 0x0f]);
-        }
-        return sb.toString();
+    public static String md5(@Nonnull String text) {
+        checkNotNull(text);
+        return DigestUtils.md5Hex(text);
     }
 
-    @SneakyThrows
-    public static String sha1(String text) {
-        MessageDigest messageDigest = null;
-        messageDigest = MessageDigest.getInstance("SHA1");
-        messageDigest.update(text.getBytes());
-        byte[] bytes = messageDigest.digest();
-        int len = bytes.length;
-        StringBuilder sb = new StringBuilder(len * 2);
-        for (byte aByte : bytes) {
-            sb.append(HEX_DIGITS[(aByte >> 4) & 0x0f]);
-            sb.append(HEX_DIGITS[aByte & 0x0f]);
-        }
-        return sb.toString();
+    public static String sha1(@Nonnull String text) {
+        checkNotNull(text);
+        return DigestUtils.sha1Hex(text);
+    }
+
+    public static String sha256(@Nonnull String text) {
+        checkNotNull(text);
+        return DigestUtils.sha256Hex(text);
+    }
+
+    public static String encodeBase64(@Nonnull String text) {
+        checkNotNull(text);
+        return Base64.encodeBase64String(text.getBytes());
+    }
+
+    public static String dncodeBase64(@Nonnull String text) {
+        checkNotNull(text);
+        return new String(Base64.decodeBase64(text.getBytes()));
     }
 
 }
