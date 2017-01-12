@@ -9,6 +9,6 @@
 
 
     <context:property-placeholder location="/properties/local-rpc-httpx-import.properties"
-                                  file-encoding="UTF-8"/>
+                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8}"/>
 
 </beans>

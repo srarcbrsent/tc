@@ -30,8 +30,8 @@
     </bean>
 
     <!-- !!!! Import !!!! -->
-    <context:property-placeholder file-encoding="UTF-8"
-                                  location="${properties.pom.activation.spring.web.profile}"/>
+    <context:property-placeholder location="${properties.pom.activation.spring.web.profile}"
+                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8}"/>
 
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:/config/tc-spring-web-front-end.xml"/>

@@ -21,6 +21,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -202,7 +203,7 @@ public class TcHttpxService {
 
     @SneakyThrows
     public String urlEncode(String value) {
-        return URLEncoder.encode(value, "UTF-8");
+        return URLEncoder.encode(value, StandardCharsets.UTF_8.name());
     }
 
     protected HttpHeaders addReqContentType(HttpHeaders httpHeaders, String mediaType) {

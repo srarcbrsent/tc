@@ -90,7 +90,7 @@
                     </property>
                 </bean>
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                    <constructor-arg index="0" value="UTF-8"/>
+                    <constructor-arg index="0" value="#{T(java.nio.charset.StandardCharsets).UTF_8}"/>
                     <property name="supportedMediaTypes">
                         <list>
                             <value>#{T(org.springframework.http.MediaType).TEXT_HTML}</value>

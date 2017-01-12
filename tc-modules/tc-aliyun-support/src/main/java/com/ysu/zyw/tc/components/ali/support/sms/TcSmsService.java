@@ -61,6 +61,7 @@ public class TcSmsService implements InitializingBean {
         IClientProfile profile = DefaultProfile.getProfile(regionId, accessKey, accessSecret);
         DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Sms", "sms.aliyuncs.com");
         client = new DefaultAcsClient(profile);
+        log.info("successful initialize aliyun sms client ...");
     }
 
 }

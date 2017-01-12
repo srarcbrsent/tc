@@ -69,6 +69,7 @@ public class TcMailService implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         IClientProfile profile = DefaultProfile.getProfile(regionId, accessKey, accessSecret);
         client = new DefaultAcsClient(profile);
+        log.info("successful initialize aliyun email client ...");
     }
 
 }

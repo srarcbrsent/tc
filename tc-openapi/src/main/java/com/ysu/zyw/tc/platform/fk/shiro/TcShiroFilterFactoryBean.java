@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -26,7 +27,7 @@ public class TcShiroFilterFactoryBean extends ShiroFilterFactoryBean {
         String definitions;
         try {
             log.info("start load shiro filter definition [{}]", realPath);
-            definitions = FileUtils.readFileToString(filterChainDefinitionResource.getFile(), "UTF-8");
+            definitions = FileUtils.readFileToString(filterChainDefinitionResource.getFile(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new TcException("shiro filter initialize need an valid filter chain definition resource file, "
                     + "it's must start with [classpath:], and then is a valid file path, but get [" + definitionFile
