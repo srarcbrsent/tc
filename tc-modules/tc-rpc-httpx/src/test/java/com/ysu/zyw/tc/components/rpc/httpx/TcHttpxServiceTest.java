@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.rpc.httpx;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
+import okhttp3.OkHttpClient;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.ResponseExtractor;
 
 import javax.annotation.Resource;
-import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -25,6 +27,9 @@ public class TcHttpxServiceTest {
     @Resource
     private TcHttpxService tcHttpxService;
 
+    @Resource
+    private OkHttpClient okHttpClient;
+
     @Before
     public void setUp() throws Exception {
 
@@ -36,13 +41,17 @@ public class TcHttpxServiceTest {
     }
 
     @Test
-    public void testGetBaiduHomepage() {
-        tcHttpxService.getRestTemplate().execute("http://www.baidu.com", HttpMethod.GET,
-                null,
-                (ResponseExtractor<Void>) response -> {
-                    System.out.println(IOUtils.toString(response.getBody(), StandardCharsets.UTF_8));
-                    return null;
-                });
+    public void testGetBaiduHomepage() throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(35);
+        for (int i = 0; i < 150; i++) {
+            executorService.execute(() -> {
+                tcHttpxService.getRestTemplate().execute("http://www.baidu.com", HttpMethod.GET,
+                        null,
+                        (ResponseExtractor<Void>) response -> null);
+                System.out.println(okHttpClient.connectionPool().connectionCount());
+            });
+        }
+        executorService.awaitTermination(3000, TimeUnit.MILLISECONDS);
     }
 
 }

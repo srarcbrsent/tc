@@ -5,10 +5,10 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="okHttpClient" class="com.ysu.zyw.tc.components.rpc.httpx.TcOkHttpClientFactoryBean">
-        <property name="pingInterval" value="900000"/>
-        <property name="connectTimeout" value="2000"/>
-        <property name="writeTimeout" value="10000"/>
-        <property name="readTimeout" value="10000"/>
+        <property name="pingInterval" value="${properties.rpc.httpx.connection.ping.interval}"/>
+        <property name="connectTimeout" value="${properties.rpc.httpx.connect.timeout.ms}"/>
+        <property name="writeTimeout" value="${properties.rpc.httpx.write.timeout.ms}"/>
+        <property name="readTimeout" value="${properties.rpc.httpx.read.timeout.ms}"/>
         <property name="interceptors">
             <list value-type="okhttp3.Interceptor">
                 <bean class="com.ysu.zyw.tc.components.rpc.httpx.TcOkHttpLoggingInterceptor"/>
