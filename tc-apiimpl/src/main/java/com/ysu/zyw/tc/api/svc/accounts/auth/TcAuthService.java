@@ -7,12 +7,12 @@ import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.base.constant.TcConstant;
 import com.ysu.zyw.tc.base.tools.TcIdGen;
+import com.ysu.zyw.tc.base.utils.TcBeanUtils;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -295,21 +295,21 @@ public class TcAuthService {
     private ToRole convert2ToRole(TcRole tcRole) {
         checkNotNull(tcRole);
         ToRole toRole = new ToRole();
-        BeanUtils.copyProperties(tcRole, toRole);
+        TcBeanUtils.copyProperties(tcRole, toRole);
         return toRole;
     }
 
     private ToMenu convert2ToMenu(TcMenu tcMenu) {
         checkNotNull(tcMenu);
         ToMenu toMenu = new ToMenu();
-        BeanUtils.copyProperties(tcMenu, toMenu);
+        TcBeanUtils.copyProperties(tcMenu, toMenu);
         return toMenu;
     }
 
     private ToPermission convert2ToPermission(TcPermission tcPermission) {
         checkNotNull(tcPermission);
         ToPermission toPermission = new ToPermission();
-        BeanUtils.copyProperties(tcPermission, toPermission);
+        TcBeanUtils.copyProperties(tcPermission, toPermission);
         return toPermission;
     }
 

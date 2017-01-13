@@ -8,6 +8,7 @@ import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
 import com.ysu.zyw.tc.base.tools.TcIdGen;
+import com.ysu.zyw.tc.base.utils.TcBeanUtils;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
@@ -16,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -115,7 +115,7 @@ public class TcAccountService {
         // account
         TcAccount tcAccount = new TcAccount();
 
-        BeanUtils.copyProperties(tiAccount, tcAccount);
+        TcBeanUtils.copyProperties(tiAccount, tcAccount);
         tcAccount
                 .setId(id)
                 .setDelected(false)
@@ -129,7 +129,7 @@ public class TcAccountService {
         // account assist
         TcAccountAssist tcAccountAssist = new TcAccountAssist();
 
-        BeanUtils.copyProperties(tiAccount, tcAccountAssist);
+        TcBeanUtils.copyProperties(tiAccount, tcAccountAssist);
         tcAccountAssist
                 .setId(id)
                 .setSigninPlatform(tiAccount.getSigninPlatform())
@@ -211,7 +211,7 @@ public class TcAccountService {
         // account
         TcAccount tcAccount = new TcAccount();
 
-        BeanUtils.copyProperties(tiAccount, tcAccount);
+        TcBeanUtils.copyProperties(tiAccount, tcAccount);
         tcAccount
                 // mobile activated can not be update to true, use spi instead.
                 .setMobileActivated(
@@ -572,7 +572,7 @@ public class TcAccountService {
     private ToAccount convert2ToAccount(@Nonnull TcAccount tcAccount) {
         checkNotNull(tcAccount);
         ToAccount toAccount = new ToAccount();
-        BeanUtils.copyProperties(tcAccount, toAccount);
+        TcBeanUtils.copyProperties(tcAccount, toAccount);
         return toAccount;
     }
 
