@@ -3,7 +3,6 @@ package com.ysu.zyw.tc.components.rpc.httpx;
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.base.constant.TcConstant;
 import com.ysu.zyw.tc.base.ex.TcException;
-import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -22,7 +21,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -242,22 +244,7 @@ public class TcHttpxService {
                                               HttpEntity<?> httpEntity,
                                               ParameterizedTypeReference<T> typeReference,
                                               Map<String, String> uriVariables) {
-        Date now = new Date();
-
-        if (log.isInfoEnabled()) {
-            log.info("start call http api [{}:{}], url vars [{}], request body [{}]",
-                    httpMethod, url, uriVariables, httpEntity);
-        }
-
-        ResponseEntity<T> responseEntity =
-                restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
-
-        if (log.isInfoEnabled()) {
-            log.info("call http api [{}:{}] finish, response code [{}], take time [{}]",
-                    httpMethod, url, httpEntity, TcDateUtils.duration(now, new Date()));
-        }
-
-        return responseEntity;
+        return restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
     }
 
     protected <T> ResponseEntity<T> doCamouflageException() {
