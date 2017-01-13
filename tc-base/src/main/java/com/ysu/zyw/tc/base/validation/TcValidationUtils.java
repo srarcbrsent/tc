@@ -1,6 +1,8 @@
 package com.ysu.zyw.tc.base.validation;
 
 import com.google.common.collect.Lists;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.GenericValidator;
 
 import javax.validation.ConstraintViolation;
@@ -16,6 +18,13 @@ import java.util.stream.Collectors;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
+/**
+ * TcBeanUtils defines validation related operations
+ *
+ * @author yaowu.zhang
+ */
+@Slf4j
+@UtilityClass
 public class TcValidationUtils extends GenericValidator {
 
     public static boolean isNull(Object value) {

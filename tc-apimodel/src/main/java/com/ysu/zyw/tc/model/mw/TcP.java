@@ -13,10 +13,10 @@ import java.io.Serializable;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * 1. TcP.code == com.ysu.zyw.tc.model.mw.Rc.SUCCESS => success, have body (at least a empty collection)
- * 2. TcP.code == other => custom code, depends on api.
- * 3. TcP.code == com.ysu.zyw.tc.model.mw.Rc.BAD_REQUEST => request param error, may contains extra.
- * 4. TcP.code == com.ysu.zyw.tc.model.mw..Rc.SERVER_ERROR => server errs, may happen in any apis.
+ * TcP.code == com.ysu.zyw.tc.model.mw.Rc.SUCCESS => success, have body (at least a empty collection)
+ * TcP.code == other => custom code, depends on api.
+ * TcP.code == com.ysu.zyw.tc.model.mw.Rc.BAD_REQUEST => request param error, may contains extra.
+ * TcP.code == com.ysu.zyw.tc.model.mw..Rc.SERVER_ERROR => server errs, may happen in any apis.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

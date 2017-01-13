@@ -5,6 +5,11 @@ import lombok.experimental.UtilityClass;
 
 import java.util.UUID;
 
+/**
+ * TcIdGen defines all id generator strategy and it's implements.
+ *
+ * @author yaowu.zhang
+ */
 @UtilityClass
 public class TcIdGen {
 

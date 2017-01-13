@@ -1,5 +1,10 @@
 package com.ysu.zyw.tc.base.constant;
 
+/**
+ * TcTopics defins tc system level message queue topics.
+ *
+ * @author yaowu.zhang
+ */
 public abstract class TcTopics {
 
     public abstract static class Topic {
