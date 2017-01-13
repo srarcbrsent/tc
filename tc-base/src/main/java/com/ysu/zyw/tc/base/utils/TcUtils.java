@@ -44,12 +44,6 @@ public class TcUtils {
         }
     }
 
-    public static void doInDevMode(@Nonnull TcTask tcTask, boolean devMode) {
-        if (devMode) {
-            doQuietly(tcTask);
-        }
-    }
-
     public static void doIfTrue(@Nonnull TcTask tcTask, boolean expression) {
         if (expression) {
             tcTask.execute();
@@ -62,10 +56,10 @@ public class TcUtils {
         }
     }
 
-    public static void doWithTiming(@Nonnull TcTask tcTask, String expression) {
+    public static long doWithTiming(@Nonnull TcTask tcTask, String expression) {
         Date before = new Date();
         tcTask.execute();
-        log.info(expression, TcDateUtils.duration(before, new Date()));
+        return TcDateUtils.duration(before, new Date());
     }
 
     public static <T> T defaultValue(T value, Supplier<T> defaultValue) {

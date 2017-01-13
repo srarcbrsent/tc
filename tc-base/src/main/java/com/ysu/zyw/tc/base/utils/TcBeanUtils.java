@@ -38,6 +38,7 @@ public class TcBeanUtils {
 
     public static <T> T deepCopyProperties(@Nonnull Object source, @Nonnull TypeReference<T> typeReference) {
         checkNotNull(source);
+        checkNotNull(typeReference);
         return TcSerializationUtils.readJson(TcSerializationUtils.writeJson(source), typeReference);
     }
 
