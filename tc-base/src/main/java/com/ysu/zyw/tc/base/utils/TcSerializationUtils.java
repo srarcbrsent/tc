@@ -14,6 +14,11 @@ import java.text.SimpleDateFormat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * TcBeanUtils defines serialization related operations
+ *
+ * @author yaowu.zhang
+ */
 @Slf4j
 @UtilityClass
 public class TcSerializationUtils {

@@ -19,10 +19,10 @@ import java.util.function.Supplier;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * 1. TcR.code == com.ysu.zyw.tc.model.mw.Rc.SUCCESS => success, have body (except TcR<Void>)
- * 2. TcR.code == other => custom code, depends on api.
- * 3. TcR.code == com.ysu.zyw.tc.model.mw.Rc.BAD_REQUEST => request param error, may contains extra.
- * 4. TcR.code == com.ysu.zyw.tc.model.mw..Rc.SERVER_ERROR => server errs, may happen in any apis.
+ * TcR.code == com.ysu.zyw.tc.model.mw.Rc.SUCCESS => success, have body (except TcR<Void>)
+ * TcR.code == other => custom code, depends on api.
+ * TcR.code == com.ysu.zyw.tc.model.mw.Rc.BAD_REQUEST => request param error, may contains extra.
+ * TcR.code == com.ysu.zyw.tc.model.mw..Rc.SERVER_ERROR => server errs, may happen in any apis.
  */
 @Data
 @Accessors(chain = true)

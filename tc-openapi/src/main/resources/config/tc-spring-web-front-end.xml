@@ -49,7 +49,7 @@
     </bean>
 
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="#{T(java.nio.charset.StandardCharsets).UTF_8}"/>
+        <property name="defaultEncoding" value="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
         <!-- 5m -->
         <property name="maxUploadSize" value="15242880"/>
     </bean>

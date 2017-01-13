@@ -14,6 +14,19 @@ import org.springframework.core.annotation.Order;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * aspect for api layer, and it will catch all exception and wrap it to response,
+ * so it's order is the highest.
+ *
+ * if {@link com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException} being throwed,
+ * and it's must contains a code and a description, and may contains a extra content,
+ * so we directly copy it's code, description, extra content to a {@link TcR} and return.
+ *
+ * if any other exception being throwed, and directly log it and return a {@link TcR}
+ * with code 9999 (com.ysu.zyw.tc.model.mw.Rc.SERVER_ERROR).
+ *
+ * @author yaowu.zhang
+ */
 @Aspect
 @Order(value = TcConstant.AspectOrder.EXCEPTION_DECORATOR_ASPECT_ORDER)
 @Slf4j
@@ -49,7 +62,7 @@ public class TcExceptionResponseDecorator {
                     proceedingJoinPoint.getArgs(), code, description);
             return TcR.code(code, description, extra);
         } catch (Exception e) {
-            // 如果内部抛出了异常 则对页面返回 500 服务器异常
+            // 如果内部抛出了异常 则对页面返回 9999 服务器异常
             log.error("[{}][{}][{}]", "OpenApi切面-服务器异常", "切面异常捕获", proceedingJoinPoint.getArgs(), e);
             return TcR.errs();
         }

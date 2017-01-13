@@ -8,13 +8,17 @@ import lombok.extern.slf4j.Slf4j;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * TcBeanUtils defines pagination related operations
+ *
+ * @author yaowu.zhang
+ */
 @Slf4j
 @UtilityClass
 public class TcPaginationUtils {
 
     /**
      * give every page size and current page, then return start line number and page size.
-     * <p>
      * only consider logic paging, do not accept all records size verify.
      */
     public static Pagination paging(int currentPage, int pageSize) {
@@ -31,7 +35,6 @@ public class TcPaginationUtils {
 
     /**
      * give total size, every page size and current page, then return start line number and all page count.
-     * <p>
      * auto reset the first page and last page if pass an invalid current page.
      */
     public static Pagination paging(int currentPage, int totalSize, int pageSize) {

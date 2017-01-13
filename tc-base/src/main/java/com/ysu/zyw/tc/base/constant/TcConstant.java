@@ -1,18 +1,24 @@
 package com.ysu.zyw.tc.base.constant;
 
 /**
- * TcConstant defines tc system level constant.
+ * TcConstant defines tc system level constants.
  *
  * @author yaowu.zhang
  */
 public abstract class TcConstant {
 
+    /**
+     * base constant
+     */
     public abstract static class Base {
 
         public static final String STR_32_0 = "00000000000000000000000000000000";
 
     }
 
+    /**
+     * tc system bean names
+     */
     public abstract static class BeanNames {
 
         // shiro
@@ -52,6 +58,9 @@ public abstract class TcConstant {
 
     }
 
+    /**
+     * tc aspects orders
+     */
     public abstract static class AspectOrder {
 
         public static final int TRANSACTION_ASPECT_ORDER = 0;
@@ -62,6 +71,9 @@ public abstract class TcConstant {
 
     }
 
+    /**
+     * string constants
+     */
     public abstract static class Str {
 
         public static final String EMPTY = "";

@@ -11,6 +11,11 @@ import java.util.Date;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * TcBeanUtils defines date related operations
+ *
+ * @author yaowu.zhang
+ */
 @Slf4j
 @UtilityClass
 public class TcDateUtils {

@@ -7,6 +7,11 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
+/**
+ * pair implements.
+ *
+ * @author yaowu.zhang
+ */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor

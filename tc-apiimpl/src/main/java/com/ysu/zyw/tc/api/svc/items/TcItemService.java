@@ -3,11 +3,11 @@ package com.ysu.zyw.tc.api.svc.items;
 import com.ysu.zyw.tc.api.dao.mappers.*;
 import com.ysu.zyw.tc.api.dao.po.*;
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
+import com.ysu.zyw.tc.base.utils.TcBeanUtils;
 import com.ysu.zyw.tc.model.api.o.items.ToItem;
 import com.ysu.zyw.tc.model.api.o.items.ToShop;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -199,7 +199,7 @@ public class TcItemService {
     private ToShop convert2ToShop(@Nonnull TcShop tcShop) {
         checkNotNull(tcShop);
         ToShop toShop = new ToShop();
-        BeanUtils.copyProperties(tcShop, toShop);
+        TcBeanUtils.copyProperties(tcShop, toShop);
         return toShop;
     }
 
@@ -214,12 +214,12 @@ public class TcItemService {
 
         // base info
         ToItem toItem = new ToItem();
-        BeanUtils.copyProperties(tcItem, toItem);
+        TcBeanUtils.copyProperties(tcItem, toItem);
 
         // cover info
         List<ToItem.ToItemCover> toItemCovers = tcItemCovers.stream().map(tcItemCover -> {
             ToItem.ToItemCover cover = new ToItem.ToItemCover();
-            BeanUtils.copyProperties(tcItemCover, cover);
+            TcBeanUtils.copyProperties(tcItemCover, cover);
             return cover;
         }).collect(Collectors.toList());
         toItem.setCovers(toItemCovers);
@@ -227,7 +227,7 @@ public class TcItemService {
         // attr info
         List<ToItem.ToItemAttr> toItemAttrs = tcItemAttrs.stream().map(tcItemAttr -> {
             ToItem.ToItemAttr attr = new ToItem.ToItemAttr();
-            BeanUtils.copyProperties(tcItemAttr, attr);
+            TcBeanUtils.copyProperties(tcItemAttr, attr);
             return attr;
         }).collect(Collectors.toList());
         toItem.setAttrs(toItemAttrs);
@@ -235,7 +235,7 @@ public class TcItemService {
         // detail info
         List<ToItem.ToItemDetail> toItemDetails = tcItemDetails.stream().map(tcItemDetail -> {
             ToItem.ToItemDetail detail = new ToItem.ToItemDetail();
-            BeanUtils.copyProperties(tcItemDetail, detail);
+            TcBeanUtils.copyProperties(tcItemDetail, detail);
             return detail;
         }).collect(Collectors.toList());
         toItem.setDetails(toItemDetails);

@@ -9,6 +9,17 @@ import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * this exception is used with {@link com.ysu.zyw.tc.api.fk.TcExceptionResponseDecorator}.
+ * when this exception being instanced, it at least requires a code and a description,
+ * and an extra field is optional.
+ *
+ * and the {@link com.ysu.zyw.tc.api.fk.TcExceptionResponseDecorator} will catch this
+ * exception and wrap it to a {@link com.ysu.zyw.tc.model.mw.TcR} and return to caller,
+ * the both three field(code, description, extra) will directly copy to the response.
+ *
+ * @author yaowu.zhang
+ */
 public class TcUnProcessableEntityException extends TcException {
 
     @Getter

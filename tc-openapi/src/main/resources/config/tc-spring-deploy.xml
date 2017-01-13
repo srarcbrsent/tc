@@ -35,7 +35,7 @@
 
     <!-- !!!! Import !!!! -->
     <context:property-placeholder location="${properties.pom.activation.spring.profile}"
-                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8}"/>
+                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
 
     <!-- !!!! Import !!!! -->
     <import resource="classpath*:/config/tc-spring-security.xml"/>

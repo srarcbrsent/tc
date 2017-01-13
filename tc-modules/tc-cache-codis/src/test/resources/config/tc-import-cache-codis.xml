@@ -8,6 +8,6 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="/properties/local-cache-codis-import.properties"
-                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8}"/>
+                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
 
 </beans>

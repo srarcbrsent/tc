@@ -588,6 +588,13 @@
                 <version>4.4.4</version>
             </dependency>
 
+            <!-- okhttp -->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>3.5.0</version>
+            </dependency>
+
             <!-- zookeeper -->
             <dependency>
                 <groupId>org.apache.zookeeper</groupId>
@@ -801,6 +808,12 @@
                 <artifactId>mockito-all</artifactId>
                 <version>1.9.5</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>1.4.3.RELEASE</version>
             </dependency>
 
             <!-- javax -->

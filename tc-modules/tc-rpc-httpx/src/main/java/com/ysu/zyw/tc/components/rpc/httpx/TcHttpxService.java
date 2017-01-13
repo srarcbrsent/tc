@@ -121,7 +121,10 @@ public class TcHttpxService {
         if (ClassUtils.isPrimitiveOrWrapper(obj.getClass()) || obj instanceof String) {
             // is primitive type
             multiValueMap.set(currentPath, urlEncode(String.valueOf(obj)));
-        } else if (obj instanceof Map) {
+        } else if (obj instanceof Date) {
+            // is date
+            multiValueMap.set(currentPath, urlEncode(TcDateUtils.format((Date) obj)));
+        }else if (obj instanceof Map) {
             // is map
             Map<?, ?> rValue = (Map) obj;
             rValue.entrySet().forEach(entry -> {
@@ -242,22 +245,7 @@ public class TcHttpxService {
                                               HttpEntity<?> httpEntity,
                                               ParameterizedTypeReference<T> typeReference,
                                               Map<String, String> uriVariables) {
-        Date now = new Date();
-
-        if (log.isInfoEnabled()) {
-            log.info("start call http api [{}:{}], url vars [{}], request body [{}]",
-                    httpMethod, url, uriVariables, httpEntity);
-        }
-
-        ResponseEntity<T> responseEntity =
-                restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
-
-        if (log.isInfoEnabled()) {
-            log.info("call http api [{}:{}] finish, response code [{}], take time [{}]",
-                    httpMethod, url, httpEntity, TcDateUtils.duration(now, new Date()));
-        }
-
-        return responseEntity;
+        return restTemplate.exchange(url, httpMethod, httpEntity, typeReference, uriVariables);
     }
 
     protected <T> ResponseEntity<T> doCamouflageException() {

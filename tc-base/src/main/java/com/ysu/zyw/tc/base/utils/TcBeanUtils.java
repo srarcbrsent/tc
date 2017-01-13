@@ -12,6 +12,11 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * TcBeanUtils defines bean related operations
+ *
+ * @author yaowu.zhang
+ */
 @Slf4j
 @UtilityClass
 public class TcBeanUtils {

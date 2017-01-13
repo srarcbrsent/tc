@@ -15,6 +15,11 @@ import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * TcBeanUtils defines tc useful commons operations
+ *
+ * @author yaowu.zhang
+ */
 @Slf4j
 @UtilityClass
 public class TcUtils {
