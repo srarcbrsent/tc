@@ -74,24 +74,51 @@ public class TcHttpxServiceTest {
         Assert.assertEquals(String.valueOf(id), multiValueMap.getFirst("id"));
         Assert.assertEquals(TcDateUtils.format(now),
                 URLDecoder.decode(multiValueMap.getFirst("now"), StandardCharsets.UTF_8.name()));
-        ResponseEntity<TcStubController.TcStubs> response = tcHttpxService.getText4Entity("http://localhost:13006/getText",
-                null,
-                null,
-                multiValueMap,
-                new ParameterizedTypeReference<TcStubController.TcStubs>() {
-                });
+        ResponseEntity<TcStubController.TcStubs> response =
+                tcHttpxService.getText4Entity("http://localhost:13006/getText",
+                        null,
+                        null,
+                        multiValueMap,
+                        new ParameterizedTypeReference<TcStubController.TcStubs>() {
+                        });
         Assert.assertTrue(response.getStatusCode().is2xxSuccessful());
         Assert.assertEquals(tcStubs, response.getBody());
     }
 
     @Test
-    public void testPostText4Entity() {
-
+    public void testPostText4Entity() throws UnsupportedEncodingException {
+        int id = RandomUtils.nextInt();
+        Date now = new Date();
+        TcStubController.TcStubs tcStubs = new TcStubController.TcStubs(id, now);
+        MultiValueMap<String, String> multiValueMap = tcHttpxService.copy2MultiValueMap(tcStubs);
+        Assert.assertEquals(String.valueOf(id), multiValueMap.getFirst("id"));
+        Assert.assertEquals(TcDateUtils.format(now),
+                URLDecoder.decode(multiValueMap.getFirst("now"), StandardCharsets.UTF_8.name()));
+        ResponseEntity<TcStubController.TcStubs> response =
+                tcHttpxService.postText4Entity("http://localhost:13006/postText",
+                        null,
+                        null,
+                        multiValueMap,
+                        new ParameterizedTypeReference<TcStubController.TcStubs>() {
+                        });
+        Assert.assertTrue(response.getStatusCode().is2xxSuccessful());
+        Assert.assertEquals(tcStubs, response.getBody());
     }
 
     @Test
-    public void testPostJson4Entity() {
-
+    public void testPostJson4Entity() throws UnsupportedEncodingException {
+        int id = RandomUtils.nextInt();
+        Date now = new Date();
+        TcStubController.TcStubs tcStubs = new TcStubController.TcStubs(id, now);
+        ResponseEntity<TcStubController.TcStubs> response =
+                tcHttpxService.postJson4Entity("http://localhost:13006/postJson",
+                        null,
+                        null,
+                        tcStubs,
+                        new ParameterizedTypeReference<TcStubController.TcStubs>() {
+                        });
+        Assert.assertTrue(response.getStatusCode().is2xxSuccessful());
+        Assert.assertEquals(tcStubs, response.getBody());
     }
 
 }

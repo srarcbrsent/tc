@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+
 @Slf4j
 public class TcOkHttpClientFactoryBean implements FactoryBean<OkHttpClient> {
 

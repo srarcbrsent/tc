@@ -8,21 +8,37 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 @RestController
-public class TcStubController implements EmbeddedServletContainerCustomizer {
+public class TcStubController extends WebMvcConfigurerAdapter implements EmbeddedServletContainerCustomizer {
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new TcDateFormatter());
+        super.addFormatters(registry);
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        HttpMessageConverter<?> messageConverter =
+                new MappingJackson2HttpMessageConverter(TcSerializationUtils.OBJECT_MAPPER);
+        converters.add(messageConverter);
+        super.configureMessageConverters(converters);
+    }
 
     @Data
     @Accessors(chain = true)
@@ -34,13 +50,6 @@ public class TcStubController implements EmbeddedServletContainerCustomizer {
 
         private Date now;
 
-    }
-
-    @Bean
-    public HttpMessageConverters customConverters() {
-        HttpMessageConverter<?> messageConverter =
-                new MappingJackson2HttpMessageConverter(TcSerializationUtils.OBJECT_MAPPER);
-        return new HttpMessageConverters(messageConverter);
     }
 
     @Bean
