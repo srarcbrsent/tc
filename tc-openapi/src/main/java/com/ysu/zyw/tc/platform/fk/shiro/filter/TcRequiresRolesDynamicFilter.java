@@ -2,10 +2,10 @@ package com.ysu.zyw.tc.platform.fk.shiro.filter;
 
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
-import com.ysu.zyw.tc.base.constant.TcConstant;
 import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
+import com.ysu.zyw.tc.platform.constant.TcSessionKey;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 
@@ -32,7 +32,7 @@ public class TcRequiresRolesDynamicFilter extends AccessControlFilter {
             return true;
         }
 
-        String accountId = subject.getSession().getAttribute(TcConstant.SessionKey.S_ACCOUNT_ID).toString();
+        String accountId = subject.getSession().getAttribute(TcSessionKey.S_ACCOUNT_ID).toString();
         checkNotNull(accountId);
         return isAccessAllowed(accountId, (String[]) mappedValue);
     }
