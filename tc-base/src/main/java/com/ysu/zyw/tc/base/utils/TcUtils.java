@@ -71,6 +71,11 @@ public class TcUtils {
                                               @Nonnull List<T2> l2,
                                               @Nonnull Function<T2, R2> m2,
                                               @Nonnull BiConsumer<T1, T2> doWith) {
+        checkNotNull(l1);
+        checkNotNull(m1);
+        checkNotNull(l2);
+        checkNotNull(m2);
+        checkNotNull(doWith);
         match(
                 l1,
                 m1,
@@ -87,6 +92,12 @@ public class TcUtils {
                                               @Nonnull Function<T2, R2> m2,
                                               @Nonnull BiFunction<R1, R2, Boolean> equals,
                                               @Nonnull BiConsumer<T1, T2> doWith) {
+        checkNotNull(l1);
+        checkNotNull(m1);
+        checkNotNull(l2);
+        checkNotNull(m2);
+        checkNotNull(equals);
+        checkNotNull(doWith);
         l1.forEach(i1 -> {
             l2.forEach(i2 -> {
                 if (equals.apply(m1.apply(i1), m2.apply(i2))) {
