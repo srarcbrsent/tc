@@ -31,6 +31,7 @@
         <module>tc-apiimpl</module>
         <module>tc-openapi</module>
         <module>tc-demos</module>
+        <module>tc-modules/tc-sch-elasticjob</module>
     </modules>
 
     <properties>
@@ -51,6 +52,7 @@
         <pom.version.mybatis>3.4.2</pom.version.mybatis>
         <pom.version.mybatis.spring>1.3.1</pom.version.mybatis.spring>
         <pom.version.dubbox>2.8.4</pom.version.dubbox>
+        <pom.version.elasticjob>2.0.3</pom.version.elasticjob>
         <pom.version.resteasy>3.1.0.Final</pom.version.resteasy>
         <pom.version.rxjava>1.2.2</pom.version.rxjava>
         <pom.version.disconf>2.6.36</pom.version.disconf>
@@ -704,6 +706,19 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-dm</artifactId>
                 <version>3.0.0-rc2</version>
+            </dependency>
+
+            <!-- elasticjob -->
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>elastic-job-lite-core</artifactId>
+                <version>${pom.version.elasticjob}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>elastic-job-lite-spring</artifactId>
+                <version>${pom.version.elasticjob}</version>
             </dependency>
 
             <!-- poi -->
