@@ -920,25 +920,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <profiles>
-        <profile>
-            <id>tc_dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <ppom.path.log.absolute.path>/Users/zhangyaowu/env/logs/tc</ppom.path.log.absolute.path>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>tc_pdu</id>
-            <properties>
-                <ppom.path.log.absolute.path>/Users/zhangyaowu/env/logs/tc</ppom.path.log.absolute.path>
-            </properties>
-        </profile>
-    </profiles>
-
     <build>
         <resources>
             <resource>

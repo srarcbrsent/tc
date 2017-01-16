@@ -30,6 +30,7 @@ public class TcAuthorizationAttributeSourceAdvisor extends AuthorizationAttribut
         return super.matches(method, targetClass) || matchesExtensionAnnotations(method, targetClass);
     }
 
+    @SuppressWarnings("unchecked")
     private boolean matchesExtensionAnnotations(Method method, Class targetClass) {
         Method m = method;
 
@@ -41,7 +42,6 @@ public class TcAuthorizationAttributeSourceAdvisor extends AuthorizationAttribut
         //Check to see if the implementation has it.
         if (targetClass != null) {
             try {
-                //noinspection unchecked
                 m = targetClass.getMethod(m.getName(), m.getParameterTypes());
                 if (isExtensionAuthzAnnotationPresent(m)) {
                     return true;

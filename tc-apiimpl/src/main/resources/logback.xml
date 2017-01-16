@@ -3,7 +3,7 @@
 
     <contextName>tc-apiimpl</contextName>
 
-    <property name="properties.logback.appender.log.store.base" value="${ppom.path.log.absolute.path}"/>
+    <property name="properties.logback.appender.log.store.base" value="/Users/zhangyaowu/env/logs/tc"/>
 
     <property name="properties.logback.appender.log.project.base" value="/tc-apiimpl"/>
 
