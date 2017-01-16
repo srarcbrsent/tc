@@ -118,7 +118,7 @@
             <map>
                 <entry key="ssl">
                     <bean class="org.apache.shiro.web.filter.authz.SslFilter">
-                        <property name="port" value="8443"/>
+                        <property name="port" value="${properties.security.shiro.ssl.port}"/>
                     </bean>
                 </entry>
                 <entry key="requiresAllRolesDynamic">
