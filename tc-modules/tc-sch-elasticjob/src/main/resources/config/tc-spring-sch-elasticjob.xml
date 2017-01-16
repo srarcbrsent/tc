@@ -8,11 +8,11 @@
        http://www.dangdang.com/schema/ddframe/reg/reg.xsd">
 
     <reg:zookeeper id="regCenter"
-                   server-lists="zk.tc.com:2181"
-                   namespace="tc_job"
-                   base-sleep-time-milliseconds="1000"
-                   max-sleep-time-milliseconds="3000"
-                   max-retries="3"/>
+                   server-lists="${properties.sch.elasticjob.zk.server}"
+                   namespace="${properties.sch.elasticjob.zk.namespace}"
+                   base-sleep-time-milliseconds="${properties.sch.elasticjob.base.sleep.time.ms}"
+                   max-sleep-time-milliseconds="${properties.sch.elasticjob.max.sleep.time.ms}"
+                   max-retries="${properties.sch.elasticjob.max.retries}"/>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
@@ -41,5 +41,5 @@
             </list>
         </property>
     </bean>
-    
+
 </beans>

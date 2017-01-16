@@ -139,7 +139,7 @@ gulp.task('mg-script-libs', function (cb) {
             'src/resources/libs/vue.min.js',
             'src/resources/libs/axios.min.js',
             'src/resources/libs/lodash.min.js',
-            'src/resources/libs/assets/js/amazeui.min.js',
+            'src/resources/libs/assets/js/zui.min.js',
             'src/resources/libs/layer/layer.min.js'
         ])
         .pipe(concat('_flib.min.js'))
@@ -152,7 +152,8 @@ gulp.task('mg-style-libs', function (cb) {
     return gulp
         .src([
             'src/resources/libs/normalize.min.css',
-            'src/resources/libs/assets/css/amazeui.flat.min.css'
+            'src/resources/libs/assets/css/zui.min.css',
+            'src/resources/libs/assets/css/zui-theme.min.css'
         ])
         .pipe(concatCss("_tlib.min.css"))
         .pipe(gulp.dest('src/resources/libs'));
