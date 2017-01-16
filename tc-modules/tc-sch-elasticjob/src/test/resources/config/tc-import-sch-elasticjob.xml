@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.dangdang.com/schema/ddframe/job
+       http://www.dangdang.com/schema/ddframe/job/job.xsd">
+
+    <context:property-placeholder location="classpath*:/properties/local-sch-elasticjob-import.properties"
+                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
+
+    <job:simple id="simpleElasticJob"
+                class="com.ysu.zyw.tc.components.sch.elasticjob.test.TcSimpleJob"
+                registry-center-ref="regCenter"
+                cron="0/3 * * * * ?"
+                sharding-total-count="1"
+                sharding-item-parameters="0=A"
+                event-trace-rdb-data-source="dataSource"/>
+
+</beans>

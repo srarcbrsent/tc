@@ -2,45 +2,44 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
-       xmlns:job="http://www.dangdang.com/schema/ddframe/job"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.dangdang.com/schema/ddframe/reg
-       http://www.dangdang.com/schema/ddframe/reg/reg.xsd
-       http://www.dangdang.com/schema/ddframe/job
-       http://www.dangdang.com/schema/ddframe/job/job.xsd">
+       http://www.dangdang.com/schema/ddframe/reg/reg.xsd">
 
     <reg:zookeeper id="regCenter"
-                   server-lists=" yourhost:2181"
-                   namespace="dd-job"
+                   server-lists="zk.tc.com:2181"
+                   namespace="tc_job"
                    base-sleep-time-milliseconds="1000"
                    max-sleep-time-milliseconds="3000"
                    max-retries="3"/>
 
-    <!-- 配置简单作业-->
-    <job:simple id="simpleElasticJob" class="xxx.MySimpleElasticJob" registry-center-ref="regCenter"
-                cron="0/10 * * * * ?" sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C"/>
-
-    <!-- 配置数据流作业-->
-    <job:dataflow id="throughputDataflow" class="xxx.MyThroughputDataflowElasticJob" registry-center-ref="regCenter"
-                  cron="0/10 * * * * ?" sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C"/>
-
-    <!-- 配置脚本作业-->
-    <job:script id="scriptElasticJob" registry-center-ref="regCenter" cron="0/10 * * * * ?" sharding-total-count="3"
-                sharding-item-parameters="0=A,1=B,2=C" script-command-line="/your/file/path/demo.sh"/>
-
-    <!-- 配置带监听的简单作业-->
-    <job:simple id="listenerElasticJob" class="xxx.MySimpleListenerElasticJob" registry-center-ref="regCenter"
-                cron="0/10 * * * * ?" sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C">
-        <job:listener class="xx.MySimpleJobListener"/>
-        <job:distributed-listener class="xx.MyOnceSimpleJobListener" started-timeout-milliseconds="1000"
-                                  completed-timeout-milliseconds="2000"/>
-    </job:simple>
-
-    <!-- 配置带作业数据库事件追踪的简单作业-->
-    <job:simple id="listenerElasticJob" class="xxx.MySimpleListenerElasticJob" registry-center-ref="regCenter"
-                cron="0/10 * * * * ?" sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C"
-                event-trace-rdb-data-source="yourDataSource">
-    </job:simple>
-
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${properties.sch.elasticjob.jdbc.core.url}"/>
+        <property name="username" value="${properties.sch.elasticjob.jdbc.core.username}"/>
+        <property name="password" value="${properties.sch.elasticjob.jdbc.core.password}"/>
+        <property name="maxActive" value="${properties.sch.elasticjob.jdbc.max.active}"/>
+        <property name="maxWait" value="${properties.sch.elasticjob.jdbc.max.wait}"/>
+        <property name="connectProperties">
+            <props>
+                <prop key="useUnicode">true</prop>
+                <prop key="characterEncoding">UTF-8</prop>
+                <prop key="zeroDateTimeBehavior">convertToNull</prop>
+                <prop key="useSSL">false</prop>
+            </props>
+        </property>
+        <property name="proxyFilters">
+            <list>
+                <bean class="com.alibaba.druid.filter.stat.StatFilter">
+                    <property name="slowSqlMillis" value="1000"/>
+                    <property name="logSlowSql" value="true"/>
+                </bean>
+                <bean class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+                    <property name="statementExecutableSqlLogEnable" value="true"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
 </beans>

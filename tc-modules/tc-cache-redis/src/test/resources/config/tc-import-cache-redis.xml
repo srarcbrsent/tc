@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="/properties/local-cache-redis-import.properties"
+    <context:property-placeholder location="classpath*:/properties/local-cache-redis-import.properties"
                                   file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
 
 </beans>
