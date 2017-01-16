@@ -278,6 +278,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.ysu.zyw</groupId>
+                <artifactId>tc-sch-elasticjob</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- spring dependency -->
             <dependency>
                 <groupId>org.springframework</groupId>
