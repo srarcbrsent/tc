@@ -10,6 +10,13 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- !!!! Import !!!! -->
+    <context:property-placeholder location="${properties.pom.activation.spring.web.profile}"
+                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
+
+    <!-- !!!! Import !!!! -->
+    <import resource="classpath*:/config/tc-spring-web-front-end-deprecated.xml"/>
+
     <!-- !!!! Infrastructure !!!! -->
 
     <!-- thread exhandler -->
@@ -23,12 +30,5 @@
     <!-- aop -->
     <aop:aspectj-autoproxy proxy-target-class="true"
                            expose-proxy="true"/>
-
-    <!-- !!!! Import !!!! -->
-    <context:property-placeholder location="classpath*:/properties/spring-web.properties"
-                                  file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
-
-    <!-- !!!! Import !!!! -->
-    <import resource="classpath*:/config/tc-spring-web-front-end-deprecated.xml"/>
 
 </beans>

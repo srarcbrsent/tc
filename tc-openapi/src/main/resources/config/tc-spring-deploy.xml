@@ -10,28 +10,6 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- !!!! Infrastructure !!!! -->
-
-    <!-- fork join exhandler -->
-    <bean id="forkJoinPool" class="org.springframework.scheduling.concurrent.ForkJoinPoolFactoryBean">
-        <property name="parallelism" value="${properties.thread.pool.fork.join.pool.size}"/>
-        <property name="uncaughtExceptionHandler">
-            <bean class="com.ysu.zyw.tc.components.exhandler.TcUncaughtExceptionHandler"/>
-        </property>
-    </bean>
-
-    <!-- aop -->
-    <!-- response-decorator: -500 / cache: -20 / transaction: 0 -->
-    <aop:aspectj-autoproxy proxy-target-class="true"
-                           expose-proxy="true"/>
-
-    <!-- metaq -->
-    <bean id="metaQueueMessageSubscribers" class="org.springframework.beans.factory.config.MapFactoryBean">
-        <property name="sourceMap">
-            <map>
-            </map>
-        </property>
-    </bean>
 
     <!-- !!!! Import !!!! -->
     <context:property-placeholder location="classpath*:/properties/spring.properties"
@@ -42,8 +20,33 @@
 
     <import resource="classpath*:/config/tc-spring-svc.xml"/>
 
+    <!-- !!!! Infrastructure !!!! -->
+
+    <!-- aop -->
+    <!-- response-decorator: -500 / cache: -20 / transaction: 0 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"
+                           expose-proxy="true"/>
+
+    <!-- fork join exhandler -->
+    <bean id="forkJoinPool" class="org.springframework.scheduling.concurrent.ForkJoinPoolFactoryBean">
+        <property name="parallelism" value="${properties.thread.pool.fork.join.pool.size}"/>
+        <property name="uncaughtExceptionHandler">
+            <bean class="com.ysu.zyw.tc.components.exhandler.TcUncaughtExceptionHandler"/>
+        </property>
+    </bean>
+
+    <!-- metaq -->
+    <bean id="metaQueueMessageSubscribers" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map>
+            </map>
+        </property>
+    </bean>
+
+    <!-- context life cycle -->
     <bean class="com.ysu.zyw.tc.platform.fk.servlet.TcContextLifeCycleHandlerImpl"/>
 
+    <!-- configs -->
     <bean class="com.ysu.zyw.tc.platform.fk.config.TcConfig">
         <property name="devMode" value="${properties.config.mode.dev}"/>
         <property name="fixedVerificationCode" value="${properties.config.fixed.verification.code}"/>
