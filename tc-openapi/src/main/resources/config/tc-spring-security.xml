@@ -121,8 +121,11 @@
                         <property name="port" value="8443"/>
                     </bean>
                 </entry>
-                <entry key="requiresRoleDynamic">
-                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresRolesDynamicFilter"/>
+                <entry key="requiresAllRolesDynamic">
+                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresAllRolesDynamicFilter"/>
+                </entry>
+                <entry key="requiresAnyRolesDynamic">
+                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresAnyRolesDynamicFilter"/>
                 </entry>
             </map>
         </property>
