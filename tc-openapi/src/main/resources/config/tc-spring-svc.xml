@@ -7,6 +7,6 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.ysu.zyw.tc.platform.svc"/>
+    <context:component-scan base-package="com.ysu.zyw.tc.openapi.svc"/>
 
 </beans>

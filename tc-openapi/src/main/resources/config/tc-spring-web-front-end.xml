@@ -35,9 +35,9 @@
 
     <mvc:default-servlet-handler/>
 
-    <context:component-scan base-package="com.ysu.zyw.tc.platform.web"/>
+    <context:component-scan base-package="com.ysu.zyw.tc.openapi.web"/>
 
-    <bean class="com.ysu.zyw.tc.platform.fk.TcResponseEntityDecorator"/>
+    <bean class="com.ysu.zyw.tc.openapi.fk.TcResponseEntityDecorator"/>
 
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>

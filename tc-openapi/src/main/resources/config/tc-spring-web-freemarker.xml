@@ -26,8 +26,8 @@
             <map>
                 <entry key="base" value="${properties.web.freemarker.vars.base}"/>
                 <entry key="staticBase" value="${properties.web.freemarker.vars.static.base}"/>
-                <entry key="shiro" value="#{new com.ysu.zyw.tc.platform.fk.shiro.tags.ShiroTags()}"/>
-                <entry key="static" value="#{new com.ysu.zyw.tc.platform.fk.fe.TcStaticTags()}"/>
+                <entry key="shiro" value="#{new com.ysu.zyw.tc.openapi.fk.shiro.tags.ShiroTags()}"/>
+                <entry key="static" value="#{new com.ysu.zyw.tc.openapi.fk.fe.TcStaticTags()}"/>
             </map>
         </property>
     </bean>

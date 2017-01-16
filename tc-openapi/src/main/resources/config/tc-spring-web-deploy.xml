@@ -32,7 +32,7 @@
     </bean>
 
     <!--- !!!! Swagger !!!! -->
-    <bean class="com.ysu.zyw.tc.platform.fk.config.TcSwaggerConfig">
+    <bean class="com.ysu.zyw.tc.openapi.fk.config.TcSwaggerConfig">
         <property name="basePackage" value="${properties.web.swagger.scanner.base.package}"/>
     </bean>
 
