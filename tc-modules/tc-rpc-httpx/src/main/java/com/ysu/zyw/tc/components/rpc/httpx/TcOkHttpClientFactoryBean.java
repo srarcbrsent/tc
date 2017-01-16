@@ -20,19 +20,19 @@ public class TcOkHttpClientFactoryBean implements FactoryBean<OkHttpClient> {
 
     @Getter
     @Setter
-    private long pingInterval = 900_000;
+    private long pingInterval;
 
     @Getter
     @Setter
-    private long connectTimeout = 10_000;
+    private long connectTimeout;
 
     @Getter
     @Setter
-    private long writeTimeout = 10_000;
+    private long writeTimeout;
 
     @Getter
     @Setter
-    private long readTimeout = 10_000;
+    private long readTimeout;
 
     @Getter
     @Setter
