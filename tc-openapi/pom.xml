@@ -220,14 +220,21 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <properties>
-                <properties.pom.activation.spring.profile>
-                    classpath*:/properties/dev/spring.properties
-                </properties.pom.activation.spring.profile>
-                <properties.pom.activation.spring.web.profile>
-                    classpath*:/properties/dev/spring-web.properties
-                </properties.pom.activation.spring.web.profile>
-            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <targetPath>${project.build.outputDirectory}/classes</targetPath>
+                        <excludes>
+                            <exclude>properties/*/*.*</exclude>
+                        </excludes>
+                    </resource>
+                    <resource>
+                        <directory>src/main/resources/properties/dev</directory>
+                        <targetPath>${project.build.outputDirectory}/classes/properties</targetPath>
+                    </resource>
+                </resources>
+            </build>
             <dependencies>
                 <!-- swagger ui only dev mode -->
                 <dependency>
@@ -239,19 +246,23 @@
 
         <profile>
             <id>tc_docker</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <properties.pom.activation.spring.profile>
-                    classpath*:/properties/docker/spring.properties
-                </properties.pom.activation.spring.profile>
-                <properties.pom.activation.spring.web.profile>
-                    classpath*:/properties/docker/spring-web.properties
-                </properties.pom.activation.spring.web.profile>
-            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <targetPath>${project.build.outputDirectory}/classes</targetPath>
+                        <excludes>
+                            <exclude>properties/*/*.*</exclude>
+                        </excludes>
+                    </resource>
+                    <resource>
+                        <directory>src/main/resources/properties/docker</directory>
+                        <targetPath>${project.build.outputDirectory}/classes/properties</targetPath>
+                    </resource>
+                </resources>
+            </build>
             <dependencies>
-                <!-- swagger ui only dev mode -->
+                <!-- swagger ui only docker mode -->
                 <dependency>
                     <groupId>io.springfox</groupId>
                     <artifactId>springfox-swagger-ui</artifactId>
@@ -261,14 +272,21 @@
 
         <profile>
             <id>tc_pdu</id>
-            <properties>
-                <properties.pom.activation.spring.profile>
-                    classpath*:/properties/pdu/spring.properties
-                </properties.pom.activation.spring.profile>
-                <properties.pom.activation.spring.web.profile>
-                    classpath*:/properties/pdu/spring-web.properties
-                </properties.pom.activation.spring.web.profile>
-            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <targetPath>${project.build.outputDirectory}/classes</targetPath>
+                        <excludes>
+                            <exclude>properties/*/*.*</exclude>
+                        </excludes>
+                    </resource>
+                    <resource>
+                        <directory>src/main/resources/properties/pdu</directory>
+                        <targetPath>${project.build.outputDirectory}/classes/properties</targetPath>
+                    </resource>
+                </resources>
+            </build>
         </profile>
     </profiles>
 

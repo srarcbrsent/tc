@@ -34,7 +34,7 @@
     </bean>
 
     <!-- !!!! Import !!!! -->
-    <context:property-placeholder location="${properties.pom.activation.spring.profile}"
+    <context:property-placeholder location="classpath*:/properties/spring.properties"
                                   file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
 
     <!-- !!!! Import !!!! -->
