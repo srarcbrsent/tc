@@ -131,10 +131,25 @@
 
     <bean class="com.ysu.zyw.tc.openapi.fk.shiro.support.TcRequiresRolesDynamicSup"/>
 
-    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.internal.TcAuthorizationAttributeSourceAdvisor">
-        <constructor-arg index="0">
-            <bean class="com.ysu.zyw.tc.openapi.fk.shiro.internal.TcAopAllianceAnnotationsAuthorizingMethodInterceptor"/>
+    <bean id="springAnnotationResolver" class="org.apache.shiro.spring.aop.SpringAnnotationResolver"/>
+
+    <bean id="tcAopAllianceAnnotationsAuthorizingMethodInterceptor"
+          class="com.ysu.zyw.tc.openapi.fk.shiro.internal.TcAopAllianceAnnotationsAuthorizingMethodInterceptor">
+        <constructor-arg index="0" ref="springAnnotationResolver"/>
+        <constructor-arg index="1">
+            <list>
+                <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresRolesDynamicAnnotationMethodInterceptor">
+                    <constructor-arg index="0">
+                        <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresRolesDynamicAnnotationHandler"/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="springAnnotationResolver"/>
+                </bean>
+            </list>
         </constructor-arg>
+    </bean>
+
+    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.internal.TcAuthorizationAttributeSourceAdvisor">
+        <constructor-arg index="0" ref="tcAopAllianceAnnotationsAuthorizingMethodInterceptor"/>
         <property name="securityManager" ref="securityManager"/>
     </bean>
 

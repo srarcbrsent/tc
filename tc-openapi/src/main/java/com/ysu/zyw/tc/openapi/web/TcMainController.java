@@ -1,9 +1,9 @@
 package com.ysu.zyw.tc.openapi.web;
 
+import com.ysu.zyw.tc.model.mw.Rc;
 import com.ysu.zyw.tc.model.mw.TcR;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,23 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TcMainController {
 
-    // the server 404 & 500 page is static page in webapp.
-
+    // only this 7777 code requires api, because shiro's interceptor is higher level
+    // than spring's aspect(all other exception is handled by spring aspect), and
+    // when an AuthorizationException has been thrown, shiro will redirect to this.
     @ApiOperation(
-            value = "404错误页",
-            notes = "跳转到404错误页")
-    @RequestMapping(value = "/not_found")
-    public ResponseEntity<?> resourceNotFoundJson() {
-        return ResponseEntity.ok(TcR.errs());
-    }
-
-    @ApiOperation(
-            value = "500错误页",
-            notes = "跳转到500错误页")
-    @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/server_error")
-    public ResponseEntity<?> internalServerErrorJson() {
-        return ResponseEntity.ok(TcR.errs());
+            value = "未授权页",
+            notes = "跳转到未授权页")
+    @RequestMapping(value = "/unauthorized")
+    public ResponseEntity<?> unauthorizedJson() {
+        return ResponseEntity.ok(TcR.code(Rc.UNAUTHORIZED, Rc.UNAUTHORIZED_DESCRIPTION));
     }
 
 }

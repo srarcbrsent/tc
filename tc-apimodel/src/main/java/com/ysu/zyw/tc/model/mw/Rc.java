@@ -6,6 +6,10 @@ public interface Rc {
 
     String SUCCESS_DESCRIPTION = "请求成功！";
 
+    int UNAUTHORIZED = 7777;
+
+    String UNAUTHORIZED_DESCRIPTION = "未授权！";
+
     int BAD_REQUEST = 8888;
 
     String BAD_REQUEST_DESCRIPTION = "信息有误！";

@@ -14,4 +14,5 @@ public @interface TcRequiresRolesDynamic {
     String[] value();
 
     Logical logical() default Logical.AND;
+
 }
