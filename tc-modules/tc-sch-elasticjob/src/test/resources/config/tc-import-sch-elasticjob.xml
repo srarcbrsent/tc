@@ -13,12 +13,33 @@
     <context:property-placeholder location="classpath*:/properties/local-sch-elasticjob-import.properties"
                                   file-encoding="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
 
-    <job:simple id="simpleElasticJob"
+    <job:simple id="simpleJob"
+                description="实验任务"
                 class="com.ysu.zyw.tc.components.sch.elasticjob.test.TcSimpleJob"
                 registry-center-ref="regCenter"
+                overwrite="true"
                 cron="0/3 * * * * ?"
                 sharding-total-count="1"
                 sharding-item-parameters="0=A"
-                event-trace-rdb-data-source="dataSource"/>
+                event-trace-rdb-data-source="dataSource"
+                job-exception-handler="com.dangdang.ddframe.job.executor.handler.impl.DefaultJobExceptionHandler"
+                executor-service-handler="com.dangdang.ddframe.job.executor.handler.impl.DefaultExecutorServiceHandler">
+        <job:listener class="com.ysu.zyw.tc.components.sch.elasticjob.TcElasticJobLogListener"/>
+    </job:simple>
+
+    <job:dataflow id="dataflowJob"
+                  description="实验任务"
+                  class="com.ysu.zyw.tc.components.sch.elasticjob.test.TcDataflowJob"
+                  registry-center-ref="regCenter"
+                  overwrite="true"
+                  streaming-process="true"
+                  cron="0/20 * * * * ?"
+                  sharding-total-count="1"
+                  sharding-item-parameters="0=A"
+                  event-trace-rdb-data-source="dataSource"
+                  job-exception-handler="com.dangdang.ddframe.job.executor.handler.impl.DefaultJobExceptionHandler"
+                  executor-service-handler="com.dangdang.ddframe.job.executor.handler.impl.DefaultExecutorServiceHandler">
+        <job:listener class="com.ysu.zyw.tc.components.sch.elasticjob.TcElasticJobLogListener"/>
+    </job:dataflow>
 
 </beans>
