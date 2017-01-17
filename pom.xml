@@ -761,6 +761,13 @@
                 <version>2.0.14</version>
             </dependency>
 
+            <!-- reactive -->
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactive-core</artifactId>
+                <version>3.0.4.RELEASE</version>
+            </dependency>
+
             <!-- apache commons utils -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -836,6 +843,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>1.4.3.RELEASE</version>
+                <scope>test</scope>
             </dependency>
 
             <!-- javax -->
