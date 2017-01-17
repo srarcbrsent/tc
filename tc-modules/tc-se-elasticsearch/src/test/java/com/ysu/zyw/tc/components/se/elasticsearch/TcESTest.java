@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.se.elasticsearch.test;
+package com.ysu.zyw.tc.components.se.elasticsearch;
 
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.client.transport.TransportClient;

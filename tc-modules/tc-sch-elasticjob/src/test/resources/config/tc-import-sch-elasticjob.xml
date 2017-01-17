@@ -15,7 +15,7 @@
 
     <job:simple id="simpleJob"
                 description="实验任务"
-                class="com.ysu.zyw.tc.components.sch.elasticjob.test.TcSimpleJob"
+                class="com.ysu.zyw.tc.components.sch.elasticjob.TcSimpleJob"
                 registry-center-ref="regCenter"
                 overwrite="true"
                 cron="0/3 * * * * ?"
@@ -29,7 +29,7 @@
 
     <job:dataflow id="dataflowJob"
                   description="实验任务"
-                  class="com.ysu.zyw.tc.components.sch.elasticjob.test.TcDataflowJob"
+                  class="com.ysu.zyw.tc.components.sch.elasticjob.TcDataflowJob"
                   registry-center-ref="regCenter"
                   overwrite="true"
                   streaming-process="true"

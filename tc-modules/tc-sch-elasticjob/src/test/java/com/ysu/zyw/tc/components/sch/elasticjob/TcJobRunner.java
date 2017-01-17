@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.sch.elasticjob.test;
+package com.ysu.zyw.tc.components.sch.elasticjob;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

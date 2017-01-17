@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.api.test;
+package com.ysu.zyw.tc.api;
 
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.api.dao.mappers.TcItemMapper;

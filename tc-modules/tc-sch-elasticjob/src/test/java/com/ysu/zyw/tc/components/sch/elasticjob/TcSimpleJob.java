@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.sch.elasticjob.test;
+package com.ysu.zyw.tc.components.sch.elasticjob;
 
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;

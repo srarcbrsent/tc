@@ -32,6 +32,7 @@
         <module>tc-openapi</module>
         <module>tc-demos</module>
         <module>tc-modules/tc-sch-elasticjob</module>
+        <module>tc-modules/tc-spring-reactive</module>
     </modules>
 
     <properties>
