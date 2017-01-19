@@ -18,4 +18,9 @@ public class TcReactiveDemos {
                 .subscribe(System.out::println);
     }
 
+    @Test
+    public void test02() {
+
+    }
+
 }
