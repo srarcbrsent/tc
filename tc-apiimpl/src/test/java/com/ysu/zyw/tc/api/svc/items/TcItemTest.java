@@ -1,8 +1,7 @@
-package com.ysu.zyw.tc.api;
+package com.ysu.zyw.tc.api.svc.items;
 
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.api.dao.mappers.TcItemMapper;
-import com.ysu.zyw.tc.api.svc.items.TcItemService;
 import com.ysu.zyw.tc.base.tools.TcIdGen;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
