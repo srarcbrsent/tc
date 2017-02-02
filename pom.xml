@@ -26,13 +26,14 @@
         <module>tc-modules/tc-commons-upload</module>
         <module>tc-modules/tc-crawler</module>
         <module>tc-modules/tc-se-elasticsearch</module>
+        <module>tc-modules/tc-sch-elasticjob</module>
+        <module>tc-modules/tc-spring-reactive</module>
+        <module>tc-modules/tc-commons-fetchrunner</module>
         <module>tc-apimodel</module>
         <module>tc-api</module>
         <module>tc-apiimpl</module>
         <module>tc-openapi</module>
         <module>tc-demos</module>
-        <module>tc-modules/tc-sch-elasticjob</module>
-        <module>tc-modules/tc-spring-reactive</module>
     </modules>
 
     <properties>
