@@ -3,27 +3,22 @@ package com.ysu.zyw.tc.components.commons.logger;
 public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
     public boolean isTraceEnabled() {
         return false;
     }
 
     @Override
-    public void trace(String msg) {
+    public void trace(Class<?> clazz, String msg) {
 
     }
 
     @Override
-    public void trace(String format, Object... arguments) {
+    public void trace(Class<?> clazz, String format, Object... arguments) {
 
     }
 
     @Override
-    public void trace(String msg, Throwable t) {
+    public void trace(Class<?> clazz, String msg, Throwable t) {
 
     }
 
@@ -33,17 +28,17 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
     }
 
     @Override
-    public void debug(String msg) {
+    public void debug(Class<?> clazz, String msg) {
 
     }
 
     @Override
-    public void debug(String format, Object... arguments) {
+    public void debug(Class<?> clazz, String format, Object... arguments) {
 
     }
 
     @Override
-    public void debug(String msg, Throwable t) {
+    public void debug(Class<?> clazz, String msg, Throwable t) {
 
     }
 
@@ -53,17 +48,17 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
     }
 
     @Override
-    public void info(String msg) {
+    public void info(Class<?> clazz, String msg) {
 
     }
 
     @Override
-    public void info(String format, Object... arguments) {
+    public void info(Class<?> clazz, String format, Object... arguments) {
 
     }
 
     @Override
-    public void info(String msg, Throwable t) {
+    public void info(Class<?> clazz, String msg, Throwable t) {
 
     }
 
@@ -73,17 +68,17 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
     }
 
     @Override
-    public void warn(String msg) {
+    public void warn(Class<?> clazz, String msg) {
 
     }
 
     @Override
-    public void warn(String format, Object... arguments) {
+    public void warn(Class<?> clazz, String format, Object... arguments) {
 
     }
 
     @Override
-    public void warn(String msg, Throwable t) {
+    public void warn(Class<?> clazz, String msg, Throwable t) {
 
     }
 
@@ -93,17 +88,17 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
     }
 
     @Override
-    public void error(String msg) {
+    public void error(Class<?> clazz, String msg) {
 
     }
 
     @Override
-    public void error(String format, Object... arguments) {
+    public void error(Class<?> clazz, String format, Object... arguments) {
 
     }
 
     @Override
-    public void error(String msg, Throwable t) {
+    public void error(Class<?> clazz, String msg, Throwable t) {
 
     }
 
