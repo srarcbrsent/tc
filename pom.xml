@@ -38,7 +38,7 @@
     </modules>
 
     <properties>
-        <pom.version.spring>4.3.5.RELEASE</pom.version.spring>
+        <pom.version.spring>4.3.6.RELEASE</pom.version.spring>
         <pom.version.spring.data.redis>1.7.6.RELEASE</pom.version.spring.data.redis>
         <pom.version.spring.data.mongodb>1.9.6.RELEASE</pom.version.spring.data.mongodb>
         <pom.version.spring.retry>1.1.5.RELEASE</pom.version.spring.retry>
