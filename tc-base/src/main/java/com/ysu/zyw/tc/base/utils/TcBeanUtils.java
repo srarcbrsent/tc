@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -29,10 +29,10 @@ public class TcBeanUtils {
         return target;
     }
 
-    public static <T> T[] copyProperties(@Nonnull Object source, @Nonnull T... targets) {
+    public static <T> List<T> copyProperties(@Nonnull Object source, @Nonnull List<T> targets) {
         checkNotNull(source);
         checkNotNull(targets);
-        Arrays.stream(targets).forEach(target -> BeanUtils.copyProperties(source, target));
+        targets.forEach(target -> BeanUtils.copyProperties(source, target));
         return targets;
     }
 
