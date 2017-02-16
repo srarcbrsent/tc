@@ -224,7 +224,8 @@ public class TcHttpxService {
                 return doExecute(url, httpMethod, httpEntity, typeReference, uriVariables);
             } catch (Exception e) {
                 // camouflage exception
-                log.error("", e);
+                log.error("http call failed, url [{}], http method [{}], http entity [{}], uri vars [{}]",
+                        url, httpMethod, httpEntity, uriVariables, e);
                 return doCamouflageException();
             }
         } else {

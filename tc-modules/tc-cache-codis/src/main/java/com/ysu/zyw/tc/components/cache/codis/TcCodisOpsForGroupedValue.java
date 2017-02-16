@@ -34,6 +34,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @link https://github.com/antirez/redis/issues/1042
  * @warn this is not accurate, it depends on the cluster time.
+ * <p>
+ * there have an another way to impl accurate expires, and do not store the expiresAt field in the
+ * same hash, and only store it as a normal key with expire time (any value is valid), and if the
+ * key is exists then the field is valid, otherwise the field is invalid. TODO
  */
 @Slf4j
 public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
