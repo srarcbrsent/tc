@@ -1,5 +1,8 @@
 package com.ysu.zyw.tc.components.commons.logger;
 
+import com.google.common.base.Throwables;
+import com.ysu.zyw.tc.base.tools.TcIdGen;
+import com.ysu.zyw.tc.base.utils.TcFormatUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +10,7 @@ import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
+import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -167,6 +171,8 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
         private Date date;
 
+        private String clazz;
+
         private String thread;
 
         private String logger;
@@ -179,8 +185,70 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     }
 
-    private void convert() {
+    private TcExtensionLogModel convert(TcLogLevelEnum tcLogLevelEnum,
+                                        Class<?> clazz,
+                                        String format,
+                                        Object... arguments) {
+        Thread currentThread = Thread.currentThread();
+        StackTraceElement ste = currentThread.getStackTrace()[1];
+        // the last arguments may be a throwable
+        boolean isLastArgumentInstanceOfThrowable = Objects.nonNull(arguments)
+                && arguments.length > 0
+                && arguments[arguments.length - 1] instanceof Throwable;
+        Throwable t = isLastArgumentInstanceOfThrowable ? (Throwable) arguments[arguments.length - 1] : null;
+        return new TcExtensionLogModel()
+                .setId(TcIdGen.upperCaseUuid())
+                .setLevel(tcLogLevelEnum.name())
+                .setDate(new Date())
+                .setClazz(clazz.toString())
+                .setThread(currentThread.getName())
+                .setLogger(tryGetFilename(ste))
+                .setLine(tryGetLineNumber(ste))
+                // the last arguments may be a throwable
+                .setMsg(tryFormatMsg(format, arguments))
+                .setException(tryFormatException(t));
+    }
 
+    private TcExtensionLogModel convert(TcLogLevelEnum tcLogLevelEnum,
+                                        Class<?> clazz,
+                                        String msg,
+                                        Throwable t) {
+        Thread currentThread = Thread.currentThread();
+        StackTraceElement ste = currentThread.getStackTrace()[1];
+        return new TcExtensionLogModel()
+                .setId(TcIdGen.upperCaseUuid())
+                .setLevel(tcLogLevelEnum.name())
+                .setDate(new Date())
+                .setClazz(clazz.toString())
+                .setThread(currentThread.getName())
+                .setLogger(tryGetFilename(ste))
+                .setLine(tryGetLineNumber(ste))
+                .setMsg(msg)
+                .setException(tryFormatException(t));
+    }
+
+    private String tryGetFilename(StackTraceElement ste) {
+        return ste.getFileName();
+    }
+
+    private int tryGetLineNumber(StackTraceElement ste) {
+        return ste.getLineNumber();
+    }
+
+    private String tryFormatMsg(String format, Object... arguments) {
+        if (Objects.nonNull(arguments) && arguments.length > 0) {
+            return TcFormatUtils.format(format, arguments);
+        } else {
+            return format;
+        }
+    }
+
+    private String tryFormatException(Throwable t) {
+        if (Objects.isNull(t)) {
+            return null;
+        } else {
+            return t.getMessage() + Throwables.getStackTraceAsString(t);
+        }
     }
 
 }
