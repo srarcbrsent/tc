@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
@@ -117,8 +118,7 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
         Thread currentThread = Thread.currentThread();
         StackTraceElement ste = currentThread.getStackTrace()[1];
         // the last arguments may be a throwable
-        boolean isLastArgumentInstanceOfThrowable = Objects.nonNull(arguments)
-                && arguments.length > 0
+        boolean isLastArgumentInstanceOfThrowable = ArrayUtils.isNotEmpty(arguments)
                 && arguments[arguments.length - 1] instanceof Throwable;
         Throwable t = isLastArgumentInstanceOfThrowable ? (Throwable) arguments[arguments.length - 1] : null;
         return new TcExtensionLogModel()
@@ -161,7 +161,7 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
     }
 
     protected String tryFormatMsg(String format, Object... arguments) {
-        if (Objects.nonNull(arguments) && arguments.length > 0) {
+        if (ArrayUtils.isNotEmpty(arguments)) {
             return TcFormatUtils.format(format, arguments);
         } else {
             return format;
