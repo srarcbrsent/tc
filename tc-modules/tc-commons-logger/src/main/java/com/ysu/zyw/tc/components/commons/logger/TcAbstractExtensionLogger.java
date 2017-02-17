@@ -1,10 +1,63 @@
 package com.ysu.zyw.tc.components.commons.logger;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Date;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class TcAbstractExtensionLogger implements TcExtensionLogger {
+
+    private static boolean traceEnabled = false;
+
+    private static boolean debugEnabled = false;
+
+    private static boolean infoEnabled = false;
+
+    private static boolean warnEnabled = false;
+
+    private static boolean errorEnabled = false;
+
+    static {
+        String extensionLoggerLevel = System.getProperty("extensionLoggerLevel");
+        TcLogLevelEnum logLevel = TcLogLevelEnum.INFO;
+        if (StringUtils.isNotEmpty(extensionLoggerLevel)) {
+            try {
+                logLevel = TcLogLevelEnum.valueOf(extensionLoggerLevel);
+            } catch (IllegalArgumentException e) {
+                // no match log level, pass to info level
+                logLevel = TcLogLevelEnum.INFO;
+                // no log can be applied there, sout it.
+                e.printStackTrace();
+            }
+        }
+        checkNotNull(logLevel);
+        switch (logLevel) {
+            case TRACE:
+                traceEnabled = true;
+                // no break, pass through
+            case DEBUG:
+                debugEnabled = true;
+                // no break, pass through
+            case INFO:
+                infoEnabled = true;
+                // no break, pass through
+            case WARN:
+                warnEnabled = true;
+                // no break, pass through
+            case ERROR:
+                errorEnabled = true;
+                // no break, pass through
+        }
+    }
 
     @Override
     public boolean isTraceEnabled() {
-        return false;
+        return traceEnabled;
     }
 
     @Override
@@ -24,7 +77,7 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     @Override
     public boolean isDebugEnabled() {
-        return false;
+        return debugEnabled;
     }
 
     @Override
@@ -44,7 +97,7 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     @Override
     public boolean isInfoEnabled() {
-        return false;
+        return infoEnabled;
     }
 
     @Override
@@ -64,7 +117,7 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     @Override
     public boolean isWarnEnabled() {
-        return false;
+        return warnEnabled;
     }
 
     @Override
@@ -84,7 +137,7 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     @Override
     public boolean isErrorEnabled() {
-        return false;
+        return errorEnabled;
     }
 
     @Override
@@ -99,6 +152,34 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     @Override
     public void error(Class<?> clazz, String msg, Throwable t) {
+
+    }
+
+    @Data
+    @Accessors(chain = true)
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TcExtensionLogModel {
+
+        private String id;
+
+        private String level;
+
+        private Date date;
+
+        private String thread;
+
+        private String logger;
+
+        private int line;
+
+        private String msg;
+
+        private String exception;
+
+    }
+
+    private void convert() {
 
     }
 
