@@ -14,7 +14,7 @@ import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class TcAbstractExtensionLogger implements TcExtensionLogger {
+public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     private static boolean traceEnabled = false;
 
@@ -65,38 +65,8 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
     }
 
     @Override
-    public void trace(Class<?> clazz, String msg) {
-
-    }
-
-    @Override
-    public void trace(Class<?> clazz, String format, Object... arguments) {
-
-    }
-
-    @Override
-    public void trace(Class<?> clazz, String msg, Throwable t) {
-
-    }
-
-    @Override
     public boolean isDebugEnabled() {
         return debugEnabled;
-    }
-
-    @Override
-    public void debug(Class<?> clazz, String msg) {
-
-    }
-
-    @Override
-    public void debug(Class<?> clazz, String format, Object... arguments) {
-
-    }
-
-    @Override
-    public void debug(Class<?> clazz, String msg, Throwable t) {
-
     }
 
     @Override
@@ -105,58 +75,13 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
     }
 
     @Override
-    public void info(Class<?> clazz, String msg) {
-
-    }
-
-    @Override
-    public void info(Class<?> clazz, String format, Object... arguments) {
-
-    }
-
-    @Override
-    public void info(Class<?> clazz, String msg, Throwable t) {
-
-    }
-
-    @Override
     public boolean isWarnEnabled() {
         return warnEnabled;
     }
 
     @Override
-    public void warn(Class<?> clazz, String msg) {
-
-    }
-
-    @Override
-    public void warn(Class<?> clazz, String format, Object... arguments) {
-
-    }
-
-    @Override
-    public void warn(Class<?> clazz, String msg, Throwable t) {
-
-    }
-
-    @Override
     public boolean isErrorEnabled() {
         return errorEnabled;
-    }
-
-    @Override
-    public void error(Class<?> clazz, String msg) {
-
-    }
-
-    @Override
-    public void error(Class<?> clazz, String format, Object... arguments) {
-
-    }
-
-    @Override
-    public void error(Class<?> clazz, String msg, Throwable t) {
-
     }
 
     @Data
@@ -185,10 +110,10 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
 
     }
 
-    private TcExtensionLogModel convert(TcLogLevelEnum tcLogLevelEnum,
-                                        Class<?> clazz,
-                                        String format,
-                                        Object... arguments) {
+    protected TcExtensionLogModel convert(TcLogLevelEnum tcLogLevelEnum,
+                                          Class<?> clazz,
+                                          String format,
+                                          Object... arguments) {
         Thread currentThread = Thread.currentThread();
         StackTraceElement ste = currentThread.getStackTrace()[1];
         // the last arguments may be a throwable
@@ -209,10 +134,10 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
                 .setException(tryFormatException(t));
     }
 
-    private TcExtensionLogModel convert(TcLogLevelEnum tcLogLevelEnum,
-                                        Class<?> clazz,
-                                        String msg,
-                                        Throwable t) {
+    protected TcExtensionLogModel convert(TcLogLevelEnum tcLogLevelEnum,
+                                          Class<?> clazz,
+                                          String msg,
+                                          Throwable t) {
         Thread currentThread = Thread.currentThread();
         StackTraceElement ste = currentThread.getStackTrace()[1];
         return new TcExtensionLogModel()
@@ -227,15 +152,15 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
                 .setException(tryFormatException(t));
     }
 
-    private String tryGetFilename(StackTraceElement ste) {
+    protected String tryGetFilename(StackTraceElement ste) {
         return ste.getFileName();
     }
 
-    private int tryGetLineNumber(StackTraceElement ste) {
+    protected int tryGetLineNumber(StackTraceElement ste) {
         return ste.getLineNumber();
     }
 
-    private String tryFormatMsg(String format, Object... arguments) {
+    protected String tryFormatMsg(String format, Object... arguments) {
         if (Objects.nonNull(arguments) && arguments.length > 0) {
             return TcFormatUtils.format(format, arguments);
         } else {
@@ -243,12 +168,9 @@ public class TcAbstractExtensionLogger implements TcExtensionLogger {
         }
     }
 
-    private String tryFormatException(Throwable t) {
-        if (Objects.isNull(t)) {
-            return null;
-        } else {
-            return t.getMessage() + Throwables.getStackTraceAsString(t);
-        }
+    protected String tryFormatException(Throwable t) {
+        return Objects.isNull(t)
+                ? null : t.getMessage() + "\n" + Throwables.getStackTraceAsString(Throwables.getRootCause(t));
     }
 
 }
