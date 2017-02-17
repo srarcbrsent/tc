@@ -1,7 +1,6 @@
 package com.ysu.zyw.tc.components.commons.logger;
 
 import com.google.common.base.Throwables;
-import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.base.utils.TcFormatUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +16,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
 
+    private static final String EXTENSION_LOGGER_LEVEL_ENV_VARIABLE = "extensionLoggerLevel";
+
     private static boolean traceEnabled = false;
 
     private static boolean debugEnabled = false;
@@ -28,7 +29,7 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
     private static boolean errorEnabled = false;
 
     static {
-        String extensionLoggerLevel = System.getProperty("extensionLoggerLevel");
+        String extensionLoggerLevel = System.getProperty(EXTENSION_LOGGER_LEVEL_ENV_VARIABLE);
         TcLogLevelEnum logLevel = TcLogLevelEnum.INFO;
         if (StringUtils.isNotEmpty(extensionLoggerLevel)) {
             try {
@@ -91,17 +92,17 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
     @AllArgsConstructor
     public static class TcExtensionLogModel {
 
-        private String id;
+        private int id;
 
         private String level;
 
         private Date date;
 
-        private String clazz;
+        private String logger;
 
         private String thread;
 
-        private String logger;
+        private String file;
 
         private int line;
 
@@ -122,12 +123,11 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
                 && arguments[arguments.length - 1] instanceof Throwable;
         Throwable t = isLastArgumentInstanceOfThrowable ? (Throwable) arguments[arguments.length - 1] : null;
         return new TcExtensionLogModel()
-                .setId(TcIdGen.upperCaseUuid())
                 .setLevel(tcLogLevelEnum.name())
                 .setDate(new Date())
-                .setClazz(clazz.toString())
+                .setLogger(clazz.toString())
                 .setThread(currentThread.getName())
-                .setLogger(tryGetFilename(ste))
+                .setFile(tryGetFilename(ste))
                 .setLine(tryGetLineNumber(ste))
                 // the last arguments may be a throwable
                 .setMsg(tryFormatMsg(format, arguments))
@@ -141,12 +141,11 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
         Thread currentThread = Thread.currentThread();
         StackTraceElement ste = currentThread.getStackTrace()[1];
         return new TcExtensionLogModel()
-                .setId(TcIdGen.upperCaseUuid())
                 .setLevel(tcLogLevelEnum.name())
                 .setDate(new Date())
-                .setClazz(clazz.toString())
+                .setLogger(clazz.toString())
                 .setThread(currentThread.getName())
-                .setLogger(tryGetFilename(ste))
+                .setFile(tryGetFilename(ste))
                 .setLine(tryGetLineNumber(ste))
                 .setMsg(msg)
                 .setException(tryFormatException(t));
