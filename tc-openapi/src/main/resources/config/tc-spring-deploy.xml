@@ -23,7 +23,6 @@
     <!-- !!!! Infrastructure !!!! -->
 
     <!-- aop -->
-    <!-- response-decorator: -500 / cache: -20 / transaction: 0 -->
     <aop:aspectj-autoproxy proxy-target-class="true"
                            expose-proxy="true"/>
 
