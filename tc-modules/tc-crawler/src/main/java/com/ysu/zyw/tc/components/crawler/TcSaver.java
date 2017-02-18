@@ -3,7 +3,7 @@ package com.ysu.zyw.tc.components.crawler;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidPooledConnection;
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcBaseConsts;
 import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.components.crawler.model.*;
 import lombok.SneakyThrows;
@@ -179,9 +179,9 @@ public class TcSaver {
             preparedStatement.setInt(7, shop.getComprehensiveRate());
             preparedStatement.setString(8, RandomUtils.nextBoolean() ? "0" : "1");
             preparedStatement.setString(9, RandomUtils.nextBoolean() ? "0" : "1");
-            preparedStatement.setString(10, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(10, TcBaseConsts.STR_32_0);
             preparedStatement.setString(11, "2016-12-31 12:12:12");
-            preparedStatement.setString(12, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(12, TcBaseConsts.STR_32_0);
             preparedStatement.setString(13, "2016-12-31 12:12:12");
             preparedStatement.execute();
         }
@@ -216,9 +216,9 @@ public class TcSaver {
             preparedStatement.setInt(8, RandomUtils.nextInt(100, 15000));
             preparedStatement.setInt(9, RandomUtils.nextInt(5, 500));
             preparedStatement.setString(10, "0");
-            preparedStatement.setString(11, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(11, TcBaseConsts.STR_32_0);
             preparedStatement.setString(12, "2016-12-31 12:12:12");
-            preparedStatement.setString(13, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(13, TcBaseConsts.STR_32_0);
             preparedStatement.setString(14, "2016-12-31 12:12:12");
             preparedStatement.execute();
         }
@@ -245,9 +245,9 @@ public class TcSaver {
             preparedStatement.setString(3, attr.getName());
             preparedStatement.setString(4, attr.getValue());
             preparedStatement.setLong(5, attr.getSequence());
-            preparedStatement.setString(6, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(6, TcBaseConsts.STR_32_0);
             preparedStatement.setString(7, "2016-12-31 12:12:12");
-            preparedStatement.setString(8, TcConstant.Base.STR_32_0);
+            preparedStatement.setString(8, TcBaseConsts.STR_32_0);
             preparedStatement.setString(9, "2016-12-31 12:12:12");
             preparedStatement.execute();
         }
@@ -272,9 +272,9 @@ public class TcSaver {
                 preparedStatement.setString(2, cover.getItemId());
                 preparedStatement.setString(3, cover.getCover());
                 preparedStatement.setLong(4, cover.getSequence());
-                preparedStatement.setString(5, TcConstant.Base.STR_32_0);
+                preparedStatement.setString(5, TcBaseConsts.STR_32_0);
                 preparedStatement.setString(6, "2016-12-31 12:12:12");
-                preparedStatement.setString(7, TcConstant.Base.STR_32_0);
+                preparedStatement.setString(7, TcBaseConsts.STR_32_0);
                 preparedStatement.setString(8, "2016-12-31 12:12:12");
                 preparedStatement.execute();
             }
@@ -300,9 +300,9 @@ public class TcSaver {
                 preparedStatement.setString(2, detail.getItemId());
                 preparedStatement.setString(3, detail.getDetail());
                 preparedStatement.setLong(4, detail.getSequence());
-                preparedStatement.setString(5, TcConstant.Base.STR_32_0);
+                preparedStatement.setString(5, TcBaseConsts.STR_32_0);
                 preparedStatement.setString(6, "2016-12-31 12:12:12");
-                preparedStatement.setString(7, TcConstant.Base.STR_32_0);
+                preparedStatement.setString(7, TcBaseConsts.STR_32_0);
                 preparedStatement.setString(8, "2016-12-31 12:12:12");
                 preparedStatement.execute();
             }

@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.commons.utils;
 
 import com.google.common.collect.Maps;
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcStrConsts;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class TcPinyinUtils {
 
     public static LinkedHashMap<Character, String[]> toPinyin(String chinese) {
-        return chinese.replace(TcConstant.Str.BLANK, TcConstant.Str.EMPTY)
+        return chinese.replace(TcStrConsts.BLANK, TcStrConsts.EMPTY)
                 .chars()
                 .collect(Maps::newLinkedHashMap,
                         (rst, ele) -> rst.put((char) ele, toPinyin((char) ele)),

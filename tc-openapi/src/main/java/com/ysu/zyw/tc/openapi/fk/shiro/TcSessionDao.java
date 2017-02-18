@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.openapi.fk.shiro;
 
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcBeanNameConsts;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 
@@ -10,7 +10,7 @@ public class TcSessionDao extends CachingSessionDAO {
 
     @Override
     public String getActiveSessionsCacheName() {
-        return TcConstant.BeanNames.SHIRO_ACTIVE_SESSION_CACHE;
+        return TcBeanNameConsts.SHIRO_ACTIVE_SESSION_CACHE;
     }
 
     @Override

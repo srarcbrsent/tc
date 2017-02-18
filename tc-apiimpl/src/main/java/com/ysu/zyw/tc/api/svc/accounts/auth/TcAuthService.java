@@ -5,7 +5,7 @@ import com.ysu.zyw.tc.api.dao.mappers.*;
 import com.ysu.zyw.tc.api.dao.po.*;
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcBaseConsts;
 import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.base.utils.TcBeanUtils;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
@@ -77,9 +77,9 @@ public class TcAuthService {
                                 TcIdGen.upperCaseUuid(),
                                 accountId,
                                 roleId,
-                                TcConstant.Base.STR_32_0,
+                                TcBaseConsts.STR_32_0,
                                 now,
-                                TcConstant.Base.STR_32_0,
+                                TcBaseConsts.STR_32_0,
                                 now
                         )
                 )
@@ -109,9 +109,9 @@ public class TcAuthService {
                                 TcIdGen.upperCaseUuid(),
                                 accountId,
                                 permissionId,
-                                TcConstant.Base.STR_32_0,
+                                TcBaseConsts.STR_32_0,
                                 now,
-                                TcConstant.Base.STR_32_0,
+                                TcBaseConsts.STR_32_0,
                                 now
                         )
                 )

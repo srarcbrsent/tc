@@ -2,7 +2,7 @@ package com.ysu.zyw.tc.api.impl.publics;
 
 import com.ysu.zyw.tc.api.api.publics.TcRegionApi;
 import com.ysu.zyw.tc.api.svc.publics.TcRegionService;
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcBeanNameConsts;
 import com.ysu.zyw.tc.components.cache.api.TcCacheService;
 import com.ysu.zyw.tc.model.api.o.publics.ToCity;
 import com.ysu.zyw.tc.model.api.o.publics.ToProvince;
@@ -21,7 +21,7 @@ public class TcRegionApiImpl implements TcRegionApi {
     @Resource
     private TcRegionService tcRegionService;
 
-    @Resource(name = TcConstant.BeanNames.SS_REDIS_SERVICE)
+    @Resource(name = TcBeanNameConsts.SS_REDIS_SERVICE)
     private TcCacheService tcCacheService;
 
     private static final long CACHE_REGION_TIMEOUT = 60 * 60 * 1000;

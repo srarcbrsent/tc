@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.api.fk;
 
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcAspectOrderConsts;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import com.ysu.zyw.tc.model.mw.TcR;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import java.util.Objects;
  * @author yaowu.zhang
  */
 @Aspect
-@Order(value = TcConstant.AspectOrder.EXCEPTION_DECORATOR_ASPECT_ORDER)
+@Order(value = TcAspectOrderConsts.EXCEPTION_DECORATOR_ASPECT_ORDER)
 @Slf4j
 public class TcExceptionResponseDecorator {
 

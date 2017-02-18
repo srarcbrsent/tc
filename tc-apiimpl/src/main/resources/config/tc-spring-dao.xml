@@ -49,7 +49,7 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="txManager"
-                          order="#{T(com.ysu.zyw.tc.base.constant.TcConstant.AspectOrder).TRANSACTION_ASPECT_ORDER}"
+                          order="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.AspectOrder).TRANSACTION_ASPECT_ORDER}"
                           proxy-target-class="true"/>
 
 </beans>

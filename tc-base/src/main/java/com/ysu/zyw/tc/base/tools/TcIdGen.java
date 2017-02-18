@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.base.tools;
 
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcStrConsts;
 import lombok.experimental.UtilityClass;
 
 import java.util.UUID;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class TcIdGen {
 
     public static String upperCaseUuid() {
-        return UUID.randomUUID().toString().replace(TcConstant.Str.HYPHEN, TcConstant.Str.EMPTY).toUpperCase();
+        return UUID.randomUUID().toString().replace(TcStrConsts.HYPHEN, TcStrConsts.EMPTY).toUpperCase();
     }
 
 }

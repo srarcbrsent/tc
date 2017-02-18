@@ -2,7 +2,7 @@ package com.ysu.zyw.tc.components.cache.redis;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcBeanNameConsts;
 import com.ysu.zyw.tc.base.tools.TcIdGen;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import com.ysu.zyw.tc.base.utils.TcUtils;
@@ -59,7 +59,7 @@ public class TcRedisServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.OO_REDIS_SERVICE, TcCacheService.class);
+        tcCacheService = applicationContext.getBean(TcBeanNameConsts.OO_REDIS_SERVICE, TcCacheService.class);
         objectKeySerializationStrategy = true;
         executorService = Executors.newFixedThreadPool(THREADS);
     }
@@ -71,15 +71,15 @@ public class TcRedisServiceTest {
 
     @Test
     public void allInOne() {
-        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.SS_REDIS_SERVICE, TcCacheService.class);
+        tcCacheService = applicationContext.getBean(TcBeanNameConsts.SS_REDIS_SERVICE, TcCacheService.class);
         objectKeySerializationStrategy = false;
         log.info("---------- SS_REDIS_CACHE_START");
         loop();
-        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.SO_REDIS_SERVICE, TcCacheService.class);
+        tcCacheService = applicationContext.getBean(TcBeanNameConsts.SO_REDIS_SERVICE, TcCacheService.class);
         objectKeySerializationStrategy = false;
         log.info("---------- SO_REDIS_CACHE_START");
         loop();
-        tcCacheService = applicationContext.getBean(TcConstant.BeanNames.OO_REDIS_SERVICE, TcCacheService.class);
+        tcCacheService = applicationContext.getBean(TcBeanNameConsts.OO_REDIS_SERVICE, TcCacheService.class);
         objectKeySerializationStrategy = true;
         log.info("---------- OO_REDIS_CACHE_START");
         loop();

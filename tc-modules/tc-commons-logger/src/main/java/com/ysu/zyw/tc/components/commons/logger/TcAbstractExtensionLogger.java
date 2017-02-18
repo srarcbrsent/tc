@@ -90,7 +90,7 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
     @Accessors(chain = true)
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class TcExtensionLogModel {
+    public static class TcExtensionLog {
 
         private int id;
 
@@ -110,19 +110,21 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
 
         private String exception;
 
+        private String extension;
+
     }
 
-    protected TcExtensionLogModel convert(TcLogLevelEnum tcLogLevelEnum,
-                                          Class<?> clazz,
-                                          String format,
-                                          Object... arguments) {
+    protected TcExtensionLog convert(TcLogLevelEnum tcLogLevelEnum,
+                                     Class<?> clazz,
+                                     String format,
+                                     Object... arguments) {
         Thread currentThread = Thread.currentThread();
         StackTraceElement ste = currentThread.getStackTrace()[1];
         // the last arguments may be a throwable
         boolean isLastArgumentInstanceOfThrowable = ArrayUtils.isNotEmpty(arguments)
                 && arguments[arguments.length - 1] instanceof Throwable;
         Throwable t = isLastArgumentInstanceOfThrowable ? (Throwable) arguments[arguments.length - 1] : null;
-        return new TcExtensionLogModel()
+        return new TcExtensionLog()
                 .setLevel(tcLogLevelEnum.name())
                 .setDate(new Date())
                 .setLogger(clazz.toString())
@@ -134,13 +136,13 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
                 .setException(tryFormatException(t));
     }
 
-    protected TcExtensionLogModel convert(TcLogLevelEnum tcLogLevelEnum,
-                                          Class<?> clazz,
-                                          String msg,
-                                          Throwable t) {
+    protected TcExtensionLog convert(TcLogLevelEnum tcLogLevelEnum,
+                                     Class<?> clazz,
+                                     String msg,
+                                     Throwable t) {
         Thread currentThread = Thread.currentThread();
         StackTraceElement ste = currentThread.getStackTrace()[1];
-        return new TcExtensionLogModel()
+        return new TcExtensionLog()
                 .setLevel(tcLogLevelEnum.name())
                 .setDate(new Date())
                 .setLogger(clazz.toString())

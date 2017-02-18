@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.rpc.httpx;
 
 import com.google.common.collect.Maps;
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcStrConsts;
 import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import lombok.Getter;
@@ -105,7 +105,7 @@ public class TcHttpxService {
         }
 
         MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
-        copy2MultiValueMap(multiValueMap, TcConstant.Str.BLANK, obj);
+        copy2MultiValueMap(multiValueMap, TcStrConsts.BLANK, obj);
         return multiValueMap;
     }
 
@@ -128,7 +128,7 @@ public class TcHttpxService {
                 checkArgument(entry.getKey() instanceof String, "map key must is string");
                 String key = String.valueOf(entry.getKey());
                 String oKey = StringUtils.hasText(currentPath)
-                        ? (currentPath + TcConstant.Str.DOT + key) : key;
+                        ? (currentPath + TcStrConsts.DOT + key) : key;
                 Object oValue = entry.getValue();
                 copy2MultiValueMap(multiValueMap, oKey, oValue);
             });
@@ -154,7 +154,7 @@ public class TcHttpxService {
                     String key = field.getName();
                     Method readMethod = findPropertyReadMethod(key, field.getDeclaringClass());
                     String oKey = StringUtils.hasText(currentPath)
-                            ? (currentPath + TcConstant.Str.DOT + key) : key;
+                            ? (currentPath + TcStrConsts.DOT + key) : key;
                     Object oValue = readMethod.invoke(obj);
                     copy2MultiValueMap(multiValueMap, oKey, oValue);
                 } catch (InvocationTargetException | NoSuchMethodException e) {

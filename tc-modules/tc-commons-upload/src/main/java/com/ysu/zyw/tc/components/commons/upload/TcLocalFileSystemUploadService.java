@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.commons.upload;
 
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcStrConsts;
 import com.ysu.zyw.tc.base.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
@@ -87,15 +87,15 @@ public class TcLocalFileSystemUploadService implements TcUploadService {
 
     private void validateUploadResourceData(TcUploadResourceData metadata) {
         if (StringUtils.isNotBlank(metadata.getFolder())) {
-            checkArgument(metadata.getFolder().startsWith(TcConstant.Str.SLASH), "folder must be start with /");
-            checkArgument(!metadata.getFolder().endsWith(TcConstant.Str.SLASH), "folder must not end with /");
+            checkArgument(metadata.getFolder().startsWith(TcStrConsts.SLASH), "folder must be start with /");
+            checkArgument(!metadata.getFolder().endsWith(TcStrConsts.SLASH), "folder must not end with /");
         }
 
         checkArgument(StringUtils.isNotBlank(metadata.getName()), "blank name is not allowed");
-        checkArgument(metadata.getName().startsWith(TcConstant.Str.SLASH), "name must be start with /");
+        checkArgument(metadata.getName().startsWith(TcStrConsts.SLASH), "name must be start with /");
 
         checkArgument(StringUtils.isNotBlank(metadata.getExtension()), "blank extension is not allowed");
-        checkArgument(metadata.getExtension().startsWith(TcConstant.Str.DOT), "extension must be start with .");
+        checkArgument(metadata.getExtension().startsWith(TcStrConsts.DOT), "extension must be start with .");
     }
 
     @SneakyThrows

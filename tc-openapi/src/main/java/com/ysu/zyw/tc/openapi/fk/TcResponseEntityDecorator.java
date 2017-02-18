@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.openapi.fk;
 
-import com.ysu.zyw.tc.base.constant.TcConstant;
+import com.ysu.zyw.tc.base.constant.TcAspectOrderConsts;
 import com.ysu.zyw.tc.model.mw.TcR;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,7 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 
 @Aspect
-@Order(value = TcConstant.AspectOrder.EXCEPTION_DECORATOR_ASPECT_ORDER)
+@Order(value = TcAspectOrderConsts.EXCEPTION_DECORATOR_ASPECT_ORDER)
 @Slf4j
 public class TcResponseEntityDecorator {
 
