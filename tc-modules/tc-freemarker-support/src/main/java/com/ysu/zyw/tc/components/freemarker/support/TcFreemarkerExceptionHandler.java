@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.components.handler;
+package com.ysu.zyw.tc.components.freemarker.support;
 
 import com.ysu.zyw.tc.base.ex.TcException;
 import freemarker.core.Environment;

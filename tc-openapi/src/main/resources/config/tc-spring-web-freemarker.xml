@@ -18,7 +18,7 @@
                 <prop key="time_format">HH:mm:ss</prop>
                 <prop key="number_format">0.##</prop>
                 <prop key="template_exception_handler">
-                    com.ysu.zyw.tc.components.handler.TcFreemarkerExceptionHandler
+                    com.ysu.zyw.tc.components.freemarker.support.TcFreemarkerExceptionHandler
                 </prop>
             </props>
         </property>
