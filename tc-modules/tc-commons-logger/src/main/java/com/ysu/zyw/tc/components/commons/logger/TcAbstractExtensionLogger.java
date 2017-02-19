@@ -1,65 +1,38 @@
 package com.ysu.zyw.tc.components.commons.logger;
 
 import com.google.common.base.Throwables;
+import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcFormatUtils;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.util.Date;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
+@Slf4j
+public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, InitializingBean {
 
     private static final String EXTENSION_LOGGER_LEVEL_ENV_VARIABLE = "extensionLoggerLevel";
 
-    private static boolean traceEnabled = false;
+    private boolean traceEnabled = false;
 
-    private static boolean debugEnabled = false;
+    private boolean debugEnabled = false;
 
-    private static boolean infoEnabled = false;
+    private boolean infoEnabled = false;
 
-    private static boolean warnEnabled = false;
+    private boolean warnEnabled = false;
 
-    private static boolean errorEnabled = false;
+    private boolean errorEnabled = false;
 
-    static {
-        String extensionLoggerLevel = System.getProperty(EXTENSION_LOGGER_LEVEL_ENV_VARIABLE);
-        TcLogLevelEnum logLevel = TcLogLevelEnum.INFO;
-        if (StringUtils.isNotEmpty(extensionLoggerLevel)) {
-            try {
-                logLevel = TcLogLevelEnum.valueOf(extensionLoggerLevel);
-            } catch (IllegalArgumentException e) {
-                // no match log level, pass to info level
-                logLevel = TcLogLevelEnum.INFO;
-                // no log can be applied there, sout it.
-                e.printStackTrace();
-            }
-        }
-        checkNotNull(logLevel);
-        switch (logLevel) {
-            case TRACE:
-                traceEnabled = true;
-                // no break, pass through
-            case DEBUG:
-                debugEnabled = true;
-                // no break, pass through
-            case INFO:
-                infoEnabled = true;
-                // no break, pass through
-            case WARN:
-                warnEnabled = true;
-                // no break, pass through
-            case ERROR:
-                errorEnabled = true;
-                // no break, pass through
-        }
-    }
+    @Getter
+    @Setter
+    private TcLogLevelEnum springConfigFileLevel = TcLogLevelEnum.INFO;
 
     @Override
     public boolean isTraceEnabled() {
@@ -84,6 +57,41 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger {
     @Override
     public boolean isErrorEnabled() {
         return errorEnabled;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        String extensionLoggerLevel = System.getProperty(EXTENSION_LOGGER_LEVEL_ENV_VARIABLE);
+        TcLogLevelEnum logLevel = springConfigFileLevel;
+        if (StringUtils.isNotEmpty(extensionLoggerLevel)) {
+            try {
+                logLevel = TcLogLevelEnum.valueOf(extensionLoggerLevel);
+            } catch (IllegalArgumentException e) {
+                // no match log level, fast failed.
+                throw new TcException("extension logger only support [trace,debug,info,warn,error] system properties",
+                        e);
+            }
+        }
+        checkNotNull(logLevel);
+        switch (logLevel) {
+            case TRACE:
+                traceEnabled = true;
+                // no break, pass through
+            case DEBUG:
+                debugEnabled = true;
+                // no break, pass through
+            case INFO:
+                infoEnabled = true;
+                // no break, pass through
+            case WARN:
+                warnEnabled = true;
+                // no break, pass through
+            case ERROR:
+                errorEnabled = true;
+                // no break, pass through
+        }
+        log.info("initializing extension logger with trace-{} debug-{} info-{} warn-{} error-{}",
+                traceEnabled, debugEnabled, infoEnabled, warnEnabled, errorEnabled);
     }
 
     @Data
