@@ -10,6 +10,8 @@ public interface TcExtensionLogger {
 
     void trace(Class<?> clazz, String msg, Throwable t);
 
+    void trace(Class<?> clazz, String uniqueKey, String msg, Throwable t);
+
     boolean isDebugEnabled();
 
     void debug(Class<?> clazz, String msg);
@@ -17,6 +19,8 @@ public interface TcExtensionLogger {
     void debug(Class<?> clazz, String format, Object... arguments);
 
     void debug(Class<?> clazz, String msg, Throwable t);
+
+    void debug(Class<?> clazz, String uniqueKey, String msg, Throwable t);
 
     boolean isInfoEnabled();
 
@@ -26,6 +30,8 @@ public interface TcExtensionLogger {
 
     void info(Class<?> clazz, String msg, Throwable t);
 
+    void info(Class<?> clazz, String uniqueKey, String msg, Throwable t);
+
     boolean isWarnEnabled();
 
     void warn(Class<?> clazz, String msg);
@@ -34,6 +40,8 @@ public interface TcExtensionLogger {
 
     void warn(Class<?> clazz, String msg, Throwable t);
 
+    void warn(Class<?> clazz, String uniqueKey, String msg, Throwable t);
+
     boolean isErrorEnabled();
 
     void error(Class<?> clazz, String msg);
@@ -41,5 +49,7 @@ public interface TcExtensionLogger {
     void error(Class<?> clazz, String format, Object... arguments);
 
     void error(Class<?> clazz, String msg, Throwable t);
+
+    void error(Class<?> clazz, String uniqueKey, String msg, Throwable t);
 
 }

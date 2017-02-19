@@ -100,7 +100,9 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
     @AllArgsConstructor
     public static class TcExtensionLog {
 
-        private int id;
+        private Integer id;
+
+        private String uniqueKey;
 
         private String level;
 
@@ -112,17 +114,16 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
 
         private String file;
 
-        private int line;
+        private Integer line;
 
         private String msg;
 
         private String exception;
 
-        private String extension;
-
     }
 
-    protected TcExtensionLog convert(TcLogLevelEnum tcLogLevelEnum,
+    protected TcExtensionLog convert(String uniqueKey,
+                                     TcLogLevelEnum tcLogLevelEnum,
                                      Class<?> clazz,
                                      String format,
                                      Object... arguments) {
@@ -133,6 +134,9 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                 && arguments[arguments.length - 1] instanceof Throwable;
         Throwable t = isLastArgumentInstanceOfThrowable ? (Throwable) arguments[arguments.length - 1] : null;
         return new TcExtensionLog()
+                // auto_increment
+                .setId(null)
+                .setUniqueKey(uniqueKey)
                 .setLevel(tcLogLevelEnum.name())
                 .setDate(new Date())
                 .setLogger(clazz.toString())
@@ -144,13 +148,17 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                 .setException(tryFormatException(t));
     }
 
-    protected TcExtensionLog convert(TcLogLevelEnum tcLogLevelEnum,
+    protected TcExtensionLog convert(String uniqueKey,
+                                     TcLogLevelEnum tcLogLevelEnum,
                                      Class<?> clazz,
                                      String msg,
                                      Throwable t) {
         Thread currentThread = Thread.currentThread();
         StackTraceElement ste = currentThread.getStackTrace()[1];
         return new TcExtensionLog()
+                // auto_increment
+                .setId(null)
+                .setUniqueKey(uniqueKey)
                 .setLevel(tcLogLevelEnum.name())
                 .setDate(new Date())
                 .setLogger(clazz.toString())
