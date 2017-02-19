@@ -9,9 +9,21 @@
         <property name="connectTimeout" value="${properties.rpc.httpx.connect.timeout.ms}"/>
         <property name="writeTimeout" value="${properties.rpc.httpx.write.timeout.ms}"/>
         <property name="readTimeout" value="${properties.rpc.httpx.read.timeout.ms}"/>
+        <property name="cookieJar">
+            <bean class="okhttp3.JavaNetCookieJar">
+                <constructor-arg index="0">
+                    <bean class="java.net.CookieManager">
+                        <constructor-arg index="0">
+                            <bean class="java.net.InMemoryCookieStore"/>
+                        </constructor-arg>
+                        <constructor-arg index="1" value="ACCEPT_NONE"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </property>
         <property name="interceptors">
             <list value-type="okhttp3.Interceptor">
-                <bean class="com.ysu.zyw.tc.components.rpc.httpx.TcOkHttpLoggingInterceptor"/>
+                <bean class="okhttp3.logging.HttpLoggingInterceptor"/>
             </list>
         </property>
     </bean>
