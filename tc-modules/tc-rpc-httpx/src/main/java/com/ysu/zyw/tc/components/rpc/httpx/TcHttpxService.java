@@ -59,6 +59,7 @@ public class TcHttpxService {
                                                 @Nonnull MultiValueMap<String, String> requestBody,
                                                 @Nonnull ParameterizedTypeReference<T> typeReference) {
         checkNotNull(url);
+        checkNotNull(requestBody);
         checkNotNull(typeReference);
         HttpEntity<Void> httpEntity = new HttpEntity<>(null,
                 addReqContentType(httpHeaders, MediaType.APPLICATION_FORM_URLENCODED_VALUE));

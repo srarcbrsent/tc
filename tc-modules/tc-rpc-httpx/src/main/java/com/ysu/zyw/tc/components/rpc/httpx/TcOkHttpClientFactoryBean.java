@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
+import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -46,6 +48,10 @@ public class TcOkHttpClientFactoryBean implements FactoryBean<OkHttpClient> {
     @Setter
     private long keepAliveDuration = 5 * 60 * 1000;
 
+    @Getter
+    @Setter
+    private CookieJar cookieJar;
+
     @Override
     public OkHttpClient getObject() throws Exception {
         checkArgument(pingInterval > 0);
@@ -63,6 +69,9 @@ public class TcOkHttpClientFactoryBean implements FactoryBean<OkHttpClient> {
                 .connectionPool(new ConnectionPool(maxIdleConnections, keepAliveDuration, TimeUnit.MILLISECONDS));
         if (CollectionUtils.isNotEmpty(interceptors)) {
             interceptors.forEach(builder::addInterceptor);
+        }
+        if (Objects.nonNull(cookieJar)) {
+            builder.cookieJar(cookieJar);
         }
         OkHttpClient okHttpClient = builder.build();
         log.info("successful instance ok http client ...");

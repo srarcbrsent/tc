@@ -58,6 +58,7 @@
         <pom.version.elasticjob>2.0.3</pom.version.elasticjob>
         <pom.version.resteasy>3.1.0.Final</pom.version.resteasy>
         <pom.version.rxjava>1.2.2</pom.version.rxjava>
+        <pom.version.okhttp>3.6.0</pom.version.okhttp>
         <pom.version.disconf>2.6.36</pom.version.disconf>
         <pom.version.swagger>2.6.1</pom.version.swagger>
     </properties>
@@ -604,7 +605,19 @@
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
-                <version>3.5.0</version>
+                <version>${pom.version.okhttp}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>logging-interceptor</artifactId>
+                <version>${pom.version.okhttp}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp-urlconnection</artifactId>
+                <version>${pom.version.okhttp}</version>
             </dependency>
 
             <!-- zookeeper -->

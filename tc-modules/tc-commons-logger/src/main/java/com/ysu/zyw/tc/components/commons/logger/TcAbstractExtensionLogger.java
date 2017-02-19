@@ -127,8 +127,7 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                                      Class<?> clazz,
                                      String format,
                                      Object... arguments) {
-        Thread currentThread = Thread.currentThread();
-        StackTraceElement ste = currentThread.getStackTrace()[1];
+        StackTraceElement ste = tryGetLoggerCallerStackTraceElement();
         // the last arguments may be a throwable
         boolean isLastArgumentInstanceOfThrowable = ArrayUtils.isNotEmpty(arguments)
                 && arguments[arguments.length - 1] instanceof Throwable;
@@ -140,7 +139,7 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                 .setLevel(tcLogLevelEnum.name())
                 .setDate(new Date())
                 .setLogger(clazz.toString())
-                .setThread(currentThread.getName())
+                .setThread(Thread.currentThread().getName())
                 .setFile(tryGetFilename(ste))
                 .setLine(tryGetLineNumber(ste))
                 // the last arguments may be a throwable
@@ -153,8 +152,7 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                                      Class<?> clazz,
                                      String msg,
                                      Throwable t) {
-        Thread currentThread = Thread.currentThread();
-        StackTraceElement ste = currentThread.getStackTrace()[1];
+        StackTraceElement ste = tryGetLoggerCallerStackTraceElement();
         return new TcExtensionLog()
                 // auto_increment
                 .setId(null)
@@ -162,11 +160,15 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                 .setLevel(tcLogLevelEnum.name())
                 .setDate(new Date())
                 .setLogger(clazz.toString())
-                .setThread(currentThread.getName())
+                .setThread(Thread.currentThread().getName())
                 .setFile(tryGetFilename(ste))
                 .setLine(tryGetLineNumber(ste))
                 .setMsg(msg)
                 .setException(tryFormatException(t));
+    }
+
+    protected StackTraceElement tryGetLoggerCallerStackTraceElement() {
+        return Thread.currentThread().getStackTrace()[1];
     }
 
     protected String tryGetFilename(StackTraceElement ste) {
