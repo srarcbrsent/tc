@@ -126,12 +126,9 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                                      TcLogLevelEnum tcLogLevelEnum,
                                      Class<?> clazz,
                                      String format,
+                                     Throwable t,
                                      Object... arguments) {
         StackTraceElement ste = tryGetLoggerCallerStackTraceElement();
-        // the last arguments may be a throwable
-        boolean isLastArgumentInstanceOfThrowable = ArrayUtils.isNotEmpty(arguments)
-                && arguments[arguments.length - 1] instanceof Throwable;
-        Throwable t = isLastArgumentInstanceOfThrowable ? (Throwable) arguments[arguments.length - 1] : null;
         return new TcExtensionLog()
                 // auto_increment
                 .setId(null)
@@ -144,26 +141,6 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                 .setLine(tryGetLineNumber(ste))
                 // the last arguments may be a throwable
                 .setMsg(tryFormatMsg(format, arguments))
-                .setException(tryFormatException(t));
-    }
-
-    protected TcExtensionLog convert(String uniqueKey,
-                                     TcLogLevelEnum tcLogLevelEnum,
-                                     Class<?> clazz,
-                                     String msg,
-                                     Throwable t) {
-        StackTraceElement ste = tryGetLoggerCallerStackTraceElement();
-        return new TcExtensionLog()
-                // auto_increment
-                .setId(null)
-                .setUniqueKey(uniqueKey)
-                .setLevel(tcLogLevelEnum.name())
-                .setDate(new Date())
-                .setLogger(clazz.toString())
-                .setThread(Thread.currentThread().getName())
-                .setFile(tryGetFilename(ste))
-                .setLine(tryGetLineNumber(ste))
-                .setMsg(msg)
                 .setException(tryFormatException(t));
     }
 
@@ -190,6 +167,12 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
     protected String tryFormatException(Throwable t) {
         return Objects.isNull(t)
                 ? null : t.getMessage() + "\n" + Throwables.getStackTraceAsString(Throwables.getRootCause(t));
+    }
+
+    protected Throwable tryGetLastArgumentsInstanceOfThrowable(Object... arguments) {
+        boolean isLastArgumentInstanceOfThrowable = ArrayUtils.isNotEmpty(arguments)
+                && arguments[arguments.length - 1] instanceof Throwable;
+        return isLastArgumentInstanceOfThrowable ? (Throwable) arguments[arguments.length - 1] : null;
     }
 
 }
