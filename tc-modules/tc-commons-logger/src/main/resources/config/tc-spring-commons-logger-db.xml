@@ -8,4 +8,32 @@
         <property name="springConfigFileLevel" value="${properties.commons.logger.level}"/>
     </bean>
 
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${properties.extension.log.jdbc.core.url}"/>
+        <property name="username" value="${properties.extension.log.jdbc.core.username}"/>
+        <property name="password" value="${properties.extension.log.jdbc.core.password}"/>
+        <property name="maxActive" value="${properties.extension.log.jdbc.max.active}"/>
+        <property name="maxWait" value="${properties.extension.log.jdbc.max.wait}"/>
+        <property name="connectProperties">
+            <props>
+                <prop key="useUnicode">true</prop>
+                <prop key="characterEncoding">UTF-8</prop>
+                <prop key="zeroDateTimeBehavior">convertToNull</prop>
+                <prop key="useSSL">false</prop>
+            </props>
+        </property>
+        <property name="proxyFilters">
+            <list>
+                <bean class="com.alibaba.druid.filter.stat.StatFilter">
+                    <property name="slowSqlMillis" value="1000"/>
+                    <property name="logSlowSql" value="true"/>
+                </bean>
+                <bean class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+                    <property name="statementExecutableSqlLogEnable" value="true"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
 </beans>
