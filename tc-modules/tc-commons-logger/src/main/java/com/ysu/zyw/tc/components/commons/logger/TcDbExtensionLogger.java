@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import java.util.Objects;
+
 @Slf4j
 public class TcDbExtensionLogger extends TcAbstractExtensionLogger {
 
@@ -95,14 +97,16 @@ public class TcDbExtensionLogger extends TcAbstractExtensionLogger {
         doInsert(tcExtensionLog);
     }
 
-    private static final String EXTENSION_LOGGER_INSERT_SQL =
+    protected static final String EXTENSION_LOGGER_INSERT_SQL =
             "INSERT INTO tc_extension_log(unique_key, level, date, logger, thread, file, line, msg, exception) "
                     + "VALUES (:uniqueKey, :level, :date, :logger, :thread, :file, :line, :msg, :exception)";
 
     protected void doInsert(TcExtensionLog tcExtensionLog) {
-        int iCount = namedParameterJdbcTemplate.update(EXTENSION_LOGGER_INSERT_SQL,
+        int affectedLine = namedParameterJdbcTemplate.update(EXTENSION_LOGGER_INSERT_SQL,
                 new BeanPropertySqlParameterSource(tcExtensionLog));
-        assert iCount == 1;
+        if (!Objects.equals(affectedLine, 1)) {
+            log.error("extension logger log crashed [{}]", tcExtensionLog);
+        }
     }
 
 }
