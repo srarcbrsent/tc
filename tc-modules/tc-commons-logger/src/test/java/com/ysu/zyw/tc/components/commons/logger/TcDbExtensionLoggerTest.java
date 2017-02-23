@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-// must rerun test, every logger class being loaded, the level will not be changed.
 public class TcDbExtensionLoggerTest {
 
     @Before
