@@ -6,9 +6,14 @@
 
     <bean class="com.ysu.zyw.tc.components.commons.logger.TcDbExtensionLogger">
         <property name="springConfigFileLevel" value="${properties.commons.logger.level}"/>
+        <property name="namedParameterJdbcTemplate">
+            <bean class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+                <constructor-arg index="0" ref="extensionLoggerDataSource"/>
+            </bean>
+        </property>
     </bean>
 
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+    <bean id="extensionLoggerDataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
         <property name="url" value="${properties.extension.log.jdbc.core.url}"/>
         <property name="username" value="${properties.extension.log.jdbc.core.username}"/>
@@ -35,5 +40,5 @@
             </list>
         </property>
     </bean>
-    
+
 </beans>

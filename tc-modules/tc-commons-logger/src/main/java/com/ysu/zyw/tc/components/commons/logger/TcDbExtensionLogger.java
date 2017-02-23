@@ -1,10 +1,18 @@
 package com.ysu.zyw.tc.components.commons.logger;
 
 import com.ysu.zyw.tc.base.utils.TcUtils;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 @Slf4j
 public class TcDbExtensionLogger extends TcAbstractExtensionLogger {
+
+    @Getter
+    @Setter
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
     public void trace(Class<?> clazz, String msg) {
@@ -87,8 +95,14 @@ public class TcDbExtensionLogger extends TcAbstractExtensionLogger {
         doInsert(tcExtensionLog);
     }
 
-    protected void doInsert(TcExtensionLog tcExtensionLog) {
+    private static final String EXTENSION_LOGGER_INSERT_SQL =
+            "INSERT INTO tc_extension_log(unique_key, level, date, logger, thread, file, line, msg, exception) "
+                    + "VALUES (:uniqueKey, :level, :date, :logger, :thread, :file, :line, :msg, :exception)";
 
+    protected void doInsert(TcExtensionLog tcExtensionLog) {
+        int iCount = namedParameterJdbcTemplate.update(EXTENSION_LOGGER_INSERT_SQL,
+                new BeanPropertySqlParameterSource(tcExtensionLog));
+        assert iCount == 1;
     }
 
 }
