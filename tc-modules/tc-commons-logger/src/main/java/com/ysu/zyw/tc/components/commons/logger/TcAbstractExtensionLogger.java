@@ -169,10 +169,17 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
                 ? null : t.getMessage() + "\n" + Throwables.getStackTraceAsString(Throwables.getRootCause(t));
     }
 
-    protected Throwable tryGetLastArgumentsInstanceOfThrowable(Object... arguments) {
+    protected Throwable tryGetLastArgInstanceOfThrowable(Object... arguments) {
         boolean isLastArgumentInstanceOfThrowable = ArrayUtils.isNotEmpty(arguments)
                 && arguments[arguments.length - 1] instanceof Throwable;
         return isLastArgumentInstanceOfThrowable ? (Throwable) arguments[arguments.length - 1] : null;
+    }
+
+    protected Object[] tryGetArgsWithoutLastThrowable(Object... arguments) {
+        boolean isLastArgumentInstanceOfThrowable = ArrayUtils.isNotEmpty(arguments)
+                && arguments[arguments.length - 1] instanceof Throwable;
+        return isLastArgumentInstanceOfThrowable
+                ? ArrayUtils.subarray(arguments, 0, arguments.length - 1) : arguments;
     }
 
 }

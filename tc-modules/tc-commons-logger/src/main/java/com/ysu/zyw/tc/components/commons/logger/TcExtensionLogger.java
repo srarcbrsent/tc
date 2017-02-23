@@ -6,50 +6,30 @@ public interface TcExtensionLogger {
 
     void trace(Class<?> clazz, String msg);
 
-    void trace(Class<?> clazz, String format, Object... arguments);
-
-    void trace(Class<?> clazz, String msg, Throwable t);
-
-    void trace(Class<?> clazz, String uniqueKey, String msg, Throwable t);
+    void trace(Class<?> clazz, String uniqueKey, String format, Object... arguments);
 
     boolean isDebugEnabled();
 
     void debug(Class<?> clazz, String msg);
 
-    void debug(Class<?> clazz, String format, Object... arguments);
-
-    void debug(Class<?> clazz, String msg, Throwable t);
-
-    void debug(Class<?> clazz, String uniqueKey, String msg, Throwable t);
+    void debug(Class<?> clazz, String uniqueKey, String format, Object... arguments);
 
     boolean isInfoEnabled();
 
     void info(Class<?> clazz, String msg);
 
-    void info(Class<?> clazz, String format, Object... arguments);
-
-    void info(Class<?> clazz, String msg, Throwable t);
-
-    void info(Class<?> clazz, String uniqueKey, String msg, Throwable t);
+    void info(Class<?> clazz, String uniqueKey, String format, Object... arguments);
 
     boolean isWarnEnabled();
 
     void warn(Class<?> clazz, String msg);
 
-    void warn(Class<?> clazz, String format, Object... arguments);
-
-    void warn(Class<?> clazz, String msg, Throwable t);
-
-    void warn(Class<?> clazz, String uniqueKey, String msg, Throwable t);
+    void warn(Class<?> clazz, String uniqueKey, String format, Object... arguments);
 
     boolean isErrorEnabled();
 
     void error(Class<?> clazz, String msg);
 
-    void error(Class<?> clazz, String format, Object... arguments);
-
-    void error(Class<?> clazz, String msg, Throwable t);
-
-    void error(Class<?> clazz, String uniqueKey, String msg, Throwable t);
+    void error(Class<?> clazz, String uniqueKey, String format, Object... arguments);
 
 }
