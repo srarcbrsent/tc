@@ -1,20 +1,15 @@
-package com.ysu.zyw.tc.base.validation;
+package com.ysu.zyw.tc.components.commons.validation;
 
-import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.GenericValidator;
 
-import javax.validation.ConstraintViolation;
 import java.net.IDN;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
@@ -88,14 +83,6 @@ public class TcValidationUtils extends GenericValidator {
     public static boolean isRichText(String value) {
         return nonNull(value)
                 && GenericValidator.matchRegexp(value, "^[/\"<>~!@#$%^&*()-=_a-zA-Z0-9\u4e00-\u9fa5]+");
-    }
-
-    public static List<String> unwrap(Set<ConstraintViolation<? extends Object>> violations) {
-        if (Objects.isNull(violations)) {
-            return Lists.newArrayList();
-        } else {
-            return violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
-        }
     }
 
     /**
