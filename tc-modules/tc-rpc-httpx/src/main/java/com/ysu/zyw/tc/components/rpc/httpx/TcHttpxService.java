@@ -117,7 +117,7 @@ public class TcHttpxService {
             return;
         }
         if (ClassUtils.isPrimitiveOrWrapper(obj.getClass()) || obj instanceof String) {
-            // is primitive type
+            // is primitive type: char, boolean, byte, short, int, long, float, double
             multiValueMap.set(currentPath, String.valueOf(obj));
         } else if (obj instanceof Date) {
             // is date
