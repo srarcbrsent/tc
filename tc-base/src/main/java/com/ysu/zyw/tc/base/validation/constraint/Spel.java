@@ -14,7 +14,7 @@ public @interface Spel {
 
     String expression();
 
-    String message() default "不合法的主键信息";
+    String message() default "不合法的数值";
 
     Class<?>[] groups() default {};
 
