@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  */
 public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
 
-    private static final String SELECT_KEY_BY_EXAMPLE = "selectPrimaryKeyByExample";
+    private static final String SELECT_PRIMARY_KEY_BY_EXAMPLE = "selectPrimaryKeyByExample";
 
     private static final String PRIMARY_KEY_RESULT_MAP = "PrimaryKeyResultMap";
 
@@ -43,7 +43,7 @@ public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
     }
 
     protected void generateJavaClient(Interface interfaze, IntrospectedTable introspectedTable) {
-        Method method = new Method(SELECT_KEY_BY_EXAMPLE);
+        Method method = new Method(SELECT_PRIMARY_KEY_BY_EXAMPLE);
         FullyQualifiedJavaType exampleParamType = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         method.addParameter(new Parameter(exampleParamType, "example"));
 
@@ -60,7 +60,7 @@ public class TcSelectPrimaryKeyPlugin extends PluginAdapter {
         XmlElement xmlElement = new XmlElement("select");
 
         // id
-        xmlElement.addAttribute(new Attribute("id", SELECT_KEY_BY_EXAMPLE));
+        xmlElement.addAttribute(new Attribute("id", SELECT_PRIMARY_KEY_BY_EXAMPLE));
 
         // parameter type
         xmlElement.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType()));
