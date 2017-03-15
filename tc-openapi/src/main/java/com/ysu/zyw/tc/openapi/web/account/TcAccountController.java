@@ -2,10 +2,9 @@ package com.ysu.zyw.tc.openapi.web.account;
 
 import com.ysu.zyw.tc.api.api.accounts.TcAccountApi;
 import com.ysu.zyw.tc.base.validation.TcValidationUtils;
-import com.ysu.zyw.tc.base.validation.group.TcC;
-import com.ysu.zyw.tc.base.validation.group.TcU;
 import com.ysu.zyw.tc.components.servlet.support.TcServletUtils;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
+import com.ysu.zyw.tc.model.api.i.accounts.TuAccount;
 import com.ysu.zyw.tc.model.menum.TmPlatform;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.openapi.svc.TcSessionService;
@@ -59,7 +58,7 @@ public class TcAccountController {
     public ResponseEntity<TcR<String>> createAccount(
             @RequestBody TiAccount tiAccount, HttpServletRequest request) {
 
-        Set<ConstraintViolation<TiAccount>> violations = validator.validate(tiAccount, TcC.class);
+        Set<ConstraintViolation<TiAccount>> violations = validator.validate(tiAccount);
         if (!violations.isEmpty()) {
             List<String> errs = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
             return ResponseEntity.ok(TcR.br(errs));
@@ -67,7 +66,7 @@ public class TcAccountController {
 
         tiAccount.setSigninIp(TcServletUtils.extractIp(request))
                 .setSigninPlatform(TmPlatform.PC_PLATFORM)
-                .setOperatorAccountId(tcSessionService.getAccountId());
+                .setCreatedPerson(tcSessionService.getAccountId());
         TcR<String> tcR = tcAccountApi.createAccount(tiAccount);
 
         return ResponseEntity.ok(tcR);
@@ -111,16 +110,16 @@ public class TcAccountController {
     @ApiResponse(code = 200, message = "成功")
     @RequestMapping(value = "/update_account", method = RequestMethod.POST)
     public ResponseEntity<TcR<Void>> updateAccount(
-            @RequestBody TiAccount tiAccount) {
+            @RequestBody TuAccount tuAccount) {
 
-        Set<ConstraintViolation<TiAccount>> violations = validator.validate(tiAccount, TcU.class);
+        Set<ConstraintViolation<TuAccount>> violations = validator.validate(tuAccount);
         if (!violations.isEmpty()) {
             List<String> errs = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
             return ResponseEntity.ok(TcR.br(errs));
         }
 
-        tiAccount.setOperatorAccountId(tcSessionService.getAccountId());
-        TcR<Void> tcR = tcAccountApi.updateAccount(tiAccount);
+        tuAccount.setUpdatedPerson(tcSessionService.getAccountId());
+        TcR<Void> tcR = tcAccountApi.updateAccount(tuAccount);
 
         return ResponseEntity.ok(tcR);
     }

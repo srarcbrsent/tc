@@ -118,7 +118,7 @@ public class TcCacheServiceImpl implements TcCacheService {
                             @Nonnull Callable<T> valueLoader,
                             long timeout) {
         // lock and get
-        T sValue = TcUtils.doQuietly(() -> (T) redisTemplate.opsForValue().get(key), null);
+        T sValue = TcUtils.defaultValue(() -> (T) redisTemplate.opsForValue().get(key), () -> null);
         if (Objects.nonNull(sValue)) {
             return sValue;
         }

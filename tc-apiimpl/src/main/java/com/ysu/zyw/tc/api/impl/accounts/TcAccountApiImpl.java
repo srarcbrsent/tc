@@ -4,6 +4,7 @@ import com.ysu.zyw.tc.api.api.accounts.TcAccountApi;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
+import com.ysu.zyw.tc.model.api.i.accounts.TuAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
@@ -35,10 +36,10 @@ public class TcAccountApiImpl implements TcAccountApi {
     }
 
     @Override
-    public TcR<Void> updateAccount(TiAccount tiAccount) {
+    public TcR<Void> updateAccount(TuAccount tuAccount) {
 
         // throws TcUnProcessableEntityException
-        tcAccountService.updateAccount(tiAccount);
+        tcAccountService.updateAccount(tuAccount);
 
         return TcR.ok();
     }

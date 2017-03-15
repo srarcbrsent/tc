@@ -4,7 +4,6 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -33,17 +32,6 @@ public class TcUtils {
         }
     }
 
-    public static <R> R doQuietly(@Nonnull TcRTask<R> tcRTask,
-                                  @Nullable R defaultValue) {
-        checkNotNull(tcRTask);
-        try {
-            return tcRTask.execute();
-        } catch (Exception e) {
-            log.error("", e);
-            return defaultValue;
-        }
-    }
-
     public static void doIfTrue(@Nonnull TcTask tcTask, boolean expression) {
         if (expression) {
             tcTask.execute();
@@ -62,8 +50,15 @@ public class TcUtils {
         return TcDateUtils.duration(before, new Date());
     }
 
-    public static <T> T defaultValue(T value, Supplier<T> defaultValue) {
-        return Objects.isNull(value) ? defaultValue.get() : value;
+    public static <R> R defaultValue(@Nonnull TcRTask<R> tcRTask,
+                                     @Nonnull Supplier<R> defaultValue) {
+        checkNotNull(tcRTask);
+        try {
+            return tcRTask.execute();
+        } catch (Exception e) {
+            log.error("", e);
+            return defaultValue.get();
+        }
     }
 
     public static <T1, T2, R1, R2> void match(@Nonnull List<T1> l1,

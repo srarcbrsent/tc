@@ -12,6 +12,7 @@ import com.ysu.zyw.tc.base.utils.TcBeanUtils;
 import com.ysu.zyw.tc.base.utils.TcPaginationUtils;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
+import com.ysu.zyw.tc.model.api.i.accounts.TuAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -95,17 +96,17 @@ public class TcAccountService {
      * @code code == 13 => 手机重复;
      */
     @Transactional
-    public String createAccount(@Nonnull TiAccount tiAccount) {
-        if (existNickname(tiAccount.getNickname())) {
-            throw new TcUnProcessableEntityException(11, "昵称[{}]重复！", tiAccount.getNickname());
+    public String createAccount(@Nonnull TiAccount inputAccount) {
+        if (existNickname(inputAccount.getNickname())) {
+            throw new TcUnProcessableEntityException(11, "昵称[{}]重复！", inputAccount.getNickname());
         }
 
-        if (StringUtils.isNotBlank(tiAccount.getEmail()) && existEmail(tiAccount.getEmail())) {
-            throw new TcUnProcessableEntityException(12, "邮箱[{}]重复！", tiAccount.getEmail());
+        if (StringUtils.isNotBlank(inputAccount.getEmail()) && existEmail(inputAccount.getEmail())) {
+            throw new TcUnProcessableEntityException(12, "邮箱[{}]重复！", inputAccount.getEmail());
         }
 
-        if (StringUtils.isNotBlank(tiAccount.getMobile()) && existMobile(tiAccount.getMobile())) {
-            throw new TcUnProcessableEntityException(13, "手机[{}]重复！", tiAccount.getMobile());
+        if (StringUtils.isNotBlank(inputAccount.getMobile()) && existMobile(inputAccount.getMobile())) {
+            throw new TcUnProcessableEntityException(13, "手机[{}]重复！", inputAccount.getMobile());
         }
 
         // id
@@ -115,30 +116,29 @@ public class TcAccountService {
         // account
         TcAccount tcAccount = new TcAccount();
 
-        TcBeanUtils.copyProperties(tiAccount, tcAccount);
+        TcBeanUtils.copyProperties(inputAccount, tcAccount);
         tcAccount
-                .setId(id)
                 .setDelected(false)
                 .setLockReleaseTime(now)
                 .setRandomToken(randomToken())
-                .setUpdatedPerson(tiAccount.getOperatorAccountId())
+                .setUpdatedPerson(inputAccount.getCreatedPerson())
                 .setUpdatedTimestamp(now)
-                .setCreatedPerson(tiAccount.getOperatorAccountId())
+                .setCreatedPerson(inputAccount.getCreatedPerson())
                 .setCreatedTimestamp(now);
 
         // account assist
         TcAccountAssist tcAccountAssist = new TcAccountAssist();
 
-        TcBeanUtils.copyProperties(tiAccount, tcAccountAssist);
+        TcBeanUtils.copyProperties(inputAccount, tcAccountAssist);
         tcAccountAssist
                 .setId(id)
-                .setSigninPlatform(tiAccount.getSigninPlatform())
+                .setSigninPlatform(inputAccount.getSigninPlatform())
                 .setSigninTimestamp(now)
-                .setLastSignupPlatform(tiAccount.getSigninPlatform())
+                .setLastSignupPlatform(inputAccount.getSigninPlatform())
                 .setLastSignupTimestamp(now)
-                .setUpdatedPerson(tiAccount.getOperatorAccountId())
+                .setUpdatedPerson(inputAccount.getCreatedPerson())
                 .setUpdatedTimestamp(now)
-                .setCreatedPerson(tiAccount.getOperatorAccountId())
+                .setCreatedPerson(inputAccount.getCreatedPerson())
                 .setCreatedTimestamp(now);
 
         // insert
@@ -187,22 +187,22 @@ public class TcAccountService {
      * @code code == 13 => 手机重复;
      */
     @Transactional
-    public void updateAccount(@Nonnull TiAccount tiAccount) {
-        TcAccount originalTcAccount = findOriginalTcAccount(tiAccount.getId(), false);
+    public void updateAccount(@Nonnull TuAccount tuAccount) {
+        TcAccount originalTcAccount = findOriginalTcAccount(tuAccount.getId(), false);
 
         if (Objects.isNull(originalTcAccount)) {
             throw new TcUnProcessableEntityException(1, "账号不存在！");
         }
 
-        if (StringUtils.isNotEmpty(tiAccount.getNickname()) && existNickname(tiAccount.getNickname())) {
+        if (StringUtils.isNotEmpty(tuAccount.getNickname()) && existNickname(tuAccount.getNickname())) {
             throw new TcUnProcessableEntityException(11, "昵称已存在！");
         }
 
-        if (StringUtils.isNotEmpty(tiAccount.getEmail()) && existNickname(tiAccount.getEmail())) {
+        if (StringUtils.isNotEmpty(tuAccount.getEmail()) && existNickname(tuAccount.getEmail())) {
             throw new TcUnProcessableEntityException(12, "邮箱已存在！");
         }
 
-        if (StringUtils.isNotEmpty(tiAccount.getMobile()) && existNickname(tiAccount.getMobile())) {
+        if (StringUtils.isNotEmpty(tuAccount.getMobile()) && existNickname(tuAccount.getMobile())) {
             throw new TcUnProcessableEntityException(13, "手机已存在！");
         }
 
@@ -211,15 +211,15 @@ public class TcAccountService {
         // account
         TcAccount tcAccount = new TcAccount();
 
-        TcBeanUtils.copyProperties(tiAccount, tcAccount);
+        TcBeanUtils.copyProperties(tuAccount, tcAccount);
         tcAccount
                 // mobile activated can not be update to true, use spi instead.
                 .setMobileActivated(
-                        BooleanUtils.isTrue(tiAccount.getMobileActivated()) ? null : tiAccount.getMobileActivated()
+                        BooleanUtils.isTrue(tuAccount.getMobileActivated()) ? null : tuAccount.getMobileActivated()
                 )
                 // email activated can not be update to true, use spi instead.
                 .setEmailActivated(
-                        BooleanUtils.isTrue(tiAccount.getEmailActivated()) ? null : tiAccount.getEmailActivated()
+                        BooleanUtils.isTrue(tuAccount.getEmailActivated()) ? null : tuAccount.getEmailActivated()
                 )
                 // can not be updated, use spi instead.
                 .setLockReleaseTime(null)
@@ -227,7 +227,7 @@ public class TcAccountService {
                 .setPassword(null)
                 // can not be updated, use spi instead.
                 .setDelected(null)
-                .setUpdatedPerson(tiAccount.getOperatorAccountId())
+                .setUpdatedPerson(tuAccount.getUpdatedPerson())
                 .setUpdatedTimestamp(now);
         // if mobile changed, auto set mobile activated to false.
         if (StringUtils.isNotBlank(tcAccount.getMobile())

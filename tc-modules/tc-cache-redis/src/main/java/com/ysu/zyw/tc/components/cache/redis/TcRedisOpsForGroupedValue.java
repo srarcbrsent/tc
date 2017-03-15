@@ -125,7 +125,7 @@ public class TcRedisOpsForGroupedValue implements TcOpsForGroupedValue {
                             long timeout,
                             @Nonnull String groupedKey) {
         // lock and get
-        T sValue = TcUtils.doQuietly(() -> (T) redisTemplate.opsForValue().get(groupedKey), null);
+        T sValue = TcUtils.defaultValue(() -> (T) redisTemplate.opsForValue().get(groupedKey), () -> null);
         if (Objects.nonNull(sValue)) {
             return sValue;
         }

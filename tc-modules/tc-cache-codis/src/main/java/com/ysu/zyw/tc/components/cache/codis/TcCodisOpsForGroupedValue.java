@@ -154,13 +154,13 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
                             @Nonnull Callable<T> valueLoader,
                             long timeout) {
         // lock and get
-        T sValue = TcUtils.doQuietly(() -> {
+        T sValue = TcUtils.defaultValue(() -> {
             if (exists(group, key)) {
                 return (T) redisTemplate.opsForHash().get(group, key);
             } else {
                 return null;
             }
-        }, null);
+        }, () -> null);
         if (Objects.nonNull(sValue)) {
             return sValue;
         }

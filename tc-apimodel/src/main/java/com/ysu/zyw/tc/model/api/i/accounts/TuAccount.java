@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.model.api.i.accounts;
 
-import com.ysu.zyw.tc.model.menum.TmPlatform;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,9 +12,11 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TiAccount implements Serializable {
+public class TuAccount implements Serializable {
 
     private static final long serialVersionUID = 761530286213318282L;
+
+    private String id;
 
     private String region;
 
@@ -31,12 +32,6 @@ public class TiAccount implements Serializable {
 
     private String avatar;
 
-    private String password;
-
-    private TmPlatform signinPlatform;
-
-    private String signinIp;
-
-    private String createdPerson;
+    private String updatedPerson;
 
 }
