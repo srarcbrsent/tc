@@ -10,6 +10,7 @@ import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.BooleanUtils;
 
 import javax.annotation.Resource;
@@ -25,10 +26,10 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
     @Resource
     private TcAccountService tcAccountService;
 
+    @SneakyThrows
     @Override
     public TcR<ToAccount> signup(TiSignupTerms tiSignupTerms) {
 
-        // throws TcUnProcessableEntityException
         String succLoginAccountId = tcAccountService.signup(
                 tiSignupTerms.getUsername(),
                 BooleanUtils.isTrue(tiSignupTerms.getCanEmailLogin()),

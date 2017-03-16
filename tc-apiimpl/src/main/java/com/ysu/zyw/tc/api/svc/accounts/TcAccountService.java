@@ -55,7 +55,7 @@ public class TcAccountService {
     @Transactional(readOnly = true)
     public String signup(@Nonnull String username,
                          @Nonnull Boolean canEmailLogin,
-                         @Nonnull Boolean canMobileLogin) {
+                         @Nonnull Boolean canMobileLogin) throws TcUnProcessableEntityException {
         checkArgument(canEmailLogin || canMobileLogin);
 
         TcAccountExample tcAccountExample = new TcAccountExample();
@@ -96,7 +96,7 @@ public class TcAccountService {
      * @code code == 13 => 手机重复;
      */
     @Transactional
-    public String createAccount(@Nonnull TiAccount inputAccount) {
+    public String createAccount(@Nonnull TiAccount inputAccount) throws TcUnProcessableEntityException {
         if (existNickname(inputAccount.getNickname())) {
             throw new TcUnProcessableEntityException(11, "昵称[{}]重复！", inputAccount.getNickname());
         }
@@ -155,7 +155,8 @@ public class TcAccountService {
      * @code code == 1 => 账号不存在;
      */
     @Transactional
-    public void deleteAccount(@Nonnull String accountId, @Nonnull String delector) {
+    public void deleteAccount(@Nonnull String accountId, @Nonnull String delector)
+            throws TcUnProcessableEntityException {
         if (!existId(accountId)) {
             throw new TcUnProcessableEntityException(1, "账号不存在！");
         }
@@ -187,7 +188,7 @@ public class TcAccountService {
      * @code code == 13 => 手机重复;
      */
     @Transactional
-    public void updateAccount(@Nonnull TuAccount tuAccount) {
+    public void updateAccount(@Nonnull TuAccount tuAccount) throws TcUnProcessableEntityException {
         TcAccount originalTcAccount = findOriginalTcAccount(tuAccount.getId(), false);
 
         if (Objects.isNull(originalTcAccount)) {
@@ -255,7 +256,7 @@ public class TcAccountService {
     public void updatePassword(@Nonnull String accountId,
                                @Nonnull String oPassword,
                                @Nonnull String nPassword,
-                               @Nonnull String operator) {
+                               @Nonnull String operator) throws TcUnProcessableEntityException {
         TcAccountExample tcAccountExample = new TcAccountExample();
         tcAccountExample.setStartLine(0);
         tcAccountExample.setPageSize(1);
@@ -289,7 +290,8 @@ public class TcAccountService {
      * @code code == 1 => 账号不存在;
      */
     @Transactional(readOnly = true)
-    public ToAccount findAccount(@Nonnull String accountId, @Nonnull Boolean containsPassword) {
+    public ToAccount findAccount(@Nonnull String accountId, @Nonnull Boolean containsPassword)
+            throws TcUnProcessableEntityException {
         checkNotNull(accountId);
         TcAccount originalTcAccount = findOriginalTcAccount(accountId, containsPassword);
         if (Objects.isNull(originalTcAccount)) {
@@ -481,7 +483,8 @@ public class TcAccountService {
      * @code code == 1 => 账号不存在;
      */
     @Transactional
-    public void activeMobile(@Nonnull String accountId, @Nonnull String mobile, @Nonnull String operator) {
+    public void activeMobile(@Nonnull String accountId, @Nonnull String mobile, @Nonnull String operator)
+            throws TcUnProcessableEntityException {
         checkNotNull(accountId);
         checkNotNull(mobile);
         if (!existId(accountId)) {
@@ -509,7 +512,8 @@ public class TcAccountService {
      * @code code == 1 => 账号不存在;
      */
     @Transactional
-    public void activeEmail(@Nonnull String accountId, @Nonnull String email, @Nonnull String operator) {
+    public void activeEmail(@Nonnull String accountId, @Nonnull String email, @Nonnull String operator)
+            throws TcUnProcessableEntityException {
         checkNotNull(accountId);
         checkNotNull(email);
         if (!existId(accountId)) {
@@ -538,7 +542,8 @@ public class TcAccountService {
      * @code code == 2 => 账号已被锁定更长时间;
      */
     @Transactional
-    public void lockAccount(@Nonnull String accountId, @Nonnull Date lockReleaseTime, @Nonnull String operator) {
+    public void lockAccount(@Nonnull String accountId, @Nonnull Date lockReleaseTime, @Nonnull String operator)
+            throws TcUnProcessableEntityException {
         // check
         TcAccount originalTcAccount = findOriginalTcAccount(accountId, false);
         if (Objects.isNull(originalTcAccount)) {
