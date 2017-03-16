@@ -1,5 +1,6 @@
 package com.ysu.zyw.tc.api.svc.items;
 
+import com.ysu.zyw.tc.model.api.i.items.TcItemSearchTerms;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +8,7 @@ import javax.annotation.Resource;
 
 @Slf4j
 @Service
-public class TcItemESService {
+public class TcElasticSearchItemService {
 
     @Resource
     private TcItemService tcItemService;
@@ -15,14 +16,14 @@ public class TcItemESService {
     /**
      * 查询数量
      */
-    public void count() {
+    public void count(TcItemSearchTerms tcItemSearchTerms) {
 
     }
 
     /**
      * 查询列表
      */
-    public void query() {
+    public void query(TcItemSearchTerms tcItemSearchTerms) {
 
     }
 
@@ -36,14 +37,15 @@ public class TcItemESService {
     /**
      * 建索引
      */
-    public void index() {
-
+    public void index(String id) {
     }
 
     /**
      * 删索引
      */
-    public void delete() {
+    public void delete(String id) {
     }
+
+
 
 }
