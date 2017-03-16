@@ -63,17 +63,6 @@
                             javaType="java.lang.Boolean"/>
         </table>
 
-        <table tableName="mb_account_assist"
-               domainObjectName="TcAccountAssist"
-               mapperName="TcAccountAssistMapper">
-            <columnOverride column="signin_platform"
-                            javaType="com.ysu.zyw.tc.model.menum.TmPlatform"
-                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-            <columnOverride column="last_signup_platform"
-                            javaType="com.ysu.zyw.tc.model.menum.TmPlatform"
-                            typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
-        </table>
-
         <table tableName="mb_behavior_trace"
                domainObjectName="TcBehaviorTrace"
                mapperName="TcBehaviorTraceMapper"/>
