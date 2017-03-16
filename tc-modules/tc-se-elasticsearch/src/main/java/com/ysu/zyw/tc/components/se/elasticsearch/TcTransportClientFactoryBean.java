@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.components.se.elasticsearch;
 
-import com.ysu.zyw.tc.base.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +44,7 @@ public class TcTransportClientFactoryBean implements FactoryBean<TransportClient
                         new InetSocketTransportAddress(InetAddress.getByName(entry.getKey()), entry.getValue()));
                 log.info("add socket transport address [{}:{}] to client", entry.getKey(), entry.getValue());
             } catch (UnknownHostException e) {
-                throw new TcException(e);
+                throw new IllegalStateException(e);
             }
         });
         this.client = client;

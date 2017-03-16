@@ -2,7 +2,7 @@ package com.ysu.zyw.tc.components.cache.redis;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Sets;
-import com.ysu.zyw.tc.base.ex.TcException;
+import com.ysu.zyw.tc.base.utils.TcFormatUtils;
 import com.ysu.zyw.tc.base.utils.TcUtils;
 import com.ysu.zyw.tc.components.cache.api.TcOpsForGroupedValue;
 import lombok.Getter;
@@ -110,7 +110,7 @@ public class TcRedisOpsForGroupedValue implements TcOpsForGroupedValue {
                     lock.tryLock(tryLockTimeout, TimeUnit.MILLISECONDS);
                     return loadValue(group, key, valueLoader, timeout, groupedKey);
                 } catch (InterruptedException e) {
-                    throw new TcException("load cache blocked, throw exception");
+                    throw new IllegalStateException("load cache blocked, throw exception");
                 } finally {
                     lock.unlock();
                 }
@@ -143,7 +143,7 @@ public class TcRedisOpsForGroupedValue implements TcOpsForGroupedValue {
         try {
             loadedValue = valueLoader.call();
         } catch (Exception e) {
-            throw new TcException(e, groupedKey, valueLoader);
+            throw new IllegalStateException(TcFormatUtils.format("key [{}] load value failed", groupedKey), e);
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
         TcUtils.doQuietly(() ->

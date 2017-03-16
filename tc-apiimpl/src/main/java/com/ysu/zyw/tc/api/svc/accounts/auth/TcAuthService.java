@@ -61,7 +61,7 @@ public class TcAuthService {
      */
     @Transactional
     public int grantRole(@Nonnull String accountId,
-                         @Nonnull List<String> roleIdList) {
+                         @Nonnull List<String> roleIdList) throws TcUnProcessableEntityException {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(roleIdList));
 
@@ -93,7 +93,7 @@ public class TcAuthService {
      */
     @Transactional
     public int grantPermission(@Nonnull String accountId,
-                               @Nonnull List<String> permissionIdList) {
+                               @Nonnull List<String> permissionIdList) throws TcUnProcessableEntityException {
         checkNotNull(accountId);
         checkArgument(CollectionUtils.isNotEmpty(permissionIdList));
 

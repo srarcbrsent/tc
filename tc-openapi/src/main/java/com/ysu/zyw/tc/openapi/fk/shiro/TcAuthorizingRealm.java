@@ -2,7 +2,6 @@ package com.ysu.zyw.tc.openapi.fk.shiro;
 
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
-import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.model.api.i.accounts.TiSignupTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
@@ -97,7 +96,7 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
         }
 
         // Unreachable
-        throw new TcException("系统异常！");
+        throw new IllegalStateException("系统异常！");
     }
 
     protected List<ToRole> fetchRoles(String accountId) {

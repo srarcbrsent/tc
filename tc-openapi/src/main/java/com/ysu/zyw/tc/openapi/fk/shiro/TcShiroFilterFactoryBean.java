@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.openapi.fk.shiro;
 
-import com.ysu.zyw.tc.base.ex.TcException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -29,9 +28,9 @@ public class TcShiroFilterFactoryBean extends ShiroFilterFactoryBean {
             log.info("start load shiro filter definition [{}]", realPath);
             definitions = FileUtils.readFileToString(filterChainDefinitionResource.getFile(), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new TcException("shiro filter initialize need an valid filter chain definition resource file, "
-                    + "it's must start with [classpath:], and then is a valid file path, but get [" + definitionFile
-                    + "]", e);
+            throw new IllegalStateException("shiro filter initialize need an valid filter chain definition "
+                    + "resource file, it's must start with [classpath:], and then is a valid file path, but get ["
+                    + definitionFile + "]", e);
         }
         checkNotNull(definitions, "empty definitions is not allowed");
         super.setFilterChainDefinitions(definitions);

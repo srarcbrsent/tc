@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
-import com.ysu.zyw.tc.base.ex.TcException;
+import com.ysu.zyw.tc.base.utils.TcFormatUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -140,7 +140,7 @@ public class TcCodisCache implements Cache, InitializingBean {
         try {
             loadedValue = valueLoader.call();
         } catch (Exception e) {
-            throw new TcException(e, key, valueLoader);
+            throw new IllegalStateException(TcFormatUtils.format("key [{}] load value failed", key), e);
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
         try {
@@ -195,7 +195,7 @@ public class TcCodisCache implements Cache, InitializingBean {
 
     @Override
     public void clear() {
-        throw new TcException("clear is a not supported operation");
+        throw new IllegalStateException("clear is a not supported operation");
     }
 
     @Override

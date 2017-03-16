@@ -2,7 +2,6 @@ package com.ysu.zyw.tc.components.rpc.httpx;
 
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.base.constant.TcStrConsts;
-import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -102,7 +101,7 @@ public class TcHttpxService {
                 || obj.getClass().isArray()
                 || ClassUtils.isPrimitiveOrWrapper(obj.getClass())
                 || obj instanceof String) {
-            throw new TcException("list / primitive / string value is not supported");
+            throw new IllegalArgumentException("list / primitive / string value is not supported");
         }
 
         MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();

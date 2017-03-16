@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.cache.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.ysu.zyw.tc.base.ex.TcException;
+import com.ysu.zyw.tc.base.utils.TcFormatUtils;
 import com.ysu.zyw.tc.base.utils.TcUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -105,7 +105,7 @@ public class TcCacheServiceImpl implements TcCacheService {
                     lock.tryLock(tryLockTimeout, TimeUnit.MILLISECONDS);
                     return loadValue(key, valueLoader, timeout);
                 } catch (InterruptedException e) {
-                    throw new TcException("load cache blocked, throw exception");
+                    throw new IllegalStateException("load cache blocked, throw exception");
                 } finally {
                     lock.unlock();
                 }
@@ -134,7 +134,7 @@ public class TcCacheServiceImpl implements TcCacheService {
         try {
             loadedValue = valueLoader.call();
         } catch (Exception e) {
-            throw new TcException(e, key, valueLoader);
+            throw new IllegalStateException(TcFormatUtils.format("key [{}] load value failed", key), e);
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
         TcUtils.doQuietly(() -> {

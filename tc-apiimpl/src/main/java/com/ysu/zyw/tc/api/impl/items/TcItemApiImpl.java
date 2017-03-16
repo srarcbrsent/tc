@@ -5,6 +5,7 @@ import com.ysu.zyw.tc.api.svc.items.TcItemService;
 import com.ysu.zyw.tc.model.api.o.items.ToItem;
 import com.ysu.zyw.tc.model.api.o.items.ToShop;
 import com.ysu.zyw.tc.model.mw.TcR;
+import lombok.SneakyThrows;
 
 import javax.annotation.Resource;
 
@@ -13,6 +14,7 @@ public class TcItemApiImpl implements TcItemApi {
     @Resource
     private TcItemService tcItemService;
 
+    @SneakyThrows
     @Override
     public TcR<ToShop> findShop(String id) {
 
@@ -21,6 +23,7 @@ public class TcItemApiImpl implements TcItemApi {
         return TcR.ok(toShop);
     }
 
+    @SneakyThrows
     @Override
     public TcR<ToItem> findItem(String id) {
 

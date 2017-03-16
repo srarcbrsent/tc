@@ -1,6 +1,5 @@
 package com.ysu.zyw.tc.openapi.fk.shiro;
 
-import com.ysu.zyw.tc.base.ex.TcException;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.shiro.cache.Cache;
@@ -62,17 +61,17 @@ public class TcShiroCacheManager implements CacheManager {
 
         @Override
         public int size() {
-            throw new TcException("size is a not supported operation");
+            throw new IllegalStateException("size is a not supported operation");
         }
 
         @Override
         public Set<Serializable> keys() {
-            throw new TcException("keys is a not supported operation");
+            throw new IllegalStateException("keys is a not supported operation");
         }
 
         @Override
         public Collection<Serializable> values() {
-            throw new TcException("values is a not supported operation");
+            throw new IllegalStateException("values is a not supported operation");
         }
 
     }
