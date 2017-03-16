@@ -15,6 +15,8 @@ import java.util.Date;
 public class TcAccountAssist {
     private String id;
 
+    private String accountId;
+
     private TmPlatform signinPlatform;
 
     private Date signinTimestamp;

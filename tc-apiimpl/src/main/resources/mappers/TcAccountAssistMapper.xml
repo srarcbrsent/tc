@@ -3,6 +3,7 @@
 <mapper namespace="com.ysu.zyw.tc.api.dao.mappers.TcAccountAssistMapper">
   <resultMap id="BaseResultMap" type="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
     <result column="signin_platform" jdbcType="VARCHAR" property="signinPlatform" typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
     <result column="signin_timestamp" jdbcType="TIMESTAMP" property="signinTimestamp" />
     <result column="signin_ip" jdbcType="VARCHAR" property="signinIp" />
@@ -149,8 +150,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, signin_platform, signin_timestamp, signin_ip, last_signup_platform, last_signup_timestamp, 
-    last_signup_ip, updated_person, updated_timestamp, created_person, created_timestamp
+    id, account_id, signin_platform, signin_timestamp, signin_ip, last_signup_platform, 
+    last_signup_timestamp, last_signup_ip, updated_person, updated_timestamp, created_person, 
+    created_timestamp
   </sql>
   <select id="selectByExample" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssistExample" resultMap="BaseResultMap">
     select
@@ -186,12 +188,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
-    insert into mb_account_assist (id, signin_platform, 
+    insert into mb_account_assist (id, account_id, signin_platform, 
       signin_timestamp, signin_ip, last_signup_platform, 
       last_signup_timestamp, last_signup_ip, updated_person, 
       updated_timestamp, created_person, created_timestamp
       )
-    values (#{id,jdbcType=VARCHAR}, #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler}, 
+    values (#{id,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler}, 
       #{signinTimestamp,jdbcType=TIMESTAMP}, #{signinIp,jdbcType=VARCHAR}, #{lastSignupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler}, 
       #{lastSignupTimestamp,jdbcType=TIMESTAMP}, #{lastSignupIp,jdbcType=VARCHAR}, #{updatedPerson,jdbcType=VARCHAR}, 
       #{updatedTimestamp,jdbcType=TIMESTAMP}, #{createdPerson,jdbcType=VARCHAR}, #{createdTimestamp,jdbcType=TIMESTAMP}
@@ -202,6 +204,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="accountId != null">
+        account_id,
       </if>
       <if test="signinPlatform != null">
         signin_platform,
@@ -237,6 +242,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+        #{accountId,jdbcType=VARCHAR},
       </if>
       <if test="signinPlatform != null">
         #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
@@ -282,6 +290,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
+      <if test="record.accountId != null">
+        account_id = #{record.accountId,jdbcType=VARCHAR},
+      </if>
       <if test="record.signinPlatform != null">
         signin_platform = #{record.signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       </if>
@@ -320,6 +331,7 @@
   <update id="updateByExample" parameterType="map">
     update mb_account_assist
     set id = #{record.id,jdbcType=VARCHAR},
+      account_id = #{record.accountId,jdbcType=VARCHAR},
       signin_platform = #{record.signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       signin_timestamp = #{record.signinTimestamp,jdbcType=TIMESTAMP},
       signin_ip = #{record.signinIp,jdbcType=VARCHAR},
@@ -337,6 +349,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     update mb_account_assist
     <set>
+      <if test="accountId != null">
+        account_id = #{accountId,jdbcType=VARCHAR},
+      </if>
       <if test="signinPlatform != null">
         signin_platform = #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       </if>
@@ -372,7 +387,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     update mb_account_assist
-    set signin_platform = #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+    set account_id = #{accountId,jdbcType=VARCHAR},
+      signin_platform = #{signinPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
       signin_timestamp = #{signinTimestamp,jdbcType=TIMESTAMP},
       signin_ip = #{signinIp,jdbcType=VARCHAR},
       last_signup_platform = #{lastSignupPlatform,jdbcType=VARCHAR,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
@@ -404,6 +420,7 @@
   <insert id="batchInsert" parameterType="com.ysu.zyw.tc.api.dao.po.TcAccountAssist">
     insert into mb_account_assist (
       id, 
+      account_id, 
       signin_platform, 
       signin_timestamp, 
       signin_ip, 
@@ -417,6 +434,7 @@
     ) values 
     <foreach collection="list" item="item" separator=", ">
       (#{item.id,jdbcType=VARCHAR}, 
+      #{item.accountId,jdbcType=VARCHAR}, 
       #{item.signinPlatform,jdbcType=VARCHAR}, 
       #{item.signinTimestamp,jdbcType=TIMESTAMP}, 
       #{item.signinIp,jdbcType=VARCHAR}, 
