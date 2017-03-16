@@ -2,7 +2,6 @@ package com.ysu.zyw.tc.components.rpc.httpx;
 
 import com.google.common.collect.Maps;
 import com.ysu.zyw.tc.base.constant.TcStrConsts;
-import com.ysu.zyw.tc.base.ex.TcException;
 import com.ysu.zyw.tc.base.utils.TcDateUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,10 @@ import javax.annotation.Resource;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -102,7 +104,7 @@ public class TcHttpxService {
                 || obj.getClass().isArray()
                 || ClassUtils.isPrimitiveOrWrapper(obj.getClass())
                 || obj instanceof String) {
-            throw new TcException("list / primitive / string value is not supported");
+            throw new IllegalArgumentException("list / primitive / string value is not supported");
         }
 
         MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
@@ -167,16 +169,14 @@ public class TcHttpxService {
 
     protected Method findPropertyReadMethod(String propertyName, Class<?> clazz) throws NoSuchMethodException {
         Method propertyReadMethod = null;
-        String methodName = "get" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH)
-                + propertyName.substring(1);
+        String methodName = "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
         try {
             propertyReadMethod = clazz.getMethod(methodName);
         } catch (NoSuchMethodException e) {
             // ignore
         }
         if (propertyReadMethod == null) {
-            methodName = "is" + propertyName.substring(0, 1).toUpperCase(Locale.ENGLISH)
-                    + propertyName.substring(1);
+            methodName = "is" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
             try {
                 propertyReadMethod = clazz.getMethod(methodName);
             } catch (NoSuchMethodException e) {

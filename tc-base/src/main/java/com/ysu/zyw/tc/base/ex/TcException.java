@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
  * @author yaowu.zhang
  */
 @Slf4j
-public class TcException extends RuntimeException {
+public class TcException extends Exception {
 
     public TcException(@Nonnull String message, @Nullable Object... infos) {
         super(TcFormatUtils.format(message, infos));

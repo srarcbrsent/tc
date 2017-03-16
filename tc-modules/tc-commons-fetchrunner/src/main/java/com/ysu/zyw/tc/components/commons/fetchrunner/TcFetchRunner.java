@@ -1,37 +1,38 @@
 package com.ysu.zyw.tc.components.commons.fetchrunner;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-/**
- * 启动策略 启动一次 定时器启动 类metaq启动
- * 跳过策略 不跳过 基于zk锁跳过
- * 异常处理策略 日志处理 错误直接退出
- * 连接池管理(fetch线程和run线程)
- *
- * @param <T>
- */
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Slf4j
-public abstract class TcFetchRunner<T> {
+public class TcFetchRunner<T> {
 
-    public void go() {
-        log.info("fetch runner prepare to go ...");
-        try {
-            List<T> datas = fetch();
-            while (CollectionUtils.isNotEmpty(datas)) {
-                run(datas);
-                datas = fetch();
-            }
-        } catch (Exception e) {
-            log.error("", e);
-        }
-        log.info("fetch runner reach end ...");
+    private Supplier<List<T>> supplier;
+
+    private Consumer<T> consumer;
+
+    public TcFetchRunner(@NonNull Supplier<List<T>> supplier,
+                         @Nonnull Consumer<T> consumer) {
+        checkNotNull(supplier);
+        checkNotNull(consumer);
+        this.supplier = supplier;
+        this.consumer = consumer;
     }
 
-    public abstract List<T> fetch();
+    public void start() {
+        List<T> datas = supplier.get();
+        while (CollectionUtils.isNotEmpty(datas)) {
+            datas.forEach(consumer);
+            datas = supplier.get();
+        }
+    }
 
-    public abstract void run(List<T> dataList);
 
 }

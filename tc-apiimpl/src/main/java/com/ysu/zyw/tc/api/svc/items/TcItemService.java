@@ -43,7 +43,7 @@ public class TcItemService {
      * @code code == 1 => 店铺不存在;
      */
     @Transactional
-    public void lockShop(@Nonnull String id) {
+    public void lockShop(@Nonnull String id) throws TcUnProcessableEntityException {
         checkNotNull(id);
 
         if (!existShop(id)) {
@@ -62,7 +62,7 @@ public class TcItemService {
      * @code code == 1 => 店铺不存在;
      */
     @Transactional(readOnly = true)
-    public ToShop findShop(@Nonnull String id) {
+    public ToShop findShop(@Nonnull String id) throws TcUnProcessableEntityException {
         checkNotNull(id);
 
         TcShopExample tcShopExample = new TcShopExample();
@@ -101,7 +101,7 @@ public class TcItemService {
      * @code code == 1 => 店铺不存在;
      */
     @Transactional(readOnly = true)
-    public List<String> findShopOwnedItems(@Nonnull String id) {
+    public List<String> findShopOwnedItems(@Nonnull String id) throws TcUnProcessableEntityException {
         checkNotNull(id);
 
         if (!existShop(id)) {
@@ -121,7 +121,7 @@ public class TcItemService {
      * @code code == 1 => 商品不存在;
      */
     @Transactional
-    public void deleteItem(@Nonnull String id) {
+    public void deleteItem(@Nonnull String id) throws TcUnProcessableEntityException {
         checkNotNull(id);
 
         if (!existItem(id)) {
@@ -140,7 +140,7 @@ public class TcItemService {
      * @code code == 1 => 商品不存在;
      */
     @Transactional(readOnly = true)
-    public ToItem findItem(@Nonnull String id) {
+    public ToItem findItem(@Nonnull String id) throws TcUnProcessableEntityException {
         checkNotNull(id);
 
         TcItemExample tcItemExample = new TcItemExample();

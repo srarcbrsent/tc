@@ -25,7 +25,6 @@ public class TcCrawler implements PageProcessor {
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
 
-
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override

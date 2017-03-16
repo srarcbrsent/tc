@@ -17,6 +17,7 @@
         <module>tc-modules/tc-cache-redis</module>
         <module>tc-modules/tc-cache-codis</module>
         <module>tc-modules/tc-mq-metaq</module>
+        <module>tc-modules/tc-mq-rocketmq</module>
         <module>tc-modules/tc-commons-retry</module>
         <module>tc-modules/tc-commons-utils</module>
         <module>tc-modules/tc-dubbox-support</module>
@@ -51,6 +52,7 @@
         <pom.version.metaq.client>1.4.6.3-SNAPSHOT</pom.version.metaq.client>
         <pom.version.elasticsearch.client>5.1.1</pom.version.elasticsearch.client>
         <pom.version.activemq.client>5.14.1</pom.version.activemq.client>
+        <pom.version.rocketmq.client>4.1.0-incubating-SNAPSHOT</pom.version.rocketmq.client>
         <pom.version.curator>2.9.1</pom.version.curator>
         <pom.version.mybatis>3.4.2</pom.version.mybatis>
         <pom.version.mybatis.spring>1.3.1</pom.version.mybatis.spring>
@@ -475,6 +477,13 @@
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-pool</artifactId>
                 <version>${pom.version.activemq.client}</version>
+            </dependency>
+
+            <!-- rocket mq -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>${pom.version.rocketmq.client}</version>
             </dependency>
 
             <!-- aspectj -->

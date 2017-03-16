@@ -2,6 +2,7 @@ package com.ysu.zyw.tc.api.api.accounts;
 
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
+import com.ysu.zyw.tc.model.api.i.accounts.TuAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
@@ -55,7 +56,7 @@ public interface TcAccountApi {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     TcR<Void> updateAccount(
-            TiAccount tiAccount
+            TuAccount tuAccount
     );
 
     /**

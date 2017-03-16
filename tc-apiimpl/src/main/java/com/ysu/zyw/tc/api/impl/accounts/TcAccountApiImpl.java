@@ -4,9 +4,11 @@ import com.ysu.zyw.tc.api.api.accounts.TcAccountApi;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.model.api.i.accounts.TiAccount;
 import com.ysu.zyw.tc.model.api.i.accounts.TiFindAccountsTerms;
+import com.ysu.zyw.tc.model.api.i.accounts.TuAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
+import lombok.SneakyThrows;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -16,37 +18,37 @@ public class TcAccountApiImpl implements TcAccountApi {
     @Resource
     private TcAccountService tcAccountService;
 
+    @SneakyThrows
     @Override
     public TcR<String> createAccount(TiAccount tiAccount) {
 
-        // throws TcUnProcessableEntityException
         String accountId = tcAccountService.createAccount(tiAccount);
 
         return TcR.ok(accountId);
     }
 
+    @SneakyThrows
     @Override
     public TcR<Void> deleteAccount(String accountId, String delector) {
 
-        // throws TcUnProcessableEntityException
         tcAccountService.deleteAccount(accountId, delector);
 
         return TcR.ok();
     }
 
+    @SneakyThrows
     @Override
-    public TcR<Void> updateAccount(TiAccount tiAccount) {
+    public TcR<Void> updateAccount(TuAccount tuAccount) {
 
-        // throws TcUnProcessableEntityException
-        tcAccountService.updateAccount(tiAccount);
+        tcAccountService.updateAccount(tuAccount);
 
         return TcR.ok();
     }
 
+    @SneakyThrows
     @Override
     public TcR<ToAccount> findAccount(String accountId) {
 
-        // throws TcUnProcessableEntityException
         ToAccount toAccount = tcAccountService.findAccount(accountId, false);
 
         return TcR.ok(toAccount);

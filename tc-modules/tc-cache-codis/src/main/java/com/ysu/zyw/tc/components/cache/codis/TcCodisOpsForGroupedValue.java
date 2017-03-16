@@ -1,7 +1,7 @@
 package com.ysu.zyw.tc.components.cache.codis;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.ysu.zyw.tc.base.ex.TcException;
+import com.ysu.zyw.tc.base.utils.TcFormatUtils;
 import com.ysu.zyw.tc.base.utils.TcUtils;
 import com.ysu.zyw.tc.components.cache.api.TcOpsForGroupedValue;
 import lombok.Getter;
@@ -55,8 +55,9 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
     protected String expiresAtFiled(String field) {
         checkNotNull(field);
         if (field.contains(HASH_FIELD_EXPIRES_AT_SUFFIX)) {
-            throw new TcException("[{}] is a inner access field part, you can not use it in your code",
-                    HASH_FIELD_EXPIRES_AT_SUFFIX);
+            throw new IllegalArgumentException(
+                    TcFormatUtils.format("[{}] is a inner access field part, you can not use it in your code",
+                            HASH_FIELD_EXPIRES_AT_SUFFIX));
         }
         return field + HASH_FIELD_EXPIRES_AT_SUFFIX;
     }
@@ -140,7 +141,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
                     lock.tryLock(tryLockTimeout, TimeUnit.MILLISECONDS);
                     return loadValue(group, key, valueLoader, timeout);
                 } catch (InterruptedException e) {
-                    throw new TcException("load cache blocked, throw exception");
+                    throw new IllegalStateException("load cache blocked, throw exception");
                 } finally {
                     lock.unlock();
                 }
@@ -154,13 +155,13 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
                             @Nonnull Callable<T> valueLoader,
                             long timeout) {
         // lock and get
-        T sValue = TcUtils.doQuietly(() -> {
+        T sValue = TcUtils.defaultValue(() -> {
             if (exists(group, key)) {
                 return (T) redisTemplate.opsForHash().get(group, key);
             } else {
                 return null;
             }
-        }, null);
+        }, () -> null);
         if (Objects.nonNull(sValue)) {
             return sValue;
         }
@@ -177,7 +178,7 @@ public class TcCodisOpsForGroupedValue implements TcOpsForGroupedValue {
         try {
             loadedValue = valueLoader.call();
         } catch (Exception e) {
-            throw new TcException(e, valueLoader);
+            throw new IllegalStateException(TcFormatUtils.format("key [{}:{}] load value failed", group, key), e);
         }
         checkNotNull(loadedValue, "empty loaded value is not allowed");
         TcUtils.doQuietly(() -> set(group, key, loadedValue, timeout));
