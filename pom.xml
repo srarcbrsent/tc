@@ -17,6 +17,7 @@
         <module>tc-modules/tc-cache-redis</module>
         <module>tc-modules/tc-cache-codis</module>
         <module>tc-modules/tc-mq-metaq</module>
+        <module>tc-modules/tc-mq-rocketmq</module>
         <module>tc-modules/tc-commons-retry</module>
         <module>tc-modules/tc-commons-utils</module>
         <module>tc-modules/tc-dubbox-support</module>

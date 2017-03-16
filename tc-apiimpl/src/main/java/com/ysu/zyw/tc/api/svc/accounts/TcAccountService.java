@@ -1,9 +1,7 @@
 package com.ysu.zyw.tc.api.svc.accounts;
 
-import com.ysu.zyw.tc.api.dao.mappers.TcAccountAssistMapper;
 import com.ysu.zyw.tc.api.dao.mappers.TcAccountMapper;
 import com.ysu.zyw.tc.api.dao.po.TcAccount;
-import com.ysu.zyw.tc.api.dao.po.TcAccountAssist;
 import com.ysu.zyw.tc.api.dao.po.TcAccountExample;
 import com.ysu.zyw.tc.api.fk.ex.TcUnProcessableEntityException;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
@@ -39,9 +37,6 @@ public class TcAccountService {
 
     @Resource
     private TcAccountMapper tcAccountMapper;
-
-    @Resource
-    private TcAccountAssistMapper tcAccountAssistMapper;
 
     @Resource
     private TcAuthService tcAuthService;
@@ -126,26 +121,10 @@ public class TcAccountService {
                 .setCreatedPerson(inputAccount.getCreatedPerson())
                 .setCreatedTimestamp(now);
 
-        // account assist
-        TcAccountAssist tcAccountAssist = new TcAccountAssist();
-
-        TcBeanUtils.copyProperties(inputAccount, tcAccountAssist);
-        tcAccountAssist
-                .setId(id)
-                .setSigninPlatform(inputAccount.getSigninPlatform())
-                .setSigninTimestamp(now)
-                .setLastSignupPlatform(inputAccount.getSigninPlatform())
-                .setLastSignupTimestamp(now)
-                .setUpdatedPerson(inputAccount.getCreatedPerson())
-                .setUpdatedTimestamp(now)
-                .setCreatedPerson(inputAccount.getCreatedPerson())
-                .setCreatedTimestamp(now);
-
         // insert
         int cAccount = tcAccountMapper.insert(tcAccount);
-        int cAccountAssist = tcAccountAssistMapper.insert(tcAccountAssist);
 
-        checkArgument(cAccount == 1 && cAccountAssist == 1);
+        checkArgument(cAccount == 1);
 
         return id;
     }
