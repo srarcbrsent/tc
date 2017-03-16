@@ -40,14 +40,14 @@ public class TcFormatUtils {
         return format(strs.stream().collect(Collectors.joining(" ")), args);
     }
 
-    private static final String OVER_LENGTH_DECORATE = "...";
+    private static final String DEFAULT_OVER_LENGTH_DECORATE = "...";
 
     public static String maxLen(@Nonnull String value, int maxLen, @Nullable String decorate) {
         checkNotNull(value);
         checkArgument(maxLen > 0);
         if (value.length() > maxLen) {
             value = value.substring(0, maxLen - 1)
-                    + (Objects.isNull(decorate) ? OVER_LENGTH_DECORATE : decorate);
+                    + (Objects.isNull(decorate) ? DEFAULT_OVER_LENGTH_DECORATE : decorate);
         }
         return value;
     }
