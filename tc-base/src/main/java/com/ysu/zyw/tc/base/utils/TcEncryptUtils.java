@@ -22,7 +22,7 @@ public class TcEncryptUtils {
     private static final int RSA_ALGORITHM_KEY_SIZE = 1024;
 
     @SneakyThrows
-    public static KeyPair generate() {
+    public static KeyPair generateRSAPair() {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
         keyPairGenerator.initialize(RSA_ALGORITHM_KEY_SIZE);
         return keyPairGenerator.generateKeyPair();
