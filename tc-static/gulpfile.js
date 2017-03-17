@@ -116,7 +116,7 @@ gulp.task('stylesheet', function () {
         .src('src/resources/styles/**/*.css')
         // 静态检查
         .pipe(csslint())
-        .pipe(csslint.formatter())
+        .pipe(csslint.formatter('compact'))
         // 替换静态资源前缀路径
         .pipe(replace(/\/tc-static\/src\/resources/g, _environment.staticBase))
         // 压缩(开发不压缩)
@@ -137,10 +137,9 @@ gulp.task('mg-script-libs', function (cb) {
         .src([
             'src/resources/libs/core/jquery-3.2.0.min.js',
             'src/resources/libs/thirdparty/axios.min.js',
-            'src/resources/libs/thirdparty/lodash.min.js',
-            'src/resources/libs/layui/layui.js'
+            'src/resources/libs/thirdparty/lodash.min.js'
         ])
-        .pipe(concat('_flib.min.js'))
+        .pipe(concat('_header_lib.min.js'))
         .pipe(gulp.dest('src/resources/libs'));
 });
 
@@ -149,10 +148,9 @@ gulp.task('mg-style-libs', function (cb) {
     del('src/resources/libs/_tlib.min.css', cb);
     return gulp
         .src([
-            'src/resources/libs/core/normalize.min.css',
-            'src/resources/libs/layui/css/layui.css'
+            'src/resources/libs/core/normalize.min.css'
         ])
-        .pipe(concatCss("_tlib.min.css"))
+        .pipe(concatCss("_footer_lib.min.css"))
         .pipe(gulp.dest('src/resources/libs'));
 });
 
@@ -227,6 +225,14 @@ gulp.task('html', function () {
 
 // 编译特殊文件
 gulp.task('special', function () {
+    return gulp
+        // layui 使用模块名加载模块 加版本之后文件名变化无法获取 复制源文件到目的地
+        .src([
+            'src/resources/libs/layui/**/*.js',
+            'src/resources/libs/layui/**/*.css'
+        ])
+        // 输出
+        .pipe(gulp.dest('dist/resources/libs/layui'));
 });
 
 // ----- 服务器

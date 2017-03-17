@@ -30,13 +30,14 @@ public class TcVerificationCodeService {
         String encodedVerificationCode = encodeVerificationCodeWithDatetime(verificationCode);
         SecurityUtils.getSubject().getSession()
                 .setAttribute(TcSessionKey.INDEX_VERIFICATION_CODE, encodedVerificationCode);
-        log.info("verification code -> [{}]", verificationCode);
+        String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
+        log.info("session id -> [{}] verification code -> [{}]", sessionId, verificationCode);
         return verificationCode;
     }
 
     public boolean isVerificationCodeMatch(String verificationCode) {
         String encodedVerificationCodeInSession = (String) SecurityUtils.getSubject().getSession()
-                        .getAttribute(TcSessionKey.INDEX_VERIFICATION_CODE);
+                .getAttribute(TcSessionKey.INDEX_VERIFICATION_CODE);
         if (Objects.isNull(encodedVerificationCodeInSession)) {
             return false;
         }
@@ -44,12 +45,14 @@ public class TcVerificationCodeService {
         return Objects.equals(verificationCode, verificationCodeInSession);
     }
 
+    private static final String VERIFICATION_CODE_AND_DATE_TIME_SEPARATIVE_SIGN = "___";
+
     private String encodeVerificationCodeWithDatetime(String verificationCode) {
-        return TcDateUtils.format(new Date()) + "___" + verificationCode;
+        return TcDateUtils.format(new Date()) + VERIFICATION_CODE_AND_DATE_TIME_SEPARATIVE_SIGN + verificationCode;
     }
 
     private String decodeVerificationCode(String encodedVerificationCode) {
-        return encodedVerificationCode.split("___")[1];
+        return encodedVerificationCode.split(VERIFICATION_CODE_AND_DATE_TIME_SEPARATIVE_SIGN)[1];
     }
 
 }

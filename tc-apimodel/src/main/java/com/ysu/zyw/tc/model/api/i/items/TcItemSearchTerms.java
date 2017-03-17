@@ -15,6 +15,6 @@ public class TcItemSearchTerms implements Serializable {
 
     private static final long serialVersionUID = -3390566386771674053L;
 
-
+    private String id;
 
 }
