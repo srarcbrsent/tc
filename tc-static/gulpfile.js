@@ -135,7 +135,7 @@ gulp.task('mg-script-libs', function (cb) {
     del('src/resources/libs/_flib.min.js', cb);
     return gulp
         .src([
-            'src/resources/libs/jquery-3.1.0.min.js',
+            'src/resources/libs/jquery-3.2.0.min.js',
             'src/resources/libs/vue.min.js',
             'src/resources/libs/axios.min.js',
             'src/resources/libs/lodash.min.js',
