@@ -9,62 +9,29 @@
 </head>
 <body>
 <!-- + wrapper -->
-<div id="wrapper">
-    <!-- + header -->
-    @@include('src/html/commons/header.html')
-    <!-- - header -->
+<!--<div id="wrapper">-->
+    <!--&lt;!&ndash; + header &ndash;&gt;-->
+    <!--@@include('src/html/commons/header.html')-->
+    <!--&lt;!&ndash; - header &ndash;&gt;-->
 
-    <!-- + body -->
-    <div id="body"
-         class="container-fixed">
-        <div class="row">
-            <div class="col-lg-3">
-                @@include('src/html/commons/menu.html')
-            </div>
-            <div class="col-lg-9">
-                <div class="panel">
-                    <div class="panel-body">
-                        <h1>Dashboard <small>仪表盘</small></h1>
-                        <hr/>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th class="col-lg-4">vars</th>
-                                <th class="col-lg-8">value</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                            </tr>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- - body -->
+    <!--&lt;!&ndash; + body &ndash;&gt;-->
+    <!--<template id="body">-->
+        <!--<Row>-->
+            <!--<i-col span="12">12</i-col>-->
+            <!--<i-col span="12">12</i-col>-->
+        <!--</Row>-->
+    <!--</template>-->
+    <!--&lt;!&ndash; - body &ndash;&gt;-->
 
-    <!-- + footer -->
-    @@include('src/html/commons/footer.html')
-    <!-- - footer -->
-</div>
+    <!--&lt;!&ndash; + footer &ndash;&gt;-->
+    <!--@@include('src/html/commons/footer.html')-->
+    <!--&lt;!&ndash; - footer &ndash;&gt;-->
+<!--</div>-->
 <!-- - wrapper -->
+
 @@include('src/html/commons/flib.html')
 @@include('src/html/commons/pms.html')
-<script src="/tc-static/src/resources/libs/hashes.min.js"
+<script src="/tc-static/src/resources/libs/thirdparty/hashes.min.js"
         type="application/javascript"></script>
 <script src="/tc-static/src/resources/scripts/index.js"
         type="application/javascript"></script>

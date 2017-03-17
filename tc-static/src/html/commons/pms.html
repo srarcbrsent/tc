@@ -1,77 +1,77 @@
 <!-- + pms -->
 <script type="text/javascript">
     // privilege infrastructure
-    var headerPmsVue = new Vue({
+    <!--var headerPmsVue = new Vue({-->
 
-        el: '#header',
+        <!--el: '#header',-->
 
-        data: {
-            authenticated: false,
-            permissions: []
-        },
+        <!--data: {-->
+            <!--authenticated: false,-->
+            <!--permissions: []-->
+        <!--},-->
 
-        mounted: function () {
-            this.doGetAuthenticatedStatus();
-            this.doGetPermissions();
-        },
+        <!--mounted: function () {-->
+            <!--this.doGetAuthenticatedStatus();-->
+            <!--this.doGetPermissions();-->
+        <!--},-->
 
-        methods: {
-            doGetAuthenticatedStatus: function () {
-                _TcAxios
-                    .get('/auths/authenticated.json')
-                    .then(function (response) {
-                        _TcC.doWithTcR(response.data, function (code, body) {
-                            headerPmsVue.authenticated = body;
-                        });
-                    })
-                    .catch(function (error) {
-                        _TcC.defaultAxiosExHandler(error);
-                    });
-            },
+        <!--methods: {-->
+            <!--doGetAuthenticatedStatus: function () {-->
+                <!--_TcAxios-->
+                    <!--.get('/auths/authenticated.json')-->
+                    <!--.then(function (response) {-->
+                        <!--_TcC.doWithTcR(response.data, function (code, body) {-->
+                            <!--headerPmsVue.authenticated = body;-->
+                        <!--});-->
+                    <!--})-->
+                    <!--.catch(function (error) {-->
+                        <!--_TcC.defaultAxiosExHandler(error);-->
+                    <!--});-->
+            <!--},-->
 
-            doGetPermissions: function () {
-                _TcAxios
-                    .get('/auths/get_permissions.json')
-                    .then(function (response) {
-                        _TcC.doWithTcR(response.data, function (code, body) {
-                            headerPmsVue.permissions = body;
-                        });
-                    })
-                    .catch(function (error) {
-                        _TcC.defaultAxiosExHandler(error);
-                    });
-            },
+            <!--doGetPermissions: function () {-->
+                <!--_TcAxios-->
+                    <!--.get('/auths/get_permissions.json')-->
+                    <!--.then(function (response) {-->
+                        <!--_TcC.doWithTcR(response.data, function (code, body) {-->
+                            <!--headerPmsVue.permissions = body;-->
+                        <!--});-->
+                    <!--})-->
+                    <!--.catch(function (error) {-->
+                        <!--_TcC.defaultAxiosExHandler(error);-->
+                    <!--});-->
+            <!--},-->
 
-            signout: function () {
-                _TcAxios
-                    .get('/auths/signout.json')
-                    .then(function (response) {
-                        _TcC.doWithTcR(response.data, function () {
-                            location.href = _TcC._htmlBase;
-                        });
-                    })
-                    .catch(function (error) {
-                        _TcC.defaultAxiosExHandler(error);
-                    });
-            }
-        },
+            <!--signout: function () {-->
+                <!--_TcAxios-->
+                    <!--.get('/auths/signout.json')-->
+                    <!--.then(function (response) {-->
+                        <!--_TcC.doWithTcR(response.data, function () {-->
+                            <!--location.href = _TcC._htmlBase;-->
+                        <!--});-->
+                    <!--})-->
+                    <!--.catch(function (error) {-->
+                        <!--_TcC.defaultAxiosExHandler(error);-->
+                    <!--});-->
+            <!--}-->
+        <!--},-->
 
-        computed: {
-            hasPermission: function (permission) {
-                return !_.isUndefined(permission) && _.contains(headerPmsVue.permissions, permission);
-            },
+        <!--computed: {-->
+            <!--hasPermission: function (permission) {-->
+                <!--return !_.isUndefined(permission) && _.contains(headerPmsVue.permissions, permission);-->
+            <!--},-->
 
-            hasAnyPermission: function (permissions) {
-                return !_.isUndefined(permissions)
-                    && _.intersection(headerPmsVue.permissions, permissions.split(',')).length > 0;
-            },
+            <!--hasAnyPermission: function (permissions) {-->
+                <!--return !_.isUndefined(permissions)-->
+                    <!--&& _.intersection(headerPmsVue.permissions, permissions.split(',')).length > 0;-->
+            <!--},-->
 
-            hasAllPermissions: function (permissions) {
-                var unionPms = _.union(headerPmsVue.permissions, permissions.split(','));
-                return !_.isUndefined(permissions) && (unionPms.length == headerPmsVue.permissions.length);
-            }
-        }
+            <!--hasAllPermissions: function (permissions) {-->
+                <!--var unionPms = _.union(headerPmsVue.permissions, permissions.split(','));-->
+                <!--return !_.isUndefined(permissions) && (unionPms.length == headerPmsVue.permissions.length);-->
+            <!--}-->
+        <!--}-->
 
-    });
+    <!--});-->
 </script>
 <!-- - pms -->
