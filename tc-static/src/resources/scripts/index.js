@@ -1,3 +1,86 @@
+layui.use(['element', 'form'], function () {
+    // import
+    var element = layui.element();
+    var form = layui.form();
+
+    // bind event
+    form.verify({
+        username: function (value) {
+            if (!new RegExp("^1[0-9]{10}$").test(value)
+                && !new RegExp("^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$").test(value)) {
+                return '用户名为手机号或者邮箱';
+            }
+        },
+        password: function (value) {
+            if (!new RegExp("^[a-zA-Z0-9_]{6,16}$").test(value)) {
+                return '密码为6-16位的英文字符或数字';
+            }
+        }
+    });
+
+    form.on('submit(fm-signup)', function (data) {
+        var password = data.field.password;
+
+        new Promise(function (resolve, reject) {
+            return getPublicKeyAsync();
+        }).then(function (publicKey) {
+            console.log(publicKey);
+        }).catch(function () {
+            _TcC.defaultAxiosExHandler();
+        });
+
+        // reject form submit
+        return false;
+    });
+
+    // bind listener
+    bindRefreshVerificationCodeListener();
+
+    // function definition
+    function getPublicKeyAsync() {
+        return new Promise(function (resolve, reject) {
+            _TcAxios
+                .post('/auths/public_key.json')
+                .then(function (response) {
+                    _TcC.doWithTcR(response.data, function (code, body) {
+                        if (code === 0) {
+                            resolve(body);
+                        } else {
+                            console.error('axios [/auths/public_key.json] -> ' + code);
+                            reject();
+                        }
+                    });
+                })
+                .catch(function (error) {
+                    console.error('axios [/auths/public_key.json] => ' + error);
+                    reject();
+                });
+        });
+    }
+
+    function bindRefreshVerificationCodeListener() {
+        $('form.index-signup-fm a.refresh-verification-code-btn').click(function () {
+            refreshVerificationCode();
+        });
+    }
+
+    function refreshVerificationCode() {
+        _TcAxios
+            .get('/auths/get_verification_code.json')
+            .then(function (response) {
+                _TcC.doWithTcR(response.data, function (code, body) {
+                    $('form.index-signup-fm a.verification-code-btn').html(body);
+                });
+            })
+            .catch(function (error) {
+                console.error('axios [/auths/get_verification_code.json] => ' + error);
+                _TcC.defaultAxiosExHandler();
+            });
+
+    }
+
+});
+
 // var indexVue = new Vue({
 //
 //     el: '#doc-signup-div',

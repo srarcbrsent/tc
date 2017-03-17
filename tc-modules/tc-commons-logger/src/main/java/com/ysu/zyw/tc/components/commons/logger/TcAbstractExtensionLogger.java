@@ -89,6 +89,8 @@ public abstract class TcAbstractExtensionLogger implements TcExtensionLogger, In
             case ERROR:
                 errorEnabled = true;
                 // no break, pass through
+            default:
+                // no default, pass through
         }
         log.info("initializing extension logger with trace-{} debug-{} info-{} warn-{} error-{}",
                 traceEnabled, debugEnabled, infoEnabled, warnEnabled, errorEnabled);

@@ -1,7 +1,19 @@
-.doc-verification-code-span {
-    user-select: none;
+div.body-block {
+    min-height: 650px;
+    padding: 10px 0 10px 0;
 }
 
-.doc-verification-code-span > i:hover {
-    cursor: pointer;
+div.body-block div.index-body-left {
+    width: 510px;
+    float: left;
+}
+
+div.body-block div.index-body-right {
+    width: 530px;
+    float: right;
+    padding-top: 100px;
+}
+
+form.index-signup-fm a.verification-code-btn {
+    font-size: 18px;
 }

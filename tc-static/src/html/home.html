@@ -1,46 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>实验工程</title>
-    @@include('src/html/commons/tlib.html')
+    @@include('src/html/commons/header_lib.html')
     <link href="/tc-static/src/resources/styles/home.css"
           type="text/css"
           rel="stylesheet"/>
 </head>
 <body>
 <!-- + wrapper -->
-<div id="wrapper">
+<div class="global-wrapper">
     <!-- + header -->
     @@include('src/html/commons/header.html')
     <!-- - header -->
 
     <!-- + body -->
-    <div id="body"
-         class="am-container">
-        <!-- + menu -->
-        <div id="doc-menu-div"
-             class="am-u-lg-3">
+    <div class="layui-main body-block">
+        <div class="layui-tab layui-tab-brief">
+            <!-- + menu -->
             @@include('src/html/commons/menu.html')
+            <!-- - menu -->
+            <div class="layui-tab-content"></div>
         </div>
-        <!-- - menu -->
-
-        <!-- + container -->
-        <div id="doc-container-div"
-             class="am-u-lg-9">
-            <ul class="am-list am-list-static am-list-border">
-                <li>...</li>
-                <li>...</li>
-                <li>...</li>
-                <li>...</li>
-                <li>...</li>
-                <li>...</li>
-                <li>...</li>
-            </ul>
-        </div>
-        <!-- - container -->
     </div>
     <!-- - body -->
 
@@ -49,8 +30,9 @@
     <!-- - footer -->
 </div>
 <!-- - wrapper -->
-@@include('src/html/commons/flib.html')
-@@include('src/html/commons/pms.html')
+
+@@include('src/html/commons/footer_lib.html')
+@@include('src/html/commons/permission.html')
 <script src="/tc-static/src/resources/scripts/home.js"
         type="application/javascript"></script>
 </body>

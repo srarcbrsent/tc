@@ -9,7 +9,7 @@
 
     <cache:annotation-driven cache-manager="cacheManager"
                              proxy-target-class="true"
-                             order="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.AspectOrder).CACHE_ASPECT_ORDER}"/>
+                             order="#{T(com.ysu.zyw.tc.base.constant.TcAspectOrderConsts).CACHE_ASPECT_ORDER}"/>
 
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
@@ -103,19 +103,19 @@
 
     <!-- cache -->
     <bean id="ssCodisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
-        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.BeanNames).SS_CODIS_CACHE}"/>
+        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcBeanNameConsts).SS_CODIS_CACHE}"/>
         <property name="codisTemplate" ref="ssCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
     </bean>
 
     <bean id="soCodisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
-        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.BeanNames).SO_CODIS_CACHE}"/>
+        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcBeanNameConsts).SO_CODIS_CACHE}"/>
         <property name="codisTemplate" ref="soCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
     </bean>
 
     <bean id="ooCodisCache" class="com.ysu.zyw.tc.components.cache.codis.TcCodisCache">
-        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.BeanNames).OO_CODIS_CACHE}"/>
+        <property name="name" value="#{T(com.ysu.zyw.tc.base.constant.TcBeanNameConsts).OO_CODIS_CACHE}"/>
         <property name="codisTemplate" ref="ooCodisTemplate"/>
         <property name="expiration" value="${properties.cache.codis.cache.expiration.millis}"/>
     </bean>

@@ -9,7 +9,7 @@
 
     <cache:annotation-driven cache-manager="cacheManager"
                              proxy-target-class="true"
-                             order="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.AspectOrder).CACHE_ASPECT_ORDER}"/>
+                             order="#{T(com.ysu.zyw.tc.base.constant.TcAspectOrderConsts).CACHE_ASPECT_ORDER}"/>
 
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
@@ -103,7 +103,7 @@
 
     <!-- cache -->
     <bean id="ssRedisCache" class="org.springframework.data.redis.cache.RedisCache">
-        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.BeanNames).SS_REDIS_CACHE}"/>
+        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcBeanNameConsts).SS_REDIS_CACHE}"/>
         <constructor-arg index="1">
             <null/>
         </constructor-arg>
@@ -112,7 +112,7 @@
     </bean>
 
     <bean id="soRedisCache" class="org.springframework.data.redis.cache.RedisCache">
-        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.BeanNames).SO_REDIS_CACHE}"/>
+        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcBeanNameConsts).SO_REDIS_CACHE}"/>
         <constructor-arg index="1">
             <null/>
         </constructor-arg>
@@ -121,7 +121,7 @@
     </bean>
 
     <bean id="ooRedisCache" class="org.springframework.data.redis.cache.RedisCache">
-        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts.BeanNames).OO_REDIS_CACHE}"/>
+        <constructor-arg index="0" value="#{T(com.ysu.zyw.tc.base.constant.TcBeanNameConsts).OO_REDIS_CACHE}"/>
         <constructor-arg index="1">
             <null/>
         </constructor-arg>
