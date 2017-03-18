@@ -38,9 +38,11 @@ public class TcEncodingUtils {
         return Base64.encodeBase64String(text.getBytes());
     }
 
-    public static String dncodeBase64(@Nonnull String text) {
+    public static String decodeBase64(@Nonnull String text) {
         checkNotNull(text);
         return new String(Base64.decodeBase64(text.getBytes()));
     }
+
+
 
 }

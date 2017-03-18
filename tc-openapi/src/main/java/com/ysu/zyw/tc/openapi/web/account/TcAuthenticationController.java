@@ -8,6 +8,7 @@ import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
+import com.ysu.zyw.tc.openapi.fk.config.TcConfig;
 import com.ysu.zyw.tc.openapi.svc.TcSessionService;
 import com.ysu.zyw.tc.openapi.svc.TcVerificationCodeService;
 import io.swagger.annotations.Api;
@@ -46,6 +47,9 @@ public class TcAuthenticationController {
     @Resource
     private TcAuthenticationApi tcAuthenticationApi;
 
+    @Resource
+    private TcConfig tcConfig;
+
     @ApiOperation(
             value = "获取登陆验证码",
             notes = "获取登陆验证码")
@@ -54,6 +58,16 @@ public class TcAuthenticationController {
     public ResponseEntity<TcR<String>> fetchVerificationCode() {
         String verificationCode = tcVerificationCodeService.generateVerificationCodeAndSet2Session();
         return ResponseEntity.ok(TcR.ok(verificationCode));
+    }
+
+    @ApiOperation(
+            value = "获取登陆加密公钥",
+            notes = "获取登陆加密公钥")
+    @ApiResponse(code = 200, message = "OK")
+    @RequestMapping(value = "/get_public_key", method = RequestMethod.POST)
+    public ResponseEntity<TcR<String>> getPublicKey() {
+        // TODO
+        return ResponseEntity.ok(TcR.ok("1"));
     }
 
     /**
