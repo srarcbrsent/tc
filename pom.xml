@@ -773,6 +773,13 @@
                 <version>0.4.8</version>
             </dependency>
 
+            <!-- rsa -->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk16</artifactId>
+                <version>1.46</version>
+            </dependency>
+
             <!-- guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
