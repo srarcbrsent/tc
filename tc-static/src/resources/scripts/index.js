@@ -36,23 +36,26 @@ layui.use(['element', 'form'], function () {
     // bind listener
     bindRefreshVerificationCodeListener();
 
+    // init
+    refreshVerificationCode();
+
     // function definition
     function getPublicKeyAsync() {
         return new Promise(function (resolve, reject) {
             _TcAxios
-                .post('/auths/public_key.json')
+                .post('/auths/get_public_key.json')
                 .then(function (response) {
                     _TcC.doWithTcR(response.data, function (code, body) {
                         if (code === 0) {
                             resolve(body);
                         } else {
-                            console.error('axios [/auths/public_key.json] -> ' + code);
+                            console.error('axios [/auths/get_public_key.json] -> ' + code);
                             reject();
                         }
                     });
                 })
                 .catch(function (error) {
-                    console.error('axios [/auths/public_key.json] => ' + error);
+                    console.error('axios [/auths/get_public_key.json] => ' + error);
                     reject();
                 });
         });

@@ -9,8 +9,8 @@ import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
 import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.openapi.fk.config.TcConfig;
+import com.ysu.zyw.tc.openapi.svc.TcAuthenticationService;
 import com.ysu.zyw.tc.openapi.svc.TcSessionService;
-import com.ysu.zyw.tc.openapi.svc.TcVerificationCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -39,7 +39,7 @@ import java.util.UUID;
 public class TcAuthenticationController {
 
     @Resource
-    private TcVerificationCodeService tcVerificationCodeService;
+    private TcAuthenticationService tcAuthenticationService;
 
     @Resource
     private TcSessionService tcSessionService;
@@ -56,7 +56,7 @@ public class TcAuthenticationController {
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/get_verification_code", method = RequestMethod.GET)
     public ResponseEntity<TcR<String>> fetchVerificationCode() {
-        String verificationCode = tcVerificationCodeService.generateVerificationCodeAndSet2Session();
+        String verificationCode = tcAuthenticationService.generateVerificationCodeAndSet2Session();
         return ResponseEntity.ok(TcR.ok(verificationCode));
     }
 
@@ -66,8 +66,8 @@ public class TcAuthenticationController {
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/get_public_key", method = RequestMethod.POST)
     public ResponseEntity<TcR<String>> getPublicKey() {
-        // TODO
-        return ResponseEntity.ok(TcR.ok("1"));
+        String publicKey = tcAuthenticationService.generateRSAKeyAndSet2Session();
+        return ResponseEntity.ok(TcR.ok(publicKey));
     }
 
     /**
@@ -84,18 +84,19 @@ public class TcAuthenticationController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<TcR<Integer>> signup(
             @RequestParam(value = "username") String username,
-            @RequestParam(value = "password") String cltPassword,
+            @RequestParam(value = "password") String rsaEncryptedPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,
             @RequestParam(value = "verificationCode") String verificationCode,
             HttpServletResponse response) {
         // verify verification code
-        boolean verificationCodeMatch = tcVerificationCodeService.isVerificationCodeMatch(verificationCode);
+        boolean verificationCodeMatch = tcAuthenticationService.isVerificationCodeMatch(verificationCode);
         if (!verificationCodeMatch) {
             return ResponseEntity.ok(TcR.code(1, "验证码输入错误！"));
         }
 
-        // login
-        UsernamePasswordToken token = new UsernamePasswordToken(username, cltPassword);
+        // signup
+        String password = tcAuthenticationService.decryptRSAEncryptedPassword(rsaEncryptedPassword);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(rememberMe);
         try {
             SecurityUtils.getSubject().login(token);
