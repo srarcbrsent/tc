@@ -55,8 +55,8 @@
 
         baseURL: _TcC._openApiBase,
 
-        // 6s
-        timeout: 6000,
+        // 30s
+        timeout: 30000,
 
         withCredentials: true,
 

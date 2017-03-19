@@ -28,7 +28,7 @@
         <property name="sessionValidationScheduler">
             <bean class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
                 <property name="sessionManager" ref="shiroSessionManager"/>
-                <property name="interval" value="${properties.secyrity.shiro.session.validation.interval.millisecond}"/>
+                <property name="interval" value="${properties.security.shiro.session.validation.interval.millisecond}"/>
             </bean>
         </property>
         <property name="sessionDAO">

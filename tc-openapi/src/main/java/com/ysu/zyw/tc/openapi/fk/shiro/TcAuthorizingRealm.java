@@ -100,13 +100,13 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
     }
 
     protected List<ToRole> fetchRoles(String accountId) {
-        TcP<List<ToRole>> tcP = tcAuthenticationApi.findRoles(accountId);
-        return tcP.orElseGet(Lists::newArrayList);
+        TcP<List<ToRole>> roles = tcAuthenticationApi.findRoles(accountId);
+        return roles.orElseGet(Lists::newArrayList);
     }
 
     protected List<ToPermission> fetchPermissions(String accountId) {
-        // no api permissions have been set, all api privilege was set by role.
-        return Lists.newArrayList();
+        TcP<List<ToPermission>> permissions = tcAuthenticationApi.findPermissions(accountId);
+        return permissions.orElseGet(Lists::newArrayList);
     }
 
     protected String fetchRealmName() {

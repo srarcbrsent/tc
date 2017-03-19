@@ -30,6 +30,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -56,7 +57,7 @@ public class TcAuthenticationController {
     @ApiResponse(code = 200, message = "OK")
     @RequestMapping(value = "/get_verification_code", method = RequestMethod.GET)
     public ResponseEntity<TcR<String>> fetchVerificationCode() {
-        String verificationCode = tcAuthenticationService.generateVerificationCodeAndSet2Session();
+        String verificationCode = tcAuthenticationService.generateVerificationCodeAndSet2Cache();
         return ResponseEntity.ok(TcR.ok(verificationCode));
     }
 
@@ -72,10 +73,11 @@ public class TcAuthenticationController {
 
     /**
      * 0 ==> 登陆成功;
-     * 1 ==> 验证码输入错误;
-     * 2 ==> 账号不存在;
-     * 3 ==> 账号被锁定;
-     * 4 ==> 账号密码错误;
+     * 1 ==> 验证码已过期;
+     * 2 ==> 验证码输入错误;
+     * 3 ==> 账号不存在;
+     * 4 ==> 账号被锁定;
+     * 5 ==> 账号密码错误;
      */
     @ApiOperation(
             value = "登陆",
@@ -89,9 +91,14 @@ public class TcAuthenticationController {
             @RequestParam(value = "verificationCode") String verificationCode,
             HttpServletResponse response) {
         // verify verification code
-        boolean verificationCodeMatch = tcAuthenticationService.isVerificationCodeMatch(verificationCode);
+        String verificationCodeInCache = tcAuthenticationService.getVerificationCodeInCache();
+        if (Objects.isNull(verificationCodeInCache)) {
+            return ResponseEntity.ok(TcR.code(1, "验证码已过期！"));
+        }
+        boolean verificationCodeMatch = tcAuthenticationService.isVerificationCodeMatch(
+                verificationCodeInCache, verificationCode);
         if (!verificationCodeMatch) {
-            return ResponseEntity.ok(TcR.code(1, "验证码输入错误！"));
+            return ResponseEntity.ok(TcR.code(2, "验证码输入错误！"));
         }
 
         // signup
@@ -101,11 +108,11 @@ public class TcAuthenticationController {
         try {
             SecurityUtils.getSubject().login(token);
         } catch (UnknownAccountException e) {
-            return ResponseEntity.ok(TcR.code(2, "账号不存在！"));
+            return ResponseEntity.ok(TcR.code(3, "账号不存在！"));
         } catch (LockedAccountException e) {
-            return ResponseEntity.ok(TcR.code(3, "账号被锁定！"));
+            return ResponseEntity.ok(TcR.code(4, "账号被锁定！"));
         } catch (IncorrectCredentialsException e) {
-            return ResponseEntity.ok(TcR.code(4, "账号密码错误！"));
+            return ResponseEntity.ok(TcR.code(5, "账号密码错误！"));
         }
 
         // set cookie
