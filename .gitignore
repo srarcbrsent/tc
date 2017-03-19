@@ -35,10 +35,10 @@ logs
 node_modules
 
 # static ignore
-tc-static/**/dist
-tc-static/**/manifest
-tc-static/**/_*.min.js
-tc-static/**/_*.min.css
+tc-openapi/**/dist
+tc-openapi/**/manifest
+tc-openapi/**/_*.min.js
+tc-openapi/**/_*.min.css
 
 # disconf ignore
 disconf

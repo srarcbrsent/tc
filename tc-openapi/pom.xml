@@ -57,6 +57,11 @@
 
         <dependency>
             <groupId>com.ysu.zyw</groupId>
+            <artifactId>tc-freemarker-support</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ysu.zyw</groupId>
             <artifactId>tc-dubbox-support</artifactId>
         </dependency>
 
@@ -289,30 +294,67 @@
         <finalName>ROOT</finalName>
 
         <plugins>
+            <!-- exec plugin -->
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <id>gulp-build</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>
+                                ${project.basedir}/src/main/webapp/WEB-INF/frontend/build-frontend.sh
+                            </executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- war plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <!-- ignore frontend src -->
+                        WEB-INF/frontend/src/**/*,
+                        <!-- ignore frontend gulp build manifest -->
+                        WEB-INF/frontend/manifest/**/*,
+                        <!-- ignore frontend gulp build node_modules -->
+                        WEB-INF/frontend/node_modules/**/*,
+                        <!-- ignore frontend build scripts -->
+                        WEB-INF/frontend/build-frontend.sh,
+                        WEB-INF/frontend/gulpfile.js,
+                        WEB-INF/frontend/package.json,
+                        <!-- ignore frontend dist resources(will package as tgz) -->
+                        WEB-INF/frontend/dist/resources/**/*
+                    </excludes>
+                </configuration>
             </plugin>
 
-            <!-- mybatis generator -->
+            <!-- assembly plugin -->
             <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.5</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.ysu.zyw</groupId>
-                        <artifactId>tc-components</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <overwrite>true</overwrite>
-                    <configurationFile>
-                        src/main/resources/config/tc-mbg-config.xml
-                    </configurationFile>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>assembly-static-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/resources/assembly.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- jetty plugin -->
@@ -335,7 +377,7 @@
                         ${project.build.outputDirectory}/jetty/jetty-ssl.xml,
                         ${project.build.outputDirectory}/jetty/jetty-https.xml
                     </jettyXml>
-                    <stopKey>stop-tc-platform</stopKey>
+                    <stopKey>stop-tc-openapi</stopKey>
                     <stopPort>8081</stopPort>
                     <systemProperties>
                         <systemProperty>

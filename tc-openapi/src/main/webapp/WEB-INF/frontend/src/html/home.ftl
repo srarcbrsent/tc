@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>首页 - 这只是一个实验工程而已</title>
-    @@include('src/html/commons/header_lib.html')
+<#include "commons/header_lib.ftl">
     <link href="/tc-static/src/resources/styles/index.css"
           type="text/css"
           rel="stylesheet"/>
@@ -11,7 +11,7 @@
 <!-- + wrapper -->
 <div class="global-wrapper">
     <!-- + header -->
-    @@include('src/html/commons/header.html')
+<#include "commons/header.ftl">
     <!-- - header -->
 
     <!-- + body -->
@@ -104,13 +104,12 @@
     <!-- - body -->
 
     <!-- + footer -->
-    @@include('src/html/commons/footer.html')
+<#include "commons/footer.ftl">
     <!-- - footer -->
 </div>
 <!-- - wrapper -->
 
-@@include('src/html/commons/footer_lib.html')
-@@include('src/html/commons/permission.html')
+<#include "commons/footer_lib.ftl">
 <script src="/tc-static/src/resources/libs/thirdparty/jsencrypt.min.js"
         type="application/javascript"></script>
 <script src="/tc-static/src/resources/scripts/index.js"

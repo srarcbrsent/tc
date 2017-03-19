@@ -6,8 +6,9 @@ layui.use(['element', 'form'], function () {
     // bind layui component listener
     form.verify({
         username: function (value) {
-            if (!new RegExp("^1[0-9]{10}$").test(value)
-                && !new RegExp("^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$").test(value)) {
+            var isMobile = new RegExp("^1[0-9]{10}$").test(value);
+            var isEmail = new RegExp("^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$").test(value);
+            if (!isMobile && !isEmail) {
                 return '用户名为手机号或者邮箱';
             }
         },
@@ -116,7 +117,7 @@ layui.use(['element', 'form'], function () {
             // account not match password
             layer.msg('账号密码错误，请重新登陆！');
         } else {
-            _TcC.defaultAxiosExHandler()
+            _TcC.defaultAxiosExHandler();
         }
         // if not success signup, reset form.
         resetSignupForm();
