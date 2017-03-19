@@ -1095,11 +1095,17 @@
                         </excludes>
                     </configuration>
                 </plugin>
-                <!-- war plugin -->
+                <!-- maven war plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>2.6</version>
+                </plugin>
+                <!-- maven assembly plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.0.0</version>
                 </plugin>
                 <!-- maven resources plugin -->
                 <plugin>

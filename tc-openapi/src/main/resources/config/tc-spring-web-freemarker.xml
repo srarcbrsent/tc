@@ -24,21 +24,18 @@
         </property>
         <property name="freemarkerVariables">
             <map>
-                <entry key="base" value="${properties.web.freemarker.vars.base}"/>
-                <entry key="staticBase" value="${properties.web.freemarker.vars.static.base}"/>
-                <entry key="shiro" value="#{new com.ysu.zyw.tc.openapi.fk.shiro.tags.ShiroTags()}"/>
-                <entry key="static" value="#{new com.ysu.zyw.tc.openapi.fk.fe.TcStaticTags()}"/>
+                <entry key="shiro" value="#{new com.ysu.zyw.tc.components.freemarker.support.shirotags.ShiroTags()}"/>
             </map>
         </property>
     </bean>
 
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="order" value="0"/>
-        <property name="suffix" value=""/>
+        <property name="suffix" value="/WEB-INF/frontend/dist"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
-    <bean class="TcFreemarkerRender">
+    <bean class="com.ysu.zyw.tc.components.freemarker.support.TcFreemarkerRender">
         <property name="freeMarkerConfigurer" ref="freeMarkerConfigurer"/>
     </bean>
 

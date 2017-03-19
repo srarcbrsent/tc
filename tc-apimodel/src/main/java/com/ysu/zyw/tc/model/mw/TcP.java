@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.Serializable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -68,12 +69,12 @@ public class TcP<T> extends TcR<T> implements Serializable {
         return tcP;
     }
 
-    public static <T> TcP<T> code(int code, @Nonnull String description, @Nonnull Object body) {
+    public static <T> TcP<T> code(int code, @Nonnull String description, @Nullable Object extra) {
         checkNotNull(description);
         TcP<T> tcP = new TcP<>();
         tcP.setCode(code)
                 .setDescription(description)
-                .addExtra(body);
+                .addExtra(extra);
         return tcP;
     }
 

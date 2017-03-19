@@ -51,11 +51,17 @@ gulp.task('default', ['local-dev'], function () {
 
 gulp.task('local-dev', function (cb) {
     _environment.dev = true;
+    _environment.htmlBase = 'http://www.tc.com';
+    _environment.openApiBase = 'http://openapi.tc.com';
+    _environment.staticBase = 'http://static.tc.com';
     task(cb);
 });
 
 gulp.task('local-pdu', function (cb) {
     _environment.dev = false;
+    _environment.htmlBase = 'http://www.tc.com';
+    _environment.openApiBase = 'http://openapi.tc.com';
+    _environment.staticBase = 'http://static.tc.com';
     task(cb);
 });
 
@@ -132,7 +138,7 @@ gulp.task('stylesheet', function () {
 
 // 合并javascript-lib
 gulp.task('mg-script-libs', function (cb) {
-    del('src/resources/libs/_flib.min.js', cb);
+    del('src/resources/libs/_header_lib.min.js', cb);
     return gulp
         .src([
             'src/resources/libs/core/jquery-3.2.0.min.js',
@@ -145,7 +151,7 @@ gulp.task('mg-script-libs', function (cb) {
 
 // 合并stylesheet-lib
 gulp.task('mg-style-libs', function (cb) {
-    del('src/resources/libs/_tlib.min.css', cb);
+    del('src/resources/libs/_footer_lib.min.css', cb);
     return gulp
         .src([
             'src/resources/libs/core/normalize.min.css'
@@ -191,7 +197,7 @@ gulp.task('images', function () {
 // 编译html
 gulp.task('html', function () {
     return gulp
-        .src(['manifest/**/*.json', 'src/html/**/*.html'])
+        .src(['manifest/**/*.json', 'src/html/**/*.ftl'])
         // 包含文件
         .pipe(fileInclude({
             prefix: '@@',

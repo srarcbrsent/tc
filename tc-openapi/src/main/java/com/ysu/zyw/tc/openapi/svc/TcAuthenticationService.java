@@ -32,12 +32,12 @@ public class TcAuthenticationService {
     private static final String SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP =
             "signup_verification_code_expire_time_counter_group";
 
-    private static final long SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_IN_SEC = 60;
+    private static final long SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_IN_MS = 60000L;
 
     private static final String SIGNUP_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP =
             "signup_rsa_key_expire_time_counter_group";
 
-    private static final long SIGNUP_RSA_KEY_EXPIRE_TIME_IN_SEC = 15;
+    private static final long SIGNUP_RSA_KEY_EXPIRE_TIME_IN_MS = 15000L;
 
     private static final String SIGNUP_RSA_PUBLIC_KEY = "session_signup_rsa_public_key";
 
@@ -46,7 +46,7 @@ public class TcAuthenticationService {
     @Resource(name = TcBeanNameConsts.SS_REDIS_SERVICE)
     private TcCacheService tcCacheService;
 
-    public String generateVerificationCodeAndSet2Session() {
+    public String generateVerificationCodeAndSet2Cache() {
         String verificationCode = RandomStringUtils.randomNumeric(VERIFICATION_CODE_LENGTH);
         if (BooleanUtils.isTrue(tcConfig.isFixedVerificationCode())) {
             verificationCode = FIXED_VERIFICATION_CODE;
@@ -55,18 +55,21 @@ public class TcAuthenticationService {
         String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
         String verificationCacheKey =
                 tcCacheService.buildLogicKey(SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP, sessionId);
-        tcCacheService.set(verificationCacheKey, verificationCode, SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_IN_SEC);
+        tcCacheService.set(verificationCacheKey, verificationCode, SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_IN_MS);
 
         log.info("session id -> [{}] verification code -> [{}]", sessionId, verificationCode);
         return verificationCode;
     }
 
-    public boolean isVerificationCodeMatch(String verificationCode) {
+    public String getVerificationCodeInCache() {
         String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
         String verificationCacheKey =
                 tcCacheService.buildLogicKey(SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP, sessionId);
-        String verificationCodeInCache = tcCacheService.get(verificationCacheKey, new TypeReference<String>() {
+        return tcCacheService.get(verificationCacheKey, new TypeReference<String>() {
         });
+    }
+
+    public boolean isVerificationCodeMatch(String verificationCodeInCache, String verificationCode) {
         return !Objects.isNull(verificationCodeInCache)
                 && Objects.equals(verificationCode, verificationCodeInCache);
     }
@@ -82,8 +85,8 @@ public class TcAuthenticationService {
         String privateKeyCacheKey = tcCacheService.buildLogicKey(
                 SIGNUP_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, SIGNUP_RSA_PRIVATE_KEY, sessionId);
 
-        tcCacheService.set(publicKeyCacheKey, publicKey, SIGNUP_RSA_KEY_EXPIRE_TIME_IN_SEC);
-        tcCacheService.set(privateKeyCacheKey, privateKey, SIGNUP_RSA_KEY_EXPIRE_TIME_IN_SEC);
+        tcCacheService.set(publicKeyCacheKey, publicKey, SIGNUP_RSA_KEY_EXPIRE_TIME_IN_MS);
+        tcCacheService.set(privateKeyCacheKey, privateKey, SIGNUP_RSA_KEY_EXPIRE_TIME_IN_MS);
 
         log.info("session id -> [{}] successful generate rsa public & private key ...", sessionId);
         return publicKey;

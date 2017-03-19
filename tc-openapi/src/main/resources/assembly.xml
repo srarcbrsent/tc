@@ -1,0 +1,55 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0
+          http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+
+    <id>static-resources</id>
+
+    <formats>
+        <format>dir</format>
+        <format>tar.gz</format>
+        <format>zip</format>
+    </formats>
+
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <!-- images -->
+        <fileSet>
+            <directory>src/main/webapp/WEB-INF/frontend/dist/resources/images</directory>
+            <outputDirectory>images</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- libs -->
+        <fileSet>
+            <directory>src/main/webapp/WEB-INF/frontend/dist/resources/libs</directory>
+            <outputDirectory>libs</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- scripts -->
+        <fileSet>
+            <directory>src/main/webapp/WEB-INF/frontend/dist/resources/scripts</directory>
+            <outputDirectory>scripts</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!-- styles -->
+        <fileSet>
+            <directory>src/main/webapp/WEB-INF/frontend/dist/resources/styles</directory>
+            <outputDirectory>styles</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+    </fileSets>
+
+</assembly>

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -66,10 +67,10 @@ public class TcR<T> implements Serializable {
                 .setDescription(description);
     }
 
-    public static <T> TcR<T> code(int code, @Nonnull String description, @Nonnull Object extra) {
+    public static <T> TcR<T> code(int code, @Nonnull String description, @Nullable Object extra) {
         checkNotNull(description);
         TcR<T> tcR = code(code, description);
-        return tcR.addExtra(extra);
+        return Objects.nonNull(extra) ? tcR.addExtra(extra) : tcR;
     }
 
     public static <T> TcR<T> br() {
