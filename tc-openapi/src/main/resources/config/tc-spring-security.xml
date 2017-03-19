@@ -22,10 +22,15 @@
     </bean>
 
     <bean id="shiroSessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="globalSessionTimeout" value="${properties.security.shiro.session.global.timeout.milesec}"/>
+        <property name="globalSessionTimeout" value="${properties.security.shiro.session.global.timeout.millisecond}"/>
         <property name="deleteInvalidSessions" value="true"/>
-        <!-- no necessary to validate session, because codis not support values operation -->
-        <property name="sessionValidationSchedulerEnabled" value="false"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionValidationScheduler">
+            <bean class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+                <property name="sessionManager" ref="shiroSessionManager"/>
+                <property name="interval" value="${properties.secyrity.shiro.session.validation.interval.millisecond}"/>
+            </bean>
+        </property>
         <property name="sessionDAO">
             <bean class="com.ysu.zyw.tc.openapi.fk.shiro.TcSessionDao">
                 <property name="sessionIdGenerator">

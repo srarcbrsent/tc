@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.annotation.Nonnull;
@@ -31,12 +32,10 @@ public class TcEncryptUtils {
 
     private static final Provider PROVIDER = new BouncyCastleProvider();
 
-    private static final String SEED_KEY = "_TC_";
-
     @SneakyThrows
     public static KeyPair generateKeyPair() {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM, PROVIDER);
-        keyPairGenerator.initialize(KEY_SIZE, new SecureRandom(SEED_KEY.getBytes()));
+        keyPairGenerator.initialize(KEY_SIZE, new SecureRandom(RandomStringUtils.randomAscii(8).getBytes()));
         return keyPairGenerator.generateKeyPair();
     }
 
