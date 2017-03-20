@@ -5,8 +5,9 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <display-name>tc-platform</display-name>
-    <description>tc-platform</description>
+    <display-name>tc-openapi</display-name>
+
+    <description>tc-openapi</description>
 
     <!-- xsrf filter -->
     <filter>

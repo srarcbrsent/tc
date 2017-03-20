@@ -196,7 +196,7 @@
 
             <dependency>
                 <groupId>com.ysu.zyw</groupId>
-                <artifactId>tc-platform</artifactId>
+                <artifactId>tc-openapi</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
