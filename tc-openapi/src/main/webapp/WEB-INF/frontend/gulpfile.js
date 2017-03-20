@@ -215,12 +215,12 @@ gulp.task('html', function () {
         .pipe(replace(/\$\{openApiBase}/g, _environment.openApiBase))
         // 替换静态资源staticBase
         .pipe(replace(/\$\{staticBase}/g, _environment.staticBase))
-        // 压缩(开发不压缩)
-        .pipe(gulpif(!_environment.dev, htmlmin({
+        // 压缩(开发不压缩)(使用ftl此选项不可使用)
+        .pipe(gulpif(false, htmlmin({
             //清除HTML注释
-            removeComments: true,
+            removeComments: false,
             //压缩HTML
-            collapseWhitespace: true,
+            collapseWhitespace: false,
             //压缩页面JS
             minifyJS: true,
             //压缩页面CSS

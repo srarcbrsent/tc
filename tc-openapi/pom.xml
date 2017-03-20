@@ -234,7 +234,32 @@
                         <targetPath>${project.build.outputDirectory}/properties</targetPath>
                     </resource>
                 </resources>
+
+                <plugins>
+                    <!-- exec plugin -->
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <version>1.5.0</version>
+                        <executions>
+                            <execution>
+                                <id>gulp-build</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>
+                                        ${project.basedir}/src/main/webapp/WEB-INF/frontend/build-frontend.sh
+                                    </executable>
+                                    <arguments>local-pdu</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
             </build>
+
             <dependencies>
                 <!-- swagger ui only dev mode -->
                 <dependency>
@@ -260,7 +285,32 @@
                         <targetPath>${project.build.outputDirectory}/properties</targetPath>
                     </resource>
                 </resources>
+
+                <plugins>
+                    <!-- exec plugin -->
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <version>1.5.0</version>
+                        <executions>
+                            <execution>
+                                <id>gulp-build</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>
+                                        ${project.basedir}/src/main/webapp/WEB-INF/frontend/build-frontend.sh
+                                    </executable>
+                                    <arguments>local_dev</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
             </build>
+
             <dependencies>
                 <!-- swagger ui only docker mode -->
                 <dependency>
@@ -286,6 +336,30 @@
                         <targetPath>${project.build.outputDirectory}/properties</targetPath>
                     </resource>
                 </resources>
+
+                <plugins>
+                    <!-- exec plugin -->
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <version>1.5.0</version>
+                        <executions>
+                            <execution>
+                                <id>gulp-build</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>
+                                        ${project.basedir}/src/main/webapp/WEB-INF/frontend/build-frontend.sh
+                                    </executable>
+                                    <arguments>remote-pdu</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
     </profiles>
@@ -294,27 +368,6 @@
         <finalName>ROOT</finalName>
 
         <plugins>
-            <!-- exec plugin -->
-            <plugin>
-                <artifactId>exec-maven-plugin</artifactId>
-                <groupId>org.codehaus.mojo</groupId>
-                <version>1.5.0</version>
-                <executions>
-                    <execution>
-                        <id>gulp-build</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>
-                                ${project.basedir}/src/main/webapp/WEB-INF/frontend/build-frontend.sh
-                            </executable>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- war plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
