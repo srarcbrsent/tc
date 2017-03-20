@@ -244,7 +244,7 @@ gulp.task('special', function () {
 // ----- 服务器
 gulp.task('start', ['local'], function () {
     connect.server({
-        name: 'tc-static',
+        name: 'tc-frontend',
         root: ['dist/html', 'dist/resources'],
         port: _environment.port,
         livereload: true

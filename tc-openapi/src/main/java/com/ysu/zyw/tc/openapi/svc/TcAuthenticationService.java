@@ -99,9 +99,8 @@ public class TcAuthenticationService {
         String privateKeyCacheKey = tcCacheService.buildLogicKey(
                 SIGNUP_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, SIGNUP_RSA_PRIVATE_KEY, sessionId);
 
-        String privateKey =
-                tcCacheService.get(privateKeyCacheKey, new TypeReference<String>() {
-                });
+        String privateKey = tcCacheService.get(privateKeyCacheKey, new TypeReference<String>() {
+        });
         if (Objects.isNull(privateKey)) {
             return null;
         }
