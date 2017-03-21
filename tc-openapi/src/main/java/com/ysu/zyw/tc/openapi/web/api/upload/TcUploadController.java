@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.openapi.web.upload;
+package com.ysu.zyw.tc.openapi.web.api.upload;
 
 import com.ysu.zyw.tc.model.mw.TcR;
 import io.swagger.annotations.Api;

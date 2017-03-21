@@ -202,6 +202,12 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
+        <!-- template -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
         <!-- commons utils -->
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -303,7 +309,7 @@
                                     <executable>
                                         ${project.basedir}/src/main/webapp/WEB-INF/frontend/build-frontend.sh
                                     </executable>
-                                    <arguments>local_dev</arguments>
+                                    <arguments>local-dev</arguments>
                                 </configuration>
                             </execution>
                         </executions>

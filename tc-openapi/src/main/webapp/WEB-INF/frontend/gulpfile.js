@@ -84,6 +84,7 @@ var task = function (cb) {
         'libs-other',
         'images',
         'html',
+        'error-pages',
         'special',
         cb);
 };
@@ -226,7 +227,42 @@ gulp.task('html', function () {
             //压缩页面CSS
             minifyCSS: true
         })))
-        .pipe(gulp.dest('dist/html'));
+        .pipe(gulp.dest('dist/ftl'));
+});
+
+// 编译error-pages
+gulp.task('error-pages', function () {
+    return gulp
+        .src(['manifest/**/*.json', 'src/html/**/*.html'])
+        // 包含文件
+        .pipe(fileInclude({
+            prefix: '@@',
+            basepath: '@root'
+        }))
+        // 替换静态文件引用
+        .pipe(revCollector({
+            replaceReved: true
+        }))
+        // 替换静态资源前缀路径
+        .pipe(replace(/\/tc-static\/src\/resources/g, _environment.staticBase))
+        // 替换根路径
+        .pipe(replace(/\$\{htmlBase}/g, _environment.htmlBase))
+        // 替换后端接口openApiBase
+        .pipe(replace(/\$\{openApiBase}/g, _environment.openApiBase))
+        // 替换静态资源staticBase
+        .pipe(replace(/\$\{staticBase}/g, _environment.staticBase))
+        // 压缩(开发不压缩)(使用ftl此选项不可使用)
+        .pipe(gulpif(false, htmlmin({
+            //清除HTML注释
+            removeComments: false,
+            //压缩HTML
+            collapseWhitespace: false,
+            //压缩页面JS
+            minifyJS: true,
+            //压缩页面CSS
+            minifyCSS: true
+        })))
+        .pipe(gulp.dest('dist/resources/html'));
 });
 
 // 编译特殊文件

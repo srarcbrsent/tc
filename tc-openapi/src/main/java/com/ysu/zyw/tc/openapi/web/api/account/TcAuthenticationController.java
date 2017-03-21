@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.openapi.web.account;
+package com.ysu.zyw.tc.openapi.web.api.account;
 
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
