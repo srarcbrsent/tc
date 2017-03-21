@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-(cd `dirname $0`; gulp)
+(cd `dirname $0`; gulp $1)

@@ -33,7 +33,7 @@ public class TcEncryptUtils {
     private static final Provider PROVIDER = new BouncyCastleProvider();
 
     @SneakyThrows
-    public static KeyPair generateKeyPair() {
+    public static KeyPair generateRSAKeyPair() {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM, PROVIDER);
         keyPairGenerator.initialize(KEY_SIZE, new SecureRandom(RandomStringUtils.randomAscii(8).getBytes()));
         return keyPairGenerator.generateKeyPair();
@@ -66,15 +66,15 @@ public class TcEncryptUtils {
     }
 
     @SneakyThrows
-    public static String encrypt(@Nonnull String plain, @Nonnull String publicKey) {
+    public static String encryptRSA(@Nonnull String plain, @Nonnull String publicKey) {
         checkNotNull(plain);
         checkNotNull(publicKey);
         checkArgument(plain.length() <= MAX_DATA_LENGTH, "too much data for RSA block");
-        return encrypt(plain, getPublicRSAKey(publicKey));
+        return encryptRSA(plain, getPublicRSAKey(publicKey));
     }
 
     @SneakyThrows
-    public static String encrypt(@Nonnull String plain, @Nonnull PublicKey publicKey) {
+    public static String encryptRSA(@Nonnull String plain, @Nonnull PublicKey publicKey) {
         checkNotNull(plain);
         checkNotNull(publicKey);
         checkArgument(plain.length() <= MAX_DATA_LENGTH, "too much data for RSA block");
@@ -84,14 +84,14 @@ public class TcEncryptUtils {
     }
 
     @SneakyThrows
-    public static String decrypt(@Nonnull String encrypted, @Nonnull String privateKey) {
+    public static String decryptRSA(@Nonnull String encrypted, @Nonnull String privateKey) {
         checkNotNull(encrypted);
         checkNotNull(privateKey);
-        return decrypt(encrypted, getPrivateRSAKey(privateKey));
+        return decryptRSA(encrypted, getPrivateRSAKey(privateKey));
     }
 
     @SneakyThrows
-    public static String decrypt(@Nonnull String encrypted, @Nonnull PrivateKey privateKey) {
+    public static String decryptRSA(@Nonnull String encrypted, @Nonnull PrivateKey privateKey) {
         checkNotNull(encrypted);
         checkNotNull(privateKey);
         Cipher cipher = Cipher.getInstance(RSA_ALGORITHM_WITH_PADDING, PROVIDER);
@@ -100,15 +100,15 @@ public class TcEncryptUtils {
     }
 
     @SneakyThrows
-    public static String sign(@Nonnull String plain, @Nonnull String privateKey) {
+    public static String signRSA(@Nonnull String plain, @Nonnull String privateKey) {
         checkNotNull(plain);
         checkNotNull(privateKey);
         checkArgument(plain.length() <= MAX_DATA_LENGTH, "too much data for RSA block");
-        return sign(plain, getPrivateRSAKey(privateKey));
+        return signRSA(plain, getPrivateRSAKey(privateKey));
     }
 
     @SneakyThrows
-    public static String sign(@Nonnull String plain, @Nonnull PrivateKey privateKey) {
+    public static String signRSA(@Nonnull String plain, @Nonnull PrivateKey privateKey) {
         checkNotNull(plain);
         checkNotNull(privateKey);
         checkArgument(plain.length() <= MAX_DATA_LENGTH, "too much data for RSA block");
@@ -118,14 +118,14 @@ public class TcEncryptUtils {
     }
 
     @SneakyThrows
-    public static String verify(@Nonnull String encrypted, @Nonnull String publicKey) {
+    public static String verifyRSA(@Nonnull String encrypted, @Nonnull String publicKey) {
         checkNotNull(encrypted);
         checkNotNull(publicKey);
-        return verify(encrypted, getPublicRSAKey(publicKey));
+        return verifyRSA(encrypted, getPublicRSAKey(publicKey));
     }
 
     @SneakyThrows
-    public static String verify(@Nonnull String encrypted, @Nonnull PublicKey publicKey) {
+    public static String verifyRSA(@Nonnull String encrypted, @Nonnull PublicKey publicKey) {
         checkNotNull(encrypted);
         checkNotNull(publicKey);
         Cipher cipher = Cipher.getInstance(RSA_ALGORITHM_WITH_PADDING, PROVIDER);

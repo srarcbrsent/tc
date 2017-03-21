@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false">
 
-    <contextName>tc-platform</contextName>
+    <contextName>tc-openapi</contextName>
 
     <property name="properties.logback.appender.log.store.base" value="/Users/zhangyaowu/env/logs/tc"/>
 
-    <property name="properties.logback.appender.log.project.base" value="/tc-platform"/>
+    <property name="properties.logback.appender.log.project.base" value="/tc-openapi"/>
 
     <property name="logback.appender.layout.pattern"
               value="[%level] [%date] [%cn] [%t] [%logger{10}:%line] - %msg%n"/>

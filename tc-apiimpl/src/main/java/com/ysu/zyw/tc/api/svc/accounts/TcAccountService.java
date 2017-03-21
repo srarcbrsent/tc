@@ -57,10 +57,10 @@ public class TcAccountService {
         tcAccountExample.setStartLine(0);
         tcAccountExample.setPageSize(1);
         if (canEmailLogin) {
-            tcAccountExample.or().andEmailEqualTo(username);
+            tcAccountExample.or().andEmailEqualTo(username).andDelectedEqualTo(false);
         }
         if (canMobileLogin) {
-            tcAccountExample.or().andMobileEqualTo(username);
+            tcAccountExample.or().andMobileEqualTo(username).andDelectedEqualTo(false);
         }
         List<TcAccount> tcAccounts = tcAccountMapper.selectByExample(tcAccountExample);
 
@@ -70,8 +70,6 @@ public class TcAccountService {
         }
 
         TcAccount tcAccount = tcAccounts.get(0);
-
-        // the password check is pass to caller
 
         // 当前时间在解锁之前之前
         if (Objects.nonNull(tcAccount.getLockReleaseTime())

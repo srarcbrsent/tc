@@ -5,7 +5,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value=""/>
+        <property name="templateLoaderPath" value="/WEB-INF/frontend/dist/ftl"/>
         <property name="defaultEncoding" value="#{T(java.nio.charset.StandardCharsets).UTF_8.name()}"/>
         <property name="freemarkerSettings">
             <props>
@@ -31,7 +31,7 @@
 
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="order" value="0"/>
-        <property name="suffix" value="/WEB-INF/frontend/dist"/>
+        <property name="suffix" value=".ftl"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 

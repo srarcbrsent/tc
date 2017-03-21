@@ -5,8 +5,13 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <display-name>tc-platform</display-name>
-    <description>tc-platform</description>
+    <display-name>tc-openapi</display-name>
+
+    <description>tc-openapi</description>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 
     <!-- xsrf filter -->
     <filter>
@@ -33,6 +38,11 @@
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
         <url-pattern>*.json</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
     </filter-mapping>
 
     <!-- spring config -->
@@ -75,20 +85,9 @@
         <url-pattern>*.json</url-pattern>
     </servlet-mapping>
 
-    <!-- errs page -->
-    <error-page>
-        <error-code>500</error-code>
-        <location>/500.json</location>
-    </error-page>
-
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404.json</location>
-    </error-page>
-
-    <error-page>
-        <exception-type>java.lang.Throwable</exception-type>
-        <location>/500.json</location>
-    </error-page>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
 
 </web-app>

@@ -75,7 +75,7 @@ public class TcAuthenticationService {
     }
 
     public String generateRSAKeyAndSet2Session() {
-        KeyPair keyPair = TcEncryptUtils.generateKeyPair();
+        KeyPair keyPair = TcEncryptUtils.generateRSAKeyPair();
         String publicKey = TcEncryptUtils.getPublicRSAKey(keyPair);
         String privateKey = TcEncryptUtils.getPrivateRSAKey(keyPair);
 
@@ -88,25 +88,24 @@ public class TcAuthenticationService {
         tcCacheService.set(publicKeyCacheKey, publicKey, SIGNUP_RSA_KEY_EXPIRE_TIME_IN_MS);
         tcCacheService.set(privateKeyCacheKey, privateKey, SIGNUP_RSA_KEY_EXPIRE_TIME_IN_MS);
 
-        log.info("session id -> [{}] successful generate rsa public & private key ...", sessionId);
+        log.info("session id -> [{}] successfully generate rsa public & private key ...", sessionId);
         return publicKey;
     }
 
-    public String decryptRSAEncryptedPassword(@Nonnull String rsaEncryptedPassword) {
-        checkNotNull(rsaEncryptedPassword);
+    public String decryptRSAEncryptedPassword(@Nonnull String encryptedPassword) {
+        checkNotNull(encryptedPassword);
 
         String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
         String privateKeyCacheKey = tcCacheService.buildLogicKey(
                 SIGNUP_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, SIGNUP_RSA_PRIVATE_KEY, sessionId);
 
-        String privateKey =
-                tcCacheService.get(privateKeyCacheKey, new TypeReference<String>() {
-                });
+        String privateKey = tcCacheService.get(privateKeyCacheKey, new TypeReference<String>() {
+        });
         if (Objects.isNull(privateKey)) {
             return null;
         }
 
-        return TcEncryptUtils.decrypt(rsaEncryptedPassword, privateKey);
+        return TcEncryptUtils.decryptRSA(encryptedPassword, privateKey);
     }
 
 }

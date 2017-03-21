@@ -12,7 +12,7 @@ public class TcEncryptUtilsTest {
     public void testRSA() {
         String plain = RandomStringUtils.randomAscii(40);
 
-        KeyPair keyPair = TcEncryptUtils.generateKeyPair();
+        KeyPair keyPair = TcEncryptUtils.generateRSAKeyPair();
         String publicRSAKey = TcEncryptUtils.getPublicRSAKey(keyPair);
         String privateRSAKey = TcEncryptUtils.getPrivateRSAKey(keyPair);
 
@@ -21,16 +21,16 @@ public class TcEncryptUtilsTest {
         System.out.println();
 
         // encrypt
-        String encrypt = TcEncryptUtils.encrypt(plain, publicRSAKey);
+        String encrypt = TcEncryptUtils.encryptRSA(plain, publicRSAKey);
         System.out.println(encrypt);
-        String decrypt = TcEncryptUtils.decrypt(encrypt, privateRSAKey);
+        String decrypt = TcEncryptUtils.decryptRSA(encrypt, privateRSAKey);
         System.out.println(decrypt);
         Assert.assertEquals(plain, decrypt);
 
         // sign
-        String sign = TcEncryptUtils.sign(plain, privateRSAKey);
+        String sign = TcEncryptUtils.signRSA(plain, privateRSAKey);
         System.out.println(sign);
-        String verify = TcEncryptUtils.verify(sign, publicRSAKey);
+        String verify = TcEncryptUtils.verifyRSA(sign, publicRSAKey);
         System.out.println(verify);
         Assert.assertEquals(plain, verify);
     }

@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.openapi.web.websocket;
+package com.ysu.zyw.tc.openapi.web.api.websocket;
 
 import com.ysu.zyw.tc.model.mw.TcR;
 import org.springframework.messaging.handler.annotation.MessageMapping;

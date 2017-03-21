@@ -121,7 +121,7 @@
         <module name="EmptyForIteratorPad"/>
         <!-- 左花括号 -->
         <module name="LeftCurly">
-            <!-- 当前花括号最多容纳行数 -->
+            <!-- 当前行最多容纳列数 -->
             <property name="maxLineLength" value="120"/>
         </module>
         <!-- 需要花括号(单语句) -->

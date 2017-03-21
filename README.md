@@ -8,6 +8,6 @@ a hello world project 👻
 
 not work, under construction ...
 
-# ScreenShots
+<!-- # ScreenShots -->
 
-![](tc-config/screenshots/screenshot_01.png)
+<!-- ![](tc-config/screenshots/screenshot_01.png) -->

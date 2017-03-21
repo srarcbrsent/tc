@@ -50,6 +50,15 @@
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>
+        <!-- htmls -->
+        <fileSet>
+            <directory>src/main/webapp/WEB-INF/frontend/dist/resources/html</directory>
+            <outputDirectory>html</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
     </fileSets>
 
 </assembly>
