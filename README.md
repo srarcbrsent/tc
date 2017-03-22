@@ -151,7 +151,7 @@ mvn -f incubator-rocketmq/pom.xml clean install
     
     1. 本地安装并启动 zookeeper, redis, nginx, metaq 服务，其中 nginx 参考 tc-config 工程中的 nginx/nginx.conf 配置文件(注意修改静态资源路径)
     2. 调整 tc-openapi/src/main/resources/properties/dev & tc-apiimpl/src/main/resources/properties/dev 下的配置文件指向(dev文件夹代表使用tc_dev profile启动)
-    3. 创建MySQL数据库，使用tc-config中rds的数据
+    3. 创建MySQL数据库，执行tc-config/rds中的脚本初始化表
 
 - 启动
 
