@@ -7,8 +7,6 @@ os:
 jdk:
   - oraclejdk8
 
-# goto build dubbox
-# goto build metaq
 before_install:
   - git clone https://github.com/dangdangdotcom/dubbox.git
   - mvn -f dubbox/pom.xml clean install -Dmaven.test.skip
