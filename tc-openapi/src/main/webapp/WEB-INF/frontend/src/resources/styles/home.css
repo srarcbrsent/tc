@@ -1,0 +1,34 @@
+div.body-block {
+    min-height: 650px;
+    padding: 10px 0 10px 0;
+}
+
+div.body-block div.home-body-left {
+    width: 210px;
+    float: left;
+}
+
+div.body-block div.home-body-right {
+    width: 910px;
+    float: right;
+}
+
+div.home-body-right div.home-content-title {
+    height: 45px;
+    width: 910px;
+    background-color: #2B2E37;
+    color: #FFFFFF;
+    line-height: 45px;
+    font-size: 14px;
+}
+
+div.home-body-right div.home-content-body {
+    border-left: 2px solid #2B2E37;
+    border-bottom: 2px solid #2B2E37;
+    border-right: 2px solid #2B2E37;
+    width: 906px;
+}
+
+div.home-content-title p {
+    margin-left: 20px;
+}

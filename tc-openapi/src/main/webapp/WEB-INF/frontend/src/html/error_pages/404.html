@@ -8,35 +8,23 @@
           type="image/x-icon"
           href="/tc-static/src/resources/images/favicon.ico"/>
     <title>404</title>
-    <script src="/tc-static/src/resources/libs/core/jquery-3.2.0.min.js"
-            type="application/javascript"></script>
     <link href="/tc-static/src/resources/libs/core/normalize.min.css"
           type="text/css"
           rel="stylesheet"/>
+    <link href="/tc-static/src/resources/libs/layui/css/layui.css"
+          type="text/css"
+          rel="stylesheet"/>
+    <link href="/tc-static/src/resources/styles/global/header_menu_footer.css"
+          type="text/css"
+          rel="stylesheet"/>
     <style type="text/css">
-        #header_div {
-            width: 100%;
-            min-width: 1140px;
-            background-color: #393D49;
-            color: #c2c2c2;
-            padding: 10px 0 10px 0;
-        }
-
-        #header_div > div {
+        div.body-block {
             width: 1000px;
             margin: 0 auto;
+            padding: 220px 0 0 0;
         }
 
-        #header_div .layui-field-title {
-            margin: 5px 0 5px 0;
-        }
-
-        #main-container {
-            width: 1000px;
-            margin: 140px auto 0 auto;
-        }
-
-        #main-container a {
+        div.body-block a {
             background-color: rgba(0, 0, 0, 0);
             color: rgb(14, 144, 210);
             font-size: 14px;
@@ -46,12 +34,19 @@
     </style>
 </head>
 <body>
-<div id="header_div">
-    <div>
-        <h3>这只是一个测试用的工程而已</h3>
+<!-- + header -->
+<div class="header-bar">
+    <div class="header-nav">
+        <a class="only-exp-project" href="http://www.tc.com">
+            <i class="layui-icon" style="font-size: 30px; color: #1E9FFF;">&#xe62c;</i>&nbsp;&nbsp;这只是一个实验工程而已
+        </a>
+        <div></div>
     </div>
 </div>
-<div id="main-container">
+<!-- - header -->
+
+<!-- + body -->
+<div class="body-block">
     <fieldset>
         <legend>&nbsp;&nbsp;抱歉，您请求的资源不存在，请更换重试。&nbsp;&nbsp;</legend>
         <div>
@@ -61,5 +56,8 @@
         </div>
     </fieldset>
 </div>
+<!-- - body -->
+<script src="/tc-static/src/resources/libs/core/jquery-3.2.0.min.js"
+        type="application/javascript"></script>
 </body>
 </html>
