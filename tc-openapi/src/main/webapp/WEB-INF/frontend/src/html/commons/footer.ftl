@@ -1,3 +1,4 @@
+<#-- + footer -->
 <div class="footer-bar">
     <div class="footer-nav">
         <p>
@@ -11,3 +12,4 @@
         </p>
     </div>
 </div>
+<#-- - footer -->

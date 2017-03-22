@@ -19,7 +19,15 @@ div.header-bar div.header-nav a.only-exp-project {
 /** header end */
 
 /** menu start */
+ul.left-menu li.layui-nav-item:first-child {
+    text-align: center;
+}
 
+ul.left-menu img.left-menu-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 17px;
+}
 /** menu end */
 
 /** footer start */

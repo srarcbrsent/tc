@@ -126,6 +126,11 @@ public class TcAuthenticationController {
         // TcP<List<ToMenu>> menus = tcAuthenticationApi.findMenus(accountId);
         // TODO: 2016/11/26
 
+
+        // mq TODO
+
+        log.info("session id -> [{}] signup success", SecurityUtils.getSubject().getSession().getId());
+
         // successful
         return ResponseEntity.ok(TcR.code(0, "登陆成功！"));
     }
@@ -143,9 +148,19 @@ public class TcAuthenticationController {
             value = "登出",
             notes = "登出")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/signout", method = RequestMethod.GET)
-    public ResponseEntity<TcR<Void>> signout() {
+    @RequestMapping(value = "/signout", method = RequestMethod.POST)
+    public ResponseEntity<TcR<Void>> signout(HttpServletResponse response) {
+        // signout
         SecurityUtils.getSubject().logout();
+
+        // remove csrf cookie
+        Cookie cookie = new Cookie(TcXsrfTokenFilter.XSRF_TOKEN_COOKIE_NAME, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        // mq TODO
+
+        log.info("session id -> [{}] signout success", SecurityUtils.getSubject().getSession().getId());
         return ResponseEntity.ok(TcR.ok());
     }
 

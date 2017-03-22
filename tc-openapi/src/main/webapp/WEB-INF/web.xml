@@ -37,12 +37,7 @@
 
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
-        <url-pattern>*.json</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>shiroFilter</filter-name>
-        <url-pattern>*.html</url-pattern>
+        <url-pattern>*</url-pattern>
     </filter-mapping>
 
     <!-- spring config -->
@@ -82,12 +77,7 @@
 
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.json</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.html</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -41,7 +41,7 @@ var _environment = {
     dev: false,
     htmlBase: 'http://www.tc.com',
     staticBase: 'http://static.tc.com',
-    openApiBase: 'http://openapi.tc.com',
+    openApiBase: 'http://www.tc.com',
     port: 80
 };
 
@@ -52,7 +52,7 @@ gulp.task('default', ['local-dev'], function () {
 gulp.task('local-dev', function (cb) {
     _environment.dev = true;
     _environment.htmlBase = 'http://www.tc.com';
-    _environment.openApiBase = 'http://openapi.tc.com';
+    _environment.openApiBase = 'http://www.tc.com';
     _environment.staticBase = 'http://static.tc.com';
     task(cb);
 });
@@ -60,7 +60,7 @@ gulp.task('local-dev', function (cb) {
 gulp.task('local-pdu', function (cb) {
     _environment.dev = false;
     _environment.htmlBase = 'http://www.tc.com';
-    _environment.openApiBase = 'http://openapi.tc.com';
+    _environment.openApiBase = 'http://www.tc.com';
     _environment.staticBase = 'http://static.tc.com';
     task(cb);
 });
@@ -68,7 +68,7 @@ gulp.task('local-pdu', function (cb) {
 gulp.task('remote-pdu', function (cb) {
     _environment.dev = false;
     _environment.htmlBase = 'http://www.tc.com';
-    _environment.openApiBase = 'http://openapi.tc.com';
+    _environment.openApiBase = 'http://www.tc.com';
     _environment.staticBase = 'http://static.tc.com';
     task(cb);
 });

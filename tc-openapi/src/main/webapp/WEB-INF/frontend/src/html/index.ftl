@@ -8,23 +8,23 @@
           rel="stylesheet"/>
 </head>
 <body>
-<!-- + wrapper -->
+<#-- + wrapper -->
 <div class="global-wrapper">
-    <!-- + header -->
+    <#-- + header -->
 <#include "commons/header.ftl">
-    <!-- - header -->
+    <#-- - header -->
 
-    <!-- + body -->
+    <#-- + body -->
     <div class="layui-main body-block">
         <div class="layui-tab layui-tab-brief">
             <div class="layui-tab-content">
-                <!-- + body left -->
+                <#-- + body left -->
                 <div class="index-body-left">
                     <img src="/tc-static/src/resources/images/miku_trapeze.png"/>
                 </div>
-                <!-- - body left -->
+                <#-- - body left -->
 
-                <!-- + body right -->
+                <#-- + body right -->
                 <div class="index-body-right">
                     <fieldset class="layui-elem-field">
                         <legend>登陆</legend>
@@ -97,17 +97,17 @@
                         </div>
                     </fieldset>
                 </div>
-                <!-- - body right -->
+                <#-- - body right -->
             </div>
         </div>
     </div>
-    <!-- - body -->
+    <#-- - body -->
 
-    <!-- + footer -->
+    <#-- + footer -->
 <#include "commons/footer.ftl">
-    <!-- - footer -->
+    <#-- - footer -->
 </div>
-<!-- - wrapper -->
+<#-- - wrapper -->
 
 <#include "commons/footer_lib.ftl">
 <script src="/tc-static/src/resources/libs/thirdparty/jsencrypt.min.js"
