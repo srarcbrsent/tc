@@ -1,5 +1,3 @@
-[TOC]
-
 ## tc
 
 <!-- [![Build Status](https://travis-ci.org/srarcbrsent/tc.svg?branch=master)](https://travis-ci.org/srarcbrsent/tc) -->
@@ -50,9 +48,12 @@ project-tc 是一个个人学习项目，目标是学习各种框架，中间件
 - zookeeper: 分布式协调服务
 - redis(codis): 缓存服务
 - rocketmq(metaq): 消息队列服务
+- elasticsearch: 搜索引擎服务
 - dubbo-admin(optional): dubbo控制台
 - dubbo-monitor(optional): dubbo监控
 - nginx: 请求分发地址映射服务
+- mysql: 数据库
+- mongodb: 文档数据库
 
 **其他类**
 
@@ -100,6 +101,8 @@ tc
 ```
 
 ### 模块依赖
+
+    TODO
 
 ### 如何构建
 
