@@ -42,7 +42,7 @@
 
     <bean id="tcAccountsApi" class="com.ysu.zyw.tc.api.impl.accounts.TcAccountApiImpl"/>
 
-    <bean id="tcAuthenticationApi" class="com.ysu.zyw.tc.api.impl.accounts.auth.TcAuthenticationApiImpl"/>
+    <bean id="tcAuthenticationApi" class="com.ysu.zyw.tc.api.impl.accounts.auths.TcAuthenticationApiImpl"/>
 
     <bean id="tcRegionApi" class="com.ysu.zyw.tc.api.impl.publics.TcRegionApiImpl"/>
 

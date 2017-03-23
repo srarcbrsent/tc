@@ -7,17 +7,13 @@ os:
 jdk:
   - oraclejdk8
 
-# goto build dubbox
-# goto build metaq
 before_install:
-  - git clone https://github.com/dangdangdotcom/dubbox.git
-  - cd dubbox
-  - mvn clean install -Dmaven.test.skip
-  - cd ..
-  - git clone https://github.com/killme2008/Metamorphosis.git
-  - cd Metamorphosis
-  - mvn clean install -Dmaven.test.skip
-  - cd ..
+  - git clone -b master https://github.com/dangdangdotcom/dubbox.git
+  - mvn -f dubbox/pom.xml clean install -Dmaven.test.skip
+  - git clone -b master https://github.com/killme2008/Metamorphosis.git
+  - mvn -f Metamorphosis/pom.xml clean install -Dmaven.test.skip
+  - git clone -b master https://github.com/apache/incubator-rocketmq.git
+  - mvn -f incubator-rocketmq/pom.xml clean install -Dmaven.test.skip
 
 install:
   - mvn clean install

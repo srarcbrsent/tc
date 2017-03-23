@@ -23,6 +23,7 @@
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>
+
         <!-- libs -->
         <fileSet>
             <directory>src/main/webapp/WEB-INF/frontend/dist/resources/libs</directory>
@@ -32,6 +33,7 @@
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>
+
         <!-- scripts -->
         <fileSet>
             <directory>src/main/webapp/WEB-INF/frontend/dist/resources/scripts</directory>
@@ -41,6 +43,7 @@
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>
+
         <!-- styles -->
         <fileSet>
             <directory>src/main/webapp/WEB-INF/frontend/dist/resources/styles</directory>
@@ -50,6 +53,7 @@
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>
+
         <!-- htmls -->
         <fileSet>
             <directory>src/main/webapp/WEB-INF/frontend/dist/resources/html</directory>

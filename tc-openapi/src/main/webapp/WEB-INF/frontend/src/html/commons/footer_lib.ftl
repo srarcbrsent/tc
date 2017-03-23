@@ -1,6 +1,6 @@
 <#-- + footer_lib -->
 <#-- @build see glupfile.js / mg-script-libs -->
-<script src="/tc-static/src/resources/libs/_header_lib.min.js"
+<script src="/tc-static/src/resources/libs/_footer_lib.min.js"
         type="text/javascript"></script>
 <#-- @build -->
 <script src="/tc-static/src/resources/libs/layui/layui.js"
@@ -11,6 +11,11 @@
         type="text/javascript"></script>
 
 <script type="text/javascript">
+    // default load layer
+    layui.use(['layer'], function () {
+
+    });
+
     // system infrastructure
     var _TcC = {
 
@@ -26,13 +31,16 @@
                 layer.alert('系统繁忙，请稍后再试！');
                 return;
             }
-            if (tcR.code == 8888) {
+
+            if (tcR.code === 7777) {
+                layer.msg('未经授权，请关闭浏览器重新登陆再试！');
+            } else if (tcR.code === 8888) {
                 if (_.isFunction(badRequestCallback)) {
                     badRequestCallback(tcR.code, tcR.message, tcR.extra);
                 } else {
                     layer.msg('系统繁忙，请刷新页面再试！');
                 }
-            } else if (tcR.code == 9999) {
+            } else if (tcR.code === 9999) {
                 if (_.isFunction(exCallback)) {
                     exCallback(tcR.code, tcR.message, tcR.extra);
                 } else {
@@ -60,11 +68,18 @@
         // 30s
         timeout: 30000,
 
+        // pass cookie
         withCredentials: true,
 
+        // xsrf token
         xsrfCookieName: 'XSRF-TOKEN',
 
         xsrfHeaderName: 'X-XSRF-TOKEN',
+
+        // custom header
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
 
         // 50k
         maxContentLength: 51200

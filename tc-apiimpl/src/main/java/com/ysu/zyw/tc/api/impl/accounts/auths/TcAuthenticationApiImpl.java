@@ -1,9 +1,9 @@
-package com.ysu.zyw.tc.api.impl.accounts.auth;
+package com.ysu.zyw.tc.api.impl.accounts.auths;
 
 import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
 import com.ysu.zyw.tc.api.svc.accounts.TcAccountService;
 import com.ysu.zyw.tc.api.svc.accounts.auth.TcAuthService;
-import com.ysu.zyw.tc.model.api.i.accounts.TiSignupTerms;
+import com.ysu.zyw.tc.model.api.i.accounts.TiLoginTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
@@ -28,12 +28,12 @@ public class TcAuthenticationApiImpl implements TcAuthenticationApi {
 
     @SneakyThrows
     @Override
-    public TcR<ToAccount> signup(TiSignupTerms tiSignupTerms) {
+    public TcR<ToAccount> login(TiLoginTerms tiLoginTerms) {
 
-        String succLoginAccountId = tcAccountService.signup(
-                tiSignupTerms.getUsername(),
-                BooleanUtils.isTrue(tiSignupTerms.getCanEmailLogin()),
-                BooleanUtils.isTrue(tiSignupTerms.getCanEmailLogin())
+        String succLoginAccountId = tcAccountService.login(
+                tiLoginTerms.getUsername(),
+                BooleanUtils.isTrue(tiLoginTerms.getCanEmailLogin()),
+                BooleanUtils.isTrue(tiLoginTerms.getCanEmailLogin())
         );
 
         checkNotNull(succLoginAccountId);

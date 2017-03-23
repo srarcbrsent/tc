@@ -1,12 +1,7 @@
-package com.ysu.zyw.tc.openapi.web.api.account;
+package com.ysu.zyw.tc.openapi.web.api.account.auths;
 
-import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
 import com.ysu.zyw.tc.components.servlet.support.TcXsrfTokenFilter;
-import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
-import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
-import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
-import com.ysu.zyw.tc.model.mw.TcP;
 import com.ysu.zyw.tc.model.mw.TcR;
 import com.ysu.zyw.tc.openapi.fk.config.TcConfig;
 import com.ysu.zyw.tc.openapi.svc.TcAuthenticationService;
@@ -27,11 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Slf4j
 @Api(value = "认证控制器")
@@ -83,8 +75,8 @@ public class TcAuthenticationController {
             value = "登陆",
             notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<TcR<Integer>> signup(
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<TcR<Integer>> login(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String rsaEncryptedPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,
@@ -101,7 +93,7 @@ public class TcAuthenticationController {
             return ResponseEntity.ok(TcR.code(2, "验证码输入错误！"));
         }
 
-        // signup
+        // login
         String password = tcAuthenticationService.decryptRSAEncryptedPassword(rsaEncryptedPassword);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(rememberMe);
@@ -115,11 +107,11 @@ public class TcAuthenticationController {
             return ResponseEntity.ok(TcR.code(5, "账号密码错误！"));
         }
 
-        // set cookie
-        response.addCookie(new Cookie(TcXsrfTokenFilter.XSRF_TOKEN_COOKIE_NAME, UUID.randomUUID().toString()));
+        // set xsrf cookie
+        TcXsrfTokenFilter.addXsrfCookie(response);
 
         // set session
-        tcSessionService.initSessionAfterSignup();
+        tcSessionService.initSessionAfterLogin();
 
         // find menus
         // String accountId = tcSessionService.getAccountId();
@@ -129,7 +121,7 @@ public class TcAuthenticationController {
 
         // mq TODO
 
-        log.info("session id -> [{}] signup success", SecurityUtils.getSubject().getSession().getId());
+        log.info("session id -> [{}] login success", SecurityUtils.getSubject().getSession().getId());
 
         // successful
         return ResponseEntity.ok(TcR.code(0, "登陆成功！"));
@@ -148,65 +140,20 @@ public class TcAuthenticationController {
             value = "登出",
             notes = "登出")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/signout", method = RequestMethod.POST)
-    public ResponseEntity<TcR<Void>> signout(HttpServletResponse response) {
-        // signout
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public ResponseEntity<TcR<Void>> logout(HttpServletResponse response) {
+        // logout
         SecurityUtils.getSubject().logout();
 
         // remove csrf cookie
-        Cookie cookie = new Cookie(TcXsrfTokenFilter.XSRF_TOKEN_COOKIE_NAME, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        TcXsrfTokenFilter.removeXsrfCookie(response);
 
         // mq TODO
 
-        log.info("session id -> [{}] signout success", SecurityUtils.getSubject().getSession().getId());
+        log.info("session id -> [{}] logout success", SecurityUtils.getSubject().getSession().getId());
+
+        // successful
         return ResponseEntity.ok(TcR.ok());
-    }
-
-    @ApiOperation(
-            value = "获取菜单",
-            notes = "获取菜单")
-    @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/get_menus", method = RequestMethod.GET)
-    public ResponseEntity<TcP<List<ToMenu>>> getMenus() {
-
-        String accountId = tcSessionService.getAccountId();
-        TcP<List<ToMenu>> menus = tcAuthenticationApi.findMenus(accountId);
-
-        return ResponseEntity.ok(menus);
-    }
-
-    @ApiOperation(
-            value = "获取角色",
-            notes = "获取角色")
-    @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/get_roles", method = RequestMethod.GET)
-    public ResponseEntity<TcP<List<ToRole>>> getRoles() {
-
-        TcP<List<ToRole>> roles = TcP.ok(Lists.newArrayList());
-        if (SecurityUtils.getSubject().isAuthenticated()) {
-            String accountId = tcSessionService.getAccountId();
-            roles = tcAuthenticationApi.findRoles(accountId);
-        }
-
-        return ResponseEntity.ok(roles);
-    }
-
-    @ApiOperation(
-            value = "获取页面元素权限",
-            notes = "获取页面元素权限")
-    @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/get_permissions", method = RequestMethod.GET)
-    public ResponseEntity<TcP<List<ToPermission>>> getPermissions() {
-
-        TcP<List<ToPermission>> permissions = TcP.ok(Lists.newArrayList());
-        if (SecurityUtils.getSubject().isAuthenticated()) {
-            String accountId = tcSessionService.getAccountId();
-            permissions = tcAuthenticationApi.findPermissions(accountId);
-        }
-
-        return ResponseEntity.ok(permissions);
     }
 
 }

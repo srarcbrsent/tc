@@ -22,6 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * TcR.code == com.ysu.zyw.tc.model.mw.Rc.SUCCESS => success, have body (except TcR<Void>)
  * TcR.code == other => custom code, depends on api.
+ * TcR.code == com.ysu.zyw.tc.model.mw.Rc.UNAUTHORIZED => unauthorized
  * TcR.code == com.ysu.zyw.tc.model.mw.Rc.BAD_REQUEST => request param error, may contains extra.
  * TcR.code == com.ysu.zyw.tc.model.mw..Rc.SERVER_ERROR => server errs, may happen in any apis.
  */

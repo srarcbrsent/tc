@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TiSignupTerms implements Serializable {
+public class TiLoginTerms implements Serializable {
 
     private static final long serialVersionUID = -8514070054649234453L;
 

@@ -29,19 +29,21 @@ public class TcAuthenticationService {
 
     private static final String FIXED_VERIFICATION_CODE = "111111";
 
-    private static final String SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP =
-            "signup_verification_code_expire_time_counter_group";
+    private static final String LOGIN_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP =
+            "login_verification_code_expire_time_counter_group";
 
-    private static final long SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_IN_MS = 60000L;
+    private static final long LOGIN_VERIFICATION_CODE_EXPIRE_TIME_IN_MS = 60000L;
 
-    private static final String SIGNUP_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP =
-            "signup_rsa_key_expire_time_counter_group";
+    private static final String LOGIN_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP =
+            "login_rsa_key_expire_time_counter_group";
 
-    private static final long SIGNUP_RSA_KEY_EXPIRE_TIME_IN_MS = 15000L;
+    private static final long LOGIN_RSA_KEY_EXPIRE_TIME_IN_MS = 15000L;
 
-    private static final String SIGNUP_RSA_PUBLIC_KEY = "session_signup_rsa_public_key";
+    private static final String LOGIN_ENCRYPT_PASSWORD_RSA_PUBLIC_KEY =
+            "session_login_encrypt_password_rsa_public_key";
 
-    private static final String SIGNUP_RSA_PRIVATE_KEY = "session_signup_rsa_private_key";
+    private static final String LOGIN_ENCRYPT_PASSWORD_RSA_PRIVATE_KEY =
+            "session_login_encrypt_password_rsa_private_key";
 
     @Resource(name = TcBeanNameConsts.SS_REDIS_SERVICE)
     private TcCacheService tcCacheService;
@@ -54,8 +56,8 @@ public class TcAuthenticationService {
 
         String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
         String verificationCacheKey =
-                tcCacheService.buildLogicKey(SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP, sessionId);
-        tcCacheService.set(verificationCacheKey, verificationCode, SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_IN_MS);
+                tcCacheService.buildLogicKey(LOGIN_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP, sessionId);
+        tcCacheService.set(verificationCacheKey, verificationCode, LOGIN_VERIFICATION_CODE_EXPIRE_TIME_IN_MS);
 
         log.info("session id -> [{}] verification code -> [{}]", sessionId, verificationCode);
         return verificationCode;
@@ -64,7 +66,7 @@ public class TcAuthenticationService {
     public String getVerificationCodeInCache() {
         String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
         String verificationCacheKey =
-                tcCacheService.buildLogicKey(SIGNUP_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP, sessionId);
+                tcCacheService.buildLogicKey(LOGIN_VERIFICATION_CODE_EXPIRE_TIME_COUNTER_GROUP, sessionId);
         return tcCacheService.get(verificationCacheKey, new TypeReference<String>() {
         });
     }
@@ -81,12 +83,12 @@ public class TcAuthenticationService {
 
         String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
         String publicKeyCacheKey = tcCacheService.buildLogicKey(
-                SIGNUP_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, SIGNUP_RSA_PUBLIC_KEY, sessionId);
+                LOGIN_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, LOGIN_ENCRYPT_PASSWORD_RSA_PUBLIC_KEY, sessionId);
         String privateKeyCacheKey = tcCacheService.buildLogicKey(
-                SIGNUP_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, SIGNUP_RSA_PRIVATE_KEY, sessionId);
+                LOGIN_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, LOGIN_ENCRYPT_PASSWORD_RSA_PRIVATE_KEY, sessionId);
 
-        tcCacheService.set(publicKeyCacheKey, publicKey, SIGNUP_RSA_KEY_EXPIRE_TIME_IN_MS);
-        tcCacheService.set(privateKeyCacheKey, privateKey, SIGNUP_RSA_KEY_EXPIRE_TIME_IN_MS);
+        tcCacheService.set(publicKeyCacheKey, publicKey, LOGIN_RSA_KEY_EXPIRE_TIME_IN_MS);
+        tcCacheService.set(privateKeyCacheKey, privateKey, LOGIN_RSA_KEY_EXPIRE_TIME_IN_MS);
 
         log.info("session id -> [{}] successfully generate rsa public & private key ...", sessionId);
         return publicKey;
@@ -97,7 +99,7 @@ public class TcAuthenticationService {
 
         String sessionId = SecurityUtils.getSubject().getSession().getId().toString();
         String privateKeyCacheKey = tcCacheService.buildLogicKey(
-                SIGNUP_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, SIGNUP_RSA_PRIVATE_KEY, sessionId);
+                LOGIN_RSA_KEY_EXPIRE_TIME_COUNTER_GROUP, LOGIN_ENCRYPT_PASSWORD_RSA_PRIVATE_KEY, sessionId);
 
         String privateKey = tcCacheService.get(privateKeyCacheKey, new TypeReference<String>() {
         });

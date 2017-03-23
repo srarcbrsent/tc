@@ -9,8 +9,6 @@ import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-// client: cltPassword = sha1(password)
-// db    : dbPassword = sha1(password)
 public class TcCredentialsMatcher implements CredentialsMatcher {
 
     @Override

@@ -1,4 +1,4 @@
-package com.ysu.zyw.tc.openapi.fk.shiro.enhance;
+package com.ysu.zyw.tc.openapi.fk.shiro.filter;
 
 import org.apache.shiro.authz.annotation.Logical;
 

@@ -19,6 +19,6 @@
             <dd><a href="">电商平台</a></dd>
         </dl>
     </li>
-    <li class="layui-nav-item layui-nav-itemed"><a href="javascript:menu_signout()">登出</a></li>
+    <li class="layui-nav-item layui-nav-itemed"><a href="javascript:menu_logout()">登出</a></li>
 </ul>
 <#-- - menu -->

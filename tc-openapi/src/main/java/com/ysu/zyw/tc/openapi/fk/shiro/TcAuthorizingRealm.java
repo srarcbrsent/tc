@@ -2,7 +2,7 @@ package com.ysu.zyw.tc.openapi.fk.shiro;
 
 import com.google.common.collect.Lists;
 import com.ysu.zyw.tc.api.api.accounts.TcAuthenticationApi;
-import com.ysu.zyw.tc.model.api.i.accounts.TiSignupTerms;
+import com.ysu.zyw.tc.model.api.i.accounts.TiLoginTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToRole;
@@ -77,8 +77,8 @@ public class TcAuthorizingRealm extends AuthorizingRealm {
     }
 
     protected ToAccount fetchAccount(String username) {
-        TcR<ToAccount> tcR = tcAuthenticationApi.signup(
-                new TiSignupTerms(username, true, true));
+        TcR<ToAccount> tcR = tcAuthenticationApi.login(
+                new TiLoginTerms(username, true, true));
 
         if (tcR.isPresent()) {
             return tcR.get();

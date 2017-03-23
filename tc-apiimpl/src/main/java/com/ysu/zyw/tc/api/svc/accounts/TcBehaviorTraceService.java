@@ -24,11 +24,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Service
 public class TcBehaviorTraceService {
 
-    private static final String LOG_SIGNUP_FORMATTER = "用户【{}】于【{}】在【{}】注册成功";
+    private static final String LOG_LOGIN_FORMATTER = "用户【{}】于【{}】在【{}】登陆成功";
 
-    private static final String LOG_SIGNIN_FORMATTER = "用户【{}】于【{}】在【{}】登陆成功";
-
-    private static final String LOG_SIGNOUT_FORMATTER = "用户【{}】于【{}】在【{}】登出成功";
+    private static final String LOG_LOGOUT_FORMATTER = "用户【{}】于【{}】在【{}】登出成功";
 
     @Resource
     private TcBehaviorTraceMapper tcBehaviorTraceMapper;
@@ -38,15 +36,16 @@ public class TcBehaviorTraceService {
 
     @SneakyThrows
     @Transactional
-    public void logSignup(String accountId, TmPlatform tmPlatform, Date doneTime) {
+    public void logCreateAccount(String accountId, TmPlatform tmPlatform, Date doneTime) {
         checkNotNull(accountId);
         checkNotNull(tmPlatform);
         checkNotNull(doneTime);
 
         ToAccount toAccount = tcAccountService.findAccount(accountId, false);
         checkNotNull(toAccount);
+        // TODO
         String description = TcFormatUtils.format(
-                LOG_SIGNUP_FORMATTER,
+                null,
                 toAccount.getName(),
                 TcDateUtils.format(doneTime),
                 tmPlatform.getName());
@@ -56,7 +55,7 @@ public class TcBehaviorTraceService {
 
     @SneakyThrows
     @Transactional
-    public void logSignin(String accountId, TmPlatform tmPlatform, Date doneTime) {
+    public void logLogin(String accountId, TmPlatform tmPlatform, Date doneTime) {
         checkNotNull(accountId);
         checkNotNull(tmPlatform);
         checkNotNull(doneTime);
@@ -64,7 +63,7 @@ public class TcBehaviorTraceService {
         ToAccount toAccount = tcAccountService.findAccount(accountId, false);
         checkNotNull(toAccount);
         String description = TcFormatUtils.format(
-                LOG_SIGNIN_FORMATTER,
+                LOG_LOGIN_FORMATTER,
                 toAccount.getName(),
                 TcDateUtils.format(doneTime),
                 tmPlatform.getName());
@@ -74,7 +73,7 @@ public class TcBehaviorTraceService {
 
     @SneakyThrows
     @Transactional
-    public void logSignout(String accountId, TmPlatform tmPlatform, Date doneTime) {
+    public void logLogout(String accountId, TmPlatform tmPlatform, Date doneTime) {
         checkNotNull(accountId);
         checkNotNull(tmPlatform);
         checkNotNull(doneTime);
@@ -82,7 +81,7 @@ public class TcBehaviorTraceService {
         ToAccount toAccount = tcAccountService.findAccount(accountId, false);
         checkNotNull(toAccount);
         String description = TcFormatUtils.format(
-                LOG_SIGNOUT_FORMATTER,
+                LOG_LOGOUT_FORMATTER,
                 toAccount.getName(),
                 TcDateUtils.format(doneTime),
                 tmPlatform.getName());

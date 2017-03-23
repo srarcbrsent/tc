@@ -38,11 +38,11 @@ public class TcTransportClientFactoryBean implements FactoryBean<TransportClient
         checkNotNull(settings);
         checkArgument(MapUtils.isNotEmpty(inetAddresses));
         PreBuiltTransportClient client = new PreBuiltTransportClient(Settings.builder().put(settings).build());
-        inetAddresses.entrySet().forEach(entry -> {
+        inetAddresses.forEach((key, value) -> {
             try {
                 client.addTransportAddress(
-                        new InetSocketTransportAddress(InetAddress.getByName(entry.getKey()), entry.getValue()));
-                log.info("add socket transport address [{}:{}] to client", entry.getKey(), entry.getValue());
+                        new InetSocketTransportAddress(InetAddress.getByName(key), value));
+                log.info("add socket transport address [{}:{}] to client", key, value);
             } catch (UnknownHostException e) {
                 throw new IllegalStateException(e);
             }

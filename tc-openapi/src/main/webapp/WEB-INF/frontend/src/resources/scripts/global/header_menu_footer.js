@@ -2,8 +2,8 @@ layui.use(['element'], function () {
 
 });
 
-function menu_signout() {
-    _menu_signout()
+function menu_logout() {
+    _menu_logout()
         .then(function (data) {
             var code = data.code;
             if (code === 0) {
@@ -17,10 +17,10 @@ function menu_signout() {
         });
 }
 
-function _menu_signout() {
+function _menu_logout() {
     return new Promise(function (resolve, reject) {
         _TcAxios
-            .post('/auths/signout.json')
+            .post('/auths/logout.json')
             .then(function (response) {
                 _TcC.doWithTcR(response.data, function (code, body) {
                     resolve({
@@ -30,7 +30,7 @@ function _menu_signout() {
                 });
             })
             .catch(function (error) {
-                console.error('axios [/auths/signout.json] => ' + error);
+                console.error('axios [/auths/logout.json] => ' + error);
                 reject();
             });
     });

@@ -29,7 +29,6 @@
         <module>tc-modules/tc-se-elasticsearch</module>
         <module>tc-modules/tc-sch-elasticjob</module>
         <module>tc-modules/tc-spring-reactive</module>
-        <module>tc-modules/tc-commons-fetchrunner</module>
         <module>tc-modules/tc-commons-logger</module>
         <module>tc-apimodel</module>
         <module>tc-api</module>

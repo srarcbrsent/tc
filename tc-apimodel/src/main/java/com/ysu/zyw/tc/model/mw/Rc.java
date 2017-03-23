@@ -10,6 +10,8 @@ public interface Rc {
 
     String UNAUTHORIZED_DESCRIPTION = "未授权！";
 
+    String XSRF_TOKEN_NOT_MATCH = "XSRF-TOKEN不匹配！";
+
     int BAD_REQUEST = 8888;
 
     String BAD_REQUEST_DESCRIPTION = "信息有误！";
