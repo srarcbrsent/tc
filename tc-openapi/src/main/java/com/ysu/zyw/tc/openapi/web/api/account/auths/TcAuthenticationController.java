@@ -75,8 +75,8 @@ public class TcAuthenticationController {
             value = "登陆",
             notes = "登陆")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<TcR<Integer>> signup(
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<TcR<Integer>> login(
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String rsaEncryptedPassword,
             @RequestParam(value = "rememberMe", defaultValue = "false") Boolean rememberMe,
@@ -93,7 +93,7 @@ public class TcAuthenticationController {
             return ResponseEntity.ok(TcR.code(2, "验证码输入错误！"));
         }
 
-        // signup
+        // login
         String password = tcAuthenticationService.decryptRSAEncryptedPassword(rsaEncryptedPassword);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(rememberMe);
@@ -111,7 +111,7 @@ public class TcAuthenticationController {
         TcXsrfTokenFilter.addXsrfCookie(response);
 
         // set session
-        tcSessionService.initSessionAfterSignup();
+        tcSessionService.initSessionAfterLogin();
 
         // find menus
         // String accountId = tcSessionService.getAccountId();
@@ -121,7 +121,7 @@ public class TcAuthenticationController {
 
         // mq TODO
 
-        log.info("session id -> [{}] signup success", SecurityUtils.getSubject().getSession().getId());
+        log.info("session id -> [{}] login success", SecurityUtils.getSubject().getSession().getId());
 
         // successful
         return ResponseEntity.ok(TcR.code(0, "登陆成功！"));
@@ -140,9 +140,9 @@ public class TcAuthenticationController {
             value = "登出",
             notes = "登出")
     @ApiResponse(code = 200, message = "成功")
-    @RequestMapping(value = "/signout", method = RequestMethod.POST)
-    public ResponseEntity<TcR<Void>> signout(HttpServletResponse response) {
-        // signout
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public ResponseEntity<TcR<Void>> logout(HttpServletResponse response) {
+        // logout
         SecurityUtils.getSubject().logout();
 
         // remove csrf cookie
@@ -150,7 +150,7 @@ public class TcAuthenticationController {
 
         // mq TODO
 
-        log.info("session id -> [{}] signout success", SecurityUtils.getSubject().getSession().getId());
+        log.info("session id -> [{}] logout success", SecurityUtils.getSubject().getSession().getId());
 
         // successful
         return ResponseEntity.ok(TcR.ok());

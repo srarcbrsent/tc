@@ -48,9 +48,9 @@ public class TcAccountService {
      * @code code == 2 => 账号被锁定;
      */
     @Transactional(readOnly = true)
-    public String signup(@Nonnull String username,
-                         @Nonnull Boolean canEmailLogin,
-                         @Nonnull Boolean canMobileLogin) throws TcUnProcessableEntityException {
+    public String login(@Nonnull String username,
+                        @Nonnull Boolean canEmailLogin,
+                        @Nonnull Boolean canMobileLogin) throws TcUnProcessableEntityException {
         checkArgument(canEmailLogin || canMobileLogin);
 
         TcAccountExample tcAccountExample = new TcAccountExample();

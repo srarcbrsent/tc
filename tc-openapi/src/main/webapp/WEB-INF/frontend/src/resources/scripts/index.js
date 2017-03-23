@@ -24,16 +24,16 @@ layui.use(['element', 'form'], function () {
         }
     });
 
-    form.on('submit(fm-signup)', function (data) {
+    form.on('submit(fm-login)', function (data) {
         var password = data.field.password;
 
         getPublicKeyAsync()
             .then(function (publicKey) {
-                return signup(data.field, publicKey);
+                return login(data.field, publicKey);
             })
             .then(function (data) {
                 var code = data.code;
-                doSignup(code);
+                doLogin(code);
             })
             .catch(function () {
                 _TcC.defaultAxiosExHandler();
@@ -71,7 +71,7 @@ layui.use(['element', 'form'], function () {
         });
     }
 
-    function signup(form, publicKey) {
+    function login(form, publicKey) {
         return new Promise(function (resolve, reject) {
             var password = form.password;
             var encrypt = new JSEncrypt();
@@ -79,7 +79,7 @@ layui.use(['element', 'form'], function () {
             form.password = encrypt.encrypt(password);
 
             _TcAxios
-                .post('/auths/signup.json', $.param(form))
+                .post('/auths/login.json', $.param(form))
                 .then(function (response) {
                     _TcC.doWithTcR(response.data, function (code, body) {
                         resolve({
@@ -89,21 +89,21 @@ layui.use(['element', 'form'], function () {
                     });
                 })
                 .catch(function (error) {
-                    console.error('axios [/auths/signup.json] => ' + error);
+                    console.error('axios [/auths/login.json] => ' + error);
                     reject();
                 });
         });
     }
 
-    function doSignup(code) {
+    function doLogin(code) {
         if (code === 0) {
-            // signup succ, reload page, will auto redirect to home.
+            // login succ, reload page, will auto redirect to home.
             location.reload();
             return;
         } else if (code === 1) {
             // expired verification code
             layer.msg('验证码已过期，请重新登陆！');
-            resetSignupForm();
+            resetLoginForm();
         } else if (code === 2) {
             // verification code not match
             layer.msg('验证码输入错误，请重新登陆！');
@@ -119,18 +119,18 @@ layui.use(['element', 'form'], function () {
         } else {
             _TcC.defaultAxiosExHandler();
         }
-        // if not success signup, reset form.
-        resetSignupForm();
+        // if not successful login, reset form.
+        resetLoginForm();
     }
 
     function bindRefreshVerificationCodeListener() {
-        $('form.index-signup-fm a.refresh-verification-code-btn').click(function () {
+        $('form.index-login-fm a.refresh-verification-code-btn').click(function () {
             refreshVerificationCode();
         });
     }
 
-    function resetSignupForm() {
-        $(".index-signup-fm")[0].reset();
+    function resetLoginForm() {
+        $(".index-login-fm")[0].reset();
         refreshVerificationCode();
     }
 
@@ -139,7 +139,7 @@ layui.use(['element', 'form'], function () {
             .get('/auths/get_verification_code.json')
             .then(function (response) {
                 _TcC.doWithTcR(response.data, function (code, body) {
-                    $('form.index-signup-fm a.verification-code-btn').html(body);
+                    $('form.index-login-fm a.verification-code-btn').html(body);
                 });
             })
             .catch(function (error) {

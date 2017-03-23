@@ -42,13 +42,14 @@ public class TcXsrfTokenFilter extends OncePerRequestFilter {
                 Cookie cookie = cookieOptional.get();
                 String header = request.getHeader(XSRF_TOKEN_HEADER_NAME);
                 if (Objects.isNull(header)) {
-                    log.warn("req [{}] has xsrf cookie but do not pass a xsrf token in xml http req, not a valid req",
+                    log.warn("req [{}] has xsrf cookie but do not pass a xsrf token in xml http req, not valid",
                             request.getRequestURI());
                     writeForbiddenResponse(response);
                     return;
                 }
                 if (!Objects.equals(cookie.getValue(), header)) {
-                    log.warn("req [{}] has xsrf cookie and xsrf token but they are not match", request.getRequestURI());
+                    log.warn("req [{}] has xsrf cookie and xsrf token but they are not match",
+                            request.getRequestURI());
                     writeForbiddenResponse(response);
                     return;
                 }
@@ -64,13 +65,17 @@ public class TcXsrfTokenFilter extends OncePerRequestFilter {
 
     public static void addXsrfCookie(HttpServletResponse response) {
         Cookie xsrfCookie = new Cookie(TcXsrfTokenFilter.XSRF_TOKEN_COOKIE_NAME, UUID.randomUUID().toString());
-        xsrfCookie.setDomain(TcBaseConsts.PROJECT_TC_DOMAIN);
+        xsrfCookie.setMaxAge(-1);
+        xsrfCookie.setDomain(TcBaseConsts.PROJECT_TC_COOKIE_DOMAIN);
+        xsrfCookie.setPath(TcBaseConsts.PROJECT_TC_COOKIE_BASE_PATH);
         response.addCookie(xsrfCookie);
     }
 
     public static void removeXsrfCookie(HttpServletResponse response) {
         Cookie xsrfCookie = new Cookie(TcXsrfTokenFilter.XSRF_TOKEN_COOKIE_NAME, null);
-        xsrfCookie.setDomain(TcBaseConsts.PROJECT_TC_DOMAIN);
+        xsrfCookie.setMaxAge(0);
+        xsrfCookie.setDomain(TcBaseConsts.PROJECT_TC_COOKIE_DOMAIN);
+        xsrfCookie.setPath(TcBaseConsts.PROJECT_TC_COOKIE_BASE_PATH);
         response.addCookie(xsrfCookie);
     }
 

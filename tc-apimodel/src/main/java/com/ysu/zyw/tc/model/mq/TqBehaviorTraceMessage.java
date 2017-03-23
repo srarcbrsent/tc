@@ -17,11 +17,9 @@ public class TqBehaviorTraceMessage implements Serializable {
 
     private static final long serialVersionUID = -521313271991322610L;
 
-    public static final int ACTION_TYPE_SIGNUP = 1;
+    public static final int ACTION_TYPE_LOGIN = 1;
 
-    public static final int ACTION_TYPE_SIGNIN = 2;
-
-    public static final int ACTION_TYPE_SIGNOUT = 3;
+    public static final int ACTION_TYPE_LOGOUT = 2;
 
     private String accountId;
 

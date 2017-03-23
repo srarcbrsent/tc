@@ -44,7 +44,7 @@
                 <constructor-arg value="tc_sid"/>
                 <property name="httpOnly" value="true"/>
                 <property name="maxAge" value="-1"/>
-                <property name="domain" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts).PROJECT_TC_DOMAIN}"/>
+                <property name="domain" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts).PROJECT_TC_COOKIE_DOMAIN}"/>
             </bean>
         </property>
         <property name="sessionListeners">
@@ -54,11 +54,11 @@
         </property>
     </bean>
 
-    <bean id="md5Sha256CredentialsMatcher"
+    <bean id="tcCredentialsMatcher"
           class="com.ysu.zyw.tc.openapi.fk.shiro.TcCredentialsMatcher"/>
 
     <bean id="abstractAuthorizingRealm" abstract="true" class="org.apache.shiro.realm.AuthorizingRealm">
-        <property name="credentialsMatcher" ref="md5Sha256CredentialsMatcher"/>
+        <property name="credentialsMatcher" ref="tcCredentialsMatcher"/>
         <property name="cachingEnabled" value="true"/>
         <property name="authenticationCachingEnabled" value="true"/>
         <property name="authenticationCacheName"
@@ -100,7 +100,7 @@
         <property name="rememberMeManager">
             <bean class="org.apache.shiro.web.mgt.CookieRememberMeManager">
                 <property name="cipherKey"
-                          value="${properties.security.shiro.session.remeberme.cookie.chpher.key.base64}"/>
+                          value="${properties.security.shiro.session.remeberme.cookie.cipher.key.base64}"/>
                 <property name="cookie">
                     <bean class="org.apache.shiro.web.servlet.SimpleCookie">
                         <constructor-arg index="0" value="tc_rid"/>
@@ -108,7 +108,7 @@
                         <property name="maxAge"
                                   value="${properties.security.shiro.session.rememberme.cookie.timeout.sec}"/>
                         <property name="domain"
-                                  value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts).PROJECT_TC_DOMAIN}"/>
+                                  value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts).PROJECT_TC_COOKIE_DOMAIN}"/>
                     </bean>
                 </property>
             </bean>
@@ -122,7 +122,7 @@
         <property name="filters">
             <map>
                 <entry key="#{T(org.apache.shiro.web.filter.mgt.DefaultFilter).authc.name()}">
-                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.TcFormAuthenticationFilter"/>
+                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.filter.TcFormAuthenticationFilter"/>
                 </entry>
                 <entry key="#{T(org.apache.shiro.web.filter.mgt.DefaultFilter).ssl.name()}">
                     <bean class="org.apache.shiro.web.filter.authz.SslFilter">
@@ -130,10 +130,10 @@
                     </bean>
                 </entry>
                 <entry key="requiresAllRolesDynamic">
-                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresAllRolesDynamicFilter"/>
+                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.filter.TcRequiresAllRolesDynamicFilter"/>
                 </entry>
                 <entry key="requiresAnyRolesDynamic">
-                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresAnyRolesDynamicFilter"/>
+                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.filter.TcRequiresAnyRolesDynamicFilter"/>
                 </entry>
             </map>
         </property>
@@ -144,23 +144,10 @@
 
     <bean id="springAnnotationResolver" class="org.apache.shiro.spring.aop.SpringAnnotationResolver"/>
 
-    <bean id="tcAopAllianceAnnotationsAuthorizingMethodInterceptor"
-          class="com.ysu.zyw.tc.openapi.fk.shiro.internal.TcAopAllianceAnnotationsAuthorizingMethodInterceptor">
-        <constructor-arg index="0" ref="springAnnotationResolver"/>
-        <constructor-arg index="1">
-            <list>
-                <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresRolesDynamicAnnotationMethodInterceptor">
-                    <constructor-arg index="0">
-                        <bean class="com.ysu.zyw.tc.openapi.fk.shiro.enhance.TcRequiresRolesDynamicAnnotationHandler"/>
-                    </constructor-arg>
-                    <constructor-arg index="1" ref="springAnnotationResolver"/>
-                </bean>
-            </list>
-        </constructor-arg>
-    </bean>
+    <bean id="aopAllianceAnnotationsAuthorizingMethodInterceptor"
+          class="org.apache.shiro.spring.security.interceptor.AopAllianceAnnotationsAuthorizingMethodInterceptor"/>
 
-    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.internal.TcAuthorizationAttributeSourceAdvisor">
-        <constructor-arg index="0" ref="tcAopAllianceAnnotationsAuthorizingMethodInterceptor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
 

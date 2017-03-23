@@ -1,6 +1,6 @@
 package com.ysu.zyw.tc.api.api.accounts;
 
-import com.ysu.zyw.tc.model.api.i.accounts.TiSignupTerms;
+import com.ysu.zyw.tc.model.api.i.accounts.TiLoginTerms;
 import com.ysu.zyw.tc.model.api.o.accounts.ToAccount;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToMenu;
 import com.ysu.zyw.tc.model.api.o.accounts.auth.ToPermission;
@@ -22,11 +22,11 @@ public interface TcAuthenticationApi {
      * @code code == 9999 => 系统异常;
      */
     @POST
-    @Path(value = "/signup")
+    @Path(value = "/login")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    TcR<ToAccount> signup(
-            TiSignupTerms tiSignupTerms
+    TcR<ToAccount> login(
+            TiLoginTerms tiLoginTerms
     );
 
     /**

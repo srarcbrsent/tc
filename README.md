@@ -82,7 +82,6 @@ tc
           |-- tc-cache-api -- 缓存服务接口
           |-- tc-cache-codis -- 基于codis的缓存组件实现
           |-- tc-cache-redis -- 基于redis的缓存组件实现
-          |-- tc-commons-fetchrunner -- fetchrunner组件
           |-- tc-commons-logger -- 特殊日志组件(重要日志存储到数据库等)
           |-- tc-commons-retry -- 重试组件
           |-- tc-commons-upload -- 上传组件

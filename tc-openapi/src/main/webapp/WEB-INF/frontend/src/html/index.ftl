@@ -29,7 +29,7 @@
                     <fieldset class="layui-elem-field">
                         <legend>登陆</legend>
                         <div class="layui-field-box">
-                            <form class="layui-form layui-form-pane index-signup-fm">
+                            <form class="layui-form layui-form-pane index-login-fm">
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">用户名</label>
                                     <div class="layui-input-block">
@@ -84,7 +84,7 @@
                                         <button type="submit"
                                                 class="layui-btn"
                                                 lay-submit
-                                                lay-filter="fm-signup">
+                                                lay-filter="fm-login">
                                             登陆
                                         </button>
                                         <button type="reset"

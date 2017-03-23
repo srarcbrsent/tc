@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TcSessionService {
 
-    public void initSessionAfterSignup() {
+    public void initSessionAfterLogin() {
         ToAccount toAccount = (ToAccount) SecurityUtils.getSubject().getPrincipal();
         org.apache.shiro.session.Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute(TcSessionKey.S_ACCOUNT_ID, toAccount.getId());
@@ -16,7 +16,7 @@ public class TcSessionService {
 
     public String getAccountId() {
         if (!SecurityUtils.getSubject().isAuthenticated()) {
-            throw new IllegalStateException("not signup session do not have a account id");
+            throw new IllegalStateException("not login session do not have a account id");
         }
         return SecurityUtils.getSubject().getSession().getAttribute(TcSessionKey.S_ACCOUNT_ID).toString();
     }
