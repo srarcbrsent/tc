@@ -4,4 +4,6 @@ public interface TcBaseConsts {
 
     String STR_32_0 = "00000000000000000000000000000000";
 
+    String PROJECT_TC_DOMAIN = "tc.com";
+
 }

@@ -146,7 +146,7 @@ gulp.task('mg-script-libs', function (cb) {
             'src/resources/libs/thirdparty/axios.min.js',
             'src/resources/libs/thirdparty/lodash.min.js'
         ])
-        .pipe(concat('_header_lib.min.js'))
+        .pipe(concat('_footer_lib.min.js'))
         .pipe(gulp.dest('src/resources/libs'));
 });
 
@@ -157,7 +157,7 @@ gulp.task('mg-style-libs', function (cb) {
         .src([
             'src/resources/libs/core/normalize.min.css'
         ])
-        .pipe(concatCss("_footer_lib.min.css"))
+        .pipe(concatCss("_header_lib.min.css"))
         .pipe(gulp.dest('src/resources/libs'));
 });
 

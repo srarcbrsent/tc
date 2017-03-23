@@ -16,6 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * TcP.code == com.ysu.zyw.tc.model.mw.Rc.SUCCESS => success, have body (at least a empty collection)
  * TcP.code == other => custom code, depends on api.
+ * TcR.code == com.ysu.zyw.tc.model.mw.Rc.UNAUTHORIZED => unauthorized
  * TcP.code == com.ysu.zyw.tc.model.mw.Rc.BAD_REQUEST => request param error, may contains extra.
  * TcP.code == com.ysu.zyw.tc.model.mw..Rc.SERVER_ERROR => server errs, may happen in any apis.
  */

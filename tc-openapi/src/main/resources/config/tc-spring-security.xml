@@ -44,7 +44,7 @@
                 <constructor-arg value="tc_sid"/>
                 <property name="httpOnly" value="true"/>
                 <property name="maxAge" value="-1"/>
-                <property name="domain" value="${properties.security.shiro.cookie.global.domain}"/>
+                <property name="domain" value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts).PROJECT_TC_DOMAIN}"/>
             </bean>
         </property>
         <property name="sessionListeners">
@@ -108,7 +108,7 @@
                         <property name="maxAge"
                                   value="${properties.security.shiro.session.rememberme.cookie.timeout.sec}"/>
                         <property name="domain"
-                                  value="${properties.security.shiro.cookie.global.domain}"/>
+                                  value="#{T(com.ysu.zyw.tc.base.constant.TcBaseConsts).PROJECT_TC_DOMAIN}"/>
                     </bean>
                 </property>
             </bean>
@@ -121,7 +121,10 @@
         <property name="unauthorizedUrl" value="${properties.security.shiro.unauthorized.url}"/>
         <property name="filters">
             <map>
-                <entry key="ssl">
+                <entry key="#{T(org.apache.shiro.web.filter.mgt.DefaultFilter).authc.name()}">
+                    <bean class="com.ysu.zyw.tc.openapi.fk.shiro.TcFormAuthenticationFilter"/>
+                </entry>
+                <entry key="#{T(org.apache.shiro.web.filter.mgt.DefaultFilter).ssl.name()}">
                     <bean class="org.apache.shiro.web.filter.authz.SslFilter">
                         <property name="port" value="${properties.security.shiro.ssl.port}"/>
                     </bean>
