@@ -37,7 +37,7 @@
         <!-- modules -->
         <dependency>
             <groupId>com.ysu.zyw</groupId>
-            <artifactId>tc-aliyun-support</artifactId>
+            <artifactId>tc-aliyun-mns</artifactId>
         </dependency>
 
         <dependency>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- aliyun mail -->
+    <bean class="com.ysu.zyw.tc.components.aliyun.mail.TcAliyunMailService">
+        <property name="regionId" value=""/>
+        <property name="accessKey" value=""/>
+        <property name="accessSecret" value=""/>
+        <property name="accountName" value=""/>
+        <property name="fromAlias" value=""/>
+        <property name="tagName" value=""/>
+    </bean>
+
+</beans>
