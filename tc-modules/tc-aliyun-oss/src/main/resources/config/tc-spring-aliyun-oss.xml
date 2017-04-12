@@ -5,10 +5,11 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean class="com.ysu.zyw.tc.components.aliyun.oss.TcAliyunOssService">
-        <property name="defaultBucket" value="tc-resources"/>
-        <property name="endpoint" value=""/>
-        <property name="accessKeyId" value=""/>
-        <property name="accessKeySecret" value=""/>
+        <property name="domainName" value="${properties.aliyun.oss.domain.name}"/>
+        <property name="defaultBucket" value="${properties.aliyun.oss.default.bucket}"/>
+        <property name="endpoint" value="${properties.aliyun.oss.endpoint}"/>
+        <property name="accessKeyId" value="${properties.aliyun.oss.access.key.id}"/>
+        <property name="accessKeySecret" value="${properties.aliyun.oss.access.key.secret}"/>
     </bean>
 
 </beans>

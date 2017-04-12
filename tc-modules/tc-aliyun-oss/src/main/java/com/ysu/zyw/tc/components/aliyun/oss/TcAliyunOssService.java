@@ -19,6 +19,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Slf4j
 public class TcAliyunOssService implements InitializingBean, DisposableBean {
 
+    @Getter
+    @Setter
+    public String domainName;
+
     @Setter
     public String defaultBucket;
 
