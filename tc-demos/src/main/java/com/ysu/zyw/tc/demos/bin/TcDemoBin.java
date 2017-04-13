@@ -1,5 +1,7 @@
 package com.ysu.zyw.tc.demos.bin;
 
+import java.util.Stack;
+
 public class TcDemoBin {
 
     public static void main(String[] args) {
@@ -14,6 +16,8 @@ public class TcDemoBin {
         reverse("i am a boy");
         System.out.println();
         reverse(" boy am i");
+        System.out.println();
+        countBrace("(1)(1(00)2(10)13)(3)", 3);
     }
 
     private static void hexadecimal10To26(int num) {
@@ -34,6 +38,25 @@ public class TcDemoBin {
             }
         }
         System.out.println(sb.toString());
+    }
+
+    private static void countBrace(String str, int index) {
+        Stack<Integer> braceStack = new Stack<>();
+        // (1)(2)(3)
+        // 012345678
+        int braces = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '(') {
+                braceStack.push(i);
+                braces++;
+            } else if (str.charAt(i) == ')') {
+                Integer left = braceStack.pop();
+                if (braces == index) {
+                    System.out.println(str.substring(left + 1, i));
+                    break;
+                }
+            }
+        }
     }
 
 }
