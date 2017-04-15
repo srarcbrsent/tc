@@ -143,6 +143,17 @@ public class TcAliyunOssService implements InitializingBean, DisposableBean {
         return folder.substring(1, folder.length()) + "/" + name;
     }
 
+    public String getObjectUrl(String domain, String name) {
+        boolean validDomain = domain.startsWith("http") && !domain.endsWith("/");
+        boolean validName = !name.startsWith("/");
+
+        if (!validDomain || !validName) {
+            throw new IllegalArgumentException("invalid domain name or invalid name");
+        }
+
+        return domain + "/" + name;
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
         checkNotNull(endpoint);
