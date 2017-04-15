@@ -39,7 +39,7 @@ project-tc 是一个个人学习项目，目标是学习各种框架，中间件
 - Spring-Retry: 重试框架
 - Dubbox: 分布式服务发现, 治理, 调用框架
 - Elastic-Job: 分布式作业调度框架
-- Swagger: Api管理框架
+- Swagger: API管理框架
 - Slf4j: 日志框架
 - OkHttp3: http调用框架
 
@@ -155,9 +155,9 @@ mvn -f incubator-rocketmq/pom.xml clean install
 - 启动
 
     1. 编译工程, 工程根目录下 `clean install`
-    1. 启动 tc-apiimpl(default-port: 9090), `clean install -Ptc_dev jetty:run`
-    2. 启动 tc-openapi(default-port: 8080), `clean install -Ptc_dev jetty:run`
-    3. 访问 http://www.tc.com
+    2. 启动 tc-apiimpl(default-port: 9090), `clean install -Ptc_dev jetty:run`
+    3. 启动 tc-openapi(default-port: 8080), `clean install -Ptc_dev jetty:run`
+    4. 访问 http://www.tc.com
 
 - 其他
 
