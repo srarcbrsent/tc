@@ -9,6 +9,9 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.annotation.Nonnull;
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -21,6 +24,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Slf4j
 @UtilityClass
 public class TcEncryptUtils {
+
+    // RSA
 
     private static final String RSA_ALGORITHM = "RSA";
 
@@ -131,6 +136,42 @@ public class TcEncryptUtils {
         Cipher cipher = Cipher.getInstance(RSA_ALGORITHM_WITH_PADDING, PROVIDER);
         cipher.init(Cipher.DECRYPT_MODE, publicKey);
         return new String(cipher.doFinal(Base64.decodeBase64(encrypted)));
+    }
+
+    // AES
+
+    private static final String AES_ALGORITHM = "AES";
+
+    private static final int AES_CIPHER_LENGTH = 128;
+
+    private static final String AES_CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
+
+    @SneakyThrows
+    public static String createAESSecretKey() {
+        KeyGenerator kg = KeyGenerator.getInstance(AES_ALGORITHM);
+        kg.init(AES_CIPHER_LENGTH);
+        SecretKey secretKey = kg.generateKey();
+        return Base64.encodeBase64String(secretKey.getEncoded());
+    }
+
+    @SneakyThrows
+    public static String encryptAES(@Nonnull String plainText, @Nonnull String secretKey) {
+        checkNotNull(plainText);
+        checkNotNull(secretKey);
+        Key key = new SecretKeySpec(Base64.decodeBase64(secretKey), AES_ALGORITHM);
+        Cipher cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return Base64.encodeBase64String(cipher.doFinal(plainText.getBytes()));
+    }
+
+    @SneakyThrows
+    public static String decryptAES(@Nonnull String encryptedText, @Nonnull String secretKey) {
+        checkNotNull(encryptedText);
+        checkNotNull(secretKey);
+        Key key = new SecretKeySpec(Base64.decodeBase64(secretKey), AES_ALGORITHM);
+        Cipher cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        return new String(cipher.doFinal(Base64.decodeBase64(encryptedText)));
     }
 
 }

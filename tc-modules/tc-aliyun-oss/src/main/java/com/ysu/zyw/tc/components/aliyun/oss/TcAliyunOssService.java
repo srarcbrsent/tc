@@ -24,9 +24,6 @@ public class TcAliyunOssService implements InitializingBean, DisposableBean {
     public String domainName;
 
     @Setter
-    public String defaultBucket;
-
-    @Setter
     private String endpoint;
 
     @Setter
@@ -42,13 +39,7 @@ public class TcAliyunOssService implements InitializingBean, DisposableBean {
         checkNotNull(bucketName);
         checkNotNull(folder);
 
-        boolean validFolderName = folder.startsWith("/") && !folder.endsWith("/");
-
-        if (!validFolderName) {
-            throw new IllegalArgumentException("invalid folder name");
-        }
-
-        String keySuffixWithSlash = folder + "/";
+        String keySuffixWithSlash = formatKey(folder);
 
         ossClient.putObject(bucketName, keySuffixWithSlash, new ByteArrayInputStream(new byte[0]));
     }
@@ -78,6 +69,25 @@ public class TcAliyunOssService implements InitializingBean, DisposableBean {
         ossClient.putObject(bucketName, key, inputStream, objectMetadata);
     }
 
+    public boolean exists(@Nonnull String bucketName, @Nonnull String folder) {
+        checkNotNull(bucketName);
+        checkNotNull(folder);
+
+        String key = formatKey(folder);
+
+        return ossClient.doesObjectExist(bucketName, key);
+    }
+
+    public boolean exists(@Nonnull String bucketName, @Nonnull String folder, @Nonnull String name) {
+        checkNotNull(bucketName);
+        checkNotNull(folder);
+        checkNotNull(name);
+
+        String key = formatKey(folder, name);
+
+        return ossClient.doesObjectExist(bucketName, key);
+    }
+
     public InputStream get(@Nonnull String bucketName, @Nonnull String folder, @Nonnull String name) {
         checkNotNull(bucketName);
         checkNotNull(folder);
@@ -94,13 +104,7 @@ public class TcAliyunOssService implements InitializingBean, DisposableBean {
         checkNotNull(bucketName);
         checkNotNull(folder);
 
-        boolean validFolderName = folder.startsWith("/") && !folder.endsWith("/");
-
-        if (!validFolderName) {
-            throw new IllegalArgumentException("invalid folder name");
-        }
-
-        String keySuffixWithSlash = folder + "/";
+        String keySuffixWithSlash = formatKey(folder);
 
         ossClient.deleteObject(bucketName, keySuffixWithSlash);
     }
@@ -115,6 +119,16 @@ public class TcAliyunOssService implements InitializingBean, DisposableBean {
         ossClient.deleteObject(bucketName, key);
     }
 
+    private String formatKey(@Nonnull String folder) {
+        boolean validFolderName = folder.startsWith("/") && !folder.endsWith("/");
+
+        if (!validFolderName) {
+            throw new IllegalArgumentException("invalid folder name");
+        }
+
+        return folder.substring(1, folder.length()) + "/";
+    }
+
     private String formatKey(@Nonnull String folder, @Nonnull String name) {
         checkNotNull(folder);
         checkNotNull(name);
@@ -126,12 +140,22 @@ public class TcAliyunOssService implements InitializingBean, DisposableBean {
             throw new IllegalArgumentException("invalid folder name or invalid name");
         }
 
-        return folder + "/" + name;
+        return folder.substring(1, folder.length()) + "/" + name;
+    }
+
+    public String getObjectUrl(String domain, String name) {
+        boolean validDomain = domain.startsWith("http") && !domain.endsWith("/");
+        boolean validName = !name.startsWith("/");
+
+        if (!validDomain || !validName) {
+            throw new IllegalArgumentException("invalid domain name or invalid name");
+        }
+
+        return domain + "/" + name;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        checkNotNull(defaultBucket);
         checkNotNull(endpoint);
         checkNotNull(accessKeyId);
         checkNotNull(accessKeySecret);

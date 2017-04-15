@@ -35,4 +35,25 @@ public class TcEncryptUtilsTest {
         Assert.assertEquals(plain, verify);
     }
 
+    @Test
+    public void testAES() {
+        String plainText = RandomStringUtils.randomAscii(40);
+
+        String secretKey = TcEncryptUtils.createAESSecretKey();
+
+        System.out.println(secretKey);
+
+        // encrypt
+        String encryptedText = TcEncryptUtils.encryptAES(plainText, secretKey);
+
+        System.out.println(encryptedText);
+
+        // decrypt
+        String decryptedText = TcEncryptUtils.decryptAES(encryptedText, secretKey);
+
+        System.out.println(decryptedText);
+
+        Assert.assertEquals(plainText, decryptedText);
+    }
+
 }
