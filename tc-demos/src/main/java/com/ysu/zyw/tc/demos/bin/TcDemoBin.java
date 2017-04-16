@@ -18,6 +18,8 @@ public class TcDemoBin {
         reverse(" boy am i");
         System.out.println();
         countBrace("(1)(1(00)2(10)13)(3)", 3);
+        char wo = '我';
+        System.out.println();
     }
 
     private static void hexadecimal10To26(int num) {
