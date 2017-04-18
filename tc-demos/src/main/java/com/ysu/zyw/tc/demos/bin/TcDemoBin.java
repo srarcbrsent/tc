@@ -1,6 +1,12 @@
 package com.ysu.zyw.tc.demos.bin;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.RandomUtils;
+
+import java.util.Arrays;
 import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TcDemoBin {
 
@@ -20,6 +26,29 @@ public class TcDemoBin {
         countBrace("(1)(1(00)2(10)13)(3)", 3);
         char wo = '我';
         System.out.println();
+
+        final int ARRAY_LENGTH = 10;
+        Integer[] array = new Integer[ARRAY_LENGTH];
+        Stream.generate(() -> RandomUtils.nextInt(0, 100))
+                .limit(ARRAY_LENGTH)
+                .collect(Collectors.toList())
+                .toArray(array);
+
+        array = ArrayUtils.add(array, array[1]);
+
+        System.out.println(Arrays.toString(array));
+
+        Arrays.stream(array)
+                .collect(Collectors.groupingBy(i -> i))
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().size() == 2)
+                .findFirst()
+                .ifPresent(entry -> {
+                    System.out.println(entry.getKey());
+                });
+
+
     }
 
     private static void hexadecimal10To26(int num) {
