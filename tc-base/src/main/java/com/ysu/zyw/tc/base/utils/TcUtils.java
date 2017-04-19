@@ -44,7 +44,7 @@ public class TcUtils {
         }
     }
 
-    public static long doWithTiming(@Nonnull TcTask tcTask, String expression) {
+    public static long doWithTiming(@Nonnull TcTask tcTask) {
         Date before = new Date();
         tcTask.execute();
         return TcDateUtils.duration(before, new Date());

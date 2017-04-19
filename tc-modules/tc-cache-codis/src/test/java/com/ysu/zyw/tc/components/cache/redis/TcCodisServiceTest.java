@@ -109,7 +109,7 @@ public class TcCodisServiceTest {
             String sValue = tcCacheService.get(key, new TypeReference<String>() {
             });
             Assert.assertEquals(value, sValue);
-        }, "simple [{}]");
+        });
     }
 
     @Test(timeout = 30000L)
@@ -123,7 +123,7 @@ public class TcCodisServiceTest {
             TcCountryMdl sValue = tcCacheService.get(key, new TypeReference<TcCountryMdl>() {
             });
             Assert.assertEquals(value, sValue);
-        }, "complex [{}]");
+        });
     }
 
     @Test(timeout = 9000L)
@@ -237,7 +237,7 @@ public class TcCodisServiceTest {
             String sValue = tcOpsForGroupedValue.get(group, key, new TypeReference<String>() {
             });
             Assert.assertEquals(value, sValue);
-        }, "simple [{}]");
+        });
     }
 
     @Test(timeout = 30000L)
@@ -253,7 +253,7 @@ public class TcCodisServiceTest {
             TcCountryMdl sValue = tcOpsForGroupedValue.get(group, key, new TypeReference<TcCountryMdl>() {
             });
             Assert.assertEquals(value, sValue);
-        }, "complex [{}]");
+        });
     }
 
     @Test(timeout = 9000L)
@@ -408,7 +408,7 @@ public class TcCodisServiceTest {
         Assert.assertEquals(0, tcOpsForGroupedValue.keys(group).size());
     }
 
-    private void doWith(TcUtils.TcTask tcTask, String expression) {
+    private void doWith(TcUtils.TcTask tcTask) {
         CountDownLatch countDownLatch = new CountDownLatch(THREADS);
         TcUtils.doWithTiming(() -> {
             IntStream.range(0, THREADS).forEach(i -> {
@@ -424,7 +424,7 @@ public class TcCodisServiceTest {
             } catch (InterruptedException e) {
                 log.error("", e);
             }
-        }, expression);
+        });
     }
 
 }
