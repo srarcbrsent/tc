@@ -50,8 +50,12 @@ public class TcSortAlgorithmsBin {
         mergeSort(array, 0, array.length - 1, comparator);
     }
 
-    public static void quickSort() {
+    public static <T> void quickSort(T[] arr, Comparator<T> comparator) {
+        quickSort(arr, 0, arr.length - 1, comparator);
+    }
 
+    public static <T> void quickSort3Ways(@Nonnull T[] arr, Comparator<T> comparator) {
+        quickSort(arr, 0, arr.length - 1, comparator);
     }
 
     public static void heapSort() {
@@ -110,8 +114,93 @@ public class TcSortAlgorithmsBin {
         }
     }
 
+    //对arr[left...right]部分进行快速排序
+    private static <T> void quickSort(T[] arr, int left, int right, Comparator<T> comparator) {
+        if (left >= right)
+            return;
+        int p = setPartition2(arr, left, right, comparator);
+        quickSort(arr, left, p, comparator);
+        quickSort(arr, p + 1, right, comparator);
+    }
+
+    //对arr[l...r]部分进行patition操作
+    //返回p，使得arr[l...p-1] < arr[p],arr[p+1...r] > arr[p]
+    private static <T> int setPartition(T[] arr, int l, int r, Comparator<T> comparator) {
+
+        //快速排序优化-随即化快速排序法
+        swap(arr, l, RandomUtils.nextInt(l, r));
+
+        T v = arr[l];
+        //arr[l+1...j] < v, arr[j+1...i) > v
+        int j = l;
+        for (int i = l + 1; i <= r; i++) {
+            if (comparator.compare(arr[i], v) < 0) {
+                swap(arr, j + 1, i);
+                j++;
+            }
+        }
+        swap(arr, l, j);
+        return j;
+    }
+
+    //对arr[l...r]部分进行patition操作
+    //返回p，使得arr[l...p-1] < arr[p],arr[p+1...r] > arr[p]
+    //双路快速排序
+    private static <T> int setPartition2(T[] arr, int l, int r, Comparator<T> comparator) {
+
+        swap(arr, l, RandomUtils.nextInt(l, r));
+
+        T v = arr[l];
+        int i = l + 1, j = r;
+        while (true) {
+            while (i <= r && comparator.compare(arr[i], v) < 0)
+                i++;
+            while (j >= l + 1 && comparator.compare(arr[j], v) > 0)
+                j--;
+            if (i > j)
+                break;
+            swap(arr, i, j);
+            i++;
+            j--;
+        }
+        swap(arr, l, j);
+        return j;
+    }
+
+    // 三路快速排序处理 arr[l...r]
+    // 将arr[l...r]分为 <v ; ==v ; >v 三部分
+    // 之后递归对 <v ; >v 两部分继续进行三路递归排序
+    private static <T> void quickSort3Ways(T[] arr, int l, int r, Comparator<T> comparator) {
+        if (l >= r)
+            return;
+
+        // patition
+        swap(arr, l, RandomUtils.nextInt(l, r));
+        T v = arr[l];
+
+        int lt = l; //arr[l+1...lt] < v
+        int gt = r + 1; //arr[gt...r] > v
+        int i = l + 1; //arr[lt+1...i) == v
+        while (i < gt) {
+            if (comparator.compare(arr[i], v) < 0) {
+                swap(arr, lt + 1, i);
+                lt++;
+                i++;
+            } else if (comparator.compare(arr[i], v) > 0) {
+                swap(arr, i, gt - 1);
+                gt--;
+            } else {
+                i++;
+            }
+        }
+        swap(arr, l, lt);
+
+        quickSort3Ways(arr, l, lt - 1, comparator);
+        quickSort3Ways(arr, gt, r, comparator);
+    }
+
     public static void main(String[] args) {
-        final int ARRAY_LENGTH = 20000;
+        final int ARRAY_LENGTH = 1000000;
         Integer[] array = new Integer[ARRAY_LENGTH];
         Stream.generate(() -> RandomUtils.nextInt(0, 20000))
                 .limit(ARRAY_LENGTH)
@@ -119,7 +208,7 @@ public class TcSortAlgorithmsBin {
                 .toArray(array);
 
         long timing = TcUtils.doWithTiming(() -> {
-            mergeSort(array, Comparator.comparingInt(o -> o));
+            quickSort(array, Comparator.comparingInt(o -> o));
             //bubbleSort(array, (Comparator.comparingInt(o -> o)));
         });
         System.out.println(timing);
